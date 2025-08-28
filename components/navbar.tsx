@@ -3,12 +3,14 @@ import Link from "next/link";
 import Container from "@/components/ui/container";
 import MainNav from "@/components/main-nav";
 import getCategories from "@/actions/get-categories";
+import getSubcategories from "@/actions/get-subcategories";
 import NavbarActions from "@/components/navbar-actions";
 
 export const revalidate = 0;
 
 const Navbar = async () => {
     const categories = await getCategories();
+    const subcategories = await getSubcategories();
 
     return (
         <div className="border-b">
@@ -17,7 +19,7 @@ const Navbar = async () => {
                     <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
                         <p className="font-bold text-xl"> Babystep </p>
                     </Link>
-                    <MainNav data={categories} />
+                    <MainNav data={categories} subcategories={subcategories} />
                     <NavbarActions />
                 </div>
             </Container>
