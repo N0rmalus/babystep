@@ -14,10 +14,10 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     return (
-        <Tab.Group as="div" selectedIndex={selectedIndex} onChange={setSelectedIndex} className="flex flex-col-reverse">
+        <Tab.Group as="div" selectedIndex={selectedIndex} onChange={setSelectedIndex} className="flex flex-col-reverse gap-4">
             {/* Image List */}
             <div className="mx-auto mt-6 w-full max-w-2xl sm:block lg:max-w-none">
-                <Tab.List className="grid grid-cols-4 gap-6">
+                <Tab.List className="grid grid-cols-4 gap-4">
                     {images.map((image) => (
                         <GalleryTab key={image.id} image={image} />
                     ))}
@@ -28,12 +28,12 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
             <Tab.Panels className="aspect-square w-full">
                 {images.map((image) => (
                     <Tab.Panel key={image.id}>
-                        <div className="aspect-square relative h-full w-full rounded-lg overflow-hidden hover:cursor-pointer">
+                        <div className="aspect-square relative h-full w-full rounded-xl overflow-hidden border border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200 bg-white">
                             <ImageLightbox
                                 images={images.map((img) => ({ src: img.url }))}
                                 alt="Gallery Image"
                                 className="object-cover object-center"
-                                startIndex={selectedIndex} // Pass selected index to open at correct image
+                                startIndex={selectedIndex}
                             />
                         </div>
                     </Tab.Panel>

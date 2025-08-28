@@ -7,6 +7,7 @@ import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import useWishlist from "@/hooks/use-wishlist";
+import Link from "next/link";
 
 interface InfoProps {
     data: Product;
@@ -26,54 +27,68 @@ const Info:React.FC<InfoProps> = ({
 
     return (
         <div>
-            <h1 className="text-3xl font-bold text-gray-900"> {data.name} </h1>
-            <div className="mt-3 flex items-end justify-between">
-                <p className="text-2xl text-gray-900"> 
+            <div className="flex items-center gap-3 mb-2">
+                {data?.subcategory?.category?.name && (
+                    <Link href={`/category/${data.subcategory.category.id}`} className="inline-block bg-blue-100 text-blue-700 text-xs font-semibold  px-3 py-1 rounded-full uppercase tracking-wide hover:bg-blue-200 transition">
+                        {data.subcategory.category.name}
+                    </Link>
+                )}
+            </div>
+            <h1 className="text-4xl font-extrabold text-gray-900 mb-2 leading-tight">{data.name}</h1>
+            <div className="flex items-center gap-4 mb-4">
+                <p className="text-3xl font-bold text-gray-900">
                     <Currency value={data?.price} />
                 </p>
+                {data.amountInStock > 0 ? (
+                    <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">
+                        Yra sandėlyje
+                    </span>
+                ) : (
+                    <span className="inline-block bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">
+                        Išparduota
+                    </span>
+                )}
             </div>
             <hr className="my-4" />
             <div className="flex flex-col gap-y-6">
                 <div className="flex items-center gap-x-4">
-                    <h3 className="font-semibold text-black"> Dydis: </h3>
-                    <div>
-                        {data?.size?.name} <b> / </b> {data?.size?.value}
-                    </div>
-                </div>
-                <div className="flex items-center gap-x-4">
-                    <h3 className="font-semibold text-black"> Spalva: </h3>
-                    <div className="h-6 w-6 rounded-full border" style={{ backgroundColor: data?.color.value }} />
-                </div>
-                <div className="flex items-center gap-x-4">
-                    <h3 className="font-semibold text-black"> Kiekis sandėlyje: </h3>
-                    <div>
-                        {data?.size?.value}
+                    <h3 className="font-semibold text-gray-700">Kiekis sandėlyje:</h3>
+                    <div className="text-gray-900 font-medium">
+                        {data?.amountInStock}
                     </div>
                 </div>
                 <hr />
                 <div>
-                    <h3 className="font-semibold text-black"> Aprašymas: </h3>
-                    <div className="text-black">
+                    <h3 className="font-semibold text-gray-700">Aprašymas:</h3>
+                    <div className="text-gray-800">
                         {data?.description.length ? (
-                            <div className="mt-2 text-justify whitespace-pre-wrap">
+                            <div className="mt-2 text-justify whitespace-pre-wrap leading-relaxed text-base">
                                 {data?.description}
                             </div>
                         ) : (
-                            <p className="flex mt-2 h-full w-full text-neutral-500"> Aprašymo nėra. </p>
+                            <p className="flex mt-2 h-full w-full text-neutral-500">Aprašymo nėra.</p>
                         )}
                     </div>
                 </div>
             </div>
-            <div className="mt-10 flex items-center justify-between gap-x-3 text-white">
-                <Button onClick={onAddToCart} className="flex items-center gap-x-2">
-                    Pridėti
-                    <ShoppingCart size="18" />
+            <div className="mt-10 flex flex-col justify-between sm:flex-row items-stretch sm:items-center gap-3 text-white">
+                <Button
+                    size="lg"
+                    onClick={onAddToCart}
+                    className="flex items-center gap-x-2 bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-black text-lg shadow-lg"
+                    disabled={data.amountInStock === 0}
+                >
+                    Pridėti į krepšelį
+                    <ShoppingCart size="20" />
                 </Button>
-                <div className="ml-auto">
-                    <Button onClick={onAddToWishlist} className="flex items-center gap-x-2">
-                        Į Norus <Heart size="18" />
-                    </Button>
-                </div>
+                <Button
+                    size="lg"
+                    onClick={onAddToWishlist}
+                    className="flex items-center bg-white border border-gray-300 text-black hover:bg-gray-100 text-lg hover:text-blackshadow"
+                    type="button"
+                >
+                    <Heart size="20" />
+                </Button>
             </div>
         </div>
     );

@@ -76,7 +76,7 @@ const MainNav: React.FC<MainNavProps> = ({
                                 {subs.map((sub) => (
                                     <Link
                                         key={sub.id}
-                                        href={`/${category.id}/${sub.name}`}
+                                        href={`/category/${category.id}/${sub.id}`}
                                         className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
                                     >
                                         {sub.name}

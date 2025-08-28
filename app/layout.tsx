@@ -22,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <ToastProvider />
-        <ModalProvider />
-        <Navbar />
-        {children}
-        <Footer />
+        <div className="min-h-screen flex flex-col">
+          <ToastProvider />
+          <ModalProvider />
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   )
