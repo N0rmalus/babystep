@@ -5,7 +5,8 @@ import { Product } from "@/types";
 import Container from "@/components/ui/container";
 import ProductCard from "@/components/ui/product-card";
 import NoResults from "@/components/ui/no-results";
-
+import { ProductFiltersContainer } from "@/components/product-filters-container";
+import { Pagination } from "@/components/pagination";
 
 interface SubcategoryPageProps {
     params: {
@@ -15,44 +16,53 @@ interface SubcategoryPageProps {
 }
 
 export default async function SubcategoryPage({ params }: SubcategoryPageProps) {
-    // Fetch all subcategories to find the one matching name and categoryId
     const subcategories = await getSubcategories();
     const subcategory = subcategories.find(
-        (sub) =>
-            sub.id === params.subcategoryId &&
-            sub.categoryId === params.categoryId
+        (sub) => sub.id === params.subcategoryId && sub.categoryId === params.categoryId
     );
 
     if (!subcategory) {
         notFound();
     }
 
-    // Fetch products for this subcategory
     const products: Product[] = await getProducts({ subcategoryId: subcategory.id });
 
     return (
-        <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen py-8">
-            <Container>
-                <div className="flex flex-col items-center mb-10">
-                    <h1 className="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight drop-shadow-sm">
-                        {subcategory.name}
-                    </h1>
+        <Container>
+            <div className="mt-8 mb-16 flex flex-col gap-16">
+                <div className="flex flex-col items-center">
+                    <h1 className="text-4xl font-extrabold capitalize">{subcategory.name}</h1>
                     <p className="text-lg text-gray-500">
-                        Discover our curated selection of{" "}
-                        <span className="font-semibold">{subcategory.name}</span> products.
+                        Atraskite mūsų platų produktų asortimentą šioje kategorijoje.
                     </p>
-                    <div className="w-20 h-1 bg-pink-400 rounded-full mt-4" />
+                    <div className="mt-4 h-1 w-60 rounded-full bg-tumbleweed-400" />
                 </div>
-                {products.length === 0 ? (
-                    <NoResults />
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {products.map((product) => (
-                            <ProductCard key={product.id} data={product} />
-                        ))}
+
+                {/* Layout like your screenshot: search left, products right */}
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-x-8">
+                    <div className="lg:col-span-1">
+                        <ProductFiltersContainer />
                     </div>
+
+                    <div className="lg:col-span-4">
+                        {products.length === 0 ? (
+                            <NoResults />
+                        ) : (
+                            <>
+                                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+                                    {products.map((product) => (
+                                        <ProductCard key={product.id} data={product} />
+                                    ))}
+                                </div>
+
+                            </>
+                        )}
+                    </div>
+                </div>
+                {products.length > 0 && (
+                    <Pagination currentPage={1} totalPages={1} />
                 )}
-            </Container>
-        </div>
+            </div>
+        </Container>
     );
 }

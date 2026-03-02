@@ -11,6 +11,7 @@ import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modal";
 import useCart from "@/hooks/use-cart";
 import useWishlist from "@/hooks/use-wishlist";
+import {ProductCardImage} from "@/components/ui/product-card";
 
 interface ProductCard {
     data: Product;
@@ -46,26 +47,29 @@ const WishlistCard: React.FC<ProductCard> = ({
     }
 
     return (
-        <div onClick={handleClick} className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
+        <div
+            onClick={handleClick}
+            className="bg-white group cursor-pointer rounded-2xl border border-gray-200 p-4 space-y-3 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
+        >
             {/* Images and Actions */}
-            <div className="aspect-square rounded-xl bg-gray-100 relative">
-                <Image src={data?.images?.[0]?.url} fill alt="Image" className="aspect-square object-cover rounded-md" />
-                <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
-                    <div className="flex gap-x-6 justify-center">
-                        <IconButton onClick={onPreview} icon={<Expand size={20} className="text-gray-600" />} />
-                        <IconButton onClick={onAddToCart} icon={<ShoppingCart size={20} className="text-gray-600" />} title={"Krepšelis"} />
-                        <IconButton onClick={onRemoveFromWishlist} icon={<X size={20} className="text-gray-600" />} title={"Pašalinti"} />
+            <ProductCardImage
+                imageUrl={data?.images?.[0]?.url}
+                onAddToCart={onAddToCart}
+                onRemoveFromWishlist={onRemoveFromWishlist}
+            />
+            <div className="flex-1 flex flex-col justify-between">
+                <div>
+                    <p className="font-semibold text-base text-gray-900">{data.name}</p>
+                    <div className="flex flex-row items-center gap-2">
+                        <p className="text-xs text-gray-500 mt-1">{data.subcategory.category.name}</p>
+                        <div className="w-[4px] h-[4px] mt-[4px] bg-tumbleweed-400 rounded-full" />
+                        <p className="text-xs text-gray-500 mt-1">{data.subcategory.name}</p>
                     </div>
                 </div>
-            </div>  
-            {/* Description */}
-            <div>
-                <p className="font-semibold text-lg"> {data.name} </p>
-                <p className="text-sm text-gray-500"> {data.category?.name} </p>
-            </div>
-            {/* Price */}
-            <div className="flex items-center justify-between">
-                <Currency value={data?.price} />
+                <div className="flex items-center justify-between mt-2">
+                    <Currency value={data?.price} />
+                    {/* TODO: add a badge for new/featured products here */}
+                </div>
             </div>
         </div>
     );

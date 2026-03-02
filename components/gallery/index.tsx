@@ -14,7 +14,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     return (
-        <Tab.Group as="div" selectedIndex={selectedIndex} onChange={setSelectedIndex} className="flex flex-col-reverse gap-4">
+        <Tab.Group as="div" selectedIndex={selectedIndex} onChange={setSelectedIndex} className="flex flex-col-reverse">
             {/* Image List */}
             <div className="mx-auto mt-6 w-full max-w-2xl sm:block lg:max-w-none">
                 <Tab.List className="grid grid-cols-4 gap-4">

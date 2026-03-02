@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <div className="min-h-screen flex flex-col">
+        <div className="bg-gradient-to-br from-tumbleweed-50 to-white min-h-screen flex flex-col">
           <ToastProvider />
           <ModalProvider />
           <Navbar />

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Expand, Heart, ShoppingCart } from 'lucide-react';
+import {Expand, Heart, ShoppingCart, X} from 'lucide-react';
 
 import { Product } from "@/types";
 import IconButton from "@/components/ui/icon-button";
@@ -16,12 +16,13 @@ interface ProductCard {
     data: Product;
 }
 
-const ProductCardImage: React.FC<{
+export const ProductCardImage: React.FC<{
     imageUrl: string;
-    onPreview: MouseEventHandler<HTMLButtonElement>;
+    onPreview?: MouseEventHandler<HTMLButtonElement>;
     onAddToCart: MouseEventHandler<HTMLButtonElement>;
-    onAddToWishlist: MouseEventHandler<HTMLButtonElement>;
-}> = ({ imageUrl, onPreview, onAddToCart, onAddToWishlist }) => (
+    onAddToWishlist?: MouseEventHandler<HTMLButtonElement>;
+    onRemoveFromWishlist?: MouseEventHandler<HTMLButtonElement>;
+}> = ({ imageUrl, onPreview, onAddToCart, onAddToWishlist, onRemoveFromWishlist }) => (
     <div className="aspect-square rounded-xl bg-gray-100 relative overflow-hidden shadow-sm">
         <Image
             src={imageUrl}
@@ -31,9 +32,16 @@ const ProductCardImage: React.FC<{
         />
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
             <div className="flex gap-x-4 justify-center">
-                <IconButton onClick={onPreview} icon={<Expand size={20} className="text-gray-700" />} title="Quick preview" />
-                <IconButton onClick={onAddToCart} icon={<ShoppingCart size={20} className="text-gray-700" />} title="Add to cart" />
-                <IconButton onClick={onAddToWishlist} icon={<Heart size={20} className="text-gray-700" />} title="Add to wishlist" />
+                {onPreview && (
+                    <IconButton onClick={onPreview} icon={<Expand size={20} className="text-gray-700" />} title="Greitos peržiūros langas" />
+                )}
+                <IconButton onClick={onAddToCart} icon={<ShoppingCart size={20} className="text-gray-700" />} title="Pridėti į krepšelį" />
+                {onAddToWishlist && (
+                    <IconButton onClick={onAddToWishlist} icon={<Heart size={20} className="text-gray-700" />} title="Pridėti į norų sąrašą" />
+                )}
+                {onRemoveFromWishlist && (
+                    <IconButton onClick={onRemoveFromWishlist} icon={<X size={20} className="text-gray-600" />} title="Pašalinti iš norų sąrašo" />
+                )}
             </div>
         </div>
     </div>
@@ -79,11 +87,15 @@ const ProductCard: React.FC<ProductCard> = ({
             <div className="flex-1 flex flex-col justify-between">
                 <div>
                     <p className="font-semibold text-base text-gray-900 truncate">{data.name}</p>
-                    <p className="text-xs text-gray-500 mt-1">{data.subcategory.category.name}</p>
+                    <div className="flex flex-row items-center gap-2">
+                        <p className="text-xs text-gray-500 mt-1">{data.subcategory.category.name}</p>
+                        <div className="w-[4px] h-[4px] mt-[4px] bg-tumbleweed-400 rounded-full" />
+                        <p className="text-xs text-gray-500 mt-1">{data.subcategory.name}</p>
+                    </div>
                 </div>
                 <div className="flex items-center justify-between mt-2">
                     <Currency value={data?.price} />
-                    {/* Optionally, add a badge for new/featured products here */}
+                    {/* TODO: add a badge for new/featured products here */}
                 </div>
             </div>
         </div>
