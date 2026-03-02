@@ -3,9 +3,11 @@ import getProducts from "@/actions/get-products";
 import getSubcategories from "@/actions/get-subcategories";
 
 import Billboard from "@/components/ui/billboard";
-import Containter from "@/components/ui/container";
+import Container from "@/components/ui/container";
 import NoResults from "@/components/ui/no-results";
 import ProductCard from "@/components/ui/product-card";
+import { ProductFiltersContainer } from "@/components/mock/product-filters-container";
+import { Pagination } from "@/components/mock/pagination";
 
 export const revalidate = 0;
 
@@ -15,9 +17,7 @@ interface CategoryPageProps {
     };
 }
 
-const CategoryPage: React.FC<CategoryPageProps> = async ({
-    params
-}) => {
+const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
     const category = await getCategory(params.categoryId);
     const subcategories = await getSubcategories();
     const categorySubcategories = subcategories.filter(
@@ -25,30 +25,36 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     );
     const subcategoryIds = categorySubcategories.map((sub) => sub.id);
 
-    // Fetch all products and filter by subcategoryId
-    const products = (await getProducts({})).filter(
-        (product) => subcategoryIds.includes(product.subcategoryId)
+    const products = (await getProducts({})).filter((product) =>
+        subcategoryIds.includes(product.subcategoryId)
     );
 
     return (
-        <div className="bg-white">
-            <Containter>
+        <Container>
+            <div className="mt-8 mb-16 flex flex-col gap-10">
                 <Billboard data={category.billboard} />
-                <div className="px-4 sm:px-6 lg:px-8 pb-24">
-                    <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-                        <div className="lg:col-span-5">
-                            {products.length === 0 && <NoResults />}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                {products.map((item) => (
-                                    <ProductCard key={item.id} data={item} />
-                                ))}
-                            </div>
+
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-x-8">
+                    <div className="lg:col-span-1">
+                        <ProductFiltersContainer />
+                    </div>
+
+                    {/* Products */}
+                    <div className="lg:col-span-4">
+                        {products.length === 0 && <NoResults />}
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                            {products.map((item) => (
+                                <ProductCard key={item.id} data={item} />
+                            ))}
                         </div>
                     </div>
                 </div>
-            </Containter>
-        </div>
+                {products.length > 0 && (
+                    <Pagination currentPage={1} totalPages={1} />
+                )}
+            </div>
+        </Container>
     );
-}
+};
 
 export default CategoryPage;

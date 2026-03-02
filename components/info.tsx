@@ -41,7 +41,7 @@ const Info:React.FC<InfoProps> = ({
                 </p>
                 {data.amountInStock > 0 ? (
                     <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full">
-                        Yra sandėlyje
+                        Yra sandėlyje ({data.amountInStock} vnt.)
                     </span>
                 ) : (
                     <span className="inline-block bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">
@@ -51,13 +51,6 @@ const Info:React.FC<InfoProps> = ({
             </div>
             <hr className="my-4" />
             <div className="flex flex-col gap-y-6">
-                <div className="flex items-center gap-x-4">
-                    <h3 className="font-semibold text-gray-700">Kiekis sandėlyje:</h3>
-                    <div className="text-gray-900 font-medium">
-                        {data?.amountInStock}
-                    </div>
-                </div>
-                <hr />
                 <div>
                     <h3 className="font-semibold text-gray-700">Aprašymas:</h3>
                     <div className="text-gray-800">

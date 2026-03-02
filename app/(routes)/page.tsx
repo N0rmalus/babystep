@@ -2,26 +2,56 @@ import getBillboard from "@/actions/get-billboard";
 import getProducts from "@/actions/get-products";
 import Billboard from "@/components/ui/billboard";
 import ProductList from "@/components/product-list";
-import Container from "@/components/ui/container"
-
+import Container from "@/components/ui/container";
+import Image from "next/image";
 export const revalidate = 0;
 
 const HomePage = async () => {
-    const indexBillboard = process.env.INDEX_BILLBOARD_ID;
-    const products = await getProducts({ isFeatured: true });
-    // @ts-ignore
-    const billboard = await getBillboard(indexBillboard);
+	const indexBillboard = process.env.INDEX_BILLBOARD_ID;
+	const products = await getProducts({ isFeatured: true });
+	// @ts-ignore
+	const billboard = await getBillboard(indexBillboard);
 
-    return (
-        <Container>
-            <div className="space-y-10 pb-10">
-                <Billboard data={billboard} />
-                <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-                    <ProductList title="Rekomenduojama" items={products} />
-                </div>
-            </div>
-        </Container>
-    );
-}
+	return (
+		<Container>
+			<div className="flex flex-col gap-16 mt-8 mb-16">
+				<section className="flex flex-col md:flex-row items-center gap-8">
+					<div className="flex-1 flex flex-col items-start gap-6">
+						<h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+							Sveiki atvykę į <span className="text-tumbleweed-300"> BabyStep.lt! </span>
+						</h1>
+						<p className="text-lg text-gray-600 max-w-xl">
+							Atraskite aukščiausios kokybės produktus, skirtus jūsų mažyliui – nuo drabužių iki žaislų, viskas vienoje vietoje.
+						</p>
+					</div>
+					<div className="flex justify-center">
+						<Image
+							src="icon-no-bg.svg"
+							alt="Baby Step"
+							width={400}
+							height={400}
+							className="object-contain w-[220px] sm:w-[280px] md:w-[360px] h-auto drop-shadow-[0_0_30px_rgba(217,163,127,0.7)] transition-transform duration-200 ease-out hover:scale-[1.03]"
+						/>
+					</div>
+				</section>
+
+				<Billboard data={billboard} />
+
+				<section id="featured" className="flex flex-col gap-8">
+					<div className="flex flex-col items-center gap-2">
+						<h2 className="font-bold text-3xl text-tumbleweed-300">Rekomenduojama</h2>
+						<p className="text-gray-500 text-base">
+							Mūsų rekomenduojami produktai jūsų mažyliui
+						</p>
+					</div>
+					<div className="flex flex-col gap-y-8 ">
+						<ProductList title="" items={products} />
+					</div>
+				</section>
+			</div>
+
+		</Container>
+	);
+};
 
 export default HomePage;
