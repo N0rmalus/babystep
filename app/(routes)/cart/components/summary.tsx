@@ -1,60 +1,58 @@
-"use client";
+'use client';
 
-import axios from "axios";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 
-import Button from "@/components/ui/button";
-import Currency from "@/components/ui/currency";
-import useCart from "@/hooks/use-cart";
+import Button from '@/components/ui/button';
+import Currency from '@/components/ui/currency';
+import useCart from '@/hooks/use-cart';
 
 const Summary = () => {
-    const searchParams = useSearchParams();
-    const items = useCart((state) => state.items);
-    const removeAll = useCart((state) => state.removeAll);
+  const searchParams = useSearchParams();
+  const items = useCart((state) => state.items);
+  const removeAll = useCart((state) => state.removeAll);
 
-    const totalPrice = items.reduce((total, item) => {
-        return total + Number(item.price);
-    }, 0)
+  const totalPrice = items.reduce((total, item) => {
+    return total + Number(item.price);
+  }, 0);
 
-    useEffect(() => {
-        if(searchParams.get("success")) {
-            toast.success("Mokėjimas atliktas.");
-            removeAll();
-        }
-
-        if(searchParams.get("canceled")) {
-            toast.error("Kažkas nepavyko.");
-        }
-    }, [searchParams, removeAll])
-
-    const onCheckout = async () => {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-            productIds: items.map((item) => item.id),
-        });
-
-        window.location = response.data.url;
+  useEffect(() => {
+    if (searchParams.get('success')) {
+      toast.success('Mokėjimas atliktas.');
+      removeAll();
     }
 
-    return (
-        <div className="mt-16 rounded-lg bg-white border border-gray-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
-            <h2 className="text-lg font-medium text-gray-900"> Užsakymo santrauka </h2>
-            <div className="mt-6 space-y-4">
-                <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                    <div className="text-base font-medium text-gray-900">
-                        Bendra kaina
-                    </div>
-                    <span className="text-tumbleweed-300">
-                        <Currency value={totalPrice} />
-                    </span>
-                </div>
-            </div>
-            <Button disabled={items.length === 0} onClick={onCheckout} className="w-full mt-6 text-white">
-                Atsiskaitymas
-            </Button>
+    if (searchParams.get('canceled')) {
+      toast.error('Kažkas nepavyko.');
+    }
+  }, [searchParams, removeAll]);
+
+  const onCheckout = async () => {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+      productIds: items.map((item) => item.id),
+    });
+
+    window.location = response.data.url;
+  };
+
+  return (
+    <div className="mt-16 rounded-lg border border-gray-200 bg-white px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+      <h2 className="text-lg font-medium text-gray-900"> Užsakymo santrauka </h2>
+      <div className="mt-6 space-y-4">
+        <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+          <div className="text-base font-medium text-gray-900">Bendra kaina</div>
+          <span className="text-tumbleweed-300">
+            <Currency value={totalPrice} />
+          </span>
         </div>
-    );
-}
+      </div>
+      <Button disabled={items.length === 0} onClick={onCheckout} className="mt-6 w-full text-white">
+        Atsiskaitymas
+      </Button>
+    </div>
+  );
+};
 
 export default Summary;
