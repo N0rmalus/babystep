@@ -5,8 +5,8 @@ import { Product } from '@/types';
 import Container from '@/components/ui/container';
 import ProductCard from '@/components/ui/product-card';
 import NoResults from '@/components/ui/no-results';
-import { ProductFiltersContainer } from '@/components/product-filters-container';
-import { Pagination } from '@/components/pagination';
+import { ProductFiltersContainer } from '@/components/mock/product-filters-container';
+import { Pagination } from '@/components/mock/pagination';
 
 interface SubcategoryPageProps {
   params: {

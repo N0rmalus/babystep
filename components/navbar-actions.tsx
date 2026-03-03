@@ -2,14 +2,17 @@
 
 import { Heart, ShoppingBag } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import Button from '@/components/ui/button';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
+import { cn } from '@/lib/utils';
 
 const NavbarActions = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const isInWishlistPage = usePathname().includes('/wishlist');
+  const isInCartPage = usePathname().includes('/cart');
 
   useEffect(() => {
     setIsMounted(true);
@@ -23,15 +26,34 @@ const NavbarActions = () => {
     return null;
   }
 
+  const actionButtonClasses =
+    'relative flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white p-0 text-neutral-700 transition hover:border-neutral-300 hover:bg-white hover:text-black md:h-auto md:w-auto md:gap-2 md:px-4 md:py-2';
+  const badgeClasses =
+    'absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-black px-1 text-[11px] font-semibold text-white md:static md:h-6 md:min-w-[1.5rem] md:px-1.5 md:text-xs';
+
   return (
-    <div className="ml-auto flex items-center gap-x-4">
-      <Button onClick={() => router.push('/wishlist')} className="flex items-center rounded-full bg-black px-4 py-2">
-        <Heart size={20} color="white" />
-        <span className="ml-2 text-sm font-medium text-white"> {wishlist.items.length} </span>
+    <div className="ml-auto flex items-center gap-2 md:gap-3">
+      <Button
+        onClick={() => router.push('/wishlist')}
+        variant="secondary"
+        size="sm"
+        aria-label="Norai"
+        className={actionButtonClasses}
+      >
+        <Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />
+        <span className="hidden text-sm font-semibold md:inline">Norai</span>
+        <span className={cn(badgeClasses)}>{wishlist.items.length}</span>
       </Button>
-      <Button onClick={() => router.push('/cart')} className="flex items-center rounded-full bg-black px-4 py-2">
-        <ShoppingBag size={20} color="white" />
-        <span className="ml-2 text-sm font-medium text-white"> {cart.items.length} </span>
+      <Button
+        onClick={() => router.push('/cart')}
+        variant="secondary"
+        size="sm"
+        aria-label="Krepšelis"
+        className={actionButtonClasses}
+      >
+        <ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />
+        <span className="hidden text-sm font-semibold md:inline">Krepšelis</span>
+        <span className={badgeClasses}>{cart.items.length}</span>
       </Button>
     </div>
   );
