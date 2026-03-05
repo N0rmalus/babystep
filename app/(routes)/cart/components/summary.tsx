@@ -48,9 +48,7 @@ const Summary = () => {
           </span>
         </div>
       </div>
-      <Button disabled={items.length === 0} onClick={onCheckout} className="mt-6 w-full text-white">
-        Atsiskaitymas
-      </Button>
+      <Button disabled={items.length === 0} label="Atsiskaitymas" onClick={onCheckout} className="mt-6" fullWidth />
     </div>
   );
 };

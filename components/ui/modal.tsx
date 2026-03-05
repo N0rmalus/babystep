@@ -1,40 +1,70 @@
 'use client';
-
-import { Fragment } from 'react';
+import { Fragment, ReactNode, useEffect, useRef } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 import IconButton from '@/components/ui/icon-button';
 import { X } from 'lucide-react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-interface ModalProps {
+interface Props {
   open: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
+export const Modal = ({ open, onClose, children }: Props) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const routeKey = `${pathname}?${searchParams.toString()}`;
+  const previousRouteKeyRef = useRef(routeKey);
+
+  useEffect(() => {
+    const previousRouteKey = previousRouteKeyRef.current;
+
+    if (previousRouteKey !== routeKey && open) {
+      onClose();
+    }
+
+    previousRouteKeyRef.current = routeKey;
+  }, [open, onClose, routeKey]);
+
   return (
     <Transition show={open} appear as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
-        <div className="fixed inset-0 bg-black bg-opacity-50" />
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-200"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="bg-neutral-950/55 fixed inset-0 backdrop-blur-sm" />
+        </Transition.Child>
+
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-end justify-center p-3 text-center sm:items-center sm:p-6">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
               leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="w-full max-w-3xl overflow-hidden rounded-lg text-left align-middle">
-                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                  <div className="absolute right-4 top-4">
-                    <IconButton onClick={onClose} icon={<X size={15} />} />
-                  </div>
-                  {children}
+              <Dialog.Panel className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-white text-left align-middle shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)]">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-neutral-50 to-transparent" />
+                <div className="absolute right-4 top-4 z-20">
+                  <IconButton
+                    onClick={onClose}
+                    icon={<X size={16} className="text-neutral-700" />}
+                    className="bg-white/95 p-2.5 shadow-sm hover:scale-100 hover:bg-neutral-100"
+                    title="Close preview"
+                  />
                 </div>
+                <div className="relative max-h-[85vh] overflow-y-auto px-8 pb-8 pt-16">{children}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -43,5 +73,3 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
     </Transition>
   );
 };
-
-export default Modal;
