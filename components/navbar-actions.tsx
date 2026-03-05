@@ -36,25 +36,31 @@ const NavbarActions = () => {
       <Button
         onClick={() => router.push('/wishlist')}
         variant="secondary"
+        elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
+        label={
+          <>
+            <span className="hidden text-sm font-semibold md:inline">Norai</span>
+            <span className={cn(badgeClasses)}>{wishlist.items.length}</span>
+          </>
+        }
         size="sm"
         aria-label="Norai"
         className={actionButtonClasses}
-      >
-        <Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />
-        <span className="hidden text-sm font-semibold md:inline">Norai</span>
-        <span className={cn(badgeClasses)}>{wishlist.items.length}</span>
-      </Button>
+      />
       <Button
         onClick={() => router.push('/cart')}
         variant="secondary"
+        elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
+        label={
+          <>
+            <span className="hidden text-sm font-semibold md:inline">Krepšelis</span>
+            <span className={badgeClasses}>{cart.items.length}</span>
+          </>
+        }
         size="sm"
         aria-label="Krepšelis"
         className={actionButtonClasses}
-      >
-        <ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />
-        <span className="hidden text-sm font-semibold md:inline">Krepšelis</span>
-        <span className={badgeClasses}>{cart.items.length}</span>
-      </Button>
+      />
     </div>
   );
 };
