@@ -1,4 +1,4 @@
-import { Product } from '@/types';
+import { Product } from '@/actions/types';
 import NoResults from '@/components/ui/no-results';
 import ProductCard from '@/components/ui/product-card';
 

@@ -1,7 +1,7 @@
 import getProducts from '@/actions/get-products';
 import getSubcategories from '@/actions/get-subcategories';
 import { notFound } from 'next/navigation';
-import { Product } from '@/types';
+import { Product } from '@/actions/types';
 import Container from '@/components/ui/container';
 import ProductCard from '@/components/ui/product-card';
 import NoResults from '@/components/ui/no-results';
@@ -14,6 +14,8 @@ interface SubcategoryPageProps {
     subcategoryId: string;
   };
 }
+
+export const revalidate = 0;
 
 export default async function SubcategoryPage({ params }: SubcategoryPageProps) {
   const subcategories = await getSubcategories();

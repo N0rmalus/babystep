@@ -1,11 +1,6 @@
-import { Subcategory } from '@/types';
+import { apiGet } from '@/lib/api-client';
+import { Subcategory } from '@/actions/types';
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/subcategories`;
-
-const getSubcategories = async (): Promise<Subcategory[]> => {
-  const res = await fetch(URL);
-
-  return res.json();
-};
+const getSubcategories = async (): Promise<Subcategory[]> => apiGet<Subcategory[]>('/subcategories');
 
 export default getSubcategories;

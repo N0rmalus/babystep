@@ -1,4 +1,4 @@
-import { Billboard as BillboardType } from '@/types';
+import { Billboard as BillboardType } from '@/actions/types';
 import { Bird } from 'lucide-react';
 
 interface BillboardProps {

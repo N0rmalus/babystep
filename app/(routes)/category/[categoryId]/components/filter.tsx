@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import qs from 'query-string';
 
-import { Color, Size } from '@/types';
+import { Color, Size } from '@/actions/types';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/button';
 import { cn } from '@/lib/utils';

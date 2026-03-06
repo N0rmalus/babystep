@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Color, Size } from '@/types';
+import { Color, Size } from '@/actions/types';
 
 import Button from '@/components/ui/button';
 import { Plus, X } from 'lucide-react';

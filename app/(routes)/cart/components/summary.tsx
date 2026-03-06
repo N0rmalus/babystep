@@ -5,16 +5,22 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+import { Product } from '@/actions/types';
 import Button from '@/components/ui/button';
 import Currency from '@/components/ui/currency';
 import useCart from '@/hooks/use-cart';
 
-const Summary = () => {
+interface SummaryProps {
+  productIds: string[];
+  products: Product[];
+  isResolvingProducts: boolean;
+}
+
+const Summary: React.FC<SummaryProps> = ({ productIds, products, isResolvingProducts }) => {
   const searchParams = useSearchParams();
-  const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
 
-  const totalPrice = items.reduce((total, item) => {
+  const totalPrice = products.reduce((total, item) => {
     return total + Number(item.price);
   }, 0);
 
@@ -30,11 +36,15 @@ const Summary = () => {
   }, [searchParams, removeAll]);
 
   const onCheckout = async () => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-      productIds: items.map((item) => item.id),
-    });
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+        productIds,
+      });
 
-    window.location = response.data.url;
+      window.location.href = response.data.url;
+    } catch {
+      toast.error('Nepavyko pradėti atsiskaitymo. Patikrinkite krepšelio prekes.');
+    }
   };
 
   return (
@@ -48,7 +58,16 @@ const Summary = () => {
           </span>
         </div>
       </div>
-      <Button disabled={items.length === 0} label="Atsiskaitymas" onClick={onCheckout} className="mt-6" fullWidth />
+      {productIds.length > 0 && isResolvingProducts && (
+        <p className="mt-3 text-sm text-neutral-500">Atnaujinama krepšelio informacija...</p>
+      )}
+      <Button
+        disabled={productIds.length === 0 || isResolvingProducts}
+        label="Atsiskaitymas"
+        onClick={onCheckout}
+        className="mt-6"
+        fullWidth
+      />
     </div>
   );
 };

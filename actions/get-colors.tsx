@@ -1,11 +1,6 @@
-import { Color } from '@/types';
+import { apiGet } from '@/lib/api-client';
+import { Color } from '@/actions/types';
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/colors`;
-
-const getColors = async (): Promise<Color[]> => {
-  const res = await fetch(URL);
-
-  return res.json();
-};
+const getColors = async (): Promise<Color[]> => apiGet<Color[]>('/colors');
 
 export default getColors;

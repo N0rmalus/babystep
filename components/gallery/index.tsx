@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
-import { Image as ImageType } from '@/types';
+import { Image as ImageType } from '@/actions/types';
 import { GalleryTab } from '@/components/gallery/gallery-tab';
 import { ImageLightbox } from '@/components/ui/image-lightbox';
 

@@ -1,14 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import { Expand, ShoppingCart, X } from 'lucide-react';
-
-import { Product } from '@/types';
-import IconButton from '@/components/ui/icon-button';
+import { Product } from '@/actions/types';
 import Currency from '@/components/ui/currency';
 import { useRouter } from 'next/navigation';
 import { MouseEventHandler } from 'react';
-import usePreviewModal from '@/hooks/use-preview-modal';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
 import { ProductCardImage } from '@/components/ui/product-card';
@@ -20,22 +15,15 @@ interface ProductCard {
 const WishlistCard: React.FC<ProductCard> = ({ data }) => {
   const cart = useCart();
   const wishlist = useWishlist();
-  const previewModal = usePreviewModal();
   const router = useRouter();
   const handleClick = () => {
     router.push(`/product/${data?.id}`);
   };
 
-  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-
-    previewModal.onOpen(data);
-  };
-
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
 
-    cart.addItem(data);
+    cart.addItem(data.id);
   };
 
   const onRemoveFromWishlist: MouseEventHandler<HTMLButtonElement> = (event) => {

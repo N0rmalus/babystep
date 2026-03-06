@@ -1,12 +1,8 @@
-import { Billboard } from '@/types';
+import { apiGet } from '@/lib/api-client';
+import { Billboard } from '@/actions/types';
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/billboards`;
 const billboardId = process.env.INDEX_BILLBOARD_ID;
 
-const getBillboard = async (): Promise<Billboard> => {
-  const res = await fetch(`${URL}/${billboardId}`);
-
-  return res.json();
-};
+const getBillboard = async (): Promise<Billboard> => apiGet<Billboard>(`/billboards/${billboardId}`);
 
 export default getBillboard;
