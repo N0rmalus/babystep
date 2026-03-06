@@ -3,6 +3,7 @@ import getProducts from '@/actions/get-products';
 import { Gallery } from '@/components/gallery';
 import { Info } from '@/components/info';
 import ProductList from '@/components/product-list';
+import { RouteFocusRefresh } from '@/components/route-focus-refresh';
 import Container from '@/components/ui/container';
 
 interface Props {
@@ -22,6 +23,7 @@ const ProductPage = async ({ params }: Props) => {
 
   return (
     <div className="mt-16 space-y-10">
+      <RouteFocusRefresh />
       <Container>
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-12">
           <Gallery images={product.images} />

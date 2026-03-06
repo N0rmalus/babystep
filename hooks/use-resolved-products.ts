@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Product } from '@/actions/types';
 
@@ -9,6 +9,7 @@ type UseResolvedProductsResult = {
   missingProductIds: string[];
   failedProductIds: string[];
   isLoading: boolean;
+  refetch: () => void;
 };
 
 type ResolvedProductFetchResult =
@@ -64,10 +65,15 @@ const useResolvedProducts = (productIds: string[]): UseResolvedProductsResult =>
   const [missingProductIds, setMissingProductIds] = useState<string[]>([]);
   const [failedProductIds, setFailedProductIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [refreshVersion, setRefreshVersion] = useState(0);
 
   const sanitizedProductIds = useMemo(() => {
     return productIds.filter((productId): productId is string => typeof productId === 'string' && productId.trim().length > 0);
   }, [productIds]);
+
+  const refetch = useCallback(() => {
+    setRefreshVersion((current) => current + 1);
+  }, []);
 
   useEffect(() => {
     let isCancelled = false;
@@ -146,13 +152,14 @@ const useResolvedProducts = (productIds: string[]): UseResolvedProductsResult =>
     return () => {
       isCancelled = true;
     };
-  }, [sanitizedProductIds]);
+  }, [refreshVersion, sanitizedProductIds]);
 
   return {
     products,
     missingProductIds,
     failedProductIds,
     isLoading,
+    refetch,
   };
 };
 
