@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Container from '@/components/ui/container';
 import useCart from '@/hooks/use-cart';
+import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 
 import Summary from './components/summary';
@@ -14,11 +15,20 @@ const CartPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const itemIds = useCart((state) => state.items);
   const setItems = useCart((state) => state.setItems);
-  const { products, missingProductIds, failedProductIds, isLoading } = useResolvedProducts(itemIds);
+  const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const onFocusRefresh = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useFocusRefresh({
+    onRefresh: onFocusRefresh,
+    enabled: isMounted,
+  });
 
   useEffect(() => {
     if (missingProductIds.length === 0) {

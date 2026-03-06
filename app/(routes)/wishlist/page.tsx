@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Container from '@/components/ui/container';
+import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useWishlist from '@/hooks/use-wishlist';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 import WishlistCard from '@/app/(routes)/wishlist/components/wishlist-item';
@@ -11,11 +12,20 @@ const WishlistPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const itemIds = useWishlist((state) => state.items);
   const setItems = useWishlist((state) => state.setItems);
-  const { products, missingProductIds, failedProductIds, isLoading } = useResolvedProducts(itemIds);
+  const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const onFocusRefresh = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  useFocusRefresh({
+    onRefresh: onFocusRefresh,
+    enabled: isMounted,
+  });
 
   useEffect(() => {
     if (missingProductIds.length === 0) {
