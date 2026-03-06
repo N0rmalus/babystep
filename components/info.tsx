@@ -1,7 +1,7 @@
 'use client';
 import { Heart, ShoppingCart } from 'lucide-react';
 
-import { Product } from '@/types';
+import { Product } from '@/actions/types';
 import Button from '@/components/ui/button';
 import Currency from '@/components/ui/currency';
 import useCart from '@/hooks/use-cart';
@@ -21,10 +21,10 @@ export const Info = ({ data }: Props) => {
   const category = data?.subcategory?.category;
   const subcategory = data?.subcategory;
   const isInStock = data.amountInStock > 0;
-  const isInWishlist = wishlist.items.some((item) => item.id === data.id);
+  const isInWishlist = wishlist.hasItem(data.id);
 
   const onAddToCart = () => {
-    cart.addItem(data);
+    cart.addItem(data.id);
   };
 
   const onToggleWishlist = () => {
@@ -34,7 +34,7 @@ export const Info = ({ data }: Props) => {
       return;
     }
 
-    wishlist.addItem(data);
+    wishlist.addItem(data.id);
   };
 
   return (
@@ -50,9 +50,11 @@ export const Info = ({ data }: Props) => {
               variant="rounded"
               color="tumbleweed-outlined"
             />
+
             <span className="pointer-events-none relative z-10 -mx-1 inline-flex h-2 w-2 shrink-0" aria-hidden="true">
               <span className="h-2 w-2 rounded-full bg-tumbleweed-700" />
             </span>
+
             <Badge
               label={subcategory.name}
               onClick={() => {
@@ -63,6 +65,7 @@ export const Info = ({ data }: Props) => {
             />
           </div>
         )}
+
         <Badge
           label={isInStock ? `Yra sandėlyje (${data.amountInStock} vnt.)` : 'Išparduota'}
           variant="rounded"

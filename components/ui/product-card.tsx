@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Expand, Heart, ShoppingCart, X } from 'lucide-react';
 
-import { Product } from '@/types';
+import { Product } from '@/actions/types';
 import IconButton from '@/components/ui/icon-button';
 import Currency from '@/components/ui/currency';
 import { useRouter } from 'next/navigation';
@@ -79,12 +79,12 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
-    cart.addItem(data);
+    cart.addItem(data.id);
   };
 
   const onAddToWishlist: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
-    wishlist.addItem(data);
+    wishlist.addItem(data.id);
   };
 
   return (

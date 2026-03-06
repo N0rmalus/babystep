@@ -1,11 +1,6 @@
-import { Product } from '@/types';
+import { apiGet } from '@/lib/api-client';
+import { Product } from '@/actions/types';
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
-
-const getProduct = async (id: string): Promise<Product> => {
-  const res = await fetch(`${URL}/${id}`);
-
-  return res.json();
-};
+const getProduct = async (id: string): Promise<Product> => apiGet<Product>(`/products/${id}`);
 
 export default getProduct;
