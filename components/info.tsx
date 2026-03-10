@@ -52,7 +52,7 @@ export const Info = ({ data }: Props) => {
             />
 
             <span className="pointer-events-none relative z-10 -mx-1 inline-flex h-2 w-2 shrink-0" aria-hidden="true">
-              <span className="h-2 w-2 rounded-full bg-tumbleweed-700" />
+              <span className="h-2 w-2 rounded-full bg-tumbleweed-200" />
             </span>
 
             <Badge

@@ -36,6 +36,8 @@ export const ProductCardImage: React.FC<{
           <IconButton
             onClick={onPreview}
             icon={<Expand size={20} className="text-gray-700" />}
+            variant="rounded"
+            color="secondary"
             title="Greitos peržiūros langas"
           />
         )}

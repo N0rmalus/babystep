@@ -39,7 +39,7 @@ const NavbarActions = () => {
         elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
         label={
           <>
-            <span className="hidden text-sm font-semibold md:inline">Norai</span>
+            <span className="hidden md:inline">Norai</span>
             <span className={cn(badgeClasses)}>{wishlist.items.length}</span>
           </>
         }
@@ -53,7 +53,7 @@ const NavbarActions = () => {
         elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
         label={
           <>
-            <span className="hidden text-sm font-semibold md:inline">Krepšelis</span>
+            <span className="hidden md:inline">Krepšelis</span>
             <span className={badgeClasses}>{cart.items.length}</span>
           </>
         }

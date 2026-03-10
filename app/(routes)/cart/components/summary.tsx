@@ -1,28 +1,46 @@
 'use client';
 
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import { Product } from '@/actions/types';
 import Button from '@/components/ui/button';
-import Currency from '@/components/ui/currency';
 import useCart from '@/hooks/use-cart';
+import { PaperWrapper } from '@/components/ui/paper-wrapper';
+import { PriceContainer } from '@/app/(routes)/cart/components/price-container';
 
-interface SummaryProps {
+type Props = {
   productIds: string[];
   products: Product[];
   isResolvingProducts: boolean;
-}
+  className?: string;
+  freeShippingThreshold: number;
+};
 
-const Summary: React.FC<SummaryProps> = ({ productIds, products, isResolvingProducts }) => {
+type InsufficientStockItem = {
+  productId: string;
+  requested: number;
+  available: number;
+};
+
+type CheckoutErrorPayload = {
+  message?: string;
+  invalidProductIds?: string[];
+  insufficientStockItems?: InsufficientStockItem[];
+};
+
+export const Summary = ({ productIds, products, isResolvingProducts, className, freeShippingThreshold }: Props) => {
   const searchParams = useSearchParams();
+  const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  const totalPrice = products.reduce((total, item) => {
-    return total + Number(item.price);
-  }, 0);
+  const productNameById = useMemo(() => {
+    return new Map(products.map((product) => [product.id, product.name]));
+  }, [products]);
 
   useEffect(() => {
     if (searchParams.get('success')) {
@@ -37,39 +55,91 @@ const Summary: React.FC<SummaryProps> = ({ productIds, products, isResolvingProd
 
   const onCheckout = async () => {
     try {
+      setIsCheckingOut(true);
+
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
         productIds,
       });
 
       window.location.href = response.data.url;
-    } catch {
-      toast.error('Nepavyko pradėti atsiskaitymo. Patikrinkite krepšelio prekes.');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorData = error.response?.data as CheckoutErrorPayload | undefined;
+        const invalidProductIds = errorData?.invalidProductIds ?? [];
+        const insufficientStockItems = errorData?.insufficientStockItems ?? [];
+
+        if (invalidProductIds.length > 0) {
+          const productNames = invalidProductIds.map((productId) => {
+            return productNameById.get(productId) ?? `prekė (${productId.slice(0, 8)})`;
+          });
+
+          toast.error(`Šios prekės nebegalimos: ${productNames.join(', ')}. Pašalink jas iš krepšelio.`);
+          return;
+        }
+
+        if (insufficientStockItems.length > 0) {
+          const stockDetails = insufficientStockItems.map((item) => {
+            const productName = productNameById.get(item.productId) ?? `prekė (${item.productId.slice(0, 8)})`;
+            return `${productName} (likutis: ${item.available}, pasirinkta: ${item.requested})`;
+          });
+
+          toast.error(`Pasikeitė likučiai: ${stockDetails.join('; ')}.`);
+          return;
+        }
+
+        if (errorData?.message) {
+          toast.error(errorData.message);
+          return;
+        }
+      }
+
+      toast.error('Nepavyko inicijuoti atsiskaitymo. Bandyk dar kartą.');
+    } finally {
+      setIsCheckingOut(false);
     }
   };
 
   return (
-    <div className="mt-16 rounded-lg border border-gray-200 bg-white px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
-      <h2 className="text-lg font-medium text-gray-900"> Užsakymo santrauka </h2>
-      <div className="mt-6 space-y-4">
-        <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-          <div className="text-base font-medium text-gray-900">Bendra kaina</div>
-          <span className="text-tumbleweed-300">
-            <Currency value={totalPrice} />
-          </span>
-        </div>
+    <aside className={className}>
+      <div className="sticky top-24 space-y-4">
+        <PaperWrapper>
+          <h2 className="text-lg font-semibold text-neutral-900">Užsakymo santrauka</h2>
+
+          <PriceContainer
+            productIds={productIds}
+            products={products}
+            items={items}
+            freeShippingThreshold={freeShippingThreshold}
+          />
+
+          <Button
+            disabled={productIds.length === 0 || isResolvingProducts}
+            loading={isCheckingOut}
+            label={items.length === 0 ? 'Krepšelis tuščias' : 'Tęsti atsiskaitymą'}
+            onClick={onCheckout}
+            className="mt-5 rounded-xl"
+            fullWidth
+          />
+
+          <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-neutral-500">
+            <Lock size={14} />
+            Mokėjimo duomenys perduodami saugiu kanalu.
+          </p>
+        </PaperWrapper>
+
+        <PaperWrapper>
+          <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-neutral-500">Reikia pagalbos?</h3>
+          <p className="mt-3 text-sm leading-relaxed text-neutral-700">
+            Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
+          </p>
+          <a
+            href="mailto:help@babystep.lt"
+            className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
+          >
+            help@babystep.lt
+          </a>
+        </PaperWrapper>
       </div>
-      {productIds.length > 0 && isResolvingProducts && (
-        <p className="mt-3 text-sm text-neutral-500">Atnaujinama krepšelio informacija...</p>
-      )}
-      <Button
-        disabled={productIds.length === 0 || isResolvingProducts}
-        label="Atsiskaitymas"
-        onClick={onCheckout}
-        className="mt-6"
-        fullWidth
-      />
-    </div>
+    </aside>
   );
 };
-
-export default Summary;
