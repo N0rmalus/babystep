@@ -35,7 +35,7 @@ const ProductPage = async ({ params }: Props) => {
         </div>
       </Container>
 
-      <div className="mb-16 bg-tumbleweed-50 py-8 shadow-[inset_0_8px_20px_rgba(0,0,0,0.08)]">
+      <div className="bg-tumbleweed-50 py-8 pb-16 shadow-[inset_0_8px_20px_rgba(0,0,0,0.08)]">
         <Container>
           <ProductList title="Panašios Prekės" items={suggestedProducts} />
         </Container>

@@ -1,13 +1,19 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-export type BadgeColor = 'tumbleweed-outlined' | 'green' | 'rose';
+export type BadgeColor = 'tumbleweed' | 'tumbleweed-outlined' | 'green' | 'rose';
 
 const badgeColorMap = {
+  tumbleweed: {
+    background: 'bg-tumbleweed-100',
+    text: 'text-tumbleweed-700',
+    hoverBackground: 'hover:bg-tumbleweed-200',
+    hoverText: 'hover:text-tumbleweed-800',
+  },
   'tumbleweed-outlined': {
-    background: 'bg-white border border-tumbleweed-700',
+    background: 'bg-white border border-tumbleweed-200',
     text: 'text-neutral-700',
-    hoverBackground: '',
+    hoverBackground: 'hover:border-tumbleweed-400',
     hoverText: 'hover:text-black',
   },
   green: {
@@ -44,7 +50,10 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
   if (onClick) {
     return (
       <button
-        onClick={onClick}
+        onClick={(event) => {
+          event.stopPropagation();
+          onClick();
+        }}
         className={cn(
           'inline-flex items-center rounded-full px-3 py-1 transition',
           badgeColorMap[color].background,
