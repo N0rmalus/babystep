@@ -1,6 +1,6 @@
 'use client';
-import { Heart, ShoppingCart } from 'lucide-react';
 
+import { Heart, ShoppingCart } from 'lucide-react';
 import { Product } from '@/actions/types';
 import Button from '@/components/ui/button';
 import Currency from '@/components/ui/currency';
@@ -10,9 +10,9 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 
-interface Props {
+type Props = {
   data: Product;
-}
+};
 
 export const Info = ({ data }: Props) => {
   const cart = useCart();

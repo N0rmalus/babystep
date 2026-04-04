@@ -7,12 +7,12 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 
-interface MainNavProps {
+interface Props {
   data: Category[];
   subcategories: Subcategory[];
 }
 
-const MainNav: React.FC<MainNavProps> = ({ data, subcategories }) => {
+export const MainNav = ({ data, subcategories }: Props) => {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -190,5 +190,3 @@ const MainNav: React.FC<MainNavProps> = ({ data, subcategories }) => {
     </div>
   );
 };
-
-export default MainNav;

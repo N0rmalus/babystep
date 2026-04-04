@@ -63,7 +63,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
       >
         <span
           className={cn(
-            'text-xs font-semibold uppercase tracking-[0.16em]',
+            'text-[9px] font-semibold uppercase tracking-[0.16em]',
             badgeColorMap[color].text,
             badgeColorMap[color].hoverText,
             wordBreak === 'break-all' ? 'break-all' : 'break-keep',
@@ -85,7 +85,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
     >
       <span
         className={cn(
-          'text-xs font-semibold uppercase tracking-[0.16em]',
+          'text-[9px] font-semibold uppercase tracking-[0.16em]',
           badgeColorMap[color].text,
           wordBreak === 'break-all' ? 'break-all' : 'break-keep',
         )}

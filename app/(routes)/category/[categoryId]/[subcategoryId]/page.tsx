@@ -3,7 +3,7 @@ import getSubcategories from '@/actions/get-subcategories';
 import { notFound } from 'next/navigation';
 import { Product } from '@/actions/types';
 import Container from '@/components/ui/container';
-import ProductCard from '@/components/ui/product-card';
+import ProductCard from '@/components/ui/product-card/product-card';
 import NoResults from '@/components/ui/no-results';
 import { ProductFiltersContainer } from '@/components/mock/product-filters-container';
 import { Pagination } from '@/components/mock/pagination';

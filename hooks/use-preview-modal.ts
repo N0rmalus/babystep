@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { Product } from '@/actions/types';
 
-interface PreviewModalStore {
+type PreviewModalStore = {
   isOpen: boolean;
   data?: Product;
   onOpen: (data: Product) => void;
   onClose: () => void;
-}
+};
 
 const usePreviewModal = create<PreviewModalStore>((set) => ({
   isOpen: false,

@@ -2,7 +2,7 @@ import Skeleton from '@/components/ui/skeleton';
 
 export const CartLoadingState = () => {
   return (
-    <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:items-start">
+    <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
       <div className="space-y-5 lg:col-span-7">
         <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6">
           <Skeleton className="h-6 w-44" />

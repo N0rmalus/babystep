@@ -5,7 +5,7 @@ import getSubcategories from '@/actions/get-subcategories';
 import Billboard from '@/components/ui/billboard';
 import Container from '@/components/ui/container';
 import NoResults from '@/components/ui/no-results';
-import ProductCard from '@/components/ui/product-card';
+import ProductCard from '@/components/ui/product-card/product-card';
 import { ProductFiltersContainer } from '@/components/mock/product-filters-container';
 import { Pagination } from '@/components/mock/pagination';
 
