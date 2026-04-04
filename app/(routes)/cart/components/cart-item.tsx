@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import { Heart, Trash2 } from 'lucide-react';
-import { MouseEventHandler } from 'react';
-
 import IconButton from '@/components/ui/icon-button';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
@@ -16,20 +14,19 @@ type Props = {
 };
 
 export const CartItem = ({ data }: Props) => {
-  const cart = useCart();
   const router = useRouter();
-  const wishlist = useWishlist();
-  const isInWishlist = wishlist.items.some((item) => item === data.id);
   const isInStock = data.amountInStock > 0;
   const productImageUrl = data.images[0]?.url ?? '/placeholder.webp';
 
-  const onRemove: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
+  const wishlist = useWishlist();
+  const cart = useCart();
+  const isInWishlist = wishlist.items.some((item) => item === data.id);
+
+  const onRemove = () => {
     cart.removeItem(data.id);
   };
 
-  const onAddToWishlist: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
+  const onAddToWishlist = () => {
     wishlist.addItem(data.id);
   };
 
@@ -93,16 +90,9 @@ export const CartItem = ({ data }: Props) => {
               onClick={onAddToWishlist}
               disabled={isInWishlist}
               variant="primary"
-              className="rounded-lg"
               icon={<Heart size={14} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
             />
-            <IconButton
-              onClick={onRemove}
-              icon={<Trash2 size={16} />}
-              className="rounded-lg"
-              variant="danger"
-              title="Pašalinti prekę"
-            />
+            <IconButton onClick={onRemove} icon={<Trash2 size={16} />} variant="danger" title="Pašalinti prekę" />
           </div>
         </div>
       </div>

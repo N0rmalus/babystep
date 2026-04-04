@@ -1,25 +1,28 @@
 import { cn } from '@/lib/utils';
-import { MouseEventHandler, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
-interface Props {
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+type Props = {
+  onClick: () => void;
   variant?: 'primary' | 'secondary' | 'danger';
   icon: ReactElement;
-  className?: string;
   title?: string;
   disabled?: boolean;
-}
+};
 
-const IconButton = ({ onClick, icon, className, title, variant, disabled }: Props) => {
+const IconButton = ({ onClick, icon, title, variant, disabled }: Props) => {
   return (
     <button
-      onClick={onClick}
+      type="button"
+      onClick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        onClick();
+      }}
       className={cn(
-        'flex items-center justify-center p-2 transition',
+        'flex items-center justify-center rounded-lg p-2 transition',
         variant === 'primary' && 'border bg-white text-black hover:bg-gray-100',
         variant === 'secondary' && 'bg-black text-white hover:bg-gray-800',
         variant === 'danger' && 'bg-rose-500 text-white hover:bg-rose-600',
-        className,
       )}
       title={title}
       disabled={disabled}

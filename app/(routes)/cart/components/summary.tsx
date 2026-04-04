@@ -32,7 +32,7 @@ type CheckoutErrorPayload = {
   insufficientStockItems?: InsufficientStockItem[];
 };
 
-export const Summary = ({ productIds, products, isResolvingProducts, className, freeShippingThreshold }: Props) => {
+export const Summary = ({ productIds, products, isResolvingProducts, freeShippingThreshold }: Props) => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
@@ -73,7 +73,7 @@ export const Summary = ({ productIds, products, isResolvingProducts, className, 
             return productNameById.get(productId) ?? `prekė (${productId.slice(0, 8)})`;
           });
 
-          toast.error(`Šios prekės nebegalimos: ${productNames.join(', ')}. Pašalink jas iš krepšelio.`);
+          toast.error(`Šios prekės nebegalimos: ${productNames.join(', ')}.`);
           return;
         }
 
@@ -100,46 +100,44 @@ export const Summary = ({ productIds, products, isResolvingProducts, className, 
   };
 
   return (
-    <aside className={className}>
-      <div className="sticky top-24 space-y-4">
-        <PaperWrapper>
-          <h2 className="text-lg font-semibold text-neutral-900">Užsakymo santrauka</h2>
+    <div className="space-y-4 lg:col-span-5">
+      <PaperWrapper>
+        <h2 className="text-lg font-semibold text-neutral-900">Užsakymo santrauka</h2>
 
-          <PriceContainer
-            productIds={productIds}
-            products={products}
-            items={items}
-            freeShippingThreshold={freeShippingThreshold}
-          />
+        <PriceContainer
+          productIds={productIds}
+          products={products}
+          items={items}
+          freeShippingThreshold={freeShippingThreshold}
+        />
 
-          <Button
-            disabled={productIds.length === 0 || isResolvingProducts}
-            loading={isCheckingOut}
-            label={items.length === 0 ? 'Krepšelis tuščias' : 'Tęsti atsiskaitymą'}
-            onClick={onCheckout}
-            className="mt-5 rounded-xl"
-            fullWidth
-          />
+        <Button
+          disabled={productIds.length === 0 || isResolvingProducts}
+          loading={isCheckingOut}
+          label={items.length === 0 ? 'Krepšelis tuščias' : 'Tęsti atsiskaitymą'}
+          onClick={onCheckout}
+          className="mt-5 rounded-xl"
+          fullWidth
+        />
 
-          <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-neutral-500">
-            <Lock size={14} />
-            Mokėjimo duomenys perduodami saugiu kanalu.
-          </p>
-        </PaperWrapper>
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-neutral-500">
+          <Lock size={14} />
+          Mokėjimo duomenys perduodami saugiu kanalu.
+        </p>
+      </PaperWrapper>
 
-        <PaperWrapper>
-          <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-neutral-500">Reikia pagalbos?</h3>
-          <p className="mt-3 text-sm leading-relaxed text-neutral-700">
-            Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
-          </p>
-          <a
-            href="mailto:help@babystep.lt"
-            className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
-          >
-            help@babystep.lt
-          </a>
-        </PaperWrapper>
-      </div>
-    </aside>
+      <PaperWrapper>
+        <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-neutral-500">Reikia pagalbos?</h3>
+        <p className="mt-3 text-sm leading-relaxed text-neutral-700">
+          Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
+        </p>
+        <a
+          href="mailto:help@babystep.lt"
+          className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
+        >
+          help@babystep.lt
+        </a>
+      </PaperWrapper>
+    </div>
   );
 };

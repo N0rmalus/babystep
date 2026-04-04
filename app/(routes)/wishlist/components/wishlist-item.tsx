@@ -1,64 +1,106 @@
 'use client';
 
-import { Product } from '@/actions/types';
-import Currency from '@/components/ui/currency';
+import Image from 'next/image';
+import { Expand, Heart, ShoppingCart, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { MouseEventHandler } from 'react';
+import { Product } from '@/actions/types';
+import IconButton from '@/components/ui/icon-button';
+import Currency from '@/components/ui/currency';
+import usePreviewModal from '@/hooks/use-preview-modal';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
-import { ProductCardImage } from '@/components/ui/product-card';
+import Button from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
-interface ProductCard {
+type Props = {
   data: Product;
-}
+};
 
-const WishlistCard: React.FC<ProductCard> = ({ data }) => {
+export const WishlistItem = ({ data }: Props) => {
   const cart = useCart();
   const wishlist = useWishlist();
+  const previewModal = usePreviewModal();
   const router = useRouter();
-  const handleClick = () => {
-    router.push(`/product/${data?.id}`);
+
+  const isInStock = data.amountInStock > 0;
+  const isInCart = cart.items.some((item) => item === data.id);
+  const imageUrl = data.images[0]?.url ?? '/placeholder.webp';
+
+  const onPreview = () => {
+    previewModal.onOpen(data);
   };
 
-  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-
+  const onAddToCart = () => {
     cart.addItem(data.id);
   };
 
-  const onRemoveFromWishlist: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-
+  const onRemoveFromWishlist = () => {
     wishlist.removeItem(data.id);
   };
 
   return (
     <div
-      onClick={handleClick}
-      className="group flex cursor-pointer flex-col space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+      onClick={() => router.push(`/product/${data.id}`)}
+      className="group cursor-pointer overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
     >
-      {/* Images and Actions */}
-      <ProductCardImage
-        imageUrl={data?.images?.[0]?.url}
-        onAddToCart={onAddToCart}
-        onRemoveFromWishlist={onRemoveFromWishlist}
-      />
-      <div className="flex flex-1 flex-col justify-between">
-        <div>
-          <p className="text-base font-semibold text-gray-900">{data.name}</p>
-          <div className="flex flex-row items-center gap-2">
-            <p className="mt-1 text-xs text-gray-500">{data.subcategory.category.name}</p>
-            <div className="mt-[4px] h-[4px] w-[4px] rounded-full bg-tumbleweed-400" />
-            <p className="mt-1 text-xs text-gray-500">{data.subcategory.name}</p>
+      <div className="relative h-52 overflow-hidden bg-neutral-100">
+        <Image
+          src={imageUrl}
+          fill
+          alt={data.name}
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+
+        <div className="absolute left-3 top-3 flex flex-wrap items-center gap-2">
+          {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
+          {data.isFeatured && <Badge label="Rekomenduojama" variant="rounded" color="tumbleweed-outlined" />}
+        </div>
+
+        <div className="absolute bottom-0 right-3 top-3 flex flex-col gap-2">
+          <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
+          <IconButton
+            onClick={onRemoveFromWishlist}
+            variant="danger"
+            icon={<Trash2 size={16} />}
+            title="Pašalinti iš norų sąrašo"
+          />
+        </div>
+      </div>
+
+      <div className="p-4">
+        <div className="flex min-h-[88px] flex-col justify-between">
+          <div>
+            <h3 className="text-base font-semibold leading-tight text-neutral-900">{data.name}</h3>
+            <p className="mt-2 text-xs text-neutral-500">
+              {data.subcategory.category.name} • {data.subcategory.name}
+            </p>
+          </div>
+
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <div className="text-lg font-bold text-neutral-900">
+              <Currency value={data.price} />
+            </div>
+            <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-between">
-          <Currency value={data?.price} />
-          {/* TODO: add a badge for new/featured products here */}
+
+        <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] gap-2">
+          <Button
+            size="sm"
+            label={isInCart ? 'Jau krepšelyje' : 'Perkelti į krepšelį'}
+            onClick={onAddToCart}
+            elementBefore={<ShoppingCart size={15} />}
+            disabled={!isInStock || isInCart}
+            fullWidth
+          />
+          <Button
+            size="sm"
+            variant="secondary"
+            label={<Heart size={14} className="fill-tumbleweed-300" />}
+            onClick={onRemoveFromWishlist}
+          />
         </div>
       </div>
     </div>
   );
 };
-
-export default WishlistCard;
