@@ -72,12 +72,12 @@ const useCart = create(
       name: 'cart-storage',
       storage: createJSONStorage(() => localStorage),
       version: 2,
-      migrate: (persistedState) => {
+      migrate: (persistedState, _version) => {
         const state = persistedState as { items?: unknown } | undefined;
 
         return {
           items: normalizeProductIds(state?.items),
-        };
+        } as CartStore;
       },
     },
   ),

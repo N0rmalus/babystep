@@ -59,8 +59,8 @@ export const Modal = ({ open, onClose, children }: Props) => {
                 <div className="absolute right-4 top-4 z-20">
                   <IconButton
                     onClick={onClose}
+                    variant="primary"
                     icon={<X size={16} className="text-neutral-700" />}
-                    className="bg-white/95 p-2.5 shadow-sm hover:scale-100 hover:bg-neutral-100"
                     title="Close preview"
                   />
                 </div>
