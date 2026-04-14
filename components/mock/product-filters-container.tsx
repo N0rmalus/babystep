@@ -40,10 +40,7 @@ export const ProductFiltersContainer = () => {
               />
             </div>
 
-            <Button size="sm" className="w-full">
-              {' '}
-              Ieškoti{' '}
-            </Button>
+            <Button size="sm" label="Ieškoti" fullWidth onClick={() => {}} />
           </div>
 
           {/* Price filter */}
