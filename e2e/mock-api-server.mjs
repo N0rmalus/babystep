@@ -180,7 +180,7 @@ const server = createServer(async (req, res) => {
       Object.assign(product, changes);
       sendJson(res, 200, deepClone(product));
       return;
-    } catch (error) {
+    } catch {
       sendJson(res, 400, { message: 'Invalid JSON body' });
       return;
     }
@@ -199,6 +199,5 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(port, '127.0.0.1', () => {
-  // eslint-disable-next-line no-console
   console.log(`[mock-api] listening on http://127.0.0.1:${port}`);
 });

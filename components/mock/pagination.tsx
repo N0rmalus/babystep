@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 type PaginationProps = {
@@ -15,26 +17,19 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage = 1, totalPa
 
   const windowSize = 5;
   const half = Math.floor(windowSize / 2);
-
-  let start = Math.max(1, safeCurrent - half);
-  let end = Math.min(safeTotal, start + windowSize - 1);
-  start = Math.max(1, end - windowSize + 1);
+  const end = Math.min(safeTotal, Math.max(1, safeCurrent - half) + windowSize - 1);
+  const start = Math.max(1, end - windowSize + 1);
 
   const pages = range(start, end);
 
   const canGoPrev = safeCurrent > 1;
   const canGoNext = safeCurrent < safeTotal;
 
-  const go = (page: number) => {
-    if (!onPageChange) return;
-    if (page < 1 || page > safeTotal) return;
-    onPageChange(page);
-  };
-
   return (
     <nav aria-label="Pagination" className={'flex items-center justify-center gap-2 ' + (className ? className : '')}>
       <button
         type="button"
+        onClick={() => onPageChange?.(safeCurrent - 1)}
         disabled={!onPageChange || !canGoPrev}
         className="h-9 rounded-md border px-3 text-sm font-medium text-neutral-900 disabled:cursor-not-allowed disabled:opacity-50"
         aria-label="Previous page"
@@ -46,6 +41,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage = 1, totalPa
         <>
           <button
             type="button"
+            onClick={() => onPageChange?.(1)}
             disabled={!onPageChange}
             className="h-9 w-9 rounded-md border text-sm font-medium text-neutral-900 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Page 1"
@@ -62,6 +58,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage = 1, totalPa
           <button
             key={p}
             type="button"
+            onClick={() => onPageChange?.(p)}
             disabled={!onPageChange}
             className={
               'h-9 w-9 rounded-md border text-sm font-medium disabled:cursor-not-allowed disabled:opacity-50 ' +
@@ -80,6 +77,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage = 1, totalPa
           {end < safeTotal - 1 && <span className="px-1 text-neutral-500">…</span>}
           <button
             type="button"
+            onClick={() => onPageChange?.(safeTotal)}
             disabled={!onPageChange}
             className="h-9 w-9 rounded-md border text-sm font-medium text-neutral-900 disabled:cursor-not-allowed disabled:opacity-50"
             aria-label={`Page ${safeTotal}`}
@@ -91,6 +89,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage = 1, totalPa
 
       <button
         type="button"
+        onClick={() => onPageChange?.(safeCurrent + 1)}
         disabled={!onPageChange || !canGoNext}
         className="h-9 rounded-md border px-3 text-sm font-medium text-neutral-900 disabled:cursor-not-allowed disabled:opacity-50"
         aria-label="Next page"

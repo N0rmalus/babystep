@@ -39,7 +39,14 @@ export const CartItem = ({ data }: Props) => {
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
         <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-2xl bg-neutral-100 sm:h-36 sm:w-36">
-          <Image fill src={productImageUrl} alt={data.name} className="object-cover object-center" />
+          <Image
+            fill
+            src={productImageUrl}
+            alt={data.name}
+            className="object-cover object-center"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+            loading="eager"
+          />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col gap-4 sm:min-h-[9rem] sm:flex-row">

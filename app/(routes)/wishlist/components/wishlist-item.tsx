@@ -49,6 +49,8 @@ export const WishlistItem = ({ data }: Props) => {
           fill
           alt={data.name}
           className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          loading="eager"
         />
 
         <div className="absolute left-3 top-3 flex flex-wrap items-center gap-2">

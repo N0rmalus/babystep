@@ -9,19 +9,18 @@ import { ProductFiltersContainer } from '@/components/mock/product-filters-conta
 import { Pagination } from '@/components/mock/pagination';
 
 interface SubcategoryPageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
     subcategoryId: string;
-  };
+  }>;
 }
 
 export const revalidate = 0;
 
 export default async function SubcategoryPage({ params }: SubcategoryPageProps) {
+  const { categoryId, subcategoryId } = await params;
   const subcategories = await getSubcategories();
-  const subcategory = subcategories.find(
-    (sub) => sub.id === params.subcategoryId && sub.categoryId === params.categoryId,
-  );
+  const subcategory = subcategories.find((sub) => sub.id === subcategoryId && sub.categoryId === categoryId);
 
   if (!subcategory) {
     notFound();

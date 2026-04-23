@@ -23,6 +23,7 @@ export const ProductCardImage = ({
       fill
       alt="Image"
       className="aspect-square rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
+      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
     />
     <div className="absolute bottom-5 w-full px-6 opacity-0 transition group-hover:opacity-100">
       <div className="flex justify-center gap-x-4">

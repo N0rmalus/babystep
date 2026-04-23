@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 
 import Container from '@/components/ui/container';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
+import useMounted from '@/hooks/use-mounted';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 import useWishlist from '@/hooks/use-wishlist';
 import { WishlistItem } from './components/wishlist-item';
@@ -19,7 +20,7 @@ import { PageHeader } from '@/components/page-header';
 import { ProductListEmptyBox } from '@/components/product-list-empty-box';
 
 const WishlistPage = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
   const [searchQuery, setSearchQuery] = useState('');
   const [stockFilter, setStockFilter] = useState<StockFilter>('all');
   const [sortBy, setSortBy] = useState<WishlistSort>('price-desc');
@@ -65,10 +66,6 @@ const WishlistPage = () => {
       return b.amountInStock - a.amountInStock;
     });
   }, [products, searchQuery, sortBy, stockFilter]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const onFocusRefresh = useCallback(() => {
     refetch();

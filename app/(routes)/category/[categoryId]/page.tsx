@@ -12,15 +12,16 @@ import { Pagination } from '@/components/mock/pagination';
 export const revalidate = 0;
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
-  };
+  }>;
 }
 
-const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
-  const category = await getCategory(params.categoryId);
+const CategoryPage = async ({ params }: CategoryPageProps) => {
+  const { categoryId } = await params;
+  const category = await getCategory(categoryId);
   const subcategories = await getSubcategories();
-  const categorySubcategories = subcategories.filter((sub) => sub.categoryId === params.categoryId);
+  const categorySubcategories = subcategories.filter((sub) => sub.categoryId === categoryId);
   const subcategoryIds = categorySubcategories.map((sub) => sub.id);
 
   const products = (await getProducts({})).filter((product) => subcategoryIds.includes(product.subcategoryId));

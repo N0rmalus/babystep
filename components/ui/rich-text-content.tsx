@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo } from 'react';
-import DOMPurify from 'dompurify';
+import createDOMPurify from 'dompurify';
+import useMounted from '@/hooks/use-mounted';
 import { normalizeRichTextContent } from '@/lib/rich-text';
 import { cn } from '@/lib/utils';
 
@@ -11,13 +12,23 @@ type Props = {
 };
 
 export const RichTextContent = ({ content, className }: Props) => {
+  const isMounted = useMounted();
   const sanitizedContent = useMemo(
-    () =>
-      DOMPurify.sanitize(normalizeRichTextContent(content), {
+    () => {
+      const normalizedContent = normalizeRichTextContent(content);
+
+      if (!isMounted) {
+        return '';
+      }
+
+      const DOMPurify = createDOMPurify(window);
+
+      return DOMPurify.sanitize(normalizedContent, {
         ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'blockquote', 'h2', 'h3'],
         ALLOWED_ATTR: [],
-      }).trim(),
-    [content],
+      }).trim();
+    },
+    [content, isMounted],
   );
 
   if (!sanitizedContent) {

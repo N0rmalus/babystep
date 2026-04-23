@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import useMounted from '@/hooks/use-mounted';
 
 const formatter = new Intl.NumberFormat('lt-LT', {
   style: 'currency',
@@ -12,17 +12,11 @@ interface CurrencyProps {
 }
 
 const Currency: React.FC<CurrencyProps> = ({ value }) => {
-  // Expecting Hidration errors -
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   if (!isMounted) {
     return null;
   }
-  // -
 
   return <div className="font-semibold">{formatter.format(Number(value))}</div>;
 };

@@ -33,9 +33,11 @@ export const MainNav = ({ data, subcategories }: Props) => {
   }, [subcategories]);
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     setOpenDropdown(null);
     setIsMobileMenuOpen(false);
     setOpenMobileCategory(null);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [pathname]);
 
   useEffect(() => {
