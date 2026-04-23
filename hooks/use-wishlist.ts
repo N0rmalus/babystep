@@ -37,8 +37,7 @@ interface WishlistStore {
   removeAll: () => void;
 }
 
-// @ts-ignore
-const useWishlist = create(
+const useWishlist = create<WishlistStore>()(
   persist<WishlistStore>(
     (set, get) => ({
       items: [],
@@ -73,13 +72,12 @@ const useWishlist = create(
       name: 'wishlist-storage',
       storage: createJSONStorage(() => localStorage),
       version: 2,
-      // @ts-ignore
       migrate: (persistedState) => {
         const state = persistedState as { items?: unknown } | undefined;
 
         return {
           items: normalizeProductIds(state?.items),
-        };
+        } as WishlistStore;
       },
     },
   ),

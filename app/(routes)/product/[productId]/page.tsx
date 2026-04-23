@@ -7,15 +7,16 @@ import { RouteFocusRefresh } from '@/components/route-focus-refresh';
 import Container from '@/components/ui/container';
 
 interface Props {
-  params: {
+  params: Promise<{
     productId: string;
-  };
+  }>;
 }
 
 export const revalidate = 0;
 
 const ProductPage = async ({ params }: Props) => {
-  const product = await getProduct(params.productId);
+  const { productId } = await params;
+  const product = await getProduct(productId);
 
   const suggestedProducts = await getProducts({
     categoryId: product?.subcategory?.categoryId,

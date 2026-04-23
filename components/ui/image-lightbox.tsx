@@ -21,7 +21,14 @@ export const ImageLightbox = ({ images, alt, className, startIndex = 0 }: Props)
 
   return (
     <>
-      <Image fill src={images[currentIndex].src} alt={alt} className={className} onClick={() => setOpen(true)} />
+      <Image
+        fill
+        src={images[currentIndex].src}
+        alt={alt}
+        className={className}
+        onClick={() => setOpen(true)}
+        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+      />
       <button
         onClick={() => setOpen(true)}
         className="absolute right-3 top-3 z-10 rounded-full bg-white/90 p-2 text-xs font-semibold text-neutral-700 shadow-sm"

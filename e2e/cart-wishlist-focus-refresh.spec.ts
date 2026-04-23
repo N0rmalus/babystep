@@ -25,7 +25,7 @@ test('refreshes wishlist and cart product data when tab gets focus', async ({ pa
   await page.getByRole('button', { name: /^Į norų sąrašą$/ }).first().click();
 
   await page.goto('/wishlist');
-  await expect(page.getByText(initialName)).toBeVisible();
+  await expect(page.getByRole('heading', { name: initialName })).toBeVisible();
 
   await request.post(`${mockApiBaseUrl}/__test/update-product`, {
     data: {
@@ -41,10 +41,10 @@ test('refreshes wishlist and cart product data when tab gets focus', async ({ pa
 
   await triggerTabFocus(page);
   await wishlistRefetchPromise;
-  await expect(page.getByText(wishlistUpdatedName)).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole('heading', { name: wishlistUpdatedName })).toBeVisible({ timeout: 10000 });
 
   await page.goto('/cart');
-  await expect(page.getByText(wishlistUpdatedName)).toBeVisible();
+  await expect(page.getByRole('heading', { name: wishlistUpdatedName })).toBeVisible();
 
   await request.post(`${mockApiBaseUrl}/__test/update-product`, {
     data: {
@@ -60,5 +60,5 @@ test('refreshes wishlist and cart product data when tab gets focus', async ({ pa
 
   await triggerTabFocus(page);
   await cartRefetchPromise;
-  await expect(page.getByText(cartUpdatedName)).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole('heading', { name: cartUpdatedName })).toBeVisible({ timeout: 10000 });
 });

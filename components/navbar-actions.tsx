@@ -1,22 +1,18 @@
 'use client';
 
 import { Heart, ShoppingBag } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import Button from '@/components/ui/button';
 import useCart from '@/hooks/use-cart';
+import useMounted from '@/hooks/use-mounted';
 import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
 
 export const NavbarActions = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
   const isInWishlistPage = usePathname().includes('/wishlist');
   const isInCartPage = usePathname().includes('/cart');
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const router = useRouter();
   const cart = useCart();

@@ -16,7 +16,13 @@ export const GalleryTab = ({ image }: Props) => {
       {({ selected }) => (
         <div>
           <span className="absolute inset-0 aspect-square h-full w-full overflow-hidden rounded-lg">
-            <Image fill src={image.url} alt="Nuotrauka" className="object-cover object-center" />
+            <Image
+              fill
+              src={image.url}
+              alt="Nuotrauka"
+              className="object-cover object-center"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+            />
           </span>
           <span
             className={cn(

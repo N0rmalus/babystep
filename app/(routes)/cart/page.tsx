@@ -1,9 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import Container from '@/components/ui/container';
 import useCart from '@/hooks/use-cart';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
+import useMounted from '@/hooks/use-mounted';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 import { CartItem } from './components/cart-item';
 import { CartLoadingState } from './components/cart-loading-state';
@@ -16,7 +17,7 @@ import { ProductListEmptyBox } from '@/components/product-list-empty-box';
 const FREE_SHIPPING_THRESHOLD = 120;
 
 const CartPage = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
   const itemIds = useCart((state) => state.items);
   const setItems = useCart((state) => state.setItems);
 
@@ -25,10 +26,6 @@ const CartPage = () => {
   const subtotal = useMemo(() => {
     return products.reduce((total, product) => total + Number(product.price), 0);
   }, [products]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const onFocusRefresh = useCallback(() => {
     refetch();
