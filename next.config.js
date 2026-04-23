@@ -16,4 +16,13 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { withSentryConfig } = require('@sentry/nextjs');
+
+module.exports = withSentryConfig(nextConfig, {
+  org: 'babysteplt',
+  project: 'babystep-storefront',
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  silent: !process.env.CI,
+  widenClientFileUpload: true,
+});
