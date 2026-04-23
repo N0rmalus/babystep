@@ -9,6 +9,7 @@ import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
+import { RichTextContent } from '@/components/ui/rich-text-content';
 
 type Props = {
   data: Product;
@@ -22,6 +23,7 @@ export const Info = ({ data }: Props) => {
   const subcategory = data?.subcategory;
   const isInStock = data.amountInStock > 0;
   const isInWishlist = wishlist.hasItem(data.id);
+  const hasDescription = Boolean(data.description?.trim());
 
   const onAddToCart = () => {
     cart.addItem(data.id);
@@ -82,10 +84,8 @@ export const Info = ({ data }: Props) => {
 
       <div className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6">
         <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">Aprašymas</h3>
-        {data?.description.length ? (
-          <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-neutral-700 sm:text-base">
-            {data?.description}
-          </p>
+        {hasDescription ? (
+          <RichTextContent content={data.description} className="mt-4" />
         ) : (
           <p className="mt-3 text-sm text-neutral-500">Aprašymo nėra.</p>
         )}

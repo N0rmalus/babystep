@@ -8,3 +8,51 @@ body,
   scroll-behavior: smooth;
   height: 100%;
 }
+
+@layer components {
+  .rich-text-content {
+    @apply text-sm leading-relaxed text-neutral-700 sm:text-base;
+  }
+
+  .rich-text-content h2 {
+    @apply mt-6 text-lg font-semibold leading-tight text-neutral-900 sm:text-xl;
+  }
+
+  .rich-text-content h3 {
+    @apply mt-5 text-base font-semibold leading-tight text-neutral-900 sm:text-lg;
+  }
+
+  .rich-text-content p + p,
+  .rich-text-content ul + p,
+  .rich-text-content ol + p,
+  .rich-text-content blockquote + p,
+  .rich-text-content h2 + p,
+  .rich-text-content h3 + p {
+    @apply mt-3;
+  }
+
+  .rich-text-content ul,
+  .rich-text-content ol {
+    @apply my-4 ml-5 space-y-2;
+  }
+
+  .rich-text-content ul {
+    @apply list-disc marker:text-tumbleweed-500;
+  }
+
+  .rich-text-content ol {
+    @apply list-decimal marker:text-tumbleweed-500;
+  }
+
+  .rich-text-content blockquote {
+    @apply my-5 rounded-r-2xl border-l-4 border-tumbleweed-300 bg-tumbleweed-50 px-4 py-3 text-neutral-700;
+  }
+
+  .rich-text-content strong {
+    @apply font-semibold text-neutral-900;
+  }
+
+  .rich-text-content em {
+    @apply italic;
+  }
+}
