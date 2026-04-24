@@ -31,7 +31,7 @@ export const ImageLightbox = ({ images, alt, className, startIndex = 0 }: Props)
       />
       <button
         onClick={() => setOpen(true)}
-        className="absolute right-3 top-3 z-10 rounded-full bg-white/90 p-2 text-xs font-semibold text-neutral-700 shadow-sm"
+        className="absolute right-3 top-3 z-10 rounded-full bg-white/90 p-2 text-xs font-semibold text-neutral-700 shadow-xs"
         title="Priartinti"
       >
         <Maximize2 size={18} className="text-neutral-700" />

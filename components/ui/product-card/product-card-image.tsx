@@ -17,7 +17,7 @@ export const ProductCardImage = ({
   onAddToWishlist,
   onRemoveFromWishlist,
 }: ProductCardImageProps) => (
-  <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 shadow-sm">
+  <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 shadow-xs">
     <Image
       src={imageUrl}
       fill

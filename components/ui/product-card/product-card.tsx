@@ -37,7 +37,7 @@ const ProductCard = ({ data }: Props) => {
   return (
     <div
       onClick={handleClick}
-      className="group flex cursor-pointer flex-col space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+      className="group flex cursor-pointer flex-col space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-xs transition-shadow duration-300 hover:shadow-lg"
     >
       <ProductCardImage
         imageUrl={data?.images?.[0]?.url}

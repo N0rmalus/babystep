@@ -25,7 +25,7 @@ export const NavbarActions = () => {
   const actionButtonClasses =
     'relative flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white p-0 text-neutral-700 transition hover:border-neutral-300 hover:bg-white hover:text-black md:h-auto md:w-auto md:gap-2 md:px-4 md:py-2';
   const badgeClasses =
-    'inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-black px-1 font-semibold text-white md:static md:h-6 md:min-w-[1.5rem] md:px-1.5 text-xs';
+    'inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 font-semibold text-white md:static md:h-6 md:min-w-6 md:px-1.5 text-xs';
 
   return (
     <div className="ml-auto flex items-center gap-2 md:gap-3">

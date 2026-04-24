@@ -58,7 +58,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
           'inline-flex items-center rounded-full px-3 py-1 transition',
           badgeColorMap[color].background,
           badgeColorMap[color].hoverBackground,
-          variant === 'rounded' ? 'rounded-full' : 'rounded-sm',
+          variant === 'rounded' ? 'rounded-full' : 'rounded-xs',
         )}
       >
         <span
@@ -80,7 +80,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
       className={cn(
         'inline-flex items-center rounded-full px-3 py-1 transition',
         badgeColorMap[color].background,
-        variant === 'rounded' ? 'rounded-xl' : 'rounded-sm',
+        variant === 'rounded' ? 'rounded-xl' : 'rounded-xs',
       )}
     >
       <span

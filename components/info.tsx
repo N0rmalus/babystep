@@ -107,7 +107,7 @@ export const Info = ({ data }: Props) => {
           elementBefore={<Heart size={18} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
           label={isInWishlist ? 'Norų sąraše' : 'Į norų sąrašą'}
           onClick={onToggleWishlist}
-          className={cn('rounded-xl shadow-sm', isInWishlist && 'hover:text-tumbleweed-300')}
+          className={cn('rounded-xl shadow-xs', isInWishlist && 'hover:text-tumbleweed-300')}
         />
       </div>
     </div>

@@ -35,7 +35,7 @@ export const CartItem = ({ data }: Props) => {
       onClick={() => {
         router.push(`/product/${data.id}`);
       }}
-      className="cursor-pointer rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors duration-300 hover:border-tumbleweed-300 sm:p-6"
+      className="cursor-pointer rounded-3xl border border-neutral-200 bg-white p-5 shadow-xs transition-colors duration-300 hover:border-tumbleweed-300 sm:p-6"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
         <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-2xl bg-neutral-100 sm:h-36 sm:w-36">
@@ -49,7 +49,7 @@ export const CartItem = ({ data }: Props) => {
           />
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-4 sm:min-h-[9rem] sm:flex-row">
+        <div className="flex min-w-0 flex-1 flex-col gap-4 sm:min-h-36 sm:flex-row">
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="flex flex-wrap items-center gap-2">
               <div className="flex flex-wrap items-center">
@@ -87,7 +87,7 @@ export const CartItem = ({ data }: Props) => {
             </div>
 
             <div className="mt-auto pt-4">
-              <h3 className="break-words text-xl leading-tight text-neutral-900">{data.name}</h3>
+              <h3 className="wrap-break-word text-xl leading-tight text-neutral-900">{data.name}</h3>
               <span className="text-2xl font-bold text-neutral-900">{toCurrency(Number(data.price))}</span>
             </div>
           </div>

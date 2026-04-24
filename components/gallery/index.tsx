@@ -25,9 +25,9 @@ export const Gallery = ({ images }: Props) => {
       {/* Main Image */}
       <Tab.Panels className="aspect-square w-full">
         {images.map((image) => (
-          <Tab.Panel key={image.id} className="focus:outline-none">
+          <Tab.Panel key={image.id} className="focus:outline-hidden">
             <div className="relative aspect-square h-full w-full overflow-hidden rounded-2xl shadow-md">
-              <div className="absolute bottom-3 left-3 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-neutral-700 shadow-sm">
+              <div className="absolute bottom-3 left-3 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-neutral-700 shadow-xs">
                 {selectedIndex + 1} / {images.length}
               </div>
               <ImageLightbox

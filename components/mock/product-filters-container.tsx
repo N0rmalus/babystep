@@ -23,7 +23,7 @@ export const ProductFiltersContainer = () => {
 
   return (
     <aside className="w-full">
-      <div className="rounded-xl border bg-white p-4 shadow-sm">
+      <div className="rounded-xl border bg-white p-4 shadow-xs">
         <div className="space-y-5">
           {/* Search */}
           <div className="space-y-3">
@@ -34,7 +34,7 @@ export const ProductFiltersContainer = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder=""
-                className="h-10 w-full rounded-md border bg-white pl-9 pr-3 text-sm outline-none transition focus:border-neutral-400"
+                className="h-10 w-full rounded-md border bg-white pl-9 pr-3 text-sm outline-hidden transition focus:border-neutral-400"
                 // mock-only (remove disabled when you hook it up)
                 disabled
               />
