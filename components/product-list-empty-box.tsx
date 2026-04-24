@@ -8,7 +8,7 @@ type Props = {
 
 export const ProductListEmptyBox = ({ variant }: Props) => {
   return (
-    <PaperWrapper className="border-dashed !py-14 text-center">
+    <PaperWrapper className="border-dashed py-14! text-center">
       <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-neutral-100 text-neutral-600">
         {variant === 'cart' ? <PackageX size={24} /> : <HeartOff size={24} />}
       </div>

@@ -41,7 +41,7 @@ export const WishlistItem = ({ data }: Props) => {
   return (
     <div
       onClick={() => router.push(`/product/${data.id}`)}
-      className="group cursor-pointer overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      className="group cursor-pointer overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="relative h-52 overflow-hidden bg-neutral-100">
         <Image

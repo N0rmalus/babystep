@@ -130,7 +130,7 @@ export const MainNav = ({ data, subcategories }: Props) => {
             onClick={closeMobileMenu}
             className="fixed inset-0 z-40 bg-black/20 md:hidden"
           />
-          <div className="fixed inset-x-4 top-[4.5rem] z-50 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl md:hidden">
+          <div className="fixed inset-x-4 top-18 z-50 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl md:hidden">
             <div className="max-h-[calc(100vh-8rem)] space-y-2 overflow-y-auto p-2">
               {data.map((category) => {
                 const isActive = pathname === `/category/${category.id}`;

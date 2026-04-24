@@ -66,7 +66,7 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
                 key={product.id}
                 className="flex min-w-0 flex-row items-center justify-between gap-3 pl-2 text-xs text-neutral-600"
               >
-                <span className="min-w-0 break-words sm:truncate">{product.name}</span>
+                <span className="min-w-0 wrap-break-word sm:truncate">{product.name}</span>
                 <div className="text-sm text-neutral-600 sm:shrink-0">{toCurrency(Number(product.price))}</div>
               </div>
             ))}
@@ -117,7 +117,7 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
             value={couponCode}
             onChange={(event) => setCouponCode(event.target.value)}
             placeholder="BABYSTEP10"
-            className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-neutral-400 focus:border-neutral-400"
+            className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm outline-hidden transition placeholder:text-neutral-400 focus:border-neutral-400"
           />
           <Button
             size="sm"

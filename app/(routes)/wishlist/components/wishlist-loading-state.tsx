@@ -31,7 +31,7 @@ export const WishlistLoadingState = () => {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {WISHLIST_LOADING_ITEMS.map((index) => (
-          <div key={index} className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm">
+          <div key={index} className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs">
             <Skeleton className="h-52 w-full" />
 
             <div className="p-4">

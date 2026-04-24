@@ -48,7 +48,7 @@ export const WishlistToolbar = ({
               value={searchQuery}
               onChange={(event) => onSearchQueryChange(event.target.value)}
               placeholder="Ieškoti pagal pavadinimą ar kategoriją"
-              className="w-full rounded-xl border border-neutral-200 bg-white py-2 pl-9 pr-3 text-sm outline-none transition placeholder:text-neutral-400 focus:border-neutral-400"
+              className="w-full rounded-xl border border-neutral-200 bg-white py-2 pl-9 pr-3 text-sm outline-hidden transition placeholder:text-neutral-400 focus:border-neutral-400"
             />
           </div>
         </div>
@@ -70,7 +70,7 @@ export const WishlistToolbar = ({
                 id="wishlist-sort"
                 value={sortBy}
                 onChange={(event) => onSortChange(event.target.value as WishlistSort)}
-                className="w-full appearance-none rounded-xl border border-neutral-200 bg-white py-2 pl-9 pr-3 text-sm outline-none transition focus:border-neutral-400"
+                className="w-full appearance-none rounded-xl border border-neutral-200 bg-white py-2 pl-9 pr-3 text-sm outline-hidden transition focus:border-neutral-400"
               >
                 <option value="price-desc">Kaina: didžiausia pirma</option>
                 <option value="price-asc">Kaina: mažiausia pirma</option>

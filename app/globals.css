@@ -1,58 +1,119 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-html,
-body,
-:root {
-  scroll-behavior: smooth;
-  height: 100%;
+@theme {
+  --font-*: initial;
+  --font-fak: Proxima Nova;
+
+  --color-tumbleweed-50: #fbf6f1;
+  --color-tumbleweed-100: #f6e9de;
+  --color-tumbleweed-200: #ebd1bd;
+  --color-tumbleweed-300: #d9a37f;
+  --color-tumbleweed-400: #d18a66;
+  --color-tumbleweed-500: #c76e48;
+  --color-tumbleweed-600: #b9593d;
+  --color-tumbleweed-700: #9a4734;
+  --color-tumbleweed-800: #7c3b30;
+  --color-tumbleweed-900: #653129;
+  --color-tumbleweed-950: #361814;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
 }
 
-@layer components {
-  .rich-text-content {
-    @apply text-sm leading-relaxed text-neutral-700 sm:text-base;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 
-  .rich-text-content h2 {
+  button {
+    cursor: pointer;
+  }
+}
+
+@utility rich-text-content {
+  @apply text-sm leading-relaxed text-neutral-700 sm:text-base;
+
+  & h2 {
     @apply mt-6 text-lg font-semibold leading-tight text-neutral-900 sm:text-xl;
   }
 
-  .rich-text-content h3 {
+  & h3 {
     @apply mt-5 text-base font-semibold leading-tight text-neutral-900 sm:text-lg;
   }
 
-  .rich-text-content p + p,
-  .rich-text-content ul + p,
-  .rich-text-content ol + p,
-  .rich-text-content blockquote + p,
-  .rich-text-content h2 + p,
-  .rich-text-content h3 + p {
+  & p + p {
     @apply mt-3;
   }
 
-  .rich-text-content ul,
-  .rich-text-content ol {
+  & ul + p {
+    @apply mt-3;
+  }
+
+  & ol + p {
+    @apply mt-3;
+  }
+
+  & blockquote + p {
+    @apply mt-3;
+  }
+
+  & h2 + p {
+    @apply mt-3;
+  }
+
+  & h3 + p {
+    @apply mt-3;
+  }
+
+  & ul {
     @apply my-4 ml-5 space-y-2;
   }
 
-  .rich-text-content ul {
+  & ol {
+    @apply my-4 ml-5 space-y-2;
+  }
+
+  & ul {
     @apply list-disc marker:text-tumbleweed-500;
   }
 
-  .rich-text-content ol {
+  & ol {
     @apply list-decimal marker:text-tumbleweed-500;
   }
 
-  .rich-text-content blockquote {
+  & blockquote {
     @apply my-5 rounded-r-2xl border-l-4 border-tumbleweed-300 bg-tumbleweed-50 px-4 py-3 text-neutral-700;
   }
 
-  .rich-text-content strong {
+  & strong {
     @apply font-semibold text-neutral-900;
   }
 
-  .rich-text-content em {
+  & em {
     @apply italic;
+  }
+}
+
+@layer utilities {
+  html,
+  body,
+  :root {
+    scroll-behavior: smooth;
+    height: 100%;
   }
 }
