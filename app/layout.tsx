@@ -1,14 +1,18 @@
-import { Urbanist } from 'next/font/google';
+import { Bricolage_Grotesque, Urbanist } from 'next/font/google';
 
 import { ModalProvider } from '@/providers/modal-provider';
 import ToastProvider from '@/providers/toast-provider';
 import Navbar from '@/components/navbar';
-import Footer from '@/components/footer';
+import { Footer } from '@/components/footer';
 
 import './globals.css';
 import { ReactNode } from 'react';
 
-const font = Urbanist({ subsets: ['latin'] });
+const bodyFont = Urbanist({ subsets: ['latin'] });
+const accentFont = Bricolage_Grotesque({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-bricolage-grotesque',
+});
 
 export const metadata = {
   title: 'Babystep',
@@ -17,9 +21,9 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <body className={font.className}>
-        <div className="flex min-h-screen flex-col bg-linear-to-br from-tumbleweed-50 to-white">
+    <html lang="en" data-scroll-behavior="smooth" className={accentFont.variable}>
+      <body className={bodyFont.className}>
+        <div className="from-tumbleweed-50 flex min-h-screen flex-col bg-linear-to-br to-white">
           <ToastProvider />
           <ModalProvider />
           <Navbar />

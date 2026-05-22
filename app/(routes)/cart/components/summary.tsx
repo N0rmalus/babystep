@@ -127,15 +127,15 @@ export const Summary = ({ productIds, products, isResolvingProducts, freeShippin
       </PaperWrapper>
 
       <PaperWrapper>
-        <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-neutral-500">Reikia pagalbos?</h3>
+        <h3 className="text-sm font-semibold tracking-[0.16em] text-neutral-500 uppercase">Reikia pagalbos?</h3>
         <p className="mt-3 text-sm leading-relaxed text-neutral-700">
           Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
         </p>
         <a
-          href="mailto:help@babystep.lt"
+          href="mailto:info@babystep.lt"
           className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
         >
-          help@babystep.lt
+          info@babystep.lt
         </a>
       </PaperWrapper>
     </div>

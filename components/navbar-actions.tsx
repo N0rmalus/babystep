@@ -23,18 +23,18 @@ export const NavbarActions = () => {
   }
 
   const actionButtonClasses =
-    'relative flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white p-0 text-neutral-700 transition hover:border-neutral-300 hover:bg-white hover:text-black md:h-auto md:w-auto md:gap-2 md:px-4 md:py-2';
+    'relative flex h-10 w-auto shrink-0 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-0 text-neutral-700 transition hover:border-neutral-300 hover:bg-white hover:text-black xl:h-auto xl:px-4 xl:py-2';
   const badgeClasses =
-    'inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 font-semibold text-white md:static md:h-6 md:min-w-6 md:px-1.5 text-xs';
+    'inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5';
 
   return (
-    <div className="ml-auto flex items-center gap-2 md:gap-3">
+    <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-3">
       <Button
         onClick={() => router.push('/wishlist')}
         variant="secondary"
         elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
         elementAfter={<span className={badgeClasses}>{wishlist.items.length}</span>}
-        label={<span className="hidden md:inline">Norai</span>}
+        label={<span className="hidden xl:inline">Norai</span>}
         size="sm"
         aria-label="Norai"
         className={actionButtonClasses}
@@ -44,7 +44,7 @@ export const NavbarActions = () => {
         variant="secondary"
         elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
         elementAfter={<span className={badgeClasses}>{cart.items.length}</span>}
-        label={<span className="hidden md:inline">Krepšelis</span>}
+        label={<span className="hidden xl:inline">Krepšelis</span>}
         size="sm"
         aria-label="Krepšelis"
         className={actionButtonClasses}

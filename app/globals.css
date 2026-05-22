@@ -16,11 +16,28 @@
   --color-tumbleweed-900: #653129;
   --color-tumbleweed-950: #361814;
 
+  --color-salmon-50: #fef9f8;
+  --color-salmon-100: #fef1f0;
+  --color-salmon-200: #fde0dd;
+  --color-salmon-300: #fcc5bf;
+  --color-salmon-400: #faaaa2;
+  --color-salmon-500: #f39f9d;
+  --color-salmon-600: #e68278;
+  --color-salmon-700: #d1685e;
+  --color-salmon-800: #b84f45;
+  --color-salmon-900: #9a3d35;
+  --color-salmon-950: #5a231d;
+
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,
     var(--tw-gradient-stops)
   );
+}
+
+@theme inline {
+  --font-accent: var(--font-bricolage-grotesque);
+  --tracking-widest: 0.22em;
 }
 
 /*
