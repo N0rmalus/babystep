@@ -6,21 +6,29 @@ import { useRouter } from 'next/navigation';
 import usePreviewModal from '@/hooks/use-preview-modal';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
-import { ProductCardImage } from '@/components/ui/product-card/product-card-image';
+import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
+import IconButton from '@/components/ui/icon-button';
+import { Expand, Heart, ShoppingCart } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import Button from '@/components/ui/button';
 
 type Props = {
   data: Product;
 };
 
-const ProductCard = ({ data }: Props) => {
+export const ProductCard = ({ data }: Props) => {
   const cart = useCart();
   const wishlist = useWishlist();
   const previewModal = usePreviewModal();
   const router = useRouter();
 
-  const handleClick = () => {
-    router.push(`/product/${data?.id}`);
-  };
+  const isInStock = data.amountInStock > 0;
+  const isInCart = cart.items.some((item) => item === data.id);
+  const isInWishlist = wishlist.items.some((item) => item === data.id);
+  const imageUrl = data.images?.[0]?.url ?? '/placeholder.webp';
+  const categoryName = data.subcategory?.category?.name ?? 'Kategorija';
+  const subcategoryName = data.subcategory?.name ?? 'Subkategorija';
 
   const onPreview = () => {
     previewModal.onOpen(data);
@@ -30,37 +38,75 @@ const ProductCard = ({ data }: Props) => {
     cart.addItem(data.id);
   };
 
-  const onAddToWishlist = () => {
+  const onToggleWishlist = () => {
+    if (isInWishlist) {
+      wishlist.removeItem(data.id);
+      return;
+    }
+
     wishlist.addItem(data.id);
   };
 
   return (
     <div
-      onClick={handleClick}
-      className="group flex cursor-pointer flex-col space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-xs transition-shadow duration-300 hover:shadow-lg"
+      onClick={() => router.push(`/product/${data.id}`)}
+      className={cn(
+        'group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md',
+        !isInStock && 'opacity-50',
+      )}
     >
-      <ProductCardImage
-        imageUrl={data?.images?.[0]?.url}
-        onPreview={onPreview}
-        onAddToCart={onAddToCart}
-        onAddToWishlist={onAddToWishlist}
-      />
-      <div className="flex flex-1 flex-col justify-between">
-        <div>
-          <p className="truncate text-base font-semibold text-gray-900">{data.name}</p>
-          <div className="flex flex-row items-center gap-2">
-            <p className="mt-1 text-xs text-gray-500">{data.subcategory.category.name}</p>
-            <div className="mt-[4px] h-[4px] w-[4px] rounded-full bg-tumbleweed-400" />
-            <p className="mt-1 text-xs text-gray-500">{data.subcategory.name}</p>
+      <div className="relative h-52 overflow-hidden bg-neutral-100">
+        <Image
+          src={imageUrl}
+          fill
+          alt={data.name}
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+
+        <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
+          {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
+        </div>
+
+        <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2">
+          <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
+          <IconButton
+            onClick={onToggleWishlist}
+            variant="primary"
+            icon={<Heart size={16} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
+            title={isInWishlist ? 'Pašalinti iš norų sąrašo' : 'Įtraukti į norų sąrašą'}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-4">
+        <div className="flex min-h-22 flex-1 flex-col justify-between">
+          <div>
+            <h3 className="text-base leading-tight font-semibold text-neutral-900">{data.name}</h3>
+            <p className="mt-2 text-xs text-neutral-500">
+              {categoryName} • {subcategoryName}
+            </p>
+          </div>
+
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <div className="text-lg font-bold text-neutral-900">
+              <Currency value={data.price} />
+            </div>
+            <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-between">
-          <Currency value={data?.price} />
-          {/* TODO: add a badge for new/featured products here */}
+
+        <div className="mt-4">
+          <Button
+            size="sm"
+            label={isInCart ? 'Jau krepšelyje' : 'Į krepšelį'}
+            onClick={onAddToCart}
+            elementBefore={<ShoppingCart size={15} />}
+            disabled={!isInStock || isInCart}
+            fullWidth
+          />
         </div>
       </div>
     </div>
   );
 };
-
-export default ProductCard;

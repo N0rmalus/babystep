@@ -22,7 +22,6 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
   }, [products]);
 
   const discount = isCouponApplied ? subtotal * 0.1 : 0;
-  const estimatedTax = subtotal * 0.21;
 
   const shippingPrice = useMemo(() => {
     if (items.length === 0) {
@@ -32,7 +31,7 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
     return subtotal >= freeShippingThreshold ? 0 : 4.99;
   }, [freeShippingThreshold, items.length, subtotal]);
 
-  const total = subtotal + shippingPrice + estimatedTax - discount;
+  const total = subtotal + shippingPrice - discount;
 
   const onApplyCoupon = () => {
     const normalizedCode = couponCode.trim().toUpperCase();
@@ -82,11 +81,6 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
               <span>{toCurrency(shippingPrice)}</span>
             )}
           </div>
-        </div>
-
-        <div className="flex items-center justify-between gap-4 text-sm">
-          <p className="text-neutral-600">PVM (21%)</p>
-          <div className={cn('font-semibold text-neutral-900')}>{toCurrency(estimatedTax)}</div>
         </div>
 
         {isCouponApplied && (

@@ -49,7 +49,10 @@ const Button = ({
     <button
       type={type}
       onClick={(event) => {
-        event.preventDefault();
+        if (type !== 'submit') {
+          event.preventDefault();
+        }
+
         event.stopPropagation();
 
         onClick?.(event);

@@ -2,15 +2,15 @@ import getProduct from '@/actions/get-product';
 import getProducts from '@/actions/get-products';
 import { Gallery } from '@/components/gallery';
 import { Info } from '@/components/info';
-import ProductList from '@/components/product-list';
+import { ProductList } from '@/components/product-list';
 import { RouteFocusRefresh } from '@/components/route-focus-refresh';
 import Container from '@/components/ui/container';
 
-interface Props {
+type Props = {
   params: Promise<{
     productId: string;
   }>;
-}
+};
 
 export const revalidate = 0;
 
