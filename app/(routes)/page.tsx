@@ -26,7 +26,7 @@ const HomePage = async () => {
           </div>
           <div className="flex justify-center">
             <Image
-              src="/icon-no-bg.svg"
+              src="/logo.png"
               alt="Baby Step"
               width={400}
               height={400}

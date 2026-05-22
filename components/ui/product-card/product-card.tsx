@@ -89,7 +89,7 @@ export const ProductCard = ({ data }: Props) => {
           </div>
 
           <div className="mt-3 flex items-center justify-between gap-2">
-            <div className="text-lg font-bold text-neutral-900">
+            <div className="font-accent text-lg font-bold text-neutral-900">
               <Currency value={data.price} />
             </div>
             <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>

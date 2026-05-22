@@ -67,10 +67,10 @@ export const MainNav = ({ data, subcategories }: Props) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative shrink-0">
       <button
         type="button"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-700 transition hover:border-neutral-300 hover:text-black md:hidden"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-700 transition hover:border-neutral-300 hover:text-black lg:hidden"
         onClick={() => setIsMobileMenuOpen((current) => !current)}
         aria-expanded={isMobileMenuOpen}
         aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -78,7 +78,7 @@ export const MainNav = ({ data, subcategories }: Props) => {
         {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
       </button>
 
-      <nav className="hidden items-center gap-1 md:ml-4 md:flex">
+      <nav className="hidden items-center gap-1 whitespace-nowrap lg:ml-4 lg:flex">
         {data.map((category) => {
           const isActive = pathname === `/category/${category.id}`;
           const subs = subcategoriesByCategory[category.id] || [];
@@ -128,9 +128,9 @@ export const MainNav = ({ data, subcategories }: Props) => {
             type="button"
             aria-label="Close menu"
             onClick={closeMobileMenu}
-            className="fixed inset-0 z-40 bg-black/20 md:hidden"
+            className="fixed inset-0 z-40 bg-black/20 lg:hidden"
           />
-          <div className="fixed inset-x-4 top-18 z-50 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl md:hidden">
+          <div className="fixed inset-x-4 top-18 z-50 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl lg:hidden">
             <div className="max-h-[calc(100vh-8rem)] space-y-2 overflow-y-auto p-2">
               {data.map((category) => {
                 const isActive = pathname === `/category/${category.id}`;
