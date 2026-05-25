@@ -14,7 +14,16 @@ const socialLinks = [
   },
 ];
 
-const shopLinks = ['Naujienos', 'Akcijos'];
+const shopLinks = [
+  {
+    label: 'Naujienos',
+    href: '#',
+  },
+  {
+    label: 'Akcijos',
+    href: '/akcijos',
+  },
+];
 const supportLinks = ['Pristatymas', 'Grąžinimai', 'Taisyklės ir sąlygos', 'Privatumo politika'];
 
 export const Footer = () => {
@@ -49,9 +58,9 @@ export const Footer = () => {
             <h2 className="font-accent text-sm font-semibold tracking-wide text-neutral-950 uppercase">Parduotuvė</h2>
             <ul className="mt-3 space-y-2.5 text-sm text-neutral-600 sm:mt-4 sm:space-y-3">
               {shopLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="hover:text-tumbleweed-600 transition">
-                    {link}
+                <li key={link.label}>
+                  <a href={link.href} className="hover:text-tumbleweed-600 transition">
+                    {link.label}
                   </a>
                 </li>
               ))}

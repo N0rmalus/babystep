@@ -1,4 +1,5 @@
 import { Product } from '@/actions/types';
+import { getProductEffectivePrice } from '@/business/product-pricing';
 
 export type ProductFilterSearchParams = {
   q?: string | string[];
@@ -75,7 +76,7 @@ export const filterProducts = (products: Product[], filters: ProductFilters) => 
       return matchesQuery;
     }
 
-    const price = Number(product.price);
+    const price = getProductEffectivePrice(product);
 
     if (!Number.isFinite(price)) {
       return false;
@@ -90,7 +91,7 @@ export const filterProducts = (products: Product[], filters: ProductFilters) => 
 
 export const getProductPriceRange = (products: Product[]): ProductPriceRange => {
   const prices = products
-    .map((product) => Number(product.price))
+    .map((product) => getProductEffectivePrice(product))
     .filter((price) => Number.isFinite(price) && price >= 0);
 
   if (prices.length === 0) {

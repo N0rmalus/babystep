@@ -10,7 +10,9 @@ import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
 import Button from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { getProductPricing } from '@/business/product-pricing';
 import { getImageUrl } from '@/lib/image-url';
+import { cn } from '@/lib/utils';
 import { toCurrency } from '@/business/to-currency';
 
 type Props = {
@@ -26,6 +28,7 @@ export const WishlistItem = ({ data }: Props) => {
   const isInStock = data.amountInStock > 0;
   const isInCart = cart.items.some((item) => item === data.id);
   const imageUrl = getImageUrl(data.images.at(0)?.url);
+  const pricing = getProductPricing(data);
 
   const onPreview = () => {
     previewModal.onOpen(data);
@@ -55,6 +58,7 @@ export const WishlistItem = ({ data }: Props) => {
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
+          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="rose" />}
           {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
           {data.isFeatured && <Badge label="Rekomenduojama" variant="rounded" color="tumbleweed-outlined" />}
         </div>
@@ -80,7 +84,16 @@ export const WishlistItem = ({ data }: Props) => {
           </div>
 
           <div className="mt-3 flex items-center justify-between gap-2">
-            <div className="text-lg font-bold text-neutral-900">{toCurrency(data.price)}</div>
+            <div>
+              {pricing.isOnSale && (
+                <div className="text-xs font-medium text-neutral-400 line-through">
+                  {toCurrency(pricing.regularPrice)}
+                </div>
+              )}
+              <div className={cn('text-lg font-bold', pricing.isOnSale ? 'text-rose-700' : 'text-neutral-900')}>
+                {toCurrency(pricing.effectivePrice)}
+              </div>
+            </div>
             <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>

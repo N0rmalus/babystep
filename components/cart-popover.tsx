@@ -21,6 +21,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
+import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
 import Button from '@/components/ui/button';
 import useCart from '@/hooks/use-cart';
@@ -156,7 +157,7 @@ export const CartPopover = () => {
             >
               <div
                 style={transitionStyles}
-                className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xl"
+                className="scrollbar-soft overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xl"
               >
                 <div className="flex items-center justify-between gap-4 px-5 py-4">
                   <div>
@@ -226,6 +227,7 @@ export const CartPopover = () => {
                   {!isLoading &&
                     products.map((product, index) => {
                       const isOutOfStock = product.amountInStock <= 0;
+                      const pricing = getProductPricing(product);
 
                       return (
                         <div
@@ -268,14 +270,19 @@ export const CartPopover = () => {
                                   isOutOfStock ? 'font-semibold text-rose-600' : 'text-neutral-500',
                                 )}
                               >
-                                {isOutOfStock ? 'Išparduota' : `1 × ${toCurrency(Number(product.price))}`}
+                                {isOutOfStock ? 'Išparduota' : `1 × ${toCurrency(pricing.effectivePrice)}`}
                               </span>
                             </span>
                           </button>
 
                           <div className="flex shrink-0 flex-col items-end gap-4">
+                            {pricing.isOnSale && (
+                              <span className="text-xs text-neutral-400 line-through">
+                                {toCurrency(pricing.regularPrice)}
+                              </span>
+                            )}
                             <span className="font-accent text-base font-black text-neutral-900">
-                              {toCurrency(Number(product.price))}
+                              {toCurrency(pricing.effectivePrice)}
                             </span>
                             <button
                               type="button"

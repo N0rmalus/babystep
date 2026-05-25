@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-export type BadgeColor = 'tumbleweed' | 'tumbleweed-outlined' | 'green' | 'rose';
+export type BadgeColor = 'tumbleweed' | 'tumbleweed-outlined' | 'green' | 'rose' | 'salmon';
 
 const badgeColorMap = {
   tumbleweed: {
@@ -27,6 +27,12 @@ const badgeColorMap = {
     text: 'text-rose-700',
     hoverBackground: 'hover:bg-rose-200',
     hoverText: 'hover:text-rose-800',
+  },
+  salmon: {
+    background: 'bg-salmon-100',
+    text: 'text-salmon-700',
+    hoverBackground: 'hover:bg-salmon-200',
+    hoverText: 'hover:text-salmon-800',
   },
 } satisfies Record<
   BadgeColor,
@@ -63,7 +69,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
       >
         <span
           className={cn(
-            'text-[9px] font-semibold uppercase tracking-[0.16em]',
+            'text-[9px] font-semibold tracking-[0.16em] uppercase',
             badgeColorMap[color].text,
             badgeColorMap[color].hoverText,
             wordBreak === 'break-all' ? 'break-all' : 'break-keep',
@@ -85,7 +91,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
     >
       <span
         className={cn(
-          'text-[9px] font-semibold uppercase tracking-[0.16em]',
+          'text-[9px] font-semibold tracking-[0.16em] uppercase',
           badgeColorMap[color].text,
           wordBreak === 'break-all' ? 'break-all' : 'break-keep',
         )}

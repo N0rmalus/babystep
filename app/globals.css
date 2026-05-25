@@ -131,6 +131,31 @@
     height: 100%;
   }
 
+  .scrollbar-soft {
+    scrollbar-width: thin;
+    scrollbar-color: black transparent;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar-thumb {
+    border: 0.25rem solid transparent;
+    border-radius: 999px;
+    background: black;
+    background-clip: content-box;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar-thumb:hover {
+    background: black;
+    background-clip: content-box;
+  }
+
   .animate-promo-conveyor {
     animation: promo-conveyor 60s linear infinite;
   }

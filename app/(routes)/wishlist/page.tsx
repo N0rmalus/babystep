@@ -12,6 +12,7 @@ import useWishlist from '@/hooks/use-wishlist';
 import { WishlistItem } from './components/wishlist-item';
 import { WishlistLoadingState } from './components/wishlist-loading-state';
 import { StockFilter, WishlistSort, WishlistToolbar } from './components/wishlist-toolbar';
+import { getProductEffectivePrice } from '@/business/product-pricing';
 import Button from '@/components/ui/button';
 import { LinkButton } from '@/components/ui/link-button';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
@@ -52,11 +53,11 @@ const WishlistPage = () => {
 
     return [...filtered].sort((a, b) => {
       if (sortBy === 'price-asc') {
-        return Number(a.price) - Number(b.price);
+        return getProductEffectivePrice(a) - getProductEffectivePrice(b);
       }
 
       if (sortBy === 'price-desc') {
-        return Number(b.price) - Number(a.price);
+        return getProductEffectivePrice(b) - getProductEffectivePrice(a);
       }
 
       if (sortBy === 'name-asc') {

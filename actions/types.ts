@@ -3,6 +3,9 @@ export interface Product {
   subcategoryId: string;
   name: string;
   price: string;
+  salePrice?: string | null;
+  saleStartsAt?: string | null;
+  saleEndsAt?: string | null;
   amountInStock: number;
   isFeatured: boolean;
   description: string | null;

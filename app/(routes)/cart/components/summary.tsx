@@ -44,7 +44,7 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
         <PriceContainer productIds={productIds} products={products} subtotal={subtotal} shippingPrice={shippingPrice} />
 
         {hasOutOfStockProducts && (
-          <div className="flex py-3 text-sm text-rose-700">
+          <div className="flex pt-3 text-sm text-rose-700">
             <p>Kai kurių prekių nebeliko, pašalink prieš tęsiant apmokėjimą.</p>
           </div>
         )}
@@ -55,7 +55,7 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
           label="Pereiti į apmokėjimą"
           elementAfter={<ArrowRight size={18} />}
           onClick={onCheckout}
-          className="rounded-xl"
+          className="mt-3 rounded-xl"
           fullWidth
         />
 

@@ -11,6 +11,7 @@ import IconButton from '@/components/ui/icon-button';
 import { Expand, Heart, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from '@/components/ui/button';
+import { getProductPricing } from '@/business/product-pricing';
 import { getImageUrl } from '@/lib/image-url';
 import { toCurrency } from '@/business/to-currency';
 
@@ -30,6 +31,8 @@ export const ProductCard = ({ data }: Props) => {
   const imageUrl = getImageUrl(data.images?.at(0)?.url);
   const categoryName = data.subcategory?.category?.name ?? 'Kategorija';
   const subcategoryName = data.subcategory?.name ?? 'Subkategorija';
+
+  const pricing = getProductPricing(data);
 
   const onPreview = () => {
     previewModal.onOpen(data);
@@ -52,7 +55,7 @@ export const ProductCard = ({ data }: Props) => {
     <div
       onClick={() => router.push(`/product/${data.id}`)}
       className={cn(
-        'group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md',
+        'group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-black bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md',
         !isInStock && 'opacity-50',
       )}
     >
@@ -60,12 +63,14 @@ export const ProductCard = ({ data }: Props) => {
         <Image
           src={imageUrl}
           fill
+          loading="eager"
           alt={data.name}
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
+          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="salmon" />}
           {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
         </div>
 
@@ -90,7 +95,21 @@ export const ProductCard = ({ data }: Props) => {
           </div>
 
           <div className="mt-3 flex items-center justify-between gap-2">
-            <div className="font-accent text-lg font-bold text-neutral-900">{toCurrency(data.price)}</div>
+            <div>
+              {pricing.isOnSale && (
+                <div className="text-xs font-medium text-neutral-400 line-through">
+                  {toCurrency(pricing.regularPrice)}
+                </div>
+              )}
+              <div
+                className={cn(
+                  'font-accent text-lg font-bold',
+                  pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900',
+                )}
+              >
+                {toCurrency(pricing.effectivePrice)}
+              </div>
+            </div>
             <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>

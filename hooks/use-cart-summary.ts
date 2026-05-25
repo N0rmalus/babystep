@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 
+import { getProductEffectivePrice } from '@/business/product-pricing';
 import type { Product } from '@/actions/types';
 import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_PRICE } from '@/lib/consts';
 
@@ -28,7 +29,7 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const subtotal = useMemo(() => {
-    return products.reduce((total, product) => total + Number(product.price), 0);
+    return products.reduce((total, product) => total + getProductEffectivePrice(product), 0);
   }, [products]);
 
   const productNameById = useMemo(() => {

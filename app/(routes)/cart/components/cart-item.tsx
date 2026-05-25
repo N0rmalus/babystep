@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Product } from '@/actions/types';
 import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
+import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
 import { getImageUrl } from '@/lib/image-url';
 
@@ -18,6 +19,7 @@ export const CartItem = ({ data }: Props) => {
   const router = useRouter();
   const isInStock = data.amountInStock > 0;
   const productImageUrl = getImageUrl(data.images.at(0)?.url);
+  const pricing = getProductPricing(data);
 
   const wishlist = useWishlist();
   const cart = useCart();
@@ -90,11 +92,28 @@ export const CartItem = ({ data }: Props) => {
                 variant="rounded"
                 color={isInStock ? 'green' : 'rose'}
               />
+              {pricing.isOnSale && (
+                <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="salmon" />
+              )}
             </div>
 
             <div className="mt-auto pt-4">
               <h3 className="text-xl leading-tight wrap-break-word text-neutral-900">{data.name}</h3>
-              <span className="font-accent text-2xl font-bold text-neutral-900">{toCurrency(Number(data.price))}</span>
+              <div>
+                {pricing.isOnSale && (
+                  <span className="block text-sm font-medium text-neutral-400 line-through">
+                    {toCurrency(pricing.regularPrice)}
+                  </span>
+                )}
+                <span
+                  className={cn(
+                    'font-accent text-2xl font-bold',
+                    pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900',
+                  )}
+                >
+                  {toCurrency(pricing.effectivePrice)}
+                </span>
+              </div>
             </div>
           </div>
 

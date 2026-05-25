@@ -7,15 +7,21 @@ import Container from '@/components/ui/container';
 import { InstagramFeed } from '@/app/(routes)/components/instagram-feed';
 import { PageSection } from '@/app/(routes)/components/page-section';
 import { PromoStrip } from '@/app/(routes)/components/promo-strip';
+import { getBiggestDiscount } from '@/business/product-pricing';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export const revalidate = 0;
 
 const HomePage = async () => {
-  const [products, billboard, instagramPosts] = await Promise.all([
+  const [featuredProducts, saleProducts, billboard, instagramPosts] = await Promise.all([
     getProducts({ isFeatured: true }),
+    getProducts({ isOnSale: true }),
     getBillboard(),
     getInstagramPosts(),
   ]);
+
+  const biggestDiscount = getBiggestDiscount(saleProducts);
 
   return (
     <>
@@ -35,16 +41,30 @@ const HomePage = async () => {
           <></>
         </PageSection>
 
-        <PageSection
-          smallText="Akcijos"
-          bigText="Švelnumas už mažiau"
-          position="left"
-          link={{ label: 'Žiūrėti akcijas', href: '/' }}
-        >
-          <div className="flex flex-col gap-y-8">
-            <ProductList items={products} />
+        <div className="from-salmon-100 to-salmon-200 w-full space-y-4 rounded-3xl bg-linear-to-r px-16 py-18">
+          <div className="flex flex-col items-start sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex flex-col gap-2">
+              <h1 className="font-accent text-3xl font-black text-neutral-900 sm:text-3xl lg:text-5xl">
+                Švelnumas už <span className="text-salmon-700">mažiau</span>
+              </h1>
+              <p>
+                Atrinkti mūsų komandos favoritai su nuolaida iki{' '}
+                <span className="text-salmon-700 font-accent font-semibold">-{biggestDiscount}%</span>. Pasiūlymai
+                galioja, kol baigsis prekių likučiai.
+              </p>
+            </div>
+            <Link
+              href="/akcijos"
+              className="group hover:text-salmon-700 font-accent inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-neutral-900 transition sm:text-base"
+            >
+              Visos akcijos
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
           </div>
-        </PageSection>
+          <div className="flex flex-col gap-y-8">
+            <ProductList items={saleProducts} variant="rail" />
+          </div>
+        </div>
 
         <PageSection
           smallText="Rekomenduojama"
@@ -53,7 +73,7 @@ const HomePage = async () => {
           link={{ label: 'Žiūrėti rekomendacijas', href: '/' }}
         >
           <div className="flex flex-col gap-y-8">
-            <ProductList items={products} />
+            <ProductList items={featuredProducts} variant="rail" />
           </div>
         </PageSection>
 

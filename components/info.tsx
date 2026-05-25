@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 import { RichTextContent } from '@/components/ui/rich-text-content';
+import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
 
 type Props = {
@@ -24,6 +25,7 @@ export const Info = ({ data }: Props) => {
   const isInStock = data.amountInStock > 0;
   const isInWishlist = wishlist.hasItem(data.id);
   const hasDescription = Boolean(data.description?.trim());
+  const pricing = getProductPricing(data);
 
   const onAddToCart = () => {
     cart.addItem(data.id);
@@ -73,11 +75,24 @@ export const Info = ({ data }: Props) => {
           variant="rounded"
           color={isInStock ? 'green' : 'rose'}
         />
+
+        {pricing.isOnSale && <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="salmon" />}
       </div>
 
       <div className="flex justify-between gap-4">
         <h1 className="text-3xl leading-tight font-bold text-neutral-900 sm:text-4xl">{data.name}</h1>
-        <div className="text-3xl font-bold text-neutral-900">{toCurrency(data.price)}</div>
+        <div className="text-right">
+          {pricing.isOnSale && (
+            <div className="font-accent text-base font-medium text-neutral-400 line-through">
+              {toCurrency(pricing.regularPrice)}
+            </div>
+          )}
+          <div
+            className={cn('font-accent text-3xl font-bold', pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900')}
+          >
+            {toCurrency(pricing.effectivePrice)}
+          </div>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6">

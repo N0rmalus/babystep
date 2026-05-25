@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { toCurrency } from '@/business/to-currency';
+import { getProductPricing } from '@/business/product-pricing';
 import Button from '@/components/ui/button';
 import { BadgePercent } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -44,17 +45,11 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4 text-sm">
             <p className="text-neutral-600">Prekės ({productIds.length})</p>
-            <div className='font-semibold text-neutral-900 font-accent'>{toCurrency(subtotal)}</div>
+            <div className="font-accent font-semibold text-neutral-900">{toCurrency(subtotal)}</div>
           </div>
           <div className="border-tumbleweed-500 ml-4 border-l border-dotted">
             {products.map((product) => (
-              <div
-                key={product.id}
-                className="flex min-w-0 flex-row items-center justify-between gap-3 pl-2 text-xs text-neutral-600"
-              >
-                <span className="min-w-0 wrap-break-word sm:truncate">{product.name}</span>
-                <div className="text-sm text-neutral-600 sm:shrink-0">{toCurrency(Number(product.price))}</div>
-              </div>
+              <PriceRow key={product.id} product={product} />
             ))}
           </div>
         </div>
@@ -83,7 +78,7 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
       <div>
         <div className="flex items-center justify-between gap-4 text-sm">
           <p className="text-neutral-600">Suma</p>
-          <div className='text-lg font-accent font-semibold text-neutral-900'>{toCurrency(total)}</div>
+          <div className="font-accent text-lg font-semibold text-neutral-900">{toCurrency(total)}</div>
         </div>
       </div>
 
@@ -110,6 +105,19 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
             fullWidth
           />
         </div>
+      </div>
+    </div>
+  );
+};
+
+const PriceRow = ({ product }: { product: Product }) => {
+  const pricing = getProductPricing(product);
+
+  return (
+    <div className="flex min-w-0 flex-row items-center justify-between gap-3 pl-2 text-xs text-neutral-600">
+      <span className="min-w-0 wrap-break-word sm:truncate">{product.name}</span>
+      <div className="text-right text-sm text-neutral-600 sm:shrink-0">
+        <span>{toCurrency(pricing.effectivePrice)}</span>
       </div>
     </div>
   );
