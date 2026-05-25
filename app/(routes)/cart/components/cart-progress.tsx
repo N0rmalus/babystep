@@ -1,38 +1,35 @@
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 import { toCurrency } from '@/business/to-currency';
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/consts';
 
 type Props = {
-  subtotal: number;
-  freeShippingThreshold: number;
+  freeShippingProgress: number;
+  remainingForFreeShipping: number;
 };
 
-export const CartProgress = ({ subtotal, freeShippingThreshold }: Props) => {
-  const normalizedSubtotal = Math.max(subtotal, 0);
-  const progress = Math.min((normalizedSubtotal / freeShippingThreshold) * 100, 100);
-  const remaining = Math.max(freeShippingThreshold - normalizedSubtotal, 0);
-
+export const CartProgress = ({ freeShippingProgress, remainingForFreeShipping }: Props) => {
   return (
     <PaperWrapper>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-neutral-900">Privalumai</h2>
-        <p className="text-sm text-neutral-600">Nemokamas pristatymas nuo {toCurrency(freeShippingThreshold)}</p>
+        <h2 className="text-lg font-semibold text-neutral-900">Nemokamas pristatymas</h2>
+        <p className="text-sm text-neutral-600">Nuo {toCurrency(FREE_SHIPPING_THRESHOLD)}</p>
       </div>
 
       <div
         className="mt-4 h-2.5 overflow-hidden rounded-full bg-neutral-100"
         role="progressbar"
-        aria-valuenow={progress}
+        aria-valuenow={freeShippingProgress}
       >
         <div
-          className="h-full rounded-full bg-tumbleweed-400 transition-all duration-500"
-          style={{ width: `${progress}%` }}
+          className="bg-tumbleweed-400 h-full rounded-full transition-all duration-500"
+          style={{ width: `${freeShippingProgress}%` }}
         />
       </div>
 
       <p className="mt-3 text-sm font-medium text-neutral-700">
-        {remaining === 0
+        {remainingForFreeShipping === 0
           ? 'Puiku! Nemokamas pristatymas jau pritaikytas.'
-          : `Pridėk prekių dar už ${toCurrency(remaining)} ir gausi nemokamą pristatymą.`}
+          : `Pridėk prekių dar už ${toCurrency(remainingForFreeShipping)} ir gausi nemokamą pristatymą.`}
       </p>
     </PaperWrapper>
   );

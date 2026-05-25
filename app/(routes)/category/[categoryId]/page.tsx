@@ -2,7 +2,7 @@ import getCategory from '@/actions/get-category';
 import getProducts from '@/actions/get-products';
 import getSubcategories from '@/actions/get-subcategories';
 
-import Billboard from '@/components/ui/billboard';
+import { Billboard } from '@/components/ui/billboard';
 import Container from '@/components/ui/container';
 import NoResults from '@/components/ui/no-results';
 import { ProductCard } from '@/components/ui/product-card/product-card';

@@ -1,7 +1,6 @@
 'use client';
 
 import { Product } from '@/actions/types';
-import Currency from '@/components/ui/currency';
 import { useRouter } from 'next/navigation';
 import usePreviewModal from '@/hooks/use-preview-modal';
 import useCart from '@/hooks/use-cart';
@@ -12,6 +11,8 @@ import IconButton from '@/components/ui/icon-button';
 import { Expand, Heart, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from '@/components/ui/button';
+import { getImageUrl } from '@/lib/image-url';
+import { toCurrency } from '@/business/to-currency';
 
 type Props = {
   data: Product;
@@ -26,7 +27,7 @@ export const ProductCard = ({ data }: Props) => {
   const isInStock = data.amountInStock > 0;
   const isInCart = cart.items.some((item) => item === data.id);
   const isInWishlist = wishlist.items.some((item) => item === data.id);
-  const imageUrl = data.images?.[0]?.url ?? '/placeholder.webp';
+  const imageUrl = getImageUrl(data.images?.at(0)?.url);
   const categoryName = data.subcategory?.category?.name ?? 'Kategorija';
   const subcategoryName = data.subcategory?.name ?? 'Subkategorija';
 
@@ -89,9 +90,7 @@ export const ProductCard = ({ data }: Props) => {
           </div>
 
           <div className="mt-3 flex items-center justify-between gap-2">
-            <div className="font-accent text-lg font-bold text-neutral-900">
-              <Currency value={data.price} />
-            </div>
+            <div className="font-accent text-lg font-bold text-neutral-900">{toCurrency(data.price)}</div>
             <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>

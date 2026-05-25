@@ -3,34 +3,21 @@ import { toCurrency } from '@/business/to-currency';
 import Button from '@/components/ui/button';
 import { BadgePercent } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useMemo, useState } from 'react';
-import { Product } from '@/actions/types';
+import { useState } from 'react';
+import type { Product } from '@/actions/types';
 
 type Props = {
   productIds: string[];
   products: Product[];
-  items: string[];
-  freeShippingThreshold: number;
+  subtotal: number;
+  shippingPrice: number;
 };
 
-export const PriceContainer = ({ productIds, products, items, freeShippingThreshold }: Props) => {
+export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }: Props) => {
   const [couponCode, setCouponCode] = useState('');
   const [isCouponApplied, setIsCouponApplied] = useState(false);
 
-  const subtotal = useMemo(() => {
-    return products.reduce((total, product) => total + Number(product.price), 0);
-  }, [products]);
-
   const discount = isCouponApplied ? subtotal * 0.1 : 0;
-
-  const shippingPrice = useMemo(() => {
-    if (items.length === 0) {
-      return 0;
-    }
-
-    return subtotal >= freeShippingThreshold ? 0 : 4.99;
-  }, [freeShippingThreshold, items.length, subtotal]);
-
   const total = subtotal + shippingPrice - discount;
 
   const onApplyCoupon = () => {
@@ -57,9 +44,9 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4 text-sm">
             <p className="text-neutral-600">Prekės ({productIds.length})</p>
-            <div className={cn('font-semibold text-neutral-900')}>{toCurrency(subtotal)}</div>
+            <div className='font-semibold text-neutral-900 font-accent'>{toCurrency(subtotal)}</div>
           </div>
-          <div className="ml-4 border-l border-dotted border-tumbleweed-500">
+          <div className="border-tumbleweed-500 ml-4 border-l border-dotted">
             {products.map((product) => (
               <div
                 key={product.id}
@@ -95,13 +82,13 @@ export const PriceContainer = ({ productIds, products, items, freeShippingThresh
 
       <div>
         <div className="flex items-center justify-between gap-4 text-sm">
-          <p className="text-neutral-600">Mokėtina suma</p>
-          <div className={cn('text-lg font-semibold text-neutral-900')}>{toCurrency(total)}</div>
+          <p className="text-neutral-600">Suma</p>
+          <div className='text-lg font-accent font-semibold text-neutral-900'>{toCurrency(total)}</div>
         </div>
       </div>
 
       <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
-        <label htmlFor="coupon" className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
+        <label htmlFor="coupon" className="text-xs font-semibold tracking-[0.16em] text-neutral-500 uppercase">
           Nuolaidos kodas
         </label>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">

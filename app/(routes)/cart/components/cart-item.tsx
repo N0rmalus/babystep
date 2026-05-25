@@ -8,6 +8,7 @@ import { Product } from '@/actions/types';
 import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { toCurrency } from '@/business/to-currency';
+import { getImageUrl } from '@/lib/image-url';
 
 type Props = {
   data: Product;
@@ -16,7 +17,7 @@ type Props = {
 export const CartItem = ({ data }: Props) => {
   const router = useRouter();
   const isInStock = data.amountInStock > 0;
-  const productImageUrl = data.images[0]?.url ?? '/placeholder.webp';
+  const productImageUrl = getImageUrl(data.images.at(0)?.url);
 
   const wishlist = useWishlist();
   const cart = useCart();
@@ -35,7 +36,12 @@ export const CartItem = ({ data }: Props) => {
       onClick={() => {
         router.push(`/product/${data.id}`);
       }}
-      className="cursor-pointer rounded-3xl border border-neutral-200 bg-white p-5 shadow-xs transition-colors duration-300 hover:border-tumbleweed-300 sm:p-6"
+      className={cn(
+        'cursor-pointer rounded-3xl border bg-white p-5 shadow-xs transition-colors duration-300 sm:p-6',
+        isInStock
+          ? 'hover:border-tumbleweed-300 border-neutral-200'
+          : 'border-rose-200 opacity-75 hover:border-rose-300',
+      )}
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
         <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-2xl bg-neutral-100 sm:h-36 sm:w-36">
@@ -43,7 +49,7 @@ export const CartItem = ({ data }: Props) => {
             fill
             src={productImageUrl}
             alt={data.name}
-            className="object-cover object-center"
+            className={cn('object-cover object-center', !isInStock && 'grayscale')}
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             loading="eager"
           />
@@ -66,7 +72,7 @@ export const CartItem = ({ data }: Props) => {
                   className="pointer-events-none relative z-10 -mx-1 inline-flex h-2 w-2 shrink-0"
                   aria-hidden="true"
                 >
-                  <span className="h-2 w-2 rounded-full bg-tumbleweed-200" />
+                  <span className="bg-tumbleweed-200 h-2 w-2 rounded-full" />
                 </span>
 
                 <Badge
@@ -87,8 +93,8 @@ export const CartItem = ({ data }: Props) => {
             </div>
 
             <div className="mt-auto pt-4">
-              <h3 className="wrap-break-word text-xl leading-tight text-neutral-900">{data.name}</h3>
-              <span className="text-2xl font-bold text-neutral-900">{toCurrency(Number(data.price))}</span>
+              <h3 className="text-xl leading-tight wrap-break-word text-neutral-900">{data.name}</h3>
+              <span className="font-accent text-2xl font-bold text-neutral-900">{toCurrency(Number(data.price))}</span>
             </div>
           </div>
 

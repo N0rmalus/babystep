@@ -19,7 +19,7 @@ const supportLinks = ['Pristatymas', 'Grąžinimai', 'Taisyklės ir sąlygos', '
 
 export const Footer = () => {
   return (
-    <footer className="border-tumbleweed-100 w-full border-t bg-white/90">
+    <div className="w-full bg-white">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 pt-0 pb-6 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-x-5 gap-y-8 pt-8 pb-2 md:grid-cols-2 md:gap-x-10 md:gap-y-10 lg:grid-cols-[1.4fr_1fr_1fr_1.15fr]">
           <div className="col-span-2 max-w-sm md:col-span-1">
@@ -102,6 +102,6 @@ export const Footer = () => {
           <p>&copy; 2026 Babystep. Visos teisės saugomos.</p>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };

@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, Ref } from 'react';
+import { ButtonHTMLAttributes, MouseEventHandler, ReactNode, Ref } from 'react';
 
 import { cn } from '@/lib/utils';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
@@ -12,7 +12,12 @@ const sizeClasses = {
   xl: 'px-9 py-5 text-xl',
 } as const;
 
-type Props = {
+type NativeButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'className' | 'disabled' | 'onClick' | 'type'
+>;
+
+type Props = NativeButtonProps & {
   variant?: ButtonVariant;
   size?: keyof typeof sizeClasses;
   label: ReactNode;
@@ -24,9 +29,9 @@ type Props = {
   className?: string;
   buttonRef?: Ref<HTMLButtonElement>;
 } & (
-  | { onClick?: MouseEventHandler<HTMLButtonElement>; type: 'submit' }
-  | { onClick: MouseEventHandler<HTMLButtonElement>; type?: 'button' }
-);
+    | { onClick?: MouseEventHandler<HTMLButtonElement>; type: 'submit' }
+    | { onClick: MouseEventHandler<HTMLButtonElement>; type?: 'button' }
+  );
 
 const Button = ({
   disabled,

@@ -1,8 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import Container from '@/components/ui/container';
 import useCart from '@/hooks/use-cart';
+import { useCartSummary } from '@/hooks/use-cart-summary';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
 import useResolvedProducts from '@/hooks/use-resolved-products';
@@ -14,18 +15,18 @@ import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import { PageHeader } from '@/components/page-header';
 import { ProductListEmptyBox } from '@/components/product-list-empty-box';
 
-const FREE_SHIPPING_THRESHOLD = 120;
-
 const CartPage = () => {
   const isMounted = useMounted();
   const itemIds = useCart((state) => state.items);
   const setItems = useCart((state) => state.setItems);
 
   const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);
-
-  const subtotal = useMemo(() => {
-    return products.reduce((total, product) => total + Number(product.price), 0);
-  }, [products]);
+  const cartSummary = useCartSummary({
+    productIds: itemIds,
+    products,
+    isLoading,
+    failedProductIds,
+  });
 
   const onFocusRefresh = useCallback(() => {
     refetch();
@@ -61,37 +62,33 @@ const CartPage = () => {
   const isCartEmpty = itemIds.length === 0;
 
   return (
-    <Container>
-      <div className="flex flex-col gap-8">
-        <PageHeader title="Paruošta atsiskaitymui" description="Pirkinių krepšelis" />
+    <Container className="flex flex-col gap-8">
+      <PageHeader title="Paruošta atsiskaitymui" description="Tavo krepšelis" />
 
-        {isCartEmpty && <ProductListEmptyBox variant="cart" />}
+      {isCartEmpty && <ProductListEmptyBox variant="cart" />}
 
-        {!isCartEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <CartLoadingState />}
+      {!isCartEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <CartLoadingState />}
 
-        {failedProductIds.length > 0 && <ProductListFailedBox onFocusRefresh={onFocusRefresh} />}
+      {failedProductIds.length > 0 && <ProductListFailedBox onFocusRefresh={onFocusRefresh} />}
 
-        {!isCartEmpty && !isResolvingProducts && (
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-            <div className="space-y-5 lg:col-span-7">
-              <CartProgress subtotal={subtotal} freeShippingThreshold={FREE_SHIPPING_THRESHOLD} />
-
-              <ul className="space-y-4">
-                {products.map((product) => (
-                  <CartItem key={product.id} data={product} />
-                ))}
-              </ul>
-            </div>
-
-            <Summary
-              productIds={itemIds}
-              products={products}
-              isResolvingProducts={isResolvingProducts}
-              freeShippingThreshold={FREE_SHIPPING_THRESHOLD}
+      {!isCartEmpty && !isResolvingProducts && (
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
+          <div className="space-y-5 lg:col-span-7">
+            <CartProgress
+              freeShippingProgress={cartSummary.freeShippingProgress}
+              remainingForFreeShipping={cartSummary.remainingForFreeShipping}
             />
+
+            <ul className="space-y-4">
+              {products.map((product) => (
+                <CartItem key={product.id} data={product} />
+              ))}
+            </ul>
           </div>
-        )}
-      </div>
+
+          <Summary productIds={itemIds} products={products} cartSummary={cartSummary} />
+        </div>
+      )}
     </Container>
   );
 };

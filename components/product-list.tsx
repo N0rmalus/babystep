@@ -3,7 +3,7 @@ import NoResults from '@/components/ui/no-results';
 import { ProductCard } from '@/components/ui/product-card/product-card';
 
 interface Props {
-  title: string;
+  title?: string;
   items: Product[];
 }
 

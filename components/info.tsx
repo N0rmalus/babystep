@@ -3,13 +3,13 @@
 import { Heart, ShoppingCart } from 'lucide-react';
 import { Product } from '@/actions/types';
 import Button from '@/components/ui/button';
-import Currency from '@/components/ui/currency';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 import { RichTextContent } from '@/components/ui/rich-text-content';
+import { toCurrency } from '@/business/to-currency';
 
 type Props = {
   data: Product;
@@ -54,7 +54,7 @@ export const Info = ({ data }: Props) => {
             />
 
             <span className="pointer-events-none relative z-10 -mx-1 inline-flex h-2 w-2 shrink-0" aria-hidden="true">
-              <span className="h-2 w-2 rounded-full bg-tumbleweed-200" />
+              <span className="bg-tumbleweed-200 h-2 w-2 rounded-full" />
             </span>
 
             <Badge
@@ -76,14 +76,12 @@ export const Info = ({ data }: Props) => {
       </div>
 
       <div className="flex justify-between gap-4">
-        <h1 className="text-3xl font-bold leading-tight text-neutral-900 sm:text-4xl">{data.name}</h1>
-        <div className="text-3xl font-bold text-neutral-900">
-          <Currency value={data?.price} />
-        </div>
+        <h1 className="text-3xl leading-tight font-bold text-neutral-900 sm:text-4xl">{data.name}</h1>
+        <div className="text-3xl font-bold text-neutral-900">{toCurrency(data.price)}</div>
       </div>
 
       <div className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6">
-        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">Aprašymas</h3>
+        <h3 className="text-sm font-semibold tracking-[0.18em] text-neutral-500 uppercase">Aprašymas</h3>
         {hasDescription ? (
           <RichTextContent content={data.description} className="mt-4" />
         ) : (

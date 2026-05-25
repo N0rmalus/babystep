@@ -4,17 +4,18 @@ import { Heart, ShoppingBag } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import Button from '@/components/ui/button';
-import useCart from '@/hooks/use-cart';
+import { CartPopover } from '@/components/cart-popover';
 import useMounted from '@/hooks/use-mounted';
 import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
+import useCart from '@/hooks/use-cart';
 
 export const NavbarActions = () => {
   const isMounted = useMounted();
   const isInWishlistPage = usePathname().includes('/wishlist');
   const isInCartPage = usePathname().includes('/cart');
-
   const router = useRouter();
+
   const cart = useCart();
   const wishlist = useWishlist();
 
@@ -39,16 +40,20 @@ export const NavbarActions = () => {
         aria-label="Norai"
         className={actionButtonClasses}
       />
-      <Button
-        onClick={() => router.push('/cart')}
-        variant="secondary"
-        elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
-        elementAfter={<span className={badgeClasses}>{cart.items.length}</span>}
-        label={<span className="hidden xl:inline">Krepšelis</span>}
-        size="sm"
-        aria-label="Krepšelis"
-        className={actionButtonClasses}
-      />
+      {!isInCartPage ? (
+        <CartPopover />
+      ) : (
+        <Button
+          onClick={() => router.push('/cart')}
+          variant="secondary"
+          elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
+          elementAfter={<span className={badgeClasses}>{cart.items.length}</span>}
+          label={<span className="hidden xl:inline">Krepšelis</span>}
+          size="sm"
+          aria-label="Krepšelis"
+          className={actionButtonClasses}
+        />
+      )}
     </div>
   );
 };

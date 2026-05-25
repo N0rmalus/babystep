@@ -1,15 +1,16 @@
 import { Billboard as BillboardType } from '@/actions/types';
 import { Bird } from 'lucide-react';
+import { getImageUrl } from '@/lib/image-url';
 
-interface BillboardProps {
+type Props = {
   data: BillboardType;
-}
+};
 
-const Billboard: React.FC<BillboardProps> = ({ data }) => {
+export const Billboard = ({ data }: Props) => {
   return (
     <div className="overflow-hidden rounded-xl">
       <div
-        style={{ backgroundImage: `url(${data.imageUrl})`, backgroundPosition: 'center' }}
+        style={{ backgroundImage: `url(${getImageUrl(data.imageUrl)})`, backgroundPosition: 'center' }}
         className="relative aspect-square overflow-hidden rounded-xl bg-cover md:aspect-[2.4/1]"
       >
         <div className="flex h-full w-full flex-col items-center justify-center gap-y-8 text-center">
@@ -21,5 +22,3 @@ const Billboard: React.FC<BillboardProps> = ({ data }) => {
     </div>
   );
 };
-
-export default Billboard;

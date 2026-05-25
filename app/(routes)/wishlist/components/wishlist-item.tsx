@@ -5,12 +5,13 @@ import { Expand, Heart, ShoppingCart, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Product } from '@/actions/types';
 import IconButton from '@/components/ui/icon-button';
-import Currency from '@/components/ui/currency';
 import usePreviewModal from '@/hooks/use-preview-modal';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
 import Button from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { getImageUrl } from '@/lib/image-url';
+import { toCurrency } from '@/business/to-currency';
 
 type Props = {
   data: Product;
@@ -24,7 +25,7 @@ export const WishlistItem = ({ data }: Props) => {
 
   const isInStock = data.amountInStock > 0;
   const isInCart = cart.items.some((item) => item === data.id);
-  const imageUrl = data.images[0]?.url ?? '/placeholder.webp';
+  const imageUrl = getImageUrl(data.images.at(0)?.url);
 
   const onPreview = () => {
     previewModal.onOpen(data);
@@ -53,12 +54,12 @@ export const WishlistItem = ({ data }: Props) => {
           loading="eager"
         />
 
-        <div className="absolute left-3 top-3 flex flex-wrap items-center gap-2">
+        <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
           {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
           {data.isFeatured && <Badge label="Rekomenduojama" variant="rounded" color="tumbleweed-outlined" />}
         </div>
 
-        <div className="absolute bottom-0 right-3 top-3 flex flex-col gap-2">
+        <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2">
           <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
           <IconButton
             onClick={onRemoveFromWishlist}
@@ -70,18 +71,16 @@ export const WishlistItem = ({ data }: Props) => {
       </div>
 
       <div className="p-4">
-        <div className="flex min-h-[88px] flex-col justify-between">
+        <div className="flex min-h-22 flex-col justify-between">
           <div>
-            <h3 className="text-base font-semibold leading-tight text-neutral-900">{data.name}</h3>
+            <h3 className="text-base leading-tight font-semibold text-neutral-900">{data.name}</h3>
             <p className="mt-2 text-xs text-neutral-500">
               {data.subcategory.category.name} • {data.subcategory.name}
             </p>
           </div>
 
           <div className="mt-3 flex items-center justify-between gap-2">
-            <div className="text-lg font-bold text-neutral-900">
-              <Currency value={data.price} />
-            </div>
+            <div className="text-lg font-bold text-neutral-900">{toCurrency(data.price)}</div>
             <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>

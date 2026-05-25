@@ -1,23 +1,44 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Category, Subcategory } from '@/actions/types';
+import {
+  autoUpdate,
+  flip,
+  FloatingFocusManager,
+  FloatingPortal,
+  offset,
+  safePolygon,
+  shift,
+  useDismiss,
+  useFloating,
+  useFocus,
+  useHover,
+  useInteractions,
+  useRole,
+  useTransitionStyles,
+} from '@floating-ui/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 
-interface Props {
+import type { Category, Subcategory } from '@/actions/types';
+import { cn } from '@/lib/utils';
+
+type Props = {
   data: Category[];
   subcategories: Subcategory[];
-}
+};
+
+type DesktopNavItemProps = {
+  category: Category;
+  isActive: boolean;
+  subcategories: Subcategory[];
+};
 
 export const MainNav = ({ data, subcategories }: Props) => {
   const pathname = usePathname();
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openMobileCategory, setOpenMobileCategory] = useState<string | null>(null);
-  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const subcategoriesByCategory = useMemo(() => {
     const grouped: Record<string, Subcategory[]> = {};
@@ -34,32 +55,10 @@ export const MainNav = ({ data, subcategories }: Props) => {
 
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
-    setOpenDropdown(null);
     setIsMobileMenuOpen(false);
     setOpenMobileCategory(null);
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [pathname]);
-
-  useEffect(() => {
-    return () => {
-      if (closeTimeout.current) {
-        clearTimeout(closeTimeout.current);
-      }
-    };
-  }, []);
-
-  const handleMouseEnter = (categoryId: string) => {
-    if (closeTimeout.current) {
-      clearTimeout(closeTimeout.current);
-    }
-    setOpenDropdown(categoryId);
-  };
-
-  const handleMouseLeave = () => {
-    closeTimeout.current = setTimeout(() => {
-      setOpenDropdown(null);
-    }, 120); // Small delay to allow moving to dropdown
-  };
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
@@ -83,42 +82,7 @@ export const MainNav = ({ data, subcategories }: Props) => {
           const isActive = pathname === `/category/${category.id}`;
           const subs = subcategoriesByCategory[category.id] || [];
 
-          return (
-            <div
-              key={category.id}
-              className="relative"
-              onMouseEnter={() => handleMouseEnter(category.id)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link
-                href={`/category/${category.id}`}
-                className={cn(
-                  'inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold tracking-wide transition-colors hover:text-black',
-                  isActive ? 'bg-neutral-100 text-black' : 'text-neutral-600',
-                )}
-              >
-                {category.name}
-                {subs.length > 0 && <ChevronDown size={14} />}
-              </Link>
-              {subs.length > 0 && openDropdown === category.id && (
-                <div
-                  className="absolute left-1/2 z-50 mt-2 w-56 -translate-x-1/2 rounded-xl border border-neutral-200 bg-white p-1 shadow-xl"
-                  onMouseEnter={() => handleMouseEnter(category.id)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  {subs.map((sub) => (
-                    <Link
-                      key={sub.id}
-                      href={`/category/${category.id}/${sub.id}`}
-                      className="block rounded-lg px-3 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-black"
-                    >
-                      {sub.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
+          return <DesktopNavItem key={category.id} category={category} isActive={isActive} subcategories={subs} />;
         })}
       </nav>
 
@@ -190,5 +154,99 @@ export const MainNav = ({ data, subcategories }: Props) => {
         </>
       )}
     </div>
+  );
+};
+
+const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const hasSubcategories = subcategories.length > 0;
+
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: 'bottom',
+    strategy: 'fixed',
+    whileElementsMounted: autoUpdate,
+    middleware: [offset(12), flip({ padding: 12 }), shift({ padding: 12 })],
+  });
+
+  const hover = useHover(context, {
+    enabled: hasSubcategories,
+    move: false,
+    delay: { open: 70, close: 240 },
+    handleClose: safePolygon({ blockPointerEvents: true }),
+  });
+
+  const focus = useFocus(context, {
+    enabled: hasSubcategories,
+  });
+
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'menu' });
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
+  const { setReference, setFloating } = refs;
+
+  const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
+    duration: {
+      open: 160,
+      close: 130,
+    },
+    common: {
+      transformOrigin: 'top center',
+    },
+    initial: {
+      opacity: 0,
+      transform: 'translateY(-6px) scale(0.98)',
+    },
+    open: {
+      opacity: 1,
+      transform: 'translateY(0) scale(1)',
+    },
+    close: {
+      opacity: 0,
+      transform: 'translateY(-4px) scale(0.98)',
+    },
+  });
+
+  return (
+    <>
+      <Link
+        ref={setReference}
+        href={`/category/${category.id}`}
+        className={cn(
+          'inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold tracking-wide transition-colors hover:text-black',
+          isActive || isOpen ? 'bg-neutral-100 text-black' : 'text-neutral-600',
+        )}
+        {...getReferenceProps({
+          onClick: () => setIsOpen(false),
+        })}
+      >
+        {category.name}
+        {hasSubcategories && (
+          <ChevronDown size={14} className={cn('transition-transform duration-200', isOpen && 'rotate-180')} />
+        )}
+      </Link>
+
+      {hasSubcategories && isMounted && (
+        <FloatingPortal>
+          <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
+            <div ref={setFloating} style={floatingStyles} className="z-50 w-56 outline-none" {...getFloatingProps()}>
+              <div style={transitionStyles} className="rounded-xl border border-neutral-200 bg-white p-1 shadow-xl">
+                {subcategories.map((subcategory) => (
+                  <Link
+                    key={subcategory.id}
+                    href={`/category/${category.id}/${subcategory.id}`}
+                    className="block rounded-lg px-3 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-black"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {subcategory.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
+      )}
+    </>
   );
 };

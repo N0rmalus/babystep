@@ -1,0 +1,22 @@
+<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bedBg" cx="30%" cy="30%" r="90%">
+      <stop offset="0%" stop-color="#F5EADA" />
+      <stop offset="60%" stop-color="#E8D7BE" />
+      <stop offset="100%" stop-color="#D9C3A3" />
+    </radialGradient>
+    <filter id="bedBlur">
+      <feGaussianBlur stdDeviation="8" />
+    </filter>
+    <pattern id="bedKnit" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+      <path d="M0 3 Q1.5 0 3 3 T6 3" stroke="#D9C3A3" stroke-width="0.8" fill="none" opacity="0.5" />
+    </pattern>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#bedBg)" />
+  <ellipse cx="120" cy="260" rx="180" ry="50" fill="#D9C3A3" opacity="0.4" filter="url(#bedBlur)" />
+  <path d="M40 180 Q120 120 220 150 T380 160 L380 300 L0 300 Z" fill="#E8D7BE" opacity="0.9" />
+  <path d="M60 200 Q140 160 240 180 T380 190 L380 300 L20 300 Z" fill="#F5EADA" />
+  <path d="M80 230 Q180 210 280 225 T400 230 L400 300 L80 300 Z" fill="#fff" opacity="0.5" />
+  <rect width="400" height="300" fill="url(#bedKnit)" opacity="0.6" />
+</svg>

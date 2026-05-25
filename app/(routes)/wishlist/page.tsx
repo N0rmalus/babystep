@@ -120,71 +120,69 @@ const WishlistPage = () => {
   const isResolvingProducts = isLoading || missingProductIds.length > 0 || failedProductIds.length > 0;
 
   return (
-    <Container>
-      <div className="flex flex-col gap-8">
-        <PageHeader
-          title="Norų sąrašas"
-          description={
-            itemIds.length === 0
-              ? 'Sąrašas dar tuščias. Peržiūrėk katalogą ir išsisaugok patikusias prekes.'
-              : `${products.length} prekės laukia, kol nuspręsi dėl pirkimo.`
-          }
-        />
+    <Container className="flex flex-col gap-8">
+      <PageHeader
+        title="Norų sąrašas"
+        description={
+          itemIds.length === 0
+            ? 'Sąrašas dar tuščias. Peržiūrėk katalogą ir išsisaugok patikusias prekes.'
+            : `${products.length} prekės laukia, kol nuspręsi dėl pirkimo.`
+        }
+      />
 
-        {isWishlistEmpty && <ProductListEmptyBox variant="wishlist" />}
+      {isWishlistEmpty && <ProductListEmptyBox variant="wishlist" />}
 
-        {!isWishlistEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <WishlistLoadingState />}
+      {!isWishlistEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <WishlistLoadingState />}
 
-        {failedProductIds.length > 0 && <ProductListFailedBox onFocusRefresh={onFocusRefresh} />}
+      {failedProductIds.length > 0 && <ProductListFailedBox onFocusRefresh={onFocusRefresh} />}
 
-        {!isWishlistEmpty && !isResolvingProducts && (
-          <div className="flex flex-col gap-8">
-            <WishlistToolbar
-              searchQuery={searchQuery}
-              onSearchQueryChange={setSearchQuery}
-              stockFilter={stockFilter}
-              onStockFilterChange={setStockFilter}
-              sortBy={sortBy}
-              onSortChange={setSortBy}
-              visibleCount={filteredItems.length}
-              totalCount={products.length}
-            />
+      {!isWishlistEmpty && !isResolvingProducts && (
+        <div className="flex flex-col gap-8">
+          <WishlistToolbar
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+            stockFilter={stockFilter}
+            onStockFilterChange={setStockFilter}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            visibleCount={filteredItems.length}
+            totalCount={products.length}
+          />
 
-            {!(filteredItems.length > 0) && !isResolvingProducts ? (
-              <div className="flex flex-col items-center justify-center gap-5 py-20">
-                <p className="text-lg font-semibold text-neutral-900">Prekių nerasta</p>
-                <p className="text-sm text-neutral-600">Pabandykite pakoreguoti paiešką arba atstatyti filtrus.</p>
-                <button
-                  onClick={onResetFilters}
-                  className="inline-flex items-center justify-center rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-80"
-                >
-                  Atstatyti filtrus
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-                {filteredItems.map((item) => (
-                  <WishlistItem key={item.id} data={item} />
-                ))}
-              </div>
-            )}
+          {!(filteredItems.length > 0) && !isResolvingProducts ? (
+            <div className="flex flex-col items-center justify-center gap-5 py-20">
+              <p className="text-lg font-semibold text-neutral-900">Prekių nerasta</p>
+              <p className="text-sm text-neutral-600">Pabandykite pakoreguoti paiešką arba atstatyti filtrus.</p>
+              <button
+                onClick={onResetFilters}
+                className="inline-flex items-center justify-center rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-80"
+              >
+                Atstatyti filtrus
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+              {filteredItems.map((item) => (
+                <WishlistItem key={item.id} data={item} />
+              ))}
+            </div>
+          )}
 
-            <PaperWrapper className="flex flex-col items-center gap-4 border-dashed md:flex-row md:justify-between">
-              <p className="text-neutral-600">Dar neradai ko ieškai? Peržiūrėk visas kategorijas.</p>
-              <div className="flex items-center gap-2">
-                <LinkButton href="/" label="Tęsti naršymą" variant="secondary" size="sm" />
-                <Button
-                  onClick={onClearWishlist}
-                  elementBefore={<Trash2 size={15} />}
-                  variant="danger"
-                  size="sm"
-                  label="Išvalyti sąrašą"
-                />
-              </div>
-            </PaperWrapper>
-          </div>
-        )}
-      </div>
+          <PaperWrapper className="flex flex-col items-center gap-4 border-dashed md:flex-row md:justify-between">
+            <p className="text-neutral-600">Dar neradai ko ieškai? Peržiūrėk visas kategorijas.</p>
+            <div className="flex items-center gap-2">
+              <LinkButton href="/" label="Tęsti naršymą" variant="secondary" size="sm" />
+              <Button
+                onClick={onClearWishlist}
+                elementBefore={<Trash2 size={15} />}
+                variant="danger"
+                size="sm"
+                label="Išvalyti sąrašą"
+              />
+            </div>
+          </PaperWrapper>
+        </div>
+      )}
     </Container>
   );
 };

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import IconButton from '@/components/ui/icon-button';
 import { Expand, Heart, ShoppingCart, X } from 'lucide-react';
+import { getImageUrl } from '@/lib/image-url';
 
 type ProductCardImageProps = {
   imageUrl: string;
@@ -19,7 +20,7 @@ export const ProductCardImage = ({
 }: ProductCardImageProps) => (
   <div className="relative aspect-square overflow-hidden rounded-xl bg-gray-100 shadow-xs">
     <Image
-      src={imageUrl}
+      src={getImageUrl(imageUrl)}
       fill
       alt="Image"
       className="aspect-square rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"

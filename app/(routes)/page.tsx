@@ -1,53 +1,95 @@
 import getBillboard from '@/actions/get-billboard';
+import { getInstagramPosts } from '@/actions/get-instagram-posts';
 import getProducts from '@/actions/get-products';
-import Billboard from '@/components/ui/billboard';
+import { Billboard } from '@/components/ui/billboard';
 import { ProductList } from '@/components/product-list';
 import Container from '@/components/ui/container';
-import Image from 'next/image';
+import { InstagramFeed } from '@/app/(routes)/components/instagram-feed';
+import { PageSection } from '@/app/(routes)/components/page-section';
+import { PromoStrip } from '@/app/(routes)/components/promo-strip';
 
 export const revalidate = 0;
 
 const HomePage = async () => {
-  const products = await getProducts({ isFeatured: true });
-  const billboard = await getBillboard();
+  const [products, billboard, instagramPosts] = await Promise.all([
+    getProducts({ isFeatured: true }),
+    getBillboard(),
+    getInstagramPosts(),
+  ]);
 
   return (
-    <Container>
-      <div className="mt-8 mb-16 flex flex-col gap-16">
-        <section className="flex flex-col items-center gap-8 md:flex-row">
-          <div className="flex flex-1 flex-col items-start gap-6">
-            <h1 className="text-4xl leading-tight font-extrabold text-gray-900 md:text-5xl">
-              Sveiki atvykę į <span className="text-tumbleweed-300">BabyStep.lt!</span>
-            </h1>
-            <p className="max-w-xl text-lg text-gray-600">
-              Atraskite aukščiausios kokybės produktus, skirtus jūsų mažyliui – nuo drabužių iki žaislų, viskas vienoje
-              vietoje.
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <Image
-              src="/logo.png"
-              alt="Baby Step"
-              width={400}
-              height={400}
-              className="h-auto w-55 object-contain drop-shadow-[0_0_30px_rgba(217,163,127,0.7)] transition-transform duration-200 ease-out hover:scale-[1.03] hover:rotate-6 sm:w-70 md:w-90"
-            />
-          </div>
-        </section>
-
+    <>
+      <Container className="flex flex-col gap-8">
         <Billboard data={billboard} />
+      </Container>
 
-        <section id="featured" className="flex flex-col gap-8">
-          <div className="flex flex-col items-center gap-2">
-            <h2 className="text-tumbleweed-300 text-3xl font-bold">Rekomenduojama</h2>
-            <p className="text-base text-gray-500">Mūsų rekomenduojami produktai jūsų mažyliui</p>
-          </div>
+      <PromoStrip />
+
+      <Container className="flex flex-col gap-8">
+        <PageSection
+          smallText="Rinkis produktus pagal kategorijas"
+          bigText="Atrask, ko ieško mažylis"
+          position="center"
+        >
+          {/* Kategorijų mozaika */}
+          <></>
+        </PageSection>
+
+        <PageSection
+          smallText="Akcijos"
+          bigText="Švelnumas už mažiau"
+          position="left"
+          link={{ label: 'Žiūrėti akcijas', href: '/' }}
+        >
           <div className="flex flex-col gap-y-8">
-            <ProductList title="" items={products} />
+            <ProductList items={products} />
           </div>
-        </section>
-      </div>
-    </Container>
+        </PageSection>
+
+        <PageSection
+          smallText="Rekomenduojama"
+          bigText="Mūsų rekomenduojami produktai jūsų mažyliui"
+          position="left"
+          link={{ label: 'Žiūrėti rekomendacijas', href: '/' }}
+        >
+          <div className="flex flex-col gap-y-8">
+            <ProductList items={products} />
+          </div>
+        </PageSection>
+
+        <PageSection
+          smallText="Tinklaraištis"
+          bigText="Patarimai tėvams"
+          position="left"
+          link={{ label: 'Žiūrėti įrašus', href: '/' }}
+        >
+          {/* Blogo įrašų sąrašas */}
+          <></>
+        </PageSection>
+
+        <PageSection
+          smallText="Sek mus Instagrame ir pasidalink savo nuotraukomis su #babystepLT"
+          bigText="@babystep.lt"
+          position="center"
+        >
+          <InstagramFeed posts={instagramPosts} />
+        </PageSection>
+
+        <div className="from-tumbleweed-100 to-salmon-100 w-full rounded-3xl bg-linear-to-r p-20">
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-col gap-4">
+              <h1 className="font-accent text-3xl font-black text-neutral-900 sm:text-3xl lg:text-5xl">
+                Pirmieji sužinokite <br /> <span className="text-salmon-700">naujienas</span>
+              </h1>
+              <p className="text-neutral-600">
+                Prenumeruok naujienlaiškį ir pirmas sužinok apie naujienas, išpardavimus ir patarimus tėvams. Nuolaida
+                atkeliaus į el. paštą per kelias minutes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </>
   );
 };
 

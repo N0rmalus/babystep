@@ -1,9 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
+import Image from 'next/image';
 import { Image as ImageType } from '@/actions/types';
 import { GalleryTab } from '@/components/gallery/gallery-tab';
 import { ImageLightbox } from '@/components/ui/image-lightbox';
+import { IMAGE_PLACEHOLDER_URL } from '@/lib/consts';
+import { getImageUrl } from '@/lib/image-url';
 
 interface Props {
   images: ImageType[];
@@ -14,8 +17,14 @@ export const Gallery = ({ images }: Props) => {
 
   if (images.length === 0) {
     return (
-      <div className="flex aspect-square items-center justify-center rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 text-sm font-medium text-neutral-500">
-        Nuotraukų nėra
+      <div className="relative aspect-square overflow-hidden rounded-2xl border border-dashed border-neutral-300 bg-neutral-50">
+        <Image
+          src={IMAGE_PLACEHOLDER_URL}
+          alt="Nuotraukų nėra"
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
+        />
       </div>
     );
   }
@@ -31,7 +40,7 @@ export const Gallery = ({ images }: Props) => {
                 {selectedIndex + 1} / {images.length}
               </div>
               <ImageLightbox
-                images={images.map((img) => ({ src: img.url }))}
+                images={images.map((img) => ({ src: getImageUrl(img.url) }))}
                 alt="Gallery Image"
                 className="cursor-pointer object-cover object-center"
                 startIndex={selectedIndex}
