@@ -123,6 +123,18 @@
   }
 }
 
+@utility tap-soft {
+  @apply transition-transform;
+}
+
+@utility tap-strong {
+  @apply transition;
+}
+
+@utility tap-surface {
+  @apply transition-colors;
+}
+
 @layer utilities {
   html,
   body,
@@ -159,6 +171,76 @@
   .animate-promo-conveyor {
     animation: promo-conveyor 60s linear infinite;
   }
+
+  .animate-empty-state-image-float {
+    animation: empty-state-image-float 7s ease-in-out infinite;
+  }
+
+  .animate-empty-state-cart-roll {
+    animation: empty-state-cart-roll 5s ease-in-out infinite;
+  }
+
+  .animate-empty-state-wishlist-heart {
+    animation: empty-state-wishlist-heart 6s ease-in-out infinite;
+  }
+
+  .animate-page-not-found-sign {
+    animation: page-not-found-sign 6s ease-in-out infinite;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .tap-soft {
+    @apply active:scale-[0.99];
+  }
+
+  .tap-strong {
+    @apply active:scale-[0.985] active:brightness-95;
+  }
+
+  .tap-surface {
+    @apply active:bg-neutral-100;
+  }
+}
+
+@keyframes empty-state-image-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes empty-state-cart-roll {
+  0%,
+  100% {
+    transform: translateX(0) rotate(-0.5deg);
+  }
+  50% {
+    transform: translateX(8px) rotate(0.5deg);
+  }
+}
+
+@keyframes empty-state-wishlist-heart {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(-0.5deg);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02) rotate(0.5deg);
+  }
+}
+
+@keyframes page-not-found-sign {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
 }
 
 @keyframes promo-conveyor {
@@ -173,6 +255,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .animate-promo-conveyor {
+    animation: none;
+  }
+
+  .animate-empty-state-image-float,
+  .animate-empty-state-cart-roll,
+  .animate-empty-state-wishlist-heart,
+  .animate-page-not-found-sign {
     animation: none;
   }
 }

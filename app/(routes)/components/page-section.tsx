@@ -28,16 +28,16 @@ export const PageSection = ({ children, smallText, bigText, position, link }: Pr
       >
         {position === 'center' ? (
           <>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-2">
               <p className="text-tumbleweed-700 text-xs font-semibold tracking-widest uppercase">{smallText}</p>
               <h1 className="font-accent text-3xl font-black sm:text-4xl">{bigText}</h1>
-              <div className="bg-tumbleweed-700 mt-4 h-1 w-60 rounded-full" />
+              <div className="bg-tumbleweed-700 mt-2 h-1 w-60 rounded-full" />
             </div>
             {link && <SectionLink link={link} />}
           </>
         ) : (
           <>
-            <div>
+            <div className="flex flex-col gap-1">
               <p className="text-tumbleweed-700 text-xs font-semibold tracking-widest uppercase">{smallText}</p>
               <h1 className="font-accent text-3xl font-black text-neutral-900 sm:text-4xl">{bigText}</h1>
             </div>

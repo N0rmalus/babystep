@@ -18,7 +18,7 @@ import { LinkButton } from '@/components/ui/link-button';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 import { PageHeader } from '@/components/page-header';
-import { ProductListEmptyBox } from '@/components/product-list-empty-box';
+import { EmptyWishlistState } from '@/app/(routes)/wishlist/components/empty-wishlist-state';
 
 const WishlistPage = () => {
   const isMounted = useMounted();
@@ -120,8 +120,16 @@ const WishlistPage = () => {
   const isWishlistEmpty = itemIds.length === 0;
   const isResolvingProducts = isLoading || missingProductIds.length > 0 || failedProductIds.length > 0;
 
+  if (isWishlistEmpty) {
+    return (
+      <Container>
+        <EmptyWishlistState />
+      </Container>
+    )
+  }
+
   return (
-    <Container className="flex flex-col gap-8">
+    <Container>
       <PageHeader
         title="Norų sąrašas"
         description={
@@ -130,8 +138,6 @@ const WishlistPage = () => {
             : `${products.length} prekės laukia, kol nuspręsi dėl pirkimo.`
         }
       />
-
-      {isWishlistEmpty && <ProductListEmptyBox variant="wishlist" />}
 
       {!isWishlistEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <WishlistLoadingState />}
 

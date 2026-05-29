@@ -5,6 +5,7 @@ import { Info } from '@/components/info';
 import { ProductList } from '@/components/product-list';
 import { RouteFocusRefresh } from '@/components/route-focus-refresh';
 import Container from '@/components/ui/container';
+import { notFound } from 'next/navigation';
 
 type Props = {
   params: Promise<{
@@ -18,8 +19,12 @@ const ProductPage = async ({ params }: Props) => {
   const { productId } = await params;
   const product = await getProduct(productId);
 
+  if (!product) {
+    notFound();
+  }
+
   const suggestedProducts = await getProducts({
-    categoryId: product?.subcategory?.categoryId,
+    categoryId: product.subcategory.categoryId,
   });
 
   return (

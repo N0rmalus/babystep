@@ -16,7 +16,7 @@ import {
   useRole,
   useTransitionStyles,
 } from '@floating-ui/react';
-import { ArrowRight, ShoppingBag, Trash2, Truck } from 'lucide-react';
+import { ArrowRight, ShoppingCart, Trash2, Truck } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
@@ -104,8 +104,9 @@ export const CartPopover = () => {
     delay: { open: 80, close: 300 },
     handleClose: safePolygon({ blockPointerEvents: true }),
   });
+
   const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
-    duration: { open: 180, close: 150 },
+    duration: { open: 170, close: 130 },
     common: {
       transformOrigin: 'top right',
     },
@@ -133,7 +134,7 @@ export const CartPopover = () => {
       <Button
         buttonRef={setReference}
         variant="secondary"
-        elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
+        elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
         elementAfter={
           <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5">
             {itemIds.length}
@@ -199,8 +200,7 @@ export const CartPopover = () => {
                 <div className="max-h-[min(44vh,21rem)] overflow-y-auto">
                   {itemIds.length === 0 && (
                     <div className="px-5 py-9 text-center">
-                      <p className="font-accent text-xl font-bold text-neutral-900">Krepšelis tuščias</p>
-                      <p className="mt-2 text-sm text-neutral-500">Įsidėk patikusias prekes ir jos atsiras čia.</p>
+                      <p className="mt-2 text-sm text-neutral-500">Krepšelis tuščias</p>
                     </div>
                   )}
 

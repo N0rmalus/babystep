@@ -1,19 +1,15 @@
 import getCategory from '@/actions/get-category';
-import getProducts from '@/actions/get-products';
+import getProductCatalog from '@/actions/get-product-catalog';
 import getSubcategories from '@/actions/get-subcategories';
 
 import { Billboard } from '@/components/ui/billboard';
 import Container from '@/components/ui/container';
-import NoResults from '@/components/ui/no-results';
-import { ProductCard } from '@/components/ui/product-card/product-card';
-import { ProductFiltersContainer } from '@/components/product-filters-container';
-import { Pagination } from '@/components/mock/pagination';
-import {
-  filterProducts,
-  getProductPriceRange,
-  parseProductFilters,
-  ProductFilterSearchParams,
-} from '@/lib/product-filters';
+import { parseProductFilters, parseProductPage, type ProductFilterSearchParams } from '@/lib/product-filters';
+import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
+import { MobileProductFiltersDrawer } from '@/components/product-filters/mobile-product-filters-drawer';
+import { ProductFiltersContainer } from '@/components/product-filters/product-filters-container';
+import type { ProductFilterOption } from '@/components/product-filters/types';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 0;
 
@@ -26,42 +22,60 @@ type Props = {
 
 const CategoryPage = async ({ params, searchParams }: Props) => {
   const [{ categoryId }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const category = await getCategory(categoryId);
-  const subcategories = await getSubcategories();
-  const categorySubcategories = subcategories.filter((sub) => sub.categoryId === categoryId);
-  const subcategoryIds = categorySubcategories.map((sub) => sub.id);
-
-  const products = (await getProducts({})).filter((product) => subcategoryIds.includes(product.subcategoryId));
   const filters = parseProductFilters(resolvedSearchParams);
-  const filteredProducts = filterProducts(products, filters);
-  const priceRange = getProductPriceRange(products);
+  const page = parseProductPage(resolvedSearchParams.page);
+
+  const [category, subcategories, catalog] = await Promise.all([
+    getCategory(categoryId),
+    getSubcategories(),
+    getProductCatalog({ categoryId, filters, page }),
+  ]);
+
+  const categorySubcategories = subcategories.filter((sub) => sub.categoryId === categoryId);
+
+  const subcategoryOptions: ProductFilterOption[] = categorySubcategories.map((subcategory) => ({
+    id: subcategory.id,
+    name: subcategory.name,
+    count: catalog.subcategoryCounts[subcategory.id] ?? 0,
+  }));
+
+  const filterKey = JSON.stringify(filters);
+
+  if (!category) {
+    notFound();
+  }
 
   return (
     <Container>
-      <div className="mt-8 mb-16 flex flex-col gap-10">
-        <Billboard data={category.billboard} />
+      <Billboard data={category.billboard} />
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-x-8">
-          <div className="lg:col-span-1">
-            <ProductFiltersContainer
-              key={`${filters.query}:${filters.minPrice ?? ''}:${filters.maxPrice ?? ''}:${priceRange.min}:${priceRange.max}`}
-              initialFilters={filters}
-              priceRange={priceRange}
-              visibleCount={filteredProducts.length}
-              totalCount={products.length}
-            />
-          </div>
-
-          <div className="lg:col-span-4">
-            {filteredProducts.length === 0 && <NoResults />}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-              {filteredProducts.map((item) => (
-                <ProductCard key={item.id} data={item} />
-              ))}
-            </div>
-          </div>
+      <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
+        <div className="hidden lg:block">
+          <ProductFiltersContainer
+            key={`${filterKey}:${catalog.priceRange.min}:${catalog.priceRange.max}`}
+            initialFilters={filters}
+            priceRange={catalog.priceRange}
+            subcategories={subcategoryOptions}
+          />
         </div>
-        {filteredProducts.length > 0 && <Pagination currentPage={1} totalPages={1} />}
+
+        <ProductCatalogResults
+          filters={filters}
+          subcategories={subcategoryOptions}
+          products={catalog.products}
+          visibleCount={catalog.filteredCount}
+          totalCount={catalog.totalCount}
+          currentPage={catalog.currentPage}
+          totalPages={catalog.totalPages}
+          pageSize={catalog.pageSize}
+          mobileFilterControl={
+            <MobileProductFiltersDrawer
+              initialFilters={filters}
+              priceRange={catalog.priceRange}
+              subcategories={subcategoryOptions}
+            />
+          }
+        />
       </div>
     </Container>
   );

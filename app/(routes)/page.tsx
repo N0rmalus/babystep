@@ -41,7 +41,7 @@ const HomePage = async () => {
           <></>
         </PageSection>
 
-        <div className="from-salmon-100 to-salmon-200 w-full space-y-4 rounded-3xl bg-linear-to-r px-16 py-18">
+        <div className="from-salmon-100 to-salmon-200 w-full space-y-4 rounded-3xl bg-linear-to-r px-6 py-7 md:px-12 md:py-16 lg:px-16 lg:py-18">
           <div className="flex flex-col items-start sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-2">
               <h1 className="font-accent text-3xl font-black text-neutral-900 sm:text-3xl lg:text-5xl">
@@ -55,15 +55,13 @@ const HomePage = async () => {
             </div>
             <Link
               href="/akcijos"
-              className="group hover:text-salmon-700 font-accent inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-neutral-900 transition sm:text-base"
+              className="group hover:text-salmon-700 font-accent mt-4 inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-neutral-900 underline transition sm:text-base sm:no-underline"
             >
               Visos akcijos
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
           </div>
-          <div className="flex flex-col gap-y-8">
-            <ProductList items={saleProducts} variant="rail" />
-          </div>
+          <ProductList items={saleProducts} variant="rail" />
         </div>
 
         <PageSection

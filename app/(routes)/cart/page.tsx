@@ -13,7 +13,7 @@ import { CartProgress } from './components/cart-progress';
 import { Summary } from './components/summary';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import { PageHeader } from '@/components/page-header';
-import { ProductListEmptyBox } from '@/components/product-list-empty-box';
+import { CartEmptyState } from '@/app/(routes)/cart/components/cart-empty-state';
 
 const CartPage = () => {
   const isMounted = useMounted();
@@ -61,11 +61,17 @@ const CartPage = () => {
   const isResolvingProducts = isLoading || missingProductIds.length > 0 || failedProductIds.length > 0;
   const isCartEmpty = itemIds.length === 0;
 
-  return (
-    <Container className="flex flex-col gap-8">
-      <PageHeader title="Paruošta atsiskaitymui" description="Tavo krepšelis" />
+  if (isCartEmpty) {
+    return (
+      <Container className="flex flex-col gap-8">
+        <CartEmptyState />
+      </Container>
+    );
+  }
 
-      {isCartEmpty && <ProductListEmptyBox variant="cart" />}
+  return (
+    <Container>
+      <PageHeader title="Paruošta atsiskaitymui" description="Tavo krepšelis" />
 
       {!isCartEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <CartLoadingState />}
 

@@ -19,12 +19,13 @@ const Navbar = async () => {
           className="group inline-flex shrink-0 items-center gap-1.5 leading-none sm:gap-2"
         >
           <Image
-            src="/logo.png"
+            src="/logo2.png"
             alt="BabyStep.lt logo"
             width={50}
             height={50}
             className="size-9 object-contain transition-transform duration-200 ease-out group-hover:rotate-6 sm:size-10"
           />
+
           <span className="font-accent text-tumbleweed-700 text-xl font-bold tracking-tight transition sm:text-2xl">
             Babystep
           </span>

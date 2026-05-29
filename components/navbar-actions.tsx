@@ -1,6 +1,6 @@
 'use client';
 
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import Button from '@/components/ui/button';
@@ -46,7 +46,7 @@ export const NavbarActions = () => {
         <Button
           onClick={() => router.push('/cart')}
           variant="secondary"
-          elementBefore={<ShoppingBag size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
+          elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
           elementAfter={<span className={badgeClasses}>{cart.items.length}</span>}
           label={<span className="hidden xl:inline">Krepšelis</span>}
           size="sm"
