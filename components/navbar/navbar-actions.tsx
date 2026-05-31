@@ -15,7 +15,7 @@ export const NavbarActions = () => {
   const isMounted = useMounted();
   const isInWishlistPage = usePathname().includes('/wishlist');
   const isInCartPage = usePathname().includes('/cart');
-  const isMobile = useIsMobile('sm');
+  const isCompactNav = useIsMobile('lg');
   const router = useRouter();
 
   const cart = useCart();
@@ -32,18 +32,31 @@ export const NavbarActions = () => {
 
   return (
     <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-3">
-      <Button
-        onClick={() => router.push('/wishlist')}
-        variant="secondary"
-        elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
-        elementAfter={<span className={badgeClasses}>{wishlist.items.length}</span>}
-        label={<span className="hidden xl:inline">Norai</span>}
-        size="sm"
-        aria-label="Norai"
-        className={actionButtonClasses}
-      />
+      {!isCompactNav && (
+        <Button
+          onClick={() => router.push('/wishlist')}
+          variant="secondary"
+          elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
+          elementAfter={<span className={badgeClasses}>{wishlist.items.length}</span>}
+          label={<span className="hidden xl:inline">Norai</span>}
+          size="sm"
+          aria-label="Norai"
+          className={actionButtonClasses}
+        />
+      )}
 
-      {isMobile || isInCartPage ? (
+      {isCompactNav ? (
+        <>
+          <button
+            type="button"
+            className="tap-strong relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 text-black"
+            onClick={() => router.push('/cart')}
+          >
+            <ShoppingCart size={20} className={cn(isInCartPage && 'fill-tumbleweed-300')} />
+            <span className={cn('absolute -top-2 -right-2 shadow-sm', badgeClasses)}>{cart.items.length}</span>
+          </button>
+        </>
+      ) : isInCartPage ? (
         <Button
           onClick={() => router.push('/cart')}
           variant="secondary"

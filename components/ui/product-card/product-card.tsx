@@ -99,7 +99,7 @@ export const ProductCard = ({ data }: Props) => {
       </div>
 
       <div className="flex flex-1 flex-col gap-1 p-3 sm:gap-4 sm:p-4">
-        <div className="flex min-h-20 flex-1 flex-col justify-between sm:min-h-22">
+        <div className="flex min-h-20 flex-1 flex-col justify-between sm:min-h-22 sm:gap-3">
           <div>
             <h3 className="text-sm leading-tight font-semibold text-neutral-900 sm:text-base">{data.name}</h3>
             <p className="mt-1.5 text-[11px] text-neutral-500 sm:mt-2 sm:text-xs">
@@ -107,23 +107,23 @@ export const ProductCard = ({ data }: Props) => {
             </p>
           </div>
 
-          <div className="flex flex-col gap-1 sm:mt-3 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
-            <div>
-              {pricing.isOnSale && (
-                <div className="text-xs font-medium text-neutral-400 line-through">
-                  {toCurrency(pricing.regularPrice)}
-                </div>
-              )}
-              <div
+          <div>
+            {pricing.isOnSale && (
+              <div className="text-xs font-medium text-neutral-400 line-through">
+                {toCurrency(pricing.regularPrice)}
+              </div>
+            )}
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+              <span
                 className={cn(
                   'font-accent text-base font-bold sm:text-lg',
                   pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900',
                 )}
               >
                 {toCurrency(pricing.effectivePrice)}
-              </div>
+              </span>
+              {!isMobile && <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>}
             </div>
-            {!isMobile && <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>}
           </div>
         </div>
 

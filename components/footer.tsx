@@ -1,18 +1,6 @@
-import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
-
-const socialLinks = [
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/babystep.lt',
-    icon: Instagram,
-  },
-  {
-    label: 'Facebook',
-    href: 'https://www.facebook.com/profile.php?id=100093058595396',
-    icon: Facebook,
-  },
-];
+import { SOCIAL_LINKS } from '@/lib/consts';
 
 const shopLinks = [
   {
@@ -41,14 +29,14 @@ export const Footer = () => {
               Mūsų tikslas, kad atrastumėte kokybę, švelnumą ir grožį kiekviename produkte...
             </p>
             <div className="mt-4 flex items-center gap-2 sm:mt-5">
-              {socialLinks.map(({ href, icon: Icon, label }) => (
+              {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
                   className="border-tumbleweed-100 bg-tumbleweed-50 hover:border-tumbleweed-300 hover:text-tumbleweed-600 focus-visible:outline-tumbleweed-500 inline-flex size-10 items-center justify-center rounded-full border text-neutral-700 transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
-                  <Icon className="size-4.5" aria-hidden="true" />
+                  <Icon className="size-4.5" />
                 </a>
               ))}
             </div>
