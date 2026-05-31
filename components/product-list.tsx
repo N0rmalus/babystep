@@ -12,8 +12,10 @@ interface Props {
 }
 
 const productListVariantClasses = {
-  grid: 'grid-cols-[repeat(auto-fill,minmax(min(100%,15rem),1fr))]',
-  rail: 'scrollbar-soft grid-flow-col auto-cols-[100%] snap-x snap-mandatory overflow-x-auto overscroll-x-contain pb-2 [-webkit-overflow-scrolling:touch] @sm:auto-cols-[minmax(15rem,calc(50%_-_0.5rem))] @2xl:auto-cols-[minmax(17rem,calc(33.333%_-_0.667rem))] @4xl:auto-cols-[minmax(18.5rem,calc(25%_-_0.75rem))] @5xl:auto-cols-[minmax(18.5rem,calc(25%_-_0.75rem))]',
+  grid:
+    'grid-cols-2 gap-3 min-[560px]:grid-cols-3 md:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] md:gap-4',
+  rail:
+    'scrollbar-soft grid-flow-col auto-cols-[calc((100%_-_0.75rem)/2)] gap-3 snap-x snap-mandatory overflow-x-auto overscroll-x-contain pb-2 [-webkit-overflow-scrolling:touch] @md:auto-cols-[minmax(15rem,calc((100%_-_1rem)/2))] @2xl:auto-cols-[minmax(17rem,calc((100%_-_2rem)/3))] @5xl:auto-cols-[minmax(18rem,calc((100%_-_3rem)/4))]',
 } satisfies Record<ProductListVariant, string>;
 
 export const ProductList = ({ title, items, variant = 'grid' }: Props) => {

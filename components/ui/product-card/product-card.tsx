@@ -14,6 +14,7 @@ import Button from '@/components/ui/button';
 import { getProductPricing } from '@/business/product-pricing';
 import { getImageUrl } from '@/lib/image-url';
 import { toCurrency } from '@/business/to-currency';
+import { useIsMobile } from '@/hooks/use-is-mobile';
 
 type Props = {
   data: Product;
@@ -24,13 +25,12 @@ export const ProductCard = ({ data }: Props) => {
   const wishlist = useWishlist();
   const previewModal = usePreviewModal();
   const router = useRouter();
+  const isMobile = useIsMobile('md');
 
   const isInStock = data.amountInStock > 0;
   const isInCart = cart.items.some((item) => item === data.id);
   const isInWishlist = wishlist.items.some((item) => item === data.id);
   const imageUrl = getImageUrl(data.images?.at(0)?.url);
-  const categoryName = data.subcategory?.category?.name ?? 'Kategorija';
-  const subcategoryName = data.subcategory?.name ?? 'Subkategorija';
 
   const pricing = getProductPricing(data);
 
@@ -66,11 +66,11 @@ export const ProductCard = ({ data }: Props) => {
     <div
       onClick={() => router.push(`/product/${data.id}`)}
       className={cn(
-        'group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md',
+        'group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl',
         !isInStock && 'opacity-50',
       )}
     >
-      <div className="relative h-52 overflow-hidden bg-neutral-100">
+      <div className="relative aspect-square overflow-hidden bg-neutral-100 sm:aspect-4/3">
         <Image
           src={imageUrl}
           fill
@@ -86,7 +86,9 @@ export const ProductCard = ({ data }: Props) => {
         </div>
 
         <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2">
-          <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
+          {!isMobile && (
+            <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
+          )}
           <IconButton
             onClick={onToggleWishlist}
             variant="primary"
@@ -96,16 +98,16 @@ export const ProductCard = ({ data }: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        <div className="flex min-h-22 flex-1 flex-col justify-between">
+      <div className="flex flex-1 flex-col gap-1 p-3 sm:gap-4 sm:p-4">
+        <div className="flex min-h-20 flex-1 flex-col justify-between sm:min-h-22">
           <div>
-            <h3 className="text-base leading-tight font-semibold text-neutral-900">{data.name}</h3>
-            <p className="mt-2 text-xs text-neutral-500">
-              {categoryName} • {subcategoryName}
+            <h3 className="text-sm leading-tight font-semibold text-neutral-900 sm:text-base">{data.name}</h3>
+            <p className="mt-1.5 text-[11px] text-neutral-500 sm:mt-2 sm:text-xs">
+              {data.subcategory.category.name} • {data.subcategory.name}
             </p>
           </div>
 
-          <div className="mt-3 flex items-center justify-between gap-2">
+          <div className="flex flex-col gap-1 sm:mt-3 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
             <div>
               {pricing.isOnSale && (
                 <div className="text-xs font-medium text-neutral-400 line-through">
@@ -114,14 +116,14 @@ export const ProductCard = ({ data }: Props) => {
               )}
               <div
                 className={cn(
-                  'font-accent text-lg font-bold',
+                  'font-accent text-base font-bold sm:text-lg',
                   pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900',
                 )}
               >
                 {toCurrency(pricing.effectivePrice)}
               </div>
             </div>
-            <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
+            {!isMobile && <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>}
           </div>
         </div>
 
@@ -129,7 +131,7 @@ export const ProductCard = ({ data }: Props) => {
           size="sm"
           label={buttonLabel()}
           onClick={onAddToCart}
-          elementBefore={<ShoppingCart size={15} />}
+          elementBefore={!isInCart && <ShoppingCart size={15} />}
           disabled={!isInStock}
           fullWidth
         />

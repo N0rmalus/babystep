@@ -27,8 +27,10 @@ type Props = {
 };
 
 const productGridClassNames = {
-  comfortable: 'grid grid-cols-[repeat(auto-fill,minmax(min(100%,17rem),1fr))] gap-4',
-  compact: 'grid grid-cols-[repeat(auto-fill,minmax(min(100%,13.5rem),1fr))] gap-4',
+  comfortable:
+    'grid grid-cols-2 gap-3 min-[560px]:grid-cols-3 md:grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] xl:grid-cols-[repeat(auto-fill,minmax(17rem,1fr))] md:gap-4',
+  compact:
+    'grid grid-cols-2 gap-3 min-[520px]:grid-cols-3 md:grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] md:gap-4',
 } satisfies Record<ProductView, string>;
 
 export const ProductCatalogResults = ({

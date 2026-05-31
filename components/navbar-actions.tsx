@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import Button from '@/components/ui/button';
 import { CartPopover } from '@/components/cart-popover';
+import { useIsMobile } from '@/hooks/use-is-mobile';
 import useMounted from '@/hooks/use-mounted';
 import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,7 @@ export const NavbarActions = () => {
   const isMounted = useMounted();
   const isInWishlistPage = usePathname().includes('/wishlist');
   const isInCartPage = usePathname().includes('/cart');
+  const isMobile = useIsMobile('sm');
   const router = useRouter();
 
   const cart = useCart();
@@ -40,9 +42,8 @@ export const NavbarActions = () => {
         aria-label="Norai"
         className={actionButtonClasses}
       />
-      {!isInCartPage ? (
-        <CartPopover />
-      ) : (
+
+      {isMobile || isInCartPage ? (
         <Button
           onClick={() => router.push('/cart')}
           variant="secondary"
@@ -53,6 +54,8 @@ export const NavbarActions = () => {
           aria-label="Krepšelis"
           className={actionButtonClasses}
         />
+      ) : (
+        <CartPopover />
       )}
     </div>
   );
