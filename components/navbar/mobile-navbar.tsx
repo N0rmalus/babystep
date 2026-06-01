@@ -37,12 +37,6 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
-    setIsMobileMenuOpen(false);
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, [pathname]);
-
-  useEffect(() => {
     if (!isMobileMenuOpen) {
       return;
     }
@@ -66,7 +60,6 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
   });
 
   const { isMounted: isMobileMounted, styles: mobileTransitionStyles } = useTransitionStyles(mobileContext, {
-    duration: { open: 220, close: 160 },
     common: {
       transformOrigin: 'top center',
     },

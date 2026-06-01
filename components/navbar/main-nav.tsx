@@ -56,6 +56,7 @@ export const MainNav = ({ data, subcategories, biggestDiscount }: Props) => {
   return (
     <div className="relative order-first shrink-0 lg:order-0">
       <MobileNavbar
+        key={pathname}
         biggestDiscount={biggestDiscount}
         categories={data}
         pathname={pathname}
