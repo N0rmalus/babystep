@@ -71,7 +71,7 @@ const CartPage = () => {
 
   return (
     <Container>
-      <PageHeader title="Paruošta atsiskaitymui" description="Tavo krepšelis" />
+      <PageHeader bigText="Paruošta atsiskaitymui" smallText="Tavo krepšelis" />
 
       {!isCartEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <CartLoadingState />}
 

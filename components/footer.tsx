@@ -1,6 +1,6 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
-import { SOCIAL_LINKS } from '@/lib/consts';
+import { CONTACT_EMAIL, SOCIAL_LINKS } from '@/lib/consts';
 
 const shopLinks = [
   {
@@ -12,7 +12,25 @@ const shopLinks = [
     href: '/akcijos',
   },
 ];
-const supportLinks = ['Pristatymas', 'Grąžinimai', 'Taisyklės ir sąlygos', 'Privatumo politika'];
+
+const supportLinks = [
+  {
+    label: 'Pristatymo informacija',
+    href: '/pristatymo-informacija',
+  },
+  {
+    label: 'Grąžinimo informacija',
+    href: '/grazinimo-informacija',
+  },
+  {
+    label: 'Taisyklės ir sąlygos',
+    href: '/taisykles-ir-salygos',
+  },
+  {
+    label: 'Privatumo politika',
+    href: '/privatumo-politika',
+  },
+];
 
 export const Footer = () => {
   return (
@@ -59,9 +77,9 @@ export const Footer = () => {
             <h2 className="font-accent text-sm font-semibold tracking-wide text-neutral-950 uppercase">Pagalba</h2>
             <ul className="mt-3 space-y-2.5 text-sm text-neutral-600 sm:mt-4 sm:space-y-3">
               {supportLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="hover:text-tumbleweed-600 transition">
-                    {link}
+                <li key={link.href}>
+                  <a href={link.href} className="hover:text-tumbleweed-600 transition">
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -73,8 +91,8 @@ export const Footer = () => {
             <ul className="mt-3 grid gap-3 text-sm text-neutral-600 sm:mt-4">
               <li className="flex items-start gap-3">
                 <Mail className="text-tumbleweed-500 mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                <a href="mailto:info@babystep.lt" className="hover:text-tumbleweed-600 transition">
-                  info@babystep.lt
+                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-tumbleweed-600 transition">
+                  {CONTACT_EMAIL}
                 </a>
               </li>
               <li className="flex items-start gap-3">

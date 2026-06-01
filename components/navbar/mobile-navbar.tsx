@@ -110,7 +110,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
           <FloatingFocusManager context={mobileContext} modal initialFocus={-1}>
             <div
               ref={setMobileFloating}
-              className="fixed inset-0 z-50 bg-[#FBF6EF] text-neutral-950 outline-none lg:hidden"
+              className="fixed inset-0 z-50 bg-white text-neutral-950 outline-none lg:hidden"
               {...getMobileFloatingProps()}
             >
               <div style={mobileTransitionStyles} className="flex h-dvh flex-col overflow-hidden">
@@ -252,7 +252,7 @@ const MobileCategorySection = ({ category, isActive, subcategories, onNavigate }
             <Link
               key={subcategory.id}
               href={`/category/${category.id}/${subcategory.id}`}
-              className="tap-surface rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-700 shadow-sm transition hover:border-neutral-300 hover:text-black"
+              className="tap-surface rounded-full border border-tumbleweed-100 bg-white px-4 py-2 text-sm text-neutral-700 transition hover:border-neutral-300 hover:text-black"
               onClick={onNavigate}
             >
               {subcategory.name}

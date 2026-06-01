@@ -12,6 +12,7 @@ import { PaperWrapper } from '@/components/ui/paper-wrapper';
 import { PriceContainer } from '@/app/(routes)/cart/components/price-container';
 import type { CartSummary } from '@/hooks/use-cart-summary';
 import { cn } from '@/lib/utils';
+import { CONTACT_EMAIL } from '@/lib/consts';
 
 type Props = {
   productIds: string[];
@@ -71,10 +72,10 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
           Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
         </p>
         <a
-          href="mailto:info@babystep.lt"
+          href={`mailto:${CONTACT_EMAIL}`}
           className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
         >
-          info@babystep.lt
+          {CONTACT_EMAIL}
         </a>
       </PaperWrapper>
     </div>

@@ -18,7 +18,7 @@ const Navbar = async () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur-sm">
-      <div className="relative mx-auto flex h-16 max-w-7xl min-w-0 items-center gap-2 px-5 sm:gap-3 sm:px-8 lg:px-8">
+      <div className="relative mx-auto flex h-16 max-w-7xl min-w-0 items-center gap-2 px-5 sm:gap-3 sm:px-8 lg:h-20 lg:px-8">
         <Link
           href="/"
           aria-label="Babystep pradžia"

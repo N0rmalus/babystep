@@ -3,7 +3,7 @@ import { FREE_SHIPPING_THRESHOLD } from '@/lib/consts';
 
 const promoItems = [
   {
-    title: 'Nemokamas pristatymas',
+    title: 'Nemokamas pristatymo-informacija',
     description: `Užsakymams nuo ${FREE_SHIPPING_THRESHOLD}€`,
     icon: Truck,
   },

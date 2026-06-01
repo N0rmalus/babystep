@@ -53,7 +53,7 @@ const AkcijosPage = async ({ searchParams }: Props) => {
 
   return (
     <Container>
-      <PageHeader title="Akcijos" description="Švelnūs atradimai geresne kaina" />
+      <PageHeader bigText="Akcijos" smallText="Švelnūs atradimai geresne kaina" />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
         <div className="hidden lg:block">

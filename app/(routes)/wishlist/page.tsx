@@ -131,8 +131,8 @@ const WishlistPage = () => {
   return (
     <Container>
       <PageHeader
-        title="Norų sąrašas"
-        description={
+        bigText="Norų sąrašas"
+        smallText={
           itemIds.length === 0
             ? 'Sąrašas dar tuščias. Peržiūrėk katalogą ir išsisaugok patikusias prekes.'
             : `${products.length} prekės laukia, kol nuspręsi dėl pirkimo.`
