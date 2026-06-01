@@ -8,9 +8,7 @@ interface Props {
 
 const Container = ({ children, className }: Props) => {
   return (
-    <div
-      className={cn('mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:gap-10 lg:px-8', className)}
-    >
+    <div className={cn('mx-auto flex max-w-7xl flex-col gap-4 p-4 sm:px-6 sm:py-14 lg:gap-10 lg:px-8', className)}>
       {children}
     </div>
   );
