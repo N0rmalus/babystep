@@ -8,7 +8,7 @@ import useWishlist from '@/hooks/use-wishlist';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import IconButton from '@/components/ui/icon-button';
-import { Expand, Heart, ShoppingCart } from 'lucide-react';
+import { Expand, Heart, ShoppingCart, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from '@/components/ui/button';
 import { getProductPricing } from '@/business/product-pricing';
@@ -18,9 +18,10 @@ import { useIsMobile } from '@/hooks/use-is-mobile';
 
 type Props = {
   data: Product;
+  wishlistAction?: 'add' | 'remove';
 };
 
-export const ProductCard = ({ data }: Props) => {
+export const ProductCard = ({ data, wishlistAction = 'toggle' }: Props) => {
   const cart = useCart();
   const wishlist = useWishlist();
   const previewModal = usePreviewModal();
@@ -42,7 +43,12 @@ export const ProductCard = ({ data }: Props) => {
     cart.addItem(data.id);
   };
 
-  const onToggleWishlist = () => {
+  const onWishlistAction = () => {
+    if (wishlistAction === 'remove') {
+      wishlist.removeItem(data.id);
+      return;
+    }
+
     if (isInWishlist) {
       wishlist.removeItem(data.id);
       return;
@@ -50,6 +56,20 @@ export const ProductCard = ({ data }: Props) => {
 
     wishlist.addItem(data.id);
   };
+
+  const wishlistIcon =
+    wishlistAction === 'remove' ? (
+      <Trash2 size={16} />
+    ) : (
+      <Heart size={16} className={cn(isInWishlist && 'fill-tumbleweed-300')} />
+    );
+
+  const wishlistTitle =
+    wishlistAction === 'remove'
+      ? 'Pašalinti iš norų sąrašo'
+      : isInWishlist
+        ? 'Pašalinti iš norų sąrašo'
+        : 'Įtraukti į norų sąrašą';
 
   const buttonLabel = () => {
     if (!isInStock) {
@@ -89,12 +109,7 @@ export const ProductCard = ({ data }: Props) => {
           {!isMobile && (
             <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
           )}
-          <IconButton
-            onClick={onToggleWishlist}
-            variant="primary"
-            icon={<Heart size={16} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
-            title={isInWishlist ? 'Pašalinti iš norų sąrašo' : 'Įtraukti į norų sąrašą'}
-          />
+          <IconButton onClick={onWishlistAction} variant="primary" icon={wishlistIcon} title={wishlistTitle} />
         </div>
       </div>
 

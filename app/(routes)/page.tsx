@@ -1,6 +1,8 @@
 import getBillboard from '@/actions/get-billboard';
+import getCategories from '@/actions/get-categories';
 import { getInstagramPosts } from '@/actions/get-instagram-posts';
 import getProducts from '@/actions/get-products';
+import { CategoryMosaic } from '@/app/(routes)/components/category-mosaic';
 import { Billboard } from '@/components/ui/billboard';
 import { ProductList } from '@/components/product-list';
 import Container from '@/components/ui/container';
@@ -14,11 +16,12 @@ import Link from 'next/link';
 export const revalidate = 0;
 
 const HomePage = async () => {
-  const [featuredProducts, saleProducts, billboard, instagramPosts] = await Promise.all([
+  const [featuredProducts, saleProducts, billboard, instagramPosts, categories] = await Promise.all([
     getProducts({ isFeatured: true }),
     getProducts({ isOnSale: true }),
     getBillboard(),
     getInstagramPosts(),
+    getCategories(),
   ]);
 
   const biggestDiscount = getBiggestDiscount(saleProducts);
@@ -37,8 +40,7 @@ const HomePage = async () => {
           bigText="Atrask, ko ieško mažylis"
           position="center"
         >
-          {/* Kategorijų mozaika */}
-          <></>
+          <CategoryMosaic categories={categories} />
         </PageSection>
 
         <div className="from-salmon-100 to-salmon-200 w-full space-y-4 rounded-3xl bg-linear-to-r px-6 py-7 md:px-12 md:py-16 lg:px-16 lg:py-18">
