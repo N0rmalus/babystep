@@ -65,7 +65,7 @@ const CategoryMosaicTile = ({
     <Link
       href={`/category/${category.id}`}
       className={cn(
-        'group focus-visible:ring-salmon-500 relative isolate overflow-hidden rounded-3xl bg-neutral-200 shadow-sm transition-shadow duration-300 outline-none hover:shadow-2xl hover:shadow-neutral-900/10 focus-visible:ring-2 focus-visible:ring-offset-4',
+        'group focus-visible:ring-salmon-500 relative isolate overflow-hidden rounded-3xl bg-neutral-200 shadow-sm transition-shadow duration-300 outline-none hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-4',
         layout?.frame,
       )}
     >
@@ -85,11 +85,7 @@ const CategoryMosaicTile = ({
           {/* TODO: Show product count once the categories API exposes a lightweight productCount field. */}
         </div>
         <span className="group-hover:bg-salmon-500 hidden size-9 shrink-0 place-items-center rounded-full bg-white text-neutral-900 transition duration-300 group-hover:text-white sm:size-10 md:size-11 lg:grid">
-          <ArrowRight
-            size={19}
-            aria-hidden="true"
-            className="transition-transform duration-300 group-hover:-rotate-45"
-          />
+          <ArrowRight size={19} className="transition-transform duration-300 group-hover:-rotate-45" />
         </span>
       </div>
     </Link>

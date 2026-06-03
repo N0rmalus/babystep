@@ -21,7 +21,7 @@ type Props = {
   wishlistAction?: 'add' | 'remove';
 };
 
-export const ProductCard = ({ data, wishlistAction = 'toggle' }: Props) => {
+export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
   const cart = useCart();
   const wishlist = useWishlist();
   const previewModal = usePreviewModal();
