@@ -1,11 +1,12 @@
 import { apiGet } from '@/lib/api-client';
 import { Product } from '@/actions/types';
 
-interface Query {
+type Query = {
   categoryId?: string;
   subcategoryId?: string;
   isFeatured?: boolean;
-}
+  isOnSale?: boolean;
+};
 
 const getProducts = async (query: Query): Promise<Product[]> =>
   apiGet<Product[]>('/products', {
@@ -13,6 +14,7 @@ const getProducts = async (query: Query): Promise<Product[]> =>
       categoryId: query.categoryId,
       subcategoryId: query.subcategoryId,
       isFeatured: query.isFeatured,
+      isOnSale: query.isOnSale,
     },
   });
 

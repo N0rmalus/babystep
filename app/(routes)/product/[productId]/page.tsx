@@ -5,6 +5,7 @@ import { Info } from '@/components/info';
 import { ProductList } from '@/components/product-list';
 import { RouteFocusRefresh } from '@/components/route-focus-refresh';
 import Container from '@/components/ui/container';
+import { notFound } from 'next/navigation';
 
 type Props = {
   params: Promise<{
@@ -18,12 +19,16 @@ const ProductPage = async ({ params }: Props) => {
   const { productId } = await params;
   const product = await getProduct(productId);
 
+  if (!product) {
+    notFound();
+  }
+
   const suggestedProducts = await getProducts({
-    categoryId: product?.subcategory?.categoryId,
+    categoryId: product.subcategory.categoryId,
   });
 
   return (
-    <div className="mt-16 space-y-10">
+    <>
       <RouteFocusRefresh />
       <Container>
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-12">
@@ -36,12 +41,12 @@ const ProductPage = async ({ params }: Props) => {
         </div>
       </Container>
 
-      <div className="bg-tumbleweed-50 py-8 pb-16 shadow-[inset_0_8px_20px_rgba(0,0,0,0.08)]">
+      <div className="bg-tumbleweed-50 shadow-[inset_0_8px_20px_rgba(0,0,0,0.08)]">
         <Container>
           <ProductList title="Panašios Prekės" items={suggestedProducts} />
         </Container>
       </div>
-    </div>
+    </>
   );
 };
 

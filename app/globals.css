@@ -29,10 +29,7 @@
   --color-salmon-950: #5a231d;
 
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
-  --background-image-gradient-conic: conic-gradient(
-    from 180deg at 50% 50%,
-    var(--tw-gradient-stops)
-  );
+  --background-image-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
 }
 
 @theme inline {
@@ -66,11 +63,11 @@
   @apply text-sm leading-relaxed text-neutral-700 sm:text-base;
 
   & h2 {
-    @apply mt-6 text-lg font-semibold leading-tight text-neutral-900 sm:text-xl;
+    @apply mt-6 text-lg leading-tight font-semibold text-neutral-900 sm:text-xl;
   }
 
   & h3 {
-    @apply mt-5 text-base font-semibold leading-tight text-neutral-900 sm:text-lg;
+    @apply mt-5 text-base leading-tight font-semibold text-neutral-900 sm:text-lg;
   }
 
   & p + p {
@@ -106,15 +103,15 @@
   }
 
   & ul {
-    @apply list-disc marker:text-tumbleweed-500;
+    @apply marker:text-tumbleweed-500 list-disc;
   }
 
   & ol {
-    @apply list-decimal marker:text-tumbleweed-500;
+    @apply marker:text-tumbleweed-500 list-decimal;
   }
 
   & blockquote {
-    @apply my-5 rounded-r-2xl border-l-4 border-tumbleweed-300 bg-tumbleweed-50 px-4 py-3 text-neutral-700;
+    @apply border-tumbleweed-300 bg-tumbleweed-50 my-5 rounded-r-2xl border-l-4 px-4 py-3 text-neutral-700;
   }
 
   & strong {
@@ -126,11 +123,145 @@
   }
 }
 
+@utility tap-soft {
+  @apply transition-transform;
+}
+
+@utility tap-strong {
+  @apply transition;
+}
+
+@utility tap-surface {
+  @apply transition-colors;
+}
+
 @layer utilities {
   html,
   body,
   :root {
     scroll-behavior: smooth;
     height: 100%;
+  }
+
+  .scrollbar-soft {
+    scrollbar-width: thin;
+    scrollbar-color: black transparent;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar-thumb {
+    border: 0.25rem solid transparent;
+    border-radius: 999px;
+    background: black;
+    background-clip: content-box;
+  }
+
+  .scrollbar-soft::-webkit-scrollbar-thumb:hover {
+    background: black;
+    background-clip: content-box;
+  }
+
+  .animate-promo-conveyor {
+    animation: promo-conveyor 60s linear infinite;
+  }
+
+  .animate-empty-state-image-float {
+    animation: empty-state-image-float 7s ease-in-out infinite;
+  }
+
+  .animate-empty-state-cart-roll {
+    animation: empty-state-cart-roll 5s ease-in-out infinite;
+  }
+
+  .animate-empty-state-wishlist-heart {
+    animation: empty-state-wishlist-heart 6s ease-in-out infinite;
+  }
+
+  .animate-page-not-found-sign {
+    animation: page-not-found-sign 6s ease-in-out infinite;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .tap-soft {
+    @apply active:scale-[0.99];
+  }
+
+  .tap-strong {
+    @apply active:scale-[0.985] active:brightness-95;
+  }
+
+  .tap-surface {
+    @apply active:bg-neutral-100;
+  }
+}
+
+@keyframes empty-state-image-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes empty-state-cart-roll {
+  0%,
+  100% {
+    transform: translateX(0) rotate(-0.5deg);
+  }
+  50% {
+    transform: translateX(8px) rotate(0.5deg);
+  }
+}
+
+@keyframes empty-state-wishlist-heart {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(-0.5deg);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02) rotate(0.5deg);
+  }
+}
+
+@keyframes page-not-found-sign {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
+@keyframes promo-conveyor {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-promo-conveyor {
+    animation: none;
+  }
+
+  .animate-empty-state-image-float,
+  .animate-empty-state-cart-roll,
+  .animate-empty-state-wishlist-heart,
+  .animate-page-not-found-sign {
+    animation: none;
   }
 }

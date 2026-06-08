@@ -7,6 +7,7 @@ import 'yet-another-react-lightbox/styles.css';
 import { Maximize2 } from 'lucide-react';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import { getImageUrl } from '@/lib/image-url';
 
 interface Props {
   images: { src: string }[];
@@ -23,7 +24,7 @@ export const ImageLightbox = ({ images, alt, className, startIndex = 0 }: Props)
     <>
       <Image
         fill
-        src={images[currentIndex].src}
+        src={getImageUrl(images.at(currentIndex)?.src)}
         alt={alt}
         className={className}
         onClick={() => setOpen(true)}
@@ -31,7 +32,7 @@ export const ImageLightbox = ({ images, alt, className, startIndex = 0 }: Props)
       />
       <button
         onClick={() => setOpen(true)}
-        className="absolute right-3 top-3 z-10 rounded-full bg-white/90 p-2 text-xs font-semibold text-neutral-700 shadow-xs"
+        className="absolute top-3 right-3 z-10 rounded-full bg-white/90 p-2 text-xs font-semibold text-neutral-700 shadow-xs"
         title="Priartinti"
       >
         <Maximize2 size={18} className="text-neutral-700" />

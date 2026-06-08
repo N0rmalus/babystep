@@ -5,6 +5,7 @@ import { Tab } from '@headlessui/react';
 
 import { cn } from '@/lib/utils';
 import { Image as ImageType } from '@/actions/types';
+import { getImageUrl } from '@/lib/image-url';
 
 interface Props {
   image: ImageType;
@@ -18,7 +19,7 @@ export const GalleryTab = ({ image }: Props) => {
           <span className="absolute inset-0 aspect-square h-full w-full overflow-hidden rounded-lg">
             <Image
               fill
-              src={image.url}
+              src={getImageUrl(image.url)}
               alt="Nuotrauka"
               className="object-cover object-center"
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"

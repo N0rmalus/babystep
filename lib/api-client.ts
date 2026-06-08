@@ -7,7 +7,21 @@ type ApiGetOptions = Omit<RequestInit, 'method' | 'body'> & {
   query?: QueryParams;
 };
 
-const DEFAULT_CACHE: RequestCache = 'no-store';
+const DEFAULT_FETCH_CACHE: RequestCache = 'no-store';
+
+export class ApiGetError extends Error {
+  readonly path: string;
+  readonly status: number;
+
+  constructor(path: string, status: number) {
+    super(`GET ${path} failed with status ${status}`);
+    this.name = 'ApiGetError';
+    this.path = path;
+    this.status = status;
+  }
+}
+
+export const isApiNotFoundError = (error: unknown) => error instanceof ApiGetError && error.status === 404;
 
 const getApiBaseUrl = () => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -29,16 +43,19 @@ const buildApiUrl = (path: string, query?: QueryParams) => {
 };
 
 export const apiGet = async <T>(path: string, options: ApiGetOptions = {}) => {
-  const { query, cache = DEFAULT_CACHE, ...init } = options;
+  const { query, cache, next, ...init } = options;
   const url = buildApiUrl(path, query);
+  const requestInit = {
+    ...init,
+    ...(next ? { next } : { cache: cache ?? DEFAULT_FETCH_CACHE }),
+  };
 
   const response = await fetch(url, {
-    ...init,
-    cache,
+    ...requestInit,
   });
 
   if (!response.ok) {
-    throw new Error(`GET ${path} failed with status ${response.status}`);
+    throw new ApiGetError(path, response.status);
   }
 
   return response.json() as Promise<T>;

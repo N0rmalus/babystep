@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, Ref } from 'react';
+import { ButtonHTMLAttributes, MouseEventHandler, ReactNode, Ref } from 'react';
 
 import { cn } from '@/lib/utils';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
@@ -12,7 +12,12 @@ const sizeClasses = {
   xl: 'px-9 py-5 text-xl',
 } as const;
 
-type Props = {
+type NativeButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'className' | 'disabled' | 'onClick' | 'type'
+>;
+
+type Props = NativeButtonProps & {
   variant?: ButtonVariant;
   size?: keyof typeof sizeClasses;
   label: ReactNode;
@@ -24,9 +29,9 @@ type Props = {
   className?: string;
   buttonRef?: Ref<HTMLButtonElement>;
 } & (
-  | { onClick?: MouseEventHandler<HTMLButtonElement>; type: 'submit' }
-  | { onClick: MouseEventHandler<HTMLButtonElement>; type?: 'button' }
-);
+    | { onClick?: MouseEventHandler<HTMLButtonElement>; type: 'submit' }
+    | { onClick: MouseEventHandler<HTMLButtonElement>; type?: 'button' }
+  );
 
 const Button = ({
   disabled,
@@ -58,7 +63,7 @@ const Button = ({
         onClick?.(event);
       }}
       className={cn(
-        'relative flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:cursor-not-allowed',
+        'tap-strong relative flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:cursor-default disabled:opacity-50 max-[400px]:px-2 max-[400px]:text-[11px]',
         variant === 'primary' && 'border-transparent bg-black text-white hover:opacity-75',
         variant === 'secondary' && 'border border-gray-300 bg-white text-black hover:bg-gray-100 hover:text-black',
         variant === 'danger' && 'border-transparent bg-rose-600 text-white hover:bg-rose-700',

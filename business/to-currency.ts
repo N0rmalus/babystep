@@ -1,19 +1,25 @@
-export const toCurrency = (value: number) => {
-  return new Intl.NumberFormat('lt-LT', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(value);
+const currencyFormatter = new Intl.NumberFormat('lt-LT', {
+  style: 'currency',
+  currency: 'EUR',
+});
+
+const roundedCurrencyFormatter = new Intl.NumberFormat('lt-LT', {
+  style: 'currency',
+  currency: 'EUR',
+  maximumFractionDigits: 0,
+  minimumFractionDigits: 0,
+});
+
+const normalizeCurrencyValue = (value: number | string) => {
+  const numericValue = typeof value === 'number' ? value : Number(value);
+
+  return Number.isFinite(numericValue) ? numericValue : 0;
 };
 
-export const toCurrencyRounded = (value: number) => {
-  if (isNaN(value)) {
-    return 0;
-  }
+export const toCurrency = (value: number | string) => {
+  return currencyFormatter.format(normalizeCurrencyValue(value));
+};
 
-  return new Intl.NumberFormat('lt-LT', {
-    style: 'currency',
-    currency: 'EUR',
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-  }).format(value);
+export const toCurrencyRounded = (value: number | string) => {
+  return roundedCurrencyFormatter.format(normalizeCurrencyValue(value));
 };

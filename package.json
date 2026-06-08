@@ -12,6 +12,7 @@
     "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.27.19",
     "@headlessui/react": "^2.2.10",
     "@sentry/nextjs": "^10.50.0",
     "@tailwindcss/postcss": "^4.2.4",
