@@ -25,8 +25,13 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
   const filters = parseProductFilters(resolvedSearchParams);
   const page = parseProductPage(resolvedSearchParams.page);
 
-  const [category, subcategories, catalog] = await Promise.all([
-    getCategory(categoryId),
+  const category = await getCategory(categoryId);
+
+  if (!category) {
+    notFound();
+  }
+
+  const [subcategories, catalog] = await Promise.all([
     getSubcategories(),
     getProductCatalog({ categoryId, filters, page }),
   ]);
@@ -40,10 +45,6 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
   }));
 
   const filterKey = JSON.stringify(filters);
-
-  if (!category) {
-    notFound();
-  }
 
   return (
     <Container>

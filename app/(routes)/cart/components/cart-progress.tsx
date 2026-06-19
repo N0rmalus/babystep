@@ -28,7 +28,7 @@ export const CartProgress = ({ freeShippingProgress, remainingForFreeShipping }:
 
       <p className="mt-3 text-sm font-medium text-neutral-700">
         {remainingForFreeShipping === 0
-          ? 'Puiku! Nemokamas pristatymo-informacija jau pritaikytas.'
+          ? 'Puiku! Nemokamas pristatymas jau pritaikytas.'
           : `Pridėk prekių dar už ${toCurrency(remainingForFreeShipping)} ir gausi nemokamą pristatymą.`}
       </p>
     </PaperWrapper>

@@ -66,10 +66,10 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
         </p>
       </PaperWrapper>
 
-      <PaperWrapper>
-        <h3 className="text-sm font-semibold tracking-[0.16em] text-neutral-500 uppercase">Reikia pagalbos?</h3>
+      <PaperWrapper variant="tumbleweed">
+        <h3 className="text-tumbleweed-700 text-xs font-semibold tracking-widest uppercase">Reikia pagalbos?</h3>
         <p className="mt-3 text-sm leading-relaxed text-neutral-700">
-          Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
+          Jei turite papildomų klausimų dėl užsakymo — parašyk mums. Įprastai atsakome per 1 darbo valandą.
         </p>
         <a
           href={`mailto:${CONTACT_EMAIL}`}

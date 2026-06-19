@@ -13,10 +13,10 @@ interface Props {
 
 export const GalleryTab = ({ image }: Props) => {
   return (
-    <Tab className="relative flex aspect-square cursor-pointer items-center justify-center rounded-lg bg-white shadow-xs transition hover:shadow-md">
+    <Tab className="relative flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-2xl bg-white shadow-xs transition hover:-translate-y-0.5 hover:shadow-md lg:size-20">
       {({ selected }) => (
         <div>
-          <span className="absolute inset-0 aspect-square h-full w-full overflow-hidden rounded-lg">
+          <span className="absolute inset-0 aspect-square h-full w-full overflow-hidden rounded-2xl">
             <Image
               fill
               src={getImageUrl(image.url)}
@@ -27,8 +27,8 @@ export const GalleryTab = ({ image }: Props) => {
           </span>
           <span
             className={cn(
-              'absolute inset-0 rounded-lg ring-2 ring-offset-2 transition',
-              selected ? 'ring-tumbleweed-500 ring-opacity-60' : 'ring-transparent',
+              'absolute inset-0 rounded-2xl ring-2 ring-offset-2 transition',
+              selected ? 'ring-opacity-80 ring-neutral-950' : 'ring-transparent',
             )}
           />
         </div>
