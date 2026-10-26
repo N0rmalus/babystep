@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -54,14 +53,15 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
     try {
       setIsCheckingOut(true);
 
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-        productIds,
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productIds }),
       });
+      const data: unknown = await response.json().catch(() => null);
 
-      window.location.href = response.data.url;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorData = getCheckoutErrorPayload(error.response?.data);
+      if (!response.ok) {
+        const errorData = getCheckoutErrorPayload(data);
         const invalidProductIds = errorData.invalidProductIds ?? [];
         const insufficientStockItems = errorData.insufficientStockItems ?? [];
 
@@ -84,12 +84,12 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
           return;
         }
 
-        if (errorData.message) {
-          toast.error(errorData.message);
-          return;
-        }
+        toast.error(errorData.message ?? 'Nepavyko inicijuoti atsiskaitymo. Bandyk dar kartą.');
+        return;
       }
 
+      window.location.href = (data as { url: string }).url;
+    } catch {
       toast.error('Nepavyko inicijuoti atsiskaitymo. Bandyk dar kartą.');
     } finally {
       setIsCheckingOut(false);

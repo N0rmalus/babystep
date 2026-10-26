@@ -32,5 +32,5 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API
 
 ## Dead code
 
-- [ ] **Delete the unused files** `actions/get-subcategory.tsx` and `components/ui/product-card/product-card-image.tsx`.
-- [ ] **Replace `axios` with `fetch`** in `use-cart-summary.ts` and remove the dependency. It's only used for that one call.
+- [x] **Delete the unused files** `actions/get-subcategory.tsx` and `components/ui/product-card/product-card-image.tsx`.
+- [x] **Replace `axios` with `fetch`** in `use-cart-summary.ts` and remove the dependency. It's only used for that one call.
