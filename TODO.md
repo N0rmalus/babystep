@@ -10,7 +10,7 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API
 - [ ] **Allow buying more than one of a product.** `hooks/use-cart.ts` stores each ID once and turns away a second add. The API already counts repeated IDs in `{ productIds }` as quantity and checks stock per quantity, so this is a storefront-only change: store a quantity per ID (with a store `migrate`) and repeat the ID that many times at checkout.
 - [ ] **Add per-route `error.tsx` boundaries.** Right now any API error falls through to `app/global-error.tsx`, which shows Next's plain error screen without the layout. On the home page, any one of its five parallel fetches failing takes the whole page down.
 - [ ] **Add a proper order confirmation.** `cart/components/summary.tsx` empties the cart and says payment succeeded whenever the URL has `?success`. There is no confirmation page or order number. `?canceled` shows "Kažkas nepavyko", which reads like an error when the customer simply cancelled. Build a confirmation page keyed on our own order ID (which the API will put in the return URL) that asks the API for the order's status, so it doesn't depend on the provider.
-- [ ] **Check the checkout reply before redirecting.** `hooks/use-cart-summary.ts` does `window.location.href = response.data.url` without checking that `url` exists, so a malformed reply sends the customer to `/cart/undefined`.
+- [x] **Check the checkout reply before redirecting.** `hooks/use-cart-summary.ts` does `window.location.href = response.data.url` without checking that `url` exists, so a malformed reply sends the customer to `/cart/undefined`.
 
 ## Legal and trust
 

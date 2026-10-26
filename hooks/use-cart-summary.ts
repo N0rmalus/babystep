@@ -88,7 +88,12 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
         return;
       }
 
-      window.location.href = (data as { url: string }).url;
+      if (!isRecord(data) || typeof data.url !== 'string') {
+        toast.error('Nepavyko inicijuoti atsiskaitymo. Bandyk dar kartą.');
+        return;
+      }
+
+      window.location.href = data.url;
     } catch {
       toast.error('Nepavyko inicijuoti atsiskaitymo. Bandyk dar kartą.');
     } finally {
