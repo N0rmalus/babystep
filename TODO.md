@@ -21,15 +21,13 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API
 
 - [ ] **Fill or remove the empty blog section** ("Patarimai tėvams") on the home page.
 - [ ] **Fix links that go nowhere.** On the home page, "Žiūrėti įrašus" and "Žiūrėti rekomendacijas" go to `/`. In the footer, "Naujienos" goes to `#`. In the mobile menu, "Tinklaraštis" and "Apie mus" go to `#`.
-- [ ] **Fix the 404 page's broken desktop image.** `app/not-found.tsx` loads `/page-not-founds.png`, which doesn't exist. Only `page-not-found.png` does.
+- [x] **Fix the 404 page's broken desktop image.** `app/not-found.tsx` loads `/page-not-founds.png`, which doesn't exist. Only `page-not-found.png` does.
 - [ ] **Show category product counts** once the API provides them. See the TODO in `app/(routes)/components/category-mosaic.tsx`.
 
 ## SEO and quality
 
 - [ ] **Add `generateMetadata` to product and category pages.** Every page currently has the title "Babystep".
-- [ ] **Set `<html lang="lt">`.** It is `lang="en"` in `app/layout.tsx` and `app/global-error.tsx`.
-- [ ] **Add an e2e test for checkout.** The mock server already has a `/checkout` endpoint. Update the mock when the delivery method and confirmation endpoints are added.
-
+- [x] **Set `<html lang="lt">`.** It is `lang="en"` in `app/layout.tsx` and `app/global-error.tsx`.
 ## Dead code
 
 - [x] **Delete the unused files** `actions/get-subcategory.tsx` and `components/ui/product-card/product-card-image.tsx`.

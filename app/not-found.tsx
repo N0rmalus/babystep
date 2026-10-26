@@ -71,7 +71,7 @@ const NotFound = () => {
             <div className="bg-tumbleweed-800/10 absolute bottom-6 left-1/2 h-10 w-72 -translate-x-1/2 rounded-full blur-2xl" />
 
             <Image
-              src="/page-not-founds.png"
+              src="/page-not-found.png"
               alt=""
               width={760}
               height={760}
