@@ -22,7 +22,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={accentFont.variable}>
+    <html lang="lt" data-scroll-behavior="smooth" className={accentFont.variable}>
       <body className={bodyFont.className}>
         <div className="flex min-h-screen flex-col bg-white bg-[radial-gradient(rgba(199,110,72,0.1)_1px,transparent_1px)] bg-size-[3px_3px]">
           <ToastProvider />
