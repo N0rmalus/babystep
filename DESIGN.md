@@ -42,7 +42,10 @@ The rocking-horse logo and the 3D wooden-toy illustration style stay. The rest o
 - **Backgrounds:** warm off-white/cream.
 - **Text:** warm near-black.
 - **Primary buttons:** warm near-black, so the main action is always clear.
-- **Salmon pink:** a rare accent only. The palette stays gender-neutral.
+- **Salmon pink:** the sale color, and used only for sales (sale badges, sale prices, the Akcijos page). Use a darker salmon shade for small text so it stays readable. Nowhere else, so the palette stays gender-neutral.
+- **Danger:** a muted warm red, clearly distinct from terracotta, for errors and destructive confirmations. Always pair it with an icon or text, never color alone.
+- **Success:** a soft sage green for "in stock" and "free shipping reached".
+- **Delete buttons** in the cart and wishlist are quiet icons that turn danger red only on hover.
 - No red or yellow "sale" colors.
 
 ### Shape
@@ -58,7 +61,7 @@ Banners are allowed, under these rules. They are provisional until we see them i
 - At most one large banner per page (e.g. the home page billboard), plus one slim announcement line at the top.
 - Banners use the brand palette, rounded corners and real photos. No countdown timers.
 - No auto-rotating carousels and no stacked banners. If there are several promotions, show one at a time in a fixed spot, or move them to the Akcijos page.
-- Sale badges on product cards are small and use the brand color.
+- Sale badges on product cards are small and use the sale color (salmon).
 
 ### Imagery
 
