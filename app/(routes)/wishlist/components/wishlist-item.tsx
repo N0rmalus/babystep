@@ -45,9 +45,9 @@ export const WishlistItem = ({ data }: Props) => {
   return (
     <div
       onClick={() => router.push(`/product/${data.id}`)}
-      className="group cursor-pointer overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      className="group border-line cursor-pointer overflow-hidden rounded-3xl border bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
     >
-      <div className="relative h-52 overflow-hidden bg-neutral-100">
+      <div className="bg-muted relative h-52 overflow-hidden">
         <Image
           src={imageUrl}
           fill
@@ -58,8 +58,8 @@ export const WishlistItem = ({ data }: Props) => {
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
-          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="rose" />}
-          {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
+          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="sale" />}
+          {!isInStock && <Badge label="Išparduota" variant="rounded" color="neutral" />}
           {data.isFeatured && <Badge label="Rekomenduojama" variant="rounded" color="tumbleweed-outlined" />}
         </div>
 
@@ -77,8 +77,8 @@ export const WishlistItem = ({ data }: Props) => {
       <div className="p-4">
         <div className="flex min-h-22 flex-col justify-between">
           <div>
-            <h3 className="text-base leading-tight font-semibold text-neutral-900">{data.name}</h3>
-            <p className="mt-2 text-xs text-neutral-500">
+            <h3 className="text-ink text-base leading-tight font-semibold">{data.name}</h3>
+            <p className="text-ink-muted mt-2 text-xs">
               {data.subcategory.category.name} • {data.subcategory.name}
             </p>
           </div>
@@ -86,15 +86,15 @@ export const WishlistItem = ({ data }: Props) => {
           <div className="mt-3 flex items-center justify-between gap-2">
             <div>
               {pricing.isOnSale && (
-                <div className="text-xs font-medium text-neutral-400 line-through">
+                <div className="text-ink-faint text-xs font-medium line-through">
                   {toCurrency(pricing.regularPrice)}
                 </div>
               )}
-              <div className={cn('text-lg font-bold', pricing.isOnSale ? 'text-rose-700' : 'text-neutral-900')}>
+              <div className={cn('text-lg font-bold', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}>
                 {toCurrency(pricing.effectivePrice)}
               </div>
             </div>
-            <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>
+            <p className="text-ink-muted text-xs">Likutis: {Math.max(data.amountInStock, 0)}</p>
           </div>
         </div>
 

@@ -97,7 +97,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
         ref={setMobileReference}
         type="button"
         className={cn(
-          'tap-strong relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 text-black lg:hidden',
+          'tap-strong text-ink relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 lg:hidden',
           isMobileMenuOpen && 'border-tumbleweed-300 bg-tumbleweed-50',
         )}
         {...getMobileReferenceProps()}
@@ -110,11 +110,11 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
           <FloatingFocusManager context={mobileContext} modal initialFocus={-1}>
             <div
               ref={setMobileFloating}
-              className="fixed inset-0 z-50 bg-white text-neutral-950 outline-none lg:hidden"
+              className="text-ink fixed inset-0 z-50 bg-white outline-none lg:hidden"
               {...getMobileFloatingProps()}
             >
               <div style={mobileTransitionStyles} className="flex h-dvh flex-col overflow-hidden">
-                <div className="flex h-16 items-center justify-between gap-2 border-b border-neutral-200 px-5 sm:gap-3 sm:px-8 lg:px-8">
+                <div className="border-line flex h-16 items-center justify-between gap-2 border-b px-5 sm:gap-3 sm:px-8 lg:px-8">
                   <Link
                     href="/"
                     aria-label="Babystep pradžia"
@@ -128,7 +128,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
                       className="size-9 object-contain transition-transform duration-200 ease-out group-hover:rotate-6 sm:size-10"
                     />
 
-                    <span className="font-accent text-tumbleweed-700 text-xl font-bold tracking-tight transition sm:text-xl">
+                    <span className="font-accent text-link text-xl font-bold tracking-tight transition sm:text-xl">
                       Babystep
                     </span>
                   </Link>
@@ -136,7 +136,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
                   <button
                     type="button"
                     className={cn(
-                      'tap-strong relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 text-black lg:hidden',
+                      'tap-strong text-ink relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 lg:hidden',
                     )}
                     onClick={closeMobileMenu}
                   >
@@ -164,56 +164,56 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
                     <div className="space-y-4">
                       <Link
                         href="/akcijos"
-                        className="group text-salmon-600 font-accent flex items-center justify-between text-xl font-bold tracking-tight"
+                        className="group text-sale-strong font-accent flex items-center justify-between text-xl font-bold tracking-tight"
                         onClick={closeMobileMenu}
                       >
                         <span>Akcijos</span>
                         {biggestDiscount > 0 && (
-                          <span className="bg-salmon-100 text-salmon-700 rounded-full px-4 py-1 text-sm font-bold tracking-wider uppercase">
+                          <span className="bg-sale-soft text-sale-strong rounded-full px-4 py-1 text-sm font-bold tracking-wider uppercase">
                             Iki -{biggestDiscount}%
                           </span>
                         )}
                       </Link>
 
-                      <div className="border-t border-neutral-200" />
+                      <div className="border-line border-t" />
 
                       <Link
                         href="/wishlist"
-                        className="group font-accent flex items-center justify-between text-xl font-bold tracking-tight text-neutral-950"
+                        className="group font-accent text-ink flex items-center justify-between text-xl font-bold tracking-tight"
                         onClick={closeMobileMenu}
                       >
                         <span>Norai</span>
-                        <Heart size={20} className="text-neutral-400 transition group-hover:text-neutral-900" />
+                        <Heart size={20} className="text-ink-faint group-hover:text-ink transition" />
                       </Link>
 
                       <Link
                         href="#"
-                        className="group font-accent flex items-center justify-between text-xl font-bold tracking-tight text-neutral-950"
+                        className="group font-accent text-ink flex items-center justify-between text-xl font-bold tracking-tight"
                         onClick={closeMobileMenu}
                       >
                         <span>Tinklaraštis</span>
-                        <ChevronRight size={20} className="text-neutral-400 transition group-hover:text-neutral-900" />
+                        <ChevronRight size={20} className="text-ink-faint group-hover:text-ink transition" />
                       </Link>
 
                       <Link
                         href="#"
-                        className="group font-accent flex items-center justify-between text-xl font-bold tracking-tight text-neutral-950"
+                        className="group font-accent text-ink flex items-center justify-between text-xl font-bold tracking-tight"
                         onClick={closeMobileMenu}
                       >
                         <span>Apie mus</span>
-                        <ChevronRight size={20} className="text-neutral-400 transition group-hover:text-neutral-900" />
+                        <ChevronRight size={20} className="text-ink-faint group-hover:text-ink transition" />
                       </Link>
                     </div>
                   </div>
 
-                  <div className="border-t border-neutral-200 pt-4">
+                  <div className="border-line border-t pt-4">
                     <div className="flex items-center gap-4">
                       {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
                         <Link
                           key={label}
                           href={href}
                           aria-label={label}
-                          className="tap-strong flex size-10 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-700 transition hover:border-neutral-300 hover:text-black"
+                          className="tap-strong border-line text-ink-soft hover:border-line-strong hover:text-ink flex size-10 items-center justify-center rounded-lg border bg-white transition"
                           onClick={closeMobileMenu}
                         >
                           <Icon size={20} />
@@ -238,12 +238,12 @@ const MobileCategorySection = ({ category, isActive, subcategories, onNavigate }
         href={`/category/${category.id}`}
         className={cn(
           'group font-accent flex items-center justify-between text-xl font-bold transition-colors',
-          isActive ? 'text-tumbleweed-800' : 'hover:text-tumbleweed-800 text-neutral-950',
+          isActive ? 'text-tumbleweed-800' : 'hover:text-tumbleweed-800 text-ink',
         )}
         onClick={onNavigate}
       >
         <span>{category.name}</span>
-        <ChevronRight size={20} className="text-neutral-400 transition group-hover:text-neutral-900" />
+        <ChevronRight size={20} className="text-ink-faint group-hover:text-ink transition" />
       </Link>
 
       {subcategories.length > 0 && (
@@ -252,7 +252,7 @@ const MobileCategorySection = ({ category, isActive, subcategories, onNavigate }
             <Link
               key={subcategory.id}
               href={`/category/${category.id}/${subcategory.id}`}
-              className="tap-surface rounded-full border border-tumbleweed-100 bg-white px-4 py-2 text-sm text-neutral-700 transition hover:border-neutral-300 hover:text-black"
+              className="tap-surface border-tumbleweed-100 text-ink-soft hover:border-line-strong hover:text-ink rounded-full border bg-white px-4 py-2 text-sm transition"
               onClick={onNavigate}
             >
               {subcategory.name}

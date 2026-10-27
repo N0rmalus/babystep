@@ -36,16 +36,39 @@ The rocking-horse logo and the 3D wooden-toy illustration style stay. The rest o
 
 ### Color
 
-- **Brand color:** terracotta (`tumbleweed` in `app/globals.css`) is the single brand color.
+Colors are semantic tokens in `app/globals.css` (`@theme`), used as Tailwind utilities such as `bg-canvas`, `text-ink` and `text-sale-strong`. Use the tokens, not Tailwind's `neutral`, `gray`, `black`, `rose` or `emerald` palettes.
+
+- **Brand color:** terracotta (`tumbleweed-*` in `app/globals.css`) is the single brand color.
   - Terracotta 500 (`#c76e48`) for large elements, fills, icons and accents.
-  - Terracotta 700 (`#9a4734`) for links and small colored text, because 500 is too light for body-size text.
-- **Backgrounds:** warm off-white/cream.
-- **Text:** warm near-black.
-- **Primary buttons:** warm near-black, so the main action is always clear.
-- **Salmon pink:** the sale color, and used only for sales (sale badges, sale prices, the Akcijos page). Use a darker salmon shade for small text so it stays readable. Nowhere else, so the palette stays gender-neutral.
-- **Danger:** a muted warm red, clearly distinct from terracotta, for errors and destructive confirmations. Always pair it with an icon or text, never color alone.
+  - Terracotta 700 (`#9a4734`, token `link`) for links and small colored text, because 500 is too light for body-size text.
+
+| Role                       | Token                         | Hex                   | Use                                                                        |
+| -------------------------- | ----------------------------- | --------------------- | -------------------------------------------------------------------------- |
+| Page background            | `canvas`                      | `#f8f4ee`             | Flat cream behind everything. No pattern.                                  |
+| Cards and panels           | `white`                       | `#ffffff`             | Cards, popovers, inputs on the cream page.                                 |
+| Subtle fill                | `muted` / `muted-soft`        | `#f1ebe3` / `#faf7f3` | Hover rows, image placeholders, inactive chips.                            |
+| Borders                    | `line` / `line-strong`        | `#e9e1d8` / `#d4c8bc` | Default borders (also the global default) / hovered or emphasized borders. |
+| Text                       | `ink`                         | `#2b2421`             | Headings, body text and **primary buttons** (warm near-black).             |
+| Secondary text             | `ink-soft`                    | `#433934`             | Body copy in long text, button hover.                                      |
+| Muted text                 | `ink-muted`                   | `#6e625a`             | Captions, meta text, labels.                                               |
+| Faint                      | `ink-faint`                   | `#968a81`             | Icons, struck-through old prices, control borders. Not for body text.      |
+| Link                       | `link`                        | `#9a4734`             | Links, eyebrows and small terracotta text.                                 |
+| Sale                       | `sale`                        | `#f39f9d`             | Salmon. Large sale fills only.                                             |
+| Sale background            | `sale-soft`                   | `#fef1f0`             | Sale badge and sale banner background.                                     |
+| Sale text                  | `sale-strong`                 | `#a8435c`             | Sale prices, sale badge text, the Akcijos link.                            |
+| Danger                     | `danger`                      | `#a12f33`             | Error text, destructive buttons, delete hover.                             |
+| Danger hover               | `danger-strong`               | `#86241f`             | Hover on filled danger buttons.                                            |
+| Danger background / border | `danger-soft` / `danger-line` | `#fbeceb` / `#f0cbc8` | Error boxes and out-of-stock cart rows.                                    |
+| Success                    | `success`                     | `#4d6b47`             | Sage green text and icons: "in stock", "free shipping reached".            |
+| Success background         | `success-soft`                | `#e6eee1`             | In-stock badge background.                                                 |
+
+Contrast (WCAG AA): `ink-muted`, `link`, `sale-strong`, `danger` and `success` all reach at least 4.5:1 on white, `canvas` and their own soft background. `ink-faint` is about 3.1–3.4:1, so use it only for icons, borders and decorative text.
+
+- **Salmon, sales only:** sale badges, sale prices, the home sale banner and the Akcijos link. Use `sale-strong` for any sale text. Nowhere else, so the palette stays gender-neutral.
+- **Danger:** a muted warm red (hue clearly redder than terracotta), for errors and destructive confirmations. Always pair it with an icon or text, never color alone.
 - **Success:** a soft sage green for "in stock" and "free shipping reached".
-- **Delete buttons** in the cart and wishlist are quiet icons that turn danger red only on hover.
+- **Out of stock** is a neutral badge (`muted` / `ink-muted`), not danger. The cart only turns danger when out-of-stock items block checkout, and it says why in text.
+- **Delete buttons** in the cart and wishlist are quiet icons (`ink-muted` or `ink-faint`) that turn `danger` only on hover.
 - No red or yellow "sale" colors.
 
 ### Shape

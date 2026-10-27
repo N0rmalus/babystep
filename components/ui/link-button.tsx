@@ -39,9 +39,9 @@ export const LinkButton = ({
       href={href}
       className={cn(
         'relative flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:cursor-not-allowed',
-        variant === 'primary' && 'border-transparent bg-black text-white hover:opacity-75',
-        variant === 'secondary' && 'border border-gray-300 bg-white text-black hover:bg-gray-100 hover:text-black',
-        variant === 'danger' && 'border-transparent bg-rose-600 text-white hover:bg-rose-700',
+        variant === 'primary' && 'bg-ink hover:bg-ink-soft border-transparent text-white',
+        variant === 'secondary' && 'border-line-strong text-ink hover:bg-muted hover:text-ink border bg-white',
+        variant === 'danger' && 'bg-danger hover:bg-danger-strong border-transparent text-white',
         sizeClasses[size],
         fullWidth ? 'w-full' : 'w-fit',
       )}

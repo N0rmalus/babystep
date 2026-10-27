@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-export type BadgeColor = 'tumbleweed' | 'tumbleweed-outlined' | 'green' | 'rose' | 'salmon';
+export type BadgeColor = 'tumbleweed' | 'tumbleweed-outlined' | 'success' | 'neutral' | 'sale';
 
 const badgeColorMap = {
   tumbleweed: {
@@ -12,27 +12,27 @@ const badgeColorMap = {
   },
   'tumbleweed-outlined': {
     background: 'bg-white border border-tumbleweed-200',
-    text: 'text-neutral-700',
+    text: 'text-ink-soft',
     hoverBackground: 'hover:border-tumbleweed-400',
-    hoverText: 'hover:text-black',
+    hoverText: 'hover:text-ink',
   },
-  green: {
-    background: 'bg-emerald-100',
-    text: 'text-emerald-700',
-    hoverBackground: 'hover:bg-emerald-200',
-    hoverText: 'hover:text-emerald-800',
+  success: {
+    background: 'bg-success-soft',
+    text: 'text-success',
+    hoverBackground: 'hover:bg-success-soft',
+    hoverText: 'hover:text-success',
   },
-  rose: {
-    background: 'bg-rose-100',
-    text: 'text-rose-700',
-    hoverBackground: 'hover:bg-rose-200',
-    hoverText: 'hover:text-rose-800',
+  neutral: {
+    background: 'bg-muted',
+    text: 'text-ink-muted',
+    hoverBackground: 'hover:bg-muted',
+    hoverText: 'hover:text-ink',
   },
-  salmon: {
-    background: 'bg-salmon-100',
-    text: 'text-salmon-700',
-    hoverBackground: 'hover:bg-salmon-200',
-    hoverText: 'hover:text-salmon-800',
+  sale: {
+    background: 'bg-sale-soft',
+    text: 'text-sale-strong',
+    hoverBackground: 'hover:bg-sale-soft',
+    hoverText: 'hover:text-sale-strong',
   },
 } satisfies Record<
   BadgeColor,

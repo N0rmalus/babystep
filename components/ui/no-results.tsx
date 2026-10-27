@@ -1,5 +1,5 @@
 const NoResults = () => {
-  return <div className="flex h-full w-full items-center justify-center text-neutral-500">Rezultatų nerasta.</div>;
+  return <div className="text-ink-muted flex h-full w-full items-center justify-center">Rezultatų nerasta.</div>;
 };
 
 export default NoResults;

@@ -17,7 +17,7 @@ export const Gallery = ({ images }: Props) => {
 
   if (images.length === 0) {
     return (
-      <div className="relative aspect-square overflow-hidden rounded-2xl border border-dashed border-neutral-300 bg-neutral-50">
+      <div className="border-line-strong bg-muted-soft relative aspect-square overflow-hidden rounded-2xl border border-dashed">
         <Image
           src={IMAGE_PLACEHOLDER_URL}
           alt="Nuotraukų nėra"
@@ -36,7 +36,7 @@ export const Gallery = ({ images }: Props) => {
         {images.map((image) => (
           <Tab.Panel key={image.id} className="focus:outline-hidden">
             <div className="relative aspect-square h-full w-full overflow-hidden rounded-2xl shadow-md">
-              <div className="absolute bottom-3 left-3 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-neutral-700 shadow-xs">
+              <div className="text-ink-soft absolute bottom-3 left-3 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold shadow-xs">
                 {selectedIndex + 1} / {images.length}
               </div>
               <ImageLightbox

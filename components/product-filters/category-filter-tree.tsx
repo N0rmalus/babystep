@@ -56,7 +56,7 @@ export const CategoryFilterTree = ({ groups, selectedSubcategoryIds, checkboxVar
         const canExpand = group.subcategories.length > 0;
 
         return (
-          <div key={group.id} className="border-b border-neutral-200 pb-1 last:border-b-0 last:pb-0">
+          <div key={group.id} className="border-line border-b pb-1 last:border-b-0 last:pb-0">
             <button
               type="button"
               className={cn(
@@ -69,24 +69,24 @@ export const CategoryFilterTree = ({ groups, selectedSubcategoryIds, checkboxVar
             >
               <span
                 className={cn(
-                  'min-w-0 flex-1 text-sm font-semibold text-neutral-700 transition group-hover:text-neutral-950',
-                  isOpen && 'text-neutral-950',
+                  'text-ink-soft group-hover:text-ink min-w-0 flex-1 text-sm font-semibold transition',
+                  isOpen && 'text-ink',
                 )}
               >
                 {group.name}
               </span>
-              <span className="font-accent text-xs text-neutral-400">{group.count}</span>
+              <span className="font-accent text-ink-faint text-xs">{group.count}</span>
               {canExpand && (
                 <ChevronDown
                   size={16}
-                  className={cn('text-neutral-400 transition-transform', isOpen && 'rotate-180 text-neutral-700')}
+                  className={cn('text-ink-faint transition-transform', isOpen && 'text-ink-soft rotate-180')}
                   aria-hidden="true"
                 />
               )}
             </button>
 
             {canExpand && isOpen && (
-              <div className="border-tumbleweed-200 mt-1 mb-2.5 ml-2 flex flex-col gap-1 border-dashed border-l pl-2.5">
+              <div className="border-tumbleweed-200 mt-1 mb-2.5 ml-2 flex flex-col gap-1 border-l border-dashed pl-2.5">
                 {group.subcategories.map((subcategory) => (
                   <FilterCheckbox
                     key={subcategory.id}

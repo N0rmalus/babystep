@@ -15,7 +15,7 @@ const NotFound = () => {
   return (
     <Container>
       <div className="relative isolate overflow-hidden px-5 py-8 sm:px-8 sm:py-10 lg:min-h-136 lg:px-14 lg:py-12">
-        <div className="font-accent text-salmon-400/10 absolute top-8 right-8 -z-10 leading-none font-black tracking-[-0.08em] sm:text-[14rem] lg:top-2 lg:right-12 lg:text-[20rem]">
+        <div className="font-accent text-tumbleweed-400/10 absolute top-8 right-8 -z-10 leading-none font-black tracking-[-0.08em] sm:text-[14rem] lg:top-2 lg:right-12 lg:text-[20rem]">
           404
         </div>
         <div className="absolute -bottom-24 left-1/2 -z-10 h-56 w-[120%] -translate-x-1/2 rounded-[100%] bg-white/70 blur-2xl" />
@@ -23,7 +23,7 @@ const NotFound = () => {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(22rem,1fr)] lg:items-center">
           <div className="relative z-10 max-w-xl">
             <div className="grid grid-cols-[minmax(0,1fr)_7.25rem] items-start gap-3 sm:block">
-              <h1 className="font-accent mt-4 text-4xl leading-[0.95] font-black tracking-tight text-neutral-950 sm:text-6xl lg:text-7xl">
+              <h1 className="font-accent text-ink mt-4 text-4xl leading-[0.95] font-black tracking-tight sm:text-6xl lg:text-7xl">
                 Šis takelis niekur neveda
               </h1>
 
@@ -40,7 +40,7 @@ const NotFound = () => {
               </div>
             </div>
 
-            <p className="mt-5 max-w-md text-base leading-7 text-neutral-600 sm:text-lg">
+            <p className="text-ink-muted mt-5 max-w-md text-base leading-7 sm:text-lg">
               Puslapis pasimetė tarp mažų žingsnelių. Grįžk į pradžią arba užsuk ten, kur dabar vyksta atradimai.
             </p>
 
@@ -53,7 +53,7 @@ const NotFound = () => {
                 <Link
                   key={quickLink.href}
                   href={quickLink.href}
-                  className="tap-surface group border-tumbleweed-100 hover:border-tumbleweed-300 inline-flex items-center gap-2 rounded-full border bg-white/70 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:text-neutral-950"
+                  className="tap-surface group border-tumbleweed-100 hover:border-tumbleweed-300 text-ink-soft hover:text-ink inline-flex items-center gap-2 rounded-full border bg-white/70 px-4 py-2 text-sm font-semibold transition"
                 >
                   {quickLink.label}
                   <ArrowRight

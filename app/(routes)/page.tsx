@@ -43,21 +43,21 @@ const HomePage = async () => {
           <CategoryMosaic categories={categories} />
         </PageSection>
 
-        <div className="from-salmon-100 to-salmon-200 w-full space-y-4 rounded-3xl bg-linear-to-r px-6 py-7 md:px-12 md:py-16 lg:px-16 lg:py-18">
+        <div className="bg-sale-soft w-full space-y-4 rounded-3xl px-6 py-7 md:px-12 md:py-16 lg:px-16 lg:py-18">
           <div className="flex flex-col items-start sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-col gap-2">
-              <h1 className="font-accent text-3xl font-black text-neutral-900 sm:text-3xl lg:text-5xl">
-                Švelnumas už <span className="text-salmon-700">mažiau</span>
+              <h1 className="font-accent text-ink text-3xl font-black sm:text-3xl lg:text-5xl">
+                Švelnumas už <span className="text-sale-strong">mažiau</span>
               </h1>
               <p>
                 Atrinkti mūsų komandos favoritai su nuolaida iki{' '}
-                <span className="text-salmon-700 font-accent font-semibold">-{biggestDiscount}%</span>. Pasiūlymai
+                <span className="text-sale-strong font-accent font-semibold">-{biggestDiscount}%</span>. Pasiūlymai
                 galioja, kol baigsis prekių likučiai.
               </p>
             </div>
             <Link
               href="/akcijos"
-              className="group hover:text-salmon-700 font-accent mt-4 inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-neutral-900 underline transition sm:text-base sm:no-underline"
+              className="group hover:text-sale-strong font-accent text-ink mt-4 inline-flex shrink-0 items-center gap-2 text-sm font-semibold underline transition sm:text-base sm:no-underline"
             >
               Visos akcijos
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -95,13 +95,13 @@ const HomePage = async () => {
           <InstagramFeed posts={instagramPosts} />
         </PageSection>
 
-        <div className="from-tumbleweed-100 to-salmon-100 w-full rounded-3xl bg-linear-to-r p-20">
+        <div className="bg-tumbleweed-100 w-full rounded-3xl p-20">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-col gap-4">
-              <h1 className="font-accent text-3xl font-black text-neutral-900 sm:text-3xl lg:text-5xl">
-                Pirmieji sužinokite <br /> <span className="text-salmon-700">naujienas</span>
+              <h1 className="font-accent text-ink text-3xl font-black sm:text-3xl lg:text-5xl">
+                Pirmieji sužinokite <br /> <span className="text-link">naujienas</span>
               </h1>
-              <p className="text-neutral-600">
+              <p className="text-ink-muted">
                 Prenumeruok naujienlaiškį ir pirmas sužinok apie naujienas, išpardavimus ir patarimus tėvams. Nuolaida
                 atkeliaus į el. paštą per kelias minutes.
               </p>

@@ -18,7 +18,7 @@ export const InstagramFeed = ({ posts }: Props) => {
           target="_blank"
           rel="noreferrer"
           aria-label={post.caption ?? 'Atidaryti Instagram įrašą'}
-          className="group relative aspect-square overflow-hidden rounded-3xl bg-neutral-100"
+          className="group bg-muted relative aspect-square overflow-hidden rounded-3xl"
         >
           <Image
             src={getImageUrl(post.imageUrl)}
@@ -28,9 +28,9 @@ export const InstagramFeed = ({ posts }: Props) => {
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           />
 
-          <div className="absolute inset-0 bg-linear-to-t from-black/35 via-black/0 to-transparent opacity-70 transition-opacity group-hover:opacity-100" />
+          <div className="from-ink/35 via-ink/0 absolute inset-0 bg-linear-to-t to-transparent opacity-70 transition-opacity group-hover:opacity-100" />
 
-          <span className="absolute right-3 bottom-3 inline-flex size-8 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-sm backdrop-blur">
+          <span className="text-ink absolute right-3 bottom-3 inline-flex size-8 items-center justify-center rounded-full bg-white/90 shadow-sm backdrop-blur">
             <Instagram size={17} aria-hidden="true" />
           </span>
         </a>

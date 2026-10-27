@@ -92,7 +92,7 @@ export const SortDropdown = ({ value, onChange }: Props) => {
         aria-label="Rūšiuoti"
         aria-expanded={isOpen}
         className={cn(
-          'hover:border-tumbleweed-300 bg-tumbleweed-50 flex h-10 w-full items-center justify-between gap-3 rounded-full border border-transparent px-4 text-left text-sm font-medium text-neutral-900 outline-hidden transition',
+          'hover:border-tumbleweed-300 bg-tumbleweed-50 text-ink flex h-10 w-full items-center justify-between gap-3 rounded-full border border-transparent px-4 text-left text-sm font-medium outline-hidden transition',
           isOpen && 'border-tumbleweed-300 bg-white',
         )}
         {...getReferenceProps()}
@@ -105,7 +105,7 @@ export const SortDropdown = ({ value, onChange }: Props) => {
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
             <div ref={setFloating} style={floatingStyles} className="z-50 outline-none" {...getFloatingProps()}>
-              <div style={transitionStyles} className="rounded-xl border border-neutral-200 bg-white p-1 shadow-xl">
+              <div style={transitionStyles} className="border-line rounded-xl border bg-white p-1 shadow-xl">
                 {sortOptions.map((option) => {
                   const isSelected = option.value === value;
 
@@ -118,9 +118,7 @@ export const SortDropdown = ({ value, onChange }: Props) => {
                       onClick={() => handleSelect(option.value)}
                       className={cn(
                         'flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors',
-                        isSelected
-                          ? 'bg-neutral-100 text-black'
-                          : 'text-neutral-700 hover:bg-neutral-100 hover:text-black',
+                        isSelected ? 'bg-muted text-ink' : 'text-ink-soft hover:bg-muted hover:text-ink',
                       )}
                     >
                       <span>{option.label}</span>

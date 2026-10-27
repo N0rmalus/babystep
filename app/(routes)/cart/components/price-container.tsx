@@ -41,11 +41,11 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
 
   return (
     <div className="mt-5 flex flex-col gap-5">
-      <div className="space-y-3 border-neutral-200">
+      <div className="border-line space-y-3">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4 text-sm">
-            <p className="text-neutral-600">Prekės ({productIds.length})</p>
-            <div className="font-accent font-semibold text-neutral-900">{toCurrency(subtotal)}</div>
+            <p className="text-ink-muted">Prekės ({productIds.length})</p>
+            <div className="font-accent text-ink font-semibold">{toCurrency(subtotal)}</div>
           </div>
           <div className="border-tumbleweed-500 ml-4 border-l border-dotted">
             {products.map((product) => (
@@ -55,10 +55,10 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
         </div>
 
         <div className="flex items-center justify-between gap-4 text-sm">
-          <p className="text-neutral-600">Pristatymas</p>
-          <div className={cn('font-semibold text-neutral-900')}>
+          <p className="text-ink-muted">Pristatymas</p>
+          <div className={cn('text-ink font-semibold')}>
             {shippingPrice === 0 ? (
-              <span className="font-semibold text-emerald-700">Nemokamai</span>
+              <span className="text-success font-semibold">Nemokamai</span>
             ) : (
               <span>{toCurrency(shippingPrice)}</span>
             )}
@@ -67,8 +67,8 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
 
         {isCouponApplied && (
           <div className="flex items-center justify-between gap-4 text-sm">
-            <p className="text-neutral-600">Nuolaida</p>
-            <div className={cn('font-semibold text-emerald-700')}>-{toCurrency(discount)}</div>
+            <p className="text-ink-muted">Nuolaida</p>
+            <div className={cn('text-success font-semibold')}>-{toCurrency(discount)}</div>
           </div>
         )}
       </div>
@@ -77,13 +77,13 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
 
       <div>
         <div className="flex items-center justify-between gap-4 text-sm">
-          <p className="text-neutral-600">Suma</p>
-          <div className="font-accent text-lg font-semibold text-neutral-900">{toCurrency(total)}</div>
+          <p className="text-ink-muted">Suma</p>
+          <div className="font-accent text-ink text-lg font-semibold">{toCurrency(total)}</div>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
-        <label htmlFor="coupon" className="text-xs font-semibold tracking-[0.16em] text-neutral-500 uppercase">
+      <div className="border-line bg-muted-soft rounded-2xl border p-3">
+        <label htmlFor="coupon" className="text-ink-muted text-xs font-semibold tracking-[0.16em] uppercase">
           Nuolaidos kodas
         </label>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
@@ -93,7 +93,7 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
             value={couponCode}
             onChange={(event) => setCouponCode(event.target.value)}
             placeholder="BABYSTEP10"
-            className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm outline-hidden transition placeholder:text-neutral-400 focus:border-neutral-400"
+            className="border-line placeholder:text-ink-faint focus:border-ink-faint w-full rounded-lg border bg-white px-3 py-2 text-sm outline-hidden transition"
           />
           <Button
             size="sm"
@@ -114,9 +114,9 @@ const PriceRow = ({ product }: { product: Product }) => {
   const pricing = getProductPricing(product);
 
   return (
-    <div className="flex min-w-0 flex-row items-center justify-between gap-3 pl-2 text-xs text-neutral-600">
+    <div className="text-ink-muted flex min-w-0 flex-row items-center justify-between gap-3 pl-2 text-xs">
       <span className="min-w-0 wrap-break-word sm:truncate">{product.name}</span>
-      <div className="text-right text-sm text-neutral-600 sm:shrink-0">
+      <div className="text-ink-muted text-right text-sm sm:shrink-0">
         <span>{toCurrency(pricing.effectivePrice)}</span>
       </div>
     </div>

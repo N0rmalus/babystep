@@ -64,10 +64,10 @@ const Button = ({
       }}
       className={cn(
         'tap-strong relative flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:cursor-default disabled:opacity-50 max-[400px]:px-2 max-[400px]:text-[11px]',
-        variant === 'primary' && 'border-transparent bg-black text-white hover:opacity-75',
-        variant === 'secondary' && 'border border-gray-300 bg-white text-black hover:bg-gray-100 hover:text-black',
-        variant === 'danger' && 'border-transparent bg-rose-600 text-white hover:bg-rose-700',
-        variant === 'danger-outlined' && 'border-transparent bg-rose-500 text-white hover:bg-rose-600',
+        variant === 'primary' && 'bg-ink hover:bg-ink-soft border-transparent text-white',
+        variant === 'secondary' && 'border-line-strong text-ink hover:bg-muted hover:text-ink border bg-white',
+        variant === 'danger' && 'bg-danger hover:bg-danger-strong border-transparent text-white',
+        variant === 'danger-outlined' && 'border-danger-line text-danger hover:bg-danger-soft border bg-white',
         className,
         sizeClasses[size],
         fullWidth ? 'w-full' : 'w-auto',

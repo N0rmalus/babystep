@@ -8,20 +8,20 @@ type Props = {
 
 export const ProductListFailedBox = ({ onFocusRefresh }: Props) => {
   return (
-    <PaperWrapper className="flex justify-center border-rose-200 bg-rose-50/80">
+    <PaperWrapper className="border-danger-line bg-danger-soft flex justify-center">
       <div className="flex flex-row items-center gap-4">
-        <span className="inline-flex rounded-full bg-rose-100 p-2 text-rose-600">
+        <span className="text-danger inline-flex rounded-full bg-white p-2">
           <AlertTriangle size={16} />
         </span>
 
-        <p className="text-sm font-semibold text-rose-700">Įvyko klaida</p>
+        <p className="text-danger text-sm font-semibold">Įvyko klaida</p>
 
         <Button
           size="sm"
           variant="secondary"
           label="Bandyti iš naujo"
           elementBefore={<RotateCcw size={14} />}
-          className="ml-5 border-rose-200 bg-white text-rose-700 hover:bg-rose-100"
+          className="border-danger-line text-danger hover:bg-danger-soft ml-5 bg-white"
           onClick={onFocusRefresh}
         />
       </div>

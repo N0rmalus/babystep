@@ -9,8 +9,8 @@ type Props = {
 };
 
 export const FilterSection = ({ title, children, withTopBorder = false }: Props) => (
-  <div className={cn('flex flex-col gap-2', withTopBorder && 'border-t border-dashed border-neutral-200 pt-4')}>
-    <h2 className="font-accent text-xs font-bold tracking-widest text-neutral-900 uppercase">{title}</h2>
+  <div className={cn('flex flex-col gap-2', withTopBorder && 'border-line border-t border-dashed pt-4')}>
+    <h2 className="font-accent text-ink text-xs font-bold tracking-widest uppercase">{title}</h2>
     {children}
   </div>
 );

@@ -20,9 +20,10 @@ const IconButton = ({ onClick, icon, title, variant, disabled }: Props) => {
       }}
       className={cn(
         'flex items-center justify-center rounded-lg p-2 transition',
-        variant === 'primary' && 'border bg-white text-black hover:bg-gray-100',
-        variant === 'secondary' && 'bg-black text-white hover:bg-gray-800',
-        variant === 'danger' && 'bg-rose-500 text-white hover:bg-rose-600',
+        variant === 'primary' && 'text-ink hover:bg-muted border bg-white',
+        variant === 'secondary' && 'bg-ink hover:bg-ink-soft text-white',
+        variant === 'danger' &&
+          'hover:border-danger-line hover:bg-danger-soft text-ink-muted hover:text-danger border bg-white',
       )}
       title={title}
       disabled={disabled}

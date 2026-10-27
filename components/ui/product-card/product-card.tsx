@@ -86,11 +86,11 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
     <div
       onClick={() => router.push(`/product/${data.id}`)}
       className={cn(
-        'group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl',
+        'group border-line flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl',
         !isInStock && 'opacity-50',
       )}
     >
-      <div className="relative aspect-square overflow-hidden bg-neutral-100 sm:aspect-4/3">
+      <div className="bg-muted relative aspect-square overflow-hidden sm:aspect-4/3">
         <Image
           src={imageUrl}
           fill
@@ -101,8 +101,8 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
-          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="salmon" />}
-          {!isInStock && <Badge label="Išparduota" variant="rounded" color="rose" />}
+          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="sale" />}
+          {!isInStock && <Badge label="Išparduota" variant="rounded" color="neutral" />}
         </div>
 
         <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2">
@@ -116,28 +116,26 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
       <div className="flex flex-1 flex-col gap-1 p-3 sm:gap-4 sm:p-4">
         <div className="flex min-h-20 flex-1 flex-col justify-between sm:min-h-22 sm:gap-3">
           <div>
-            <h3 className="text-sm leading-tight font-semibold text-neutral-900 sm:text-base">{data.name}</h3>
-            <p className="mt-1.5 text-[11px] text-neutral-500 sm:mt-2 sm:text-xs">
+            <h3 className="text-ink text-sm leading-tight font-semibold sm:text-base">{data.name}</h3>
+            <p className="text-ink-muted mt-1.5 text-[11px] sm:mt-2 sm:text-xs">
               {data.subcategory.category.name} • {data.subcategory.name}
             </p>
           </div>
 
           <div>
             {pricing.isOnSale && (
-              <div className="text-xs font-medium text-neutral-400 line-through">
-                {toCurrency(pricing.regularPrice)}
-              </div>
+              <div className="text-ink-faint text-xs font-medium line-through">{toCurrency(pricing.regularPrice)}</div>
             )}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
               <span
                 className={cn(
                   'font-accent text-base font-bold sm:text-lg',
-                  pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900',
+                  pricing.isOnSale ? 'text-sale-strong' : 'text-ink',
                 )}
               >
                 {toCurrency(pricing.effectivePrice)}
               </span>
-              {!isMobile && <p className="text-xs text-neutral-500">Likutis: {Math.max(data.amountInStock, 0)}</p>}
+              {!isMobile && <p className="text-ink-muted text-xs">Likutis: {Math.max(data.amountInStock, 0)}</p>}
             </div>
           </div>
         </div>

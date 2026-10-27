@@ -65,7 +65,7 @@ const CategoryMosaicTile = ({
     <Link
       href={`/category/${category.id}`}
       className={cn(
-        'group focus-visible:ring-salmon-500 relative isolate overflow-hidden rounded-3xl bg-neutral-200 shadow-sm transition-shadow duration-300 outline-none hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-4',
+        'group focus-visible:ring-tumbleweed-500 bg-line relative isolate overflow-hidden rounded-3xl shadow-sm transition-shadow duration-300 outline-none hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-4',
         layout?.frame,
       )}
     >
@@ -77,14 +77,14 @@ const CategoryMosaicTile = ({
         sizes={layout?.imageSizes}
         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
       />
-      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent transition-colors duration-300 group-hover:from-black/70 group-hover:via-black/25" />
+      <div className="from-ink/60 via-ink/20 group-hover:from-ink/70 group-hover:via-ink/25 absolute inset-0 bg-linear-to-t to-transparent transition-colors duration-300" />
 
       <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-2 text-white sm:inset-x-5 sm:bottom-5 sm:gap-4 md:inset-x-7 md:bottom-7">
         <div className="min-w-0">
           <h3 className={cn('font-accent leading-none font-semibold', layout?.title)}>{category.name}</h3>
           {/* TODO: Show product count once the categories API exposes a lightweight productCount field. */}
         </div>
-        <span className="group-hover:bg-salmon-500 hidden size-9 shrink-0 place-items-center rounded-full bg-white text-neutral-900 transition duration-300 group-hover:text-white sm:size-10 md:size-11 lg:grid">
+        <span className="group-hover:bg-tumbleweed-500 text-ink hidden size-9 shrink-0 place-items-center rounded-full bg-white transition duration-300 group-hover:text-white sm:size-10 md:size-11 lg:grid">
           <ArrowRight size={19} className="transition-transform duration-300 group-hover:-rotate-45" />
         </span>
       </div>

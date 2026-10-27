@@ -73,34 +73,32 @@ export const Info = ({ data }: Props) => {
         <Badge
           label={isInStock ? `Yra sandėlyje (${data.amountInStock} vnt.)` : 'Išparduota'}
           variant="rounded"
-          color={isInStock ? 'green' : 'rose'}
+          color={isInStock ? 'success' : 'neutral'}
         />
 
-        {pricing.isOnSale && <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="salmon" />}
+        {pricing.isOnSale && <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="sale" />}
       </div>
 
       <div className="flex justify-between gap-4">
-        <h1 className="text-3xl leading-tight font-bold text-neutral-900 sm:text-4xl">{data.name}</h1>
+        <h1 className="text-ink text-3xl leading-tight font-bold sm:text-4xl">{data.name}</h1>
         <div className="text-right">
           {pricing.isOnSale && (
-            <div className="font-accent text-base font-medium text-neutral-400 line-through">
+            <div className="font-accent text-ink-faint text-base font-medium line-through">
               {toCurrency(pricing.regularPrice)}
             </div>
           )}
-          <div
-            className={cn('font-accent text-3xl font-bold', pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900')}
-          >
+          <div className={cn('font-accent text-3xl font-bold', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}>
             {toCurrency(pricing.effectivePrice)}
           </div>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6">
-        <h3 className="text-sm font-semibold tracking-[0.18em] text-neutral-500 uppercase">Aprašymas</h3>
+      <div className="border-line rounded-2xl border bg-white p-5 sm:p-6">
+        <h3 className="text-ink-muted text-sm font-semibold tracking-[0.18em] uppercase">Aprašymas</h3>
         {hasDescription ? (
           <RichTextContent content={data.description} className="mt-4" />
         ) : (
-          <p className="mt-3 text-sm text-neutral-500">Aprašymo nėra.</p>
+          <p className="text-ink-muted mt-3 text-sm">Aprašymo nėra.</p>
         )}
       </div>
 

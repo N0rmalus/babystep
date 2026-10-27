@@ -28,6 +28,38 @@
   --color-salmon-900: #9a3d35;
   --color-salmon-950: #5a231d;
 
+  /*
+    Semantic roles. Use these in components instead of the primitive ramps above
+    or Tailwind's neutral/gray/black/rose/emerald palettes.
+  */
+  --color-canvas: #f8f4ee;
+  --color-muted: #f1ebe3;
+  --color-muted-soft: #faf7f3;
+  --color-line: #e9e1d8;
+  --color-line-strong: #d4c8bc;
+
+  --color-ink: #2b2421;
+  --color-ink-soft: #433934;
+  --color-ink-muted: #6e625a;
+  --color-ink-faint: #968a81;
+
+  --color-link: var(--color-tumbleweed-700);
+
+  /* Sales only: sale badges, sale prices and Akcijos. */
+  --color-sale: var(--color-salmon-500);
+  --color-sale-soft: var(--color-salmon-100);
+  --color-sale-strong: #a8435c;
+
+  /* Errors and destructive actions. Always pair with an icon or text. */
+  --color-danger: #a12f33;
+  --color-danger-strong: #86241f;
+  --color-danger-soft: #fbeceb;
+  --color-danger-line: #f0cbc8;
+
+  /* In stock and free shipping reached. */
+  --color-success: #4d6b47;
+  --color-success-soft: #e6eee1;
+
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
 }
@@ -51,7 +83,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--color-line, currentcolor);
   }
 
   button {
@@ -60,14 +92,14 @@
 }
 
 @utility rich-text-content {
-  @apply text-sm leading-relaxed text-neutral-700 sm:text-base;
+  @apply text-ink-soft text-sm leading-relaxed sm:text-base;
 
   & h2 {
-    @apply mt-6 text-lg leading-tight font-semibold text-neutral-900 sm:text-xl;
+    @apply text-ink mt-6 text-lg leading-tight font-semibold sm:text-xl;
   }
 
   & h3 {
-    @apply mt-5 text-base leading-tight font-semibold text-neutral-900 sm:text-lg;
+    @apply text-ink mt-5 text-base leading-tight font-semibold sm:text-lg;
   }
 
   & p + p {
@@ -111,11 +143,11 @@
   }
 
   & blockquote {
-    @apply border-tumbleweed-300 bg-tumbleweed-50 my-5 rounded-r-2xl border-l-4 px-4 py-3 text-neutral-700;
+    @apply border-tumbleweed-300 bg-tumbleweed-50 text-ink-soft my-5 rounded-r-2xl border-l-4 px-4 py-3;
   }
 
   & strong {
-    @apply font-semibold text-neutral-900;
+    @apply text-ink font-semibold;
   }
 
   & em {
@@ -145,7 +177,7 @@
 
   .scrollbar-soft {
     scrollbar-width: thin;
-    scrollbar-color: black transparent;
+    scrollbar-color: var(--color-ink) transparent;
   }
 
   .scrollbar-soft::-webkit-scrollbar {
@@ -159,12 +191,12 @@
   .scrollbar-soft::-webkit-scrollbar-thumb {
     border: 0.25rem solid transparent;
     border-radius: 999px;
-    background: black;
+    background: var(--color-ink);
     background-clip: content-box;
   }
 
   .scrollbar-soft::-webkit-scrollbar-thumb:hover {
-    background: black;
+    background: var(--color-ink);
     background-clip: content-box;
   }
 
@@ -199,7 +231,7 @@
   }
 
   .tap-surface {
-    @apply active:bg-neutral-100;
+    @apply active:bg-muted;
   }
 }
 

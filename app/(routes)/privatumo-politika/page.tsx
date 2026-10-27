@@ -19,7 +19,7 @@ const privacySections = [
     paragraphs: [
       <>
         Mūsų tinklalapio adresas yra:{' '}
-        <a className="text-tumbleweed-600 underline-offset-4 hover:underline" href="https://babystep.lt">
+        <a className="text-link underline-offset-4 hover:underline" href="https://babystep.lt">
           https://babystep.lt
         </a>
       </>,
@@ -91,7 +91,7 @@ const PrivatumoPolitikaPage = () => {
         description="Jūsų privatumas mums svarbus. Žemiau paaiškiname, kokius duomenis renkame, kodėl ir kaip ilgai juos saugome."
       />
 
-      <p className="text-base text-neutral-500">Atnaujinta: 2026 m. birželio 1 d.</p>
+      <p className="text-ink-muted text-base">Atnaujinta: 2026 m. birželio 1 d.</p>
 
       <div className="grid gap-10 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-20">
         <LegalContentNav ariaLabel="Privatumo politikos turinys" items={privacyNavItems} />
@@ -105,15 +105,13 @@ const PrivatumoPolitikaPage = () => {
                 className="border-tumbleweed-100 flex scroll-mt-28 flex-col gap-4 border-b pb-8 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="text-tumbleweed-700 font-accent text-lg font-bold">
-                    {formatSectionNumber(index)}
-                  </span>
-                  <h2 className="font-accent text-2xl leading-tight font-semibold text-neutral-950 sm:text-3xl">
+                  <span className="text-link font-accent text-lg font-bold">{formatSectionNumber(index)}</span>
+                  <h2 className="font-accent text-ink text-2xl leading-tight font-semibold sm:text-3xl">
                     {section.title}
                   </h2>
                 </div>
 
-                <div className="space-y-5 text-base leading-8 text-neutral-600 sm:text-lg sm:leading-9">
+                <div className="text-ink-muted space-y-5 text-base leading-8 sm:text-lg sm:leading-9">
                   {section.paragraphs.map((paragraph, paragraphIndex) => (
                     <p key={`${section.id}-${paragraphIndex}`}>{paragraph}</p>
                   ))}
@@ -123,13 +121,13 @@ const PrivatumoPolitikaPage = () => {
           </div>
 
           <PaperWrapper className="max-w-xl">
-            <h3 className="text-sm font-semibold tracking-[0.16em] text-neutral-500 uppercase">Turite klausimų?</h3>
-            <p className="mt-3 text-sm leading-relaxed text-neutral-700">
+            <h3 className="text-ink-muted text-sm font-semibold tracking-[0.16em] uppercase">Turite klausimų?</h3>
+            <p className="text-ink-soft mt-3 text-sm leading-relaxed">
               Jei norite pasinaudoti savo teisėmis arba turite klausimų apie savo duomenis, parašykite mums.
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
+              className="text-ink mt-4 inline-flex text-sm font-semibold hover:underline"
             >
               {CONTACT_EMAIL}
             </a>

@@ -40,12 +40,12 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
   return (
     <div className={cn('space-y-4 lg:col-span-5', className)}>
       <PaperWrapper>
-        <h2 className="text-lg font-semibold text-neutral-900">Užsakymo santrauka</h2>
+        <h2 className="text-ink text-lg font-semibold">Užsakymo santrauka</h2>
 
         <PriceContainer productIds={productIds} products={products} subtotal={subtotal} shippingPrice={shippingPrice} />
 
         {hasOutOfStockProducts && (
-          <div className="flex pt-3 text-sm text-rose-700">
+          <div className="text-danger flex pt-3 text-sm">
             <p>Kai kurių prekių nebeliko, pašalink prieš tęsiant apmokėjimą.</p>
           </div>
         )}
@@ -60,21 +60,18 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
           fullWidth
         />
 
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-neutral-500">
+        <p className="text-ink-muted mt-3 inline-flex items-center gap-1.5 text-xs">
           <Lock size={14} />
           Mokėjimo duomenys perduodami saugiu kanalu.
         </p>
       </PaperWrapper>
 
       <PaperWrapper>
-        <h3 className="text-sm font-semibold tracking-[0.16em] text-neutral-500 uppercase">Reikia pagalbos?</h3>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-700">
+        <h3 className="text-ink-muted text-sm font-semibold tracking-[0.16em] uppercase">Reikia pagalbos?</h3>
+        <p className="text-ink-soft mt-3 text-sm leading-relaxed">
           Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
         </p>
-        <a
-          href={`mailto:${CONTACT_EMAIL}`}
-          className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
-        >
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink mt-4 inline-flex text-sm font-semibold hover:underline">
           {CONTACT_EMAIL}
         </a>
       </PaperWrapper>
