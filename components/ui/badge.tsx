@@ -44,6 +44,8 @@ const badgeColorMap = {
   }
 >;
 
+const badgeSize = 'px-2 py-0.5 text-[10px] leading-4 sm:px-2.5 sm:text-[11px]';
+
 type Props = {
   label: string | ReactNode;
   color: BadgeColor;
@@ -61,14 +63,15 @@ export const Badge = ({ label, color, wordBreak, onClick }: Props) => {
           onClick();
         }}
         className={cn(
-          'inline-flex items-center rounded-full px-3 py-1 transition',
+          'inline-flex items-center rounded-full transition',
+          badgeSize,
           badgeColorMap[color].background,
           badgeColorMap[color].hoverBackground,
         )}
       >
         <span
           className={cn(
-            'eyebrow',
+            'tracking-eyebrow font-semibold uppercase',
             badgeColorMap[color].text,
             badgeColorMap[color].hoverText,
             wordBreak === 'break-all' ? 'break-all' : 'break-keep',
@@ -81,9 +84,13 @@ export const Badge = ({ label, color, wordBreak, onClick }: Props) => {
   }
 
   return (
-    <div className={cn('inline-flex items-center rounded-full px-3 py-1 transition', badgeColorMap[color].background)}>
+    <div className={cn('inline-flex items-center rounded-full transition', badgeSize, badgeColorMap[color].background)}>
       <span
-        className={cn('eyebrow', badgeColorMap[color].text, wordBreak === 'break-all' ? 'break-all' : 'break-keep')}
+        className={cn(
+          'tracking-eyebrow font-semibold uppercase',
+          badgeColorMap[color].text,
+          wordBreak === 'break-all' ? 'break-all' : 'break-keep',
+        )}
       >
         {label}
       </span>

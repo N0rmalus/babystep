@@ -32,3 +32,15 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API
 
 - [x] **Delete the unused files** `actions/get-subcategory.tsx` and `components/ui/product-card/product-card-image.tsx`.
 - [x] **Replace `axios` with `fetch`** in `use-cart-summary.ts` and remove the dependency. It's only used for that one call.
+
+## Customer accounts (after the Montonio migration)
+
+Storefront side of optional customer accounts. The API, data model and Clerk setup are planned in the admin repo's TODO under "Customer accounts"; do those first. Design the account pages in Claude Design after the main pages.
+
+- [ ] **Add Clerk for customers.** Install `@clerk/nextjs` with the customer Clerk app's keys (not the admin's), set up `proxy.ts`, and add sign-in and sign-up pages in the brand style with Lithuanian text.
+- [ ] **Account entry in the header.** A sign-in link when signed out, an account menu when signed in. Accounts stay optional: nothing in browsing or checkout requires signing in.
+- [ ] **Call the API as the customer.** A small helper that adds the Clerk session token (`getToken()`) as an `Authorization: Bearer` header for the customer endpoints. No custom refresh logic: Clerk handles that.
+- [ ] **Account pages.** Order history, an order detail page (reuse the order confirmation page's layout), and saved addresses (add, edit, delete, set default).
+- [ ] **Checkout when signed in.** Prefill delivery details from the default address and send the session token so the order is attached to the account.
+- [ ] **Reviews on the product page.** Show approved reviews with a rating summary and the "verified purchase" label, plus a short note on how reviews are checked. Show the review form only to signed-in customers who bought the product. Consider review structured data for search results.
+- [ ] **Privacy policy.** Extend the rewrite (see "Legal and trust") to cover accounts, saved addresses and reviews, including how to delete an account.

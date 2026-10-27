@@ -46,3 +46,11 @@ next-env.d.ts
 
 # Playwright CLI output
 .playwright-cli/
+
+# design-sync
+/.ds-sync/
+/ds-bundle/
+/.design-sync/.cache/
+/.design-sync/learnings/
+/.design-sync/node_modules
+/index.d.ts
