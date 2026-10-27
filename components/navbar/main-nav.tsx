@@ -132,7 +132,7 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
         ref={setReference}
         href={`/category/${category.id}`}
         className={cn(
-          'hover:text-ink inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold tracking-wide transition-colors',
+          'hover:text-ink inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-colors',
           isActive || isOpen ? 'bg-muted text-ink' : 'text-ink-muted',
         )}
         {...getReferenceProps({

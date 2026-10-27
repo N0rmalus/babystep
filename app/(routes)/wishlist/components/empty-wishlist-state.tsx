@@ -25,7 +25,7 @@ export const EmptyWishlistState = () => {
         </div>
 
         <div className="order-1 mx-auto max-w-xl text-center lg:order-2 lg:mx-0 lg:text-left">
-          <h2 className="font-accent text-ink mt-4 text-4xl font-black tracking-tight sm:text-5xl">
+          <h2 className="font-accent text-ink mt-4 text-4xl font-bold tracking-tight text-balance lg:text-5xl">
             Širdutė dar laukia savo norų
           </h2>
           <p className="text-ink-muted mt-4 text-base leading-7">

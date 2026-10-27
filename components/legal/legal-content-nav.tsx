@@ -12,7 +12,7 @@ type Props = {
 
 export const LegalContentNav = ({ ariaLabel, items }: Props) => (
   <aside className="lg:sticky lg:top-28 lg:self-start">
-    <p className="text-link text-sm font-bold tracking-widest uppercase">Turinys</p>
+    <p className="eyebrow text-link">Turinys</p>
     <nav aria-label={ariaLabel} className="mt-5">
       <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
         {items.map((item) => (
@@ -21,7 +21,7 @@ export const LegalContentNav = ({ ariaLabel, items }: Props) => (
               href={`#${item.id}`}
               className="group hover:text-link text-ink-soft grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-2 text-sm font-semibold transition sm:text-base"
             >
-              <span className="group-hover:text-link text-ink-muted pt-0.5 text-xs font-medium tracking-widest transition">
+              <span className="group-hover:text-link text-ink-muted pt-0.5 text-xs font-medium tabular-nums transition">
                 {item.number}
               </span>
               <span>{item.title}</span>
@@ -35,7 +35,7 @@ export const LegalContentNav = ({ ariaLabel, items }: Props) => (
                       href={`#${subitem.id}`}
                       className="group hover:text-link text-ink-muted grid grid-cols-[3.25rem_minmax(0,1fr)] items-start gap-2 text-xs leading-5 font-medium transition sm:text-sm"
                     >
-                      <span className="group-hover:text-link tracking-widest transition">{subitem.number}</span>
+                      <span className="group-hover:text-link tabular-nums transition">{subitem.number}</span>
                       <span>{subitem.title}</span>
                     </a>
                   </li>

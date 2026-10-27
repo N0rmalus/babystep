@@ -117,19 +117,21 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
         <div className="flex min-h-20 flex-1 flex-col justify-between sm:min-h-22 sm:gap-3">
           <div>
             <h3 className="text-ink text-sm leading-tight font-semibold sm:text-base">{data.name}</h3>
-            <p className="text-ink-muted mt-1.5 text-[11px] sm:mt-2 sm:text-xs">
+            <p className="text-ink-muted mt-1.5 text-xs sm:mt-2">
               {data.subcategory.category.name} • {data.subcategory.name}
             </p>
           </div>
 
           <div>
             {pricing.isOnSale && (
-              <div className="text-ink-faint text-xs font-medium line-through">{toCurrency(pricing.regularPrice)}</div>
+              <div className="text-ink-faint text-xs font-medium tabular-nums line-through">
+                {toCurrency(pricing.regularPrice)}
+              </div>
             )}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
               <span
                 className={cn(
-                  'font-accent text-base font-bold sm:text-lg',
+                  'text-base font-bold tabular-nums sm:text-lg',
                   pricing.isOnSale ? 'text-sale-strong' : 'text-ink',
                 )}
               >

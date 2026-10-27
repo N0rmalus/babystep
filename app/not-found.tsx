@@ -15,7 +15,7 @@ const NotFound = () => {
   return (
     <Container>
       <div className="relative isolate overflow-hidden px-5 py-8 sm:px-8 sm:py-10 lg:min-h-136 lg:px-14 lg:py-12">
-        <div className="font-accent text-tumbleweed-400/10 absolute top-8 right-8 -z-10 leading-none font-black tracking-[-0.08em] sm:text-[14rem] lg:top-2 lg:right-12 lg:text-[20rem]">
+        <div className="font-accent text-tumbleweed-400/10 absolute top-8 right-8 -z-10 leading-none font-bold tracking-tight sm:text-[14rem] lg:top-2 lg:right-12 lg:text-[20rem]">
           404
         </div>
         <div className="absolute -bottom-24 left-1/2 -z-10 h-56 w-[120%] -translate-x-1/2 rounded-[100%] bg-white/70 blur-2xl" />
@@ -23,7 +23,7 @@ const NotFound = () => {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(22rem,1fr)] lg:items-center">
           <div className="relative z-10 max-w-xl">
             <div className="grid grid-cols-[minmax(0,1fr)_7.25rem] items-start gap-3 sm:block">
-              <h1 className="font-accent text-ink mt-4 text-4xl leading-[0.95] font-black tracking-tight sm:text-6xl lg:text-7xl">
+              <h1 className="font-accent text-ink mt-4 text-4xl leading-tight font-bold tracking-tight text-balance lg:text-5xl">
                 Šis takelis niekur neveda
               </h1>
 

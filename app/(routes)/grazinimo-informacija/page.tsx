@@ -28,7 +28,7 @@ const GrazinimoInformacijaPage = () => {
         </div>
 
         <div>
-          <h2 className="font-accent text-ink text-xl font-semibold sm:text-2xl">Kaip grąžinti</h2>
+          <h2 className="font-accent text-ink text-2xl font-semibold text-balance sm:text-3xl">Kaip grąžinti</h2>
           <p className="text-ink-muted mt-3 text-base leading-8">
             Norėdami grąžinti įsigytas prekes, susisiekite su mumis nurodydami užsakymo datą, numerį, prekės pavadinimą
             ir konkrečią priežastį el. paštu{' '}
@@ -41,7 +41,7 @@ const GrazinimoInformacijaPage = () => {
       </PaperWrapper>
 
       <section className="flex flex-col gap-5">
-        <h2 className="font-accent text-ink text-xl font-semibold sm:text-2xl">
+        <h2 className="font-accent text-ink text-2xl font-semibold text-balance sm:text-3xl">
           Keičiamos ar grąžinamos prekės kriterijai
         </h2>
 

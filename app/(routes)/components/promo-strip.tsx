@@ -34,7 +34,7 @@ export const PromoStrip = () => {
               <Icon className="size-5 sm:size-6" />
             </span>
             <div className="min-w-0">
-              <h1 className="font-accent text-ink text-xs leading-tight font-bold sm:text-base">{title}</h1>
+              <h1 className="text-ink text-sm leading-tight font-semibold sm:text-base">{title}</h1>
               <p className="text-ink-muted mt-0.5 text-xs leading-snug sm:mt-1 sm:text-sm">{description}</p>
             </div>
           </div>

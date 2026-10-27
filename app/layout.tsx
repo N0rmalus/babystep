@@ -9,7 +9,7 @@ import { PromoMarquee } from '@/components/promo-marquee';
 import './globals.css';
 import { ReactNode } from 'react';
 
-const bodyFont = Urbanist({ subsets: ['latin'] });
+const bodyFont = Urbanist({ subsets: ['latin', 'latin-ext'] });
 const accentFont = Bricolage_Grotesque({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-bricolage-grotesque',

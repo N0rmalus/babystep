@@ -20,7 +20,9 @@ const productListVariantClasses = {
 export const ProductList = ({ title, items, variant = 'grid', wishlistAction = 'add' }: Props) => {
   return (
     <div className="@container flex flex-col gap-4">
-      {title && <h3 className="text-ink text-3xl leading-tight font-bold md:text-4xl">{title}</h3>}
+      {title && (
+        <h3 className="font-accent text-ink text-3xl leading-tight font-bold text-balance sm:text-4xl">{title}</h3>
+      )}
       {items.length === 0 && <NoResults />}
 
       <div className={cn('grid gap-4', productListVariantClasses[variant])}>

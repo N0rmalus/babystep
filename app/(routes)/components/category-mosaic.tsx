@@ -16,22 +16,22 @@ const visibleCategoryCount = 4;
 const tileLayouts = [
   {
     frame: 'col-span-2 h-72 sm:h-[20.5rem] md:col-span-5 md:row-span-2 md:h-auto',
-    title: 'text-lg sm:text-2xl lg:text-4xl',
+    title: 'text-2xl lg:text-4xl',
     imageSizes: '(min-width: 1024px) 42vw, (min-width: 768px) 42vw, 100vw',
   },
   {
     frame: 'col-span-1 h-52 sm:h-60 md:col-span-4 md:h-auto',
-    title: 'text-lg sm:text-2xl',
+    title: 'text-2xl',
     imageSizes: '(min-width: 1024px) 33vw, (min-width: 768px) 33vw, 50vw',
   },
   {
     frame: 'col-span-1 h-52 sm:h-60 md:col-span-3 md:h-auto',
-    title: 'text-lg sm:text-2xl',
+    title: 'text-2xl',
     imageSizes: '(min-width: 1024px) 25vw, (min-width: 768px) 25vw, 50vw',
   },
   {
     frame: 'col-span-1 h-52 sm:h-60 md:col-span-7 md:h-auto',
-    title: 'text-lg sm:text-2xl lg:text-4xl',
+    title: 'text-2xl lg:text-4xl',
     imageSizes: '(min-width: 1024px) 58vw, (min-width: 768px) 58vw, 50vw',
   },
 ] satisfies { frame: string; title: string; imageSizes: string }[];

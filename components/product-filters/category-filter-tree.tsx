@@ -75,7 +75,7 @@ export const CategoryFilterTree = ({ groups, selectedSubcategoryIds, checkboxVar
               >
                 {group.name}
               </span>
-              <span className="font-accent text-ink-faint text-xs">{group.count}</span>
+              <span className="text-ink-faint text-xs tabular-nums">{group.count}</span>
               {canExpand && (
                 <ChevronDown
                   size={16}

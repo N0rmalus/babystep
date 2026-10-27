@@ -235,9 +235,7 @@ export const ProductCatalogToolbar = ({
         {chips.length > 0 && (
           <div className="border-line border-t border-dashed pt-2.5">
             <div className="flex min-w-0 flex-wrap items-center gap-2">
-              <span className="font-accent text-ink-faint text-xs font-semibold tracking-widest uppercase">
-                Filtrai:
-              </span>
+              <span className="eyebrow text-ink-faint">Filtrai:</span>
               {chips.map((chip) => (
                 <FilterChipButton key={chip.key} chip={chip} />
               ))}
@@ -247,8 +245,8 @@ export const ProductCatalogToolbar = ({
 
         <div className="flex flex-row justify-between gap-4">
           <p className="text-ink-faint text-sm">
-            Rodoma <span className="font-accent text-ink font-bold">{visibleCount}</span> iš{' '}
-            <span className="font-accent text-ink font-bold">{totalCount}</span>
+            Rodoma <span className="text-ink font-semibold tabular-nums">{visibleCount}</span> iš{' '}
+            <span className="text-ink font-semibold tabular-nums">{totalCount}</span>
           </p>
 
           {chips.length > 0 && (

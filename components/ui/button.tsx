@@ -63,7 +63,7 @@ const Button = ({
         onClick?.(event);
       }}
       className={cn(
-        'tap-strong relative flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:cursor-default disabled:opacity-50 max-[400px]:px-2 max-[400px]:text-[11px]',
+        'tap-strong relative flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:cursor-default disabled:opacity-50 max-[400px]:px-2 max-[400px]:text-xs',
         variant === 'primary' && 'bg-ink hover:bg-ink-soft border-transparent text-white',
         variant === 'secondary' && 'border-line-strong text-ink hover:bg-muted hover:text-ink border bg-white',
         variant === 'danger' && 'bg-danger hover:bg-danger-strong border-transparent text-white',

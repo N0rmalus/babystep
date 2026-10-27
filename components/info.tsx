@@ -80,21 +80,21 @@ export const Info = ({ data }: Props) => {
       </div>
 
       <div className="flex justify-between gap-4">
-        <h1 className="text-ink text-3xl leading-tight font-bold sm:text-4xl">{data.name}</h1>
+        <h1 className="font-accent text-ink text-3xl leading-tight font-bold text-balance sm:text-4xl">{data.name}</h1>
         <div className="text-right">
           {pricing.isOnSale && (
-            <div className="font-accent text-ink-faint text-base font-medium line-through">
+            <div className="text-ink-faint text-base font-medium tabular-nums line-through">
               {toCurrency(pricing.regularPrice)}
             </div>
           )}
-          <div className={cn('font-accent text-3xl font-bold', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}>
+          <div className={cn('text-3xl font-bold tabular-nums', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}>
             {toCurrency(pricing.effectivePrice)}
           </div>
         </div>
       </div>
 
       <div className="border-line rounded-2xl border bg-white p-5 sm:p-6">
-        <h3 className="text-ink-muted text-sm font-semibold tracking-[0.18em] uppercase">Aprašymas</h3>
+        <h3 className="eyebrow text-ink-muted">Aprašymas</h3>
         {hasDescription ? (
           <RichTextContent content={data.description} className="mt-4" />
         ) : (
