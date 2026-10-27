@@ -33,20 +33,21 @@ The rocking-horse logo and the 3D wooden-toy illustration style stay. The rest o
 - **Headings:** Bricolage Grotesque (`font-accent`), only for headings at `text-2xl` and up, in two weights: bold (700) and semibold (600). Never `font-black` or light weights.
 - **Everything else:** Urbanist, the body font: prices, labels, chips, badges, breadcrumbs, footer titles, navigation and panel titles.
 - **Exception:** the "Babystep" logo wordmark in the navbar and footer keeps its own Bricolage styling.
-- Sizes come from Tailwind's default steps `text-xs` to `text-5xl`. No arbitrary sizes such as `text-[11px]`. Nothing below 12px.
+- Sizes come from Tailwind's default steps `text-xs` to `text-5xl`. Use an arbitrary size only when no step fits, and list it here. Nothing below 12px, except these deliberate exceptions:
+  - Badges: 10px on phones, 11px from `sm` up (`text-[10px]` / `sm:text-[11px]`). 12px was too large for these compact labels.
 - Prices and other figures (counts, page numbers, section numbers) use `tabular-nums`, so digits line up and don't jump when they change.
 
-| Role            | Size (mobile → larger)                 | Weight         | Font      | Tracking               | Used for                                                                   |
-| --------------- | -------------------------------------- | -------------- | --------- | ---------------------- | -------------------------------------------------------------------------- |
-| Display         | `text-4xl` → `lg:text-5xl` (36 → 48px) | bold           | Bricolage | `tracking-tight`       | Home banners, billboard label, 404, empty cart and wishlist                |
-| Title           | `text-3xl` → `sm:text-4xl` (30 → 36px) | bold           | Bricolage | normal                 | Page `h1` (`PageHeader`, `PageSection`), product name, "Panašios prekės"   |
-| Heading         | `text-2xl` → `sm:text-3xl` (24 → 30px) | semibold       | Bricolage | normal                 | Section `h2` on info and legal pages, category tiles (`lg:text-4xl` large) |
-| Subheading      | `text-xl` (20px)                       | semibold       | Urbanist  | normal                 | Legal subsections, cart popover title, mobile menu links                   |
-| Panel title     | `text-lg` (18px)                       | semibold       | Urbanist  | normal                 | Cart summary and progress panels, delivery option cards                    |
-| Body            | `text-base` (16px), `text-sm` in UI    | regular        | Urbanist  | normal                 | Paragraphs (`text-lg` for page intros), descriptions, controls             |
-| Meta            | `text-xs` (12px)                       | regular/medium | Urbanist  | normal                 | Product card category line, struck-through small prices, counts            |
-| Eyebrow / label | `text-xs` (12px), uppercase            | semibold       | Urbanist  | `tracking-eyebrow`     | Eyebrows, badges, filter chips, filter and footer titles, form labels      |
-| Price           | `text-base`–`text-3xl` by context      | bold           | Urbanist  | normal, `tabular-nums` | Product page `text-3xl`, cart row `text-2xl`, cards `text-base sm:text-lg` |
+| Role            | Size (mobile → larger)                 | Weight         | Font      | Tracking               | Used for                                                                                      |
+| --------------- | -------------------------------------- | -------------- | --------- | ---------------------- | --------------------------------------------------------------------------------------------- |
+| Display         | `text-4xl` → `lg:text-5xl` (36 → 48px) | bold           | Bricolage | `tracking-tight`       | Home banners, billboard label, 404, empty cart and wishlist                                   |
+| Title           | `text-3xl` → `sm:text-4xl` (30 → 36px) | bold           | Bricolage | normal                 | Page `h1` (`PageHeader`, `PageSection`), product name, "Panašios prekės"                      |
+| Heading         | `text-2xl` → `sm:text-3xl` (24 → 30px) | semibold       | Bricolage | normal                 | Section `h2` on info and legal pages, category tiles (`lg:text-4xl` large)                    |
+| Subheading      | `text-xl` (20px)                       | semibold       | Urbanist  | normal                 | Legal subsections, cart popover title, mobile menu links                                      |
+| Panel title     | `text-lg` (18px)                       | semibold       | Urbanist  | normal                 | Cart summary and progress panels, delivery option cards                                       |
+| Body            | `text-base` (16px), `text-sm` in UI    | regular        | Urbanist  | normal                 | Paragraphs (`text-lg` for page intros), descriptions, controls                                |
+| Meta            | `text-xs` (12px)                       | regular/medium | Urbanist  | normal                 | Product card category line, struck-through small prices, counts                               |
+| Eyebrow / label | `text-xs` (12px), uppercase            | semibold       | Urbanist  | `tracking-eyebrow`     | Eyebrows, filter chips, filter and footer titles, form labels (badges are smaller, see Badge) |
+| Price           | `text-base`–`text-3xl` by context      | bold           | Urbanist  | normal, `tabular-nums` | Product page `text-3xl`, cart row `text-2xl`, cards `text-base sm:text-lg`                    |
 
 - **Eyebrow utility:** `eyebrow` in `app/globals.css` sets the label role (`text-xs`, semibold, uppercase, `tracking-eyebrow` = 0.14em). Add only a color class. It is the only letter-spacing for uppercase text; don't use `tracking-wide`/`wider`/`widest` or arbitrary values.
 - Headings get `text-balance`.
@@ -193,7 +194,7 @@ Shared primitives live in `components/ui`. Shape, elevation and size are fixed i
 
 ### Badge
 
-`components/ui/badge.tsx`. Always a pill (`rounded-full`, `px-3 py-1`) with the `eyebrow` text style (12px, uppercase). With `onClick` it renders a `<button>` (the category breadcrumbs on the product page and in the cart); otherwise a static label.
+`components/ui/badge.tsx`. Always a compact pill (`rounded-full`) with eyebrow lettering (uppercase, semibold, `tracking-eyebrow`) at a smaller size: `px-2 py-0.5` and 10px text on phones, `px-2.5` and 11px text from `sm` up. With `onClick` it renders a `<button>` (the category breadcrumbs on the product page and in the cart); otherwise a static label.
 
 | Color                 | Use                                    |
 | --------------------- | -------------------------------------- |

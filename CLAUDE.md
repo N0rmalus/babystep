@@ -35,6 +35,38 @@ npm is the package manager (`package-lock.json`).
 
 **UI.** Shared primitives are in `components/ui`. Global modals (the product preview) use `providers/modal-provider.tsx` together with `hooks/use-preview-modal.ts`. Route-local components sit next to their route under `app/(routes)/<route>/components`. Combine classes with `cn` from `lib/utils.ts` (clsx + tailwind-merge).
 
+## Code style
+
+Apply to new and changed code. Don't refactor existing code just for style.
+
+TypeScript
+- No `as` casts: use type guards, `as const`, `satisfies` or zod.
+- Let TypeScript infer; annotate only exported functions' return types.
+- Discriminated unions for variant/state data. No `Type` suffix on type names.
+
+Naming
+- Component props type is `Props`. Booleans start with is/has/should/can, never negated (`isLoggedIn`, not `isNotLoggedIn`).
+- Handlers: `handle*` inside components, `on*` in props. Arrays plural, counts `*Count`.
+- SCREAMING_SNAKE_CASE for global constants; no magic numbers or strings.
+- No redundant context in object keys (`{ make }`, not `{ carMake }`).
+
+Patterns
+- Early returns: edge cases first, happy path last. No `if` without braces, no nested ternaries.
+- More than 2 function arguments → one options object.
+- Prefer `array.at(i)` when bounds aren't checked.
+
+React
+- Arrow-function components with named exports; destructure props in the signature.
+- File order: imports, `Props`, constants, component, helpers.
+- Server Components by default; `'use client'` only for interactivity.
+- Compose small components instead of adding boolean props.
+- Zustand: always use selectors, never a bare `useStore()`. Client state only.
+
+Tailwind
+- Theme tokens from `app/globals.css` (`@theme`); no `tailwind.config.js`.
+- Prefer built-in scale values (`p-10`, not `p-[41px]`). Use an arbitrary value only when no step fits, and keep it in one named constant (or token), not repeated across files. Never build class names at runtime.
+- Extract repeated class sets into components, not `@apply`. Conditional classes as ternaries inside `cn()`, not object keys.
+
 ## Agent skills
 
 ### Issue tracker
