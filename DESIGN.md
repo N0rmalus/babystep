@@ -108,7 +108,8 @@ Banners are allowed, under these rules. They are provisional until we see them i
 
 - At most one large banner per page (e.g. the home page billboard), plus one slim announcement line at the top.
 - Banners use the brand palette, rounded corners and real photos. No countdown timers.
-- No auto-rotating carousels and no stacked banners. If there are several promotions, show one at a time in a fixed spot, or move them to the Akcijos page.
+- No auto-rotating carousels and no stacked banners. The home page billboard spot may hold several banners as a **manual carousel**: arrows, dots and swipe, no autoplay, shown only when more than one banner is active, in the order set in the admin. Other promotions go to the Akcijos page.
+- Billboards (home and category) are edited in the admin and always use one of a fixed set of layouts: text over the image (left-aligned or centered), split (image half, text half), or image only. Each can have an eyebrow, title, subtitle, one button, light or dark text, an image focus point and an optional separate mobile image. No free-form placement: the fixed layouts are what keep every banner on brand.
 - Sale badges on product cards are small and use the sale color (salmon).
 
 ### Imagery

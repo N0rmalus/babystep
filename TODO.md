@@ -44,3 +44,12 @@ Storefront side of optional customer accounts. The API, data model and Clerk set
 - [ ] **Checkout when signed in.** Prefill delivery details from the default address and send the session token so the order is attached to the account.
 - [ ] **Reviews on the product page.** Show approved reviews with a rating summary and the "verified purchase" label, plus a short note on how reviews are checked. Show the review form only to signed-in customers who bought the product. Consider review structured data for search results.
 - [ ] **Privacy policy.** Extend the rewrite (see "Legal and trust") to cover accounts, saved addresses and reviews, including how to delete an account.
+
+## Customizable billboards
+
+Storefront side of the billboard upgrade in the admin's TODO ("Customizable billboards"). Do it after the admin side and after the layouts are designed in Claude Design.
+
+- [ ] **Billboard layouts.** Implement the designed variants in `components/ui/billboard.tsx`: text over the image (left or centered), split image/text, image only. Eyebrow, title, subtitle, optional button, light or dark text, focus point (`object-position`) and an optional mobile image.
+- [ ] **Home page carousel.** Fetch the active home banners from the new endpoint instead of `INDEX_BILLBOARD_ID`. With one banner show it alone; with several, a manual carousel: arrows, dots, swipe on mobile, keyboard accessible, no autoplay. Then remove `INDEX_BILLBOARD_ID` from `.env.example`.
+- [ ] **Category pages** use the same `Billboard` component with their category's billboard.
+- [ ] **Update `.design-sync/previews/Billboard.tsx`** and run `/design-sync` so Claude Design shows the new variants.
