@@ -29,14 +29,11 @@ export const EmptyFilteredProductsState = () => {
             height={500}
             className="animate-empty-state-image-float relative h-auto w-40 drop-shadow-2xl sm:w-48 md:w-56 lg:w-64"
           />
-          <div
-            className="absolute right-8 -bottom-1 left-8 h-3 rounded-full bg-neutral-950/10 blur-md"
-            aria-hidden="true"
-          />
+          <div className="bg-ink/10 absolute right-8 -bottom-1 left-8 h-3 rounded-full blur-md" aria-hidden="true" />
         </div>
 
         <div className="relative text-center sm:text-left">
-          <h2 className="font-accent text-tumbleweed-700 text-3xl font-semibold sm:text-4xl">
+          <h2 className="font-accent text-link text-3xl font-semibold sm:text-4xl">
             Prekių pagal{' '}
             <span className="relative z-0 inline-block">
               filtrus

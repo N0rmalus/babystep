@@ -17,7 +17,7 @@ const Navbar = async () => {
   const biggestDiscount = getBiggestDiscount(saleProducts);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur-sm">
+    <header className="border-line sticky top-0 z-40 border-b bg-white/95 backdrop-blur-sm">
       <div className="relative mx-auto flex h-16 max-w-7xl min-w-0 items-center gap-2 px-5 sm:gap-3 sm:px-8 lg:h-20 lg:px-8">
         <Link
           href="/"
@@ -32,7 +32,7 @@ const Navbar = async () => {
             className="size-9 object-contain transition-transform duration-200 ease-out group-hover:rotate-6 sm:size-10"
           />
 
-          <span className="font-accent text-tumbleweed-700 text-xl font-bold tracking-tight transition sm:text-2xl">
+          <span className="font-accent text-link text-xl font-bold tracking-tight transition sm:text-2xl">
             Babystep
           </span>
         </Link>

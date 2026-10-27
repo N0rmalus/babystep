@@ -132,8 +132,8 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
         ref={setReference}
         href={`/category/${category.id}`}
         className={cn(
-          'inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold tracking-wide transition-colors hover:text-black',
-          isActive || isOpen ? 'bg-neutral-100 text-black' : 'text-neutral-600',
+          'hover:text-ink inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold tracking-wide transition-colors',
+          isActive || isOpen ? 'bg-muted text-ink' : 'text-ink-muted',
         )}
         {...getReferenceProps({
           onClick: () => setIsOpen(false),
@@ -149,12 +149,12 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
             <div ref={setFloating} style={floatingStyles} className="z-50 w-56 outline-none" {...getFloatingProps()}>
-              <div style={transitionStyles} className="rounded-xl border border-neutral-200 bg-white/95 p-1 shadow-xl">
+              <div style={transitionStyles} className="border-line rounded-xl border bg-white/95 p-1 shadow-xl">
                 {subcategories.map((subcategory) => (
                   <Link
                     key={subcategory.id}
                     href={`/category/${category.id}/${subcategory.id}`}
-                    className="block rounded-lg px-3 py-2 text-sm text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-black"
+                    className="text-ink-soft hover:bg-muted hover:text-ink block rounded-lg px-3 py-2 text-sm transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     {subcategory.name}

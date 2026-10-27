@@ -553,7 +553,7 @@ const TaisyklesIrSalygosPage = () => {
         description="Pirkimo–pardavimo sutarties sąlygos, nustatančios Pirkėjo ir Pardavėjo teises bei pareigas, pristatymo ir prekių grąžinimo tvarką."
       />
 
-      <p className="text-base text-neutral-500">Atnaujinta: 2026 m. birželio 1 d.</p>
+      <p className="text-ink-muted text-base">Atnaujinta: 2026 m. birželio 1 d.</p>
 
       <div className="grid gap-10 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-20">
         <LegalContentNav ariaLabel="Taisyklių ir sąlygų turinys" items={termsNavItems} />
@@ -567,8 +567,8 @@ const TaisyklesIrSalygosPage = () => {
                 className="border-tumbleweed-100 flex scroll-mt-28 flex-col gap-4 border-b pb-8 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="font-accent text-tumbleweed-700 text-lg font-bold">{chapter.number}</span>
-                  <h2 className="font-accent text-2xl leading-tight font-semibold text-neutral-950 sm:text-3xl">
+                  <span className="font-accent text-link text-lg font-bold">{chapter.number}</span>
+                  <h2 className="font-accent text-ink text-2xl leading-tight font-semibold sm:text-3xl">
                     {chapter.title}
                   </h2>
                 </div>
@@ -577,12 +577,10 @@ const TaisyklesIrSalygosPage = () => {
                   {chapter.subchapters.map((subchapter) => (
                     <section key={subchapter.id} id={subchapter.id} className="scroll-mt-28">
                       <div className="flex items-baseline gap-3">
-                        <span className="text-tumbleweed-700 text-sm font-semibold">{subchapter.number}</span>
-                        <h3 className="font-accent text-xl font-semibold text-neutral-950 sm:text-2xl">
-                          {subchapter.title}
-                        </h3>
+                        <span className="text-link text-sm font-semibold">{subchapter.number}</span>
+                        <h3 className="font-accent text-ink text-xl font-semibold sm:text-2xl">{subchapter.title}</h3>
                       </div>
-                      <div className="mt-3 space-y-4 text-base leading-8 text-neutral-600 sm:text-lg sm:leading-9">
+                      <div className="text-ink-muted mt-3 space-y-4 text-base leading-8 sm:text-lg sm:leading-9">
                         {subchapter.paragraphs.map((paragraph, paragraphIndex) => (
                           <p key={`${subchapter.id}-${paragraphIndex}`}>{paragraph}</p>
                         ))}
@@ -595,13 +593,13 @@ const TaisyklesIrSalygosPage = () => {
           </div>
 
           <PaperWrapper className="max-w-xl">
-            <h3 className="text-sm font-semibold tracking-[0.16em] text-neutral-500 uppercase">Reikia pagalbos?</h3>
-            <p className="mt-3 text-sm leading-relaxed text-neutral-700">
+            <h3 className="text-ink-muted text-sm font-semibold tracking-[0.16em] uppercase">Reikia pagalbos?</h3>
+            <p className="text-ink-soft mt-3 text-sm leading-relaxed">
               Jei turite klausimų dėl užsakymo, taisyklių arba prekių grąžinimo, susisiekite su mumis.
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="mt-4 inline-flex text-sm font-semibold text-neutral-900 hover:underline"
+              className="text-ink mt-4 inline-flex text-sm font-semibold hover:underline"
             >
               {CONTACT_EMAIL}
             </a>

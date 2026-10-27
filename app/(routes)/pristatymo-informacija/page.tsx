@@ -48,9 +48,9 @@ const PristatymoInformacijaPage = () => {
         {deliveryMethods.map((method) => (
           <div
             key={method}
-            className="border-tumbleweed-100 inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-semibold text-neutral-900 sm:px-5 sm:text-base"
+            className="border-tumbleweed-100 text-ink inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-semibold sm:px-5 sm:text-base"
           >
-            <Truck className="text-tumbleweed-600 size-4" />
+            <Truck className="text-tumbleweed-500 size-4" />
             {method}
           </div>
         ))}
@@ -68,8 +68,8 @@ const PristatymoInformacijaPage = () => {
 
       <div className="flex w-full flex-col gap-5">
         <div className="space-y-1">
-          <h2 className="font-accent text-xl font-semibold text-neutral-950 sm:text-2xl">Pristatymo kaina</h2>
-          <p className="text-base leading-7 text-neutral-500">
+          <h2 className="font-accent text-ink text-xl font-semibold sm:text-2xl">Pristatymo kaina</h2>
+          <p className="text-ink-muted text-base leading-7">
             Užsakymams iki {FREE_SHIPPING_THRESHOLD} € taikomas pristatymo mokestis{' '}
             <span className="underline">(išskyrus Kuršių Neriją)</span>:
           </p>
@@ -79,36 +79,34 @@ const PristatymoInformacijaPage = () => {
           {deliveryPrices.map((item) => (
             <PaperWrapper key={item.title} className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <h3 className="text-lg font-bold text-neutral-950">{item.title}</h3>
-                <p className="text-base text-neutral-500">{item.description}</p>
+                <h3 className="text-ink text-lg font-bold">{item.title}</h3>
+                <p className="text-ink-muted text-base">{item.description}</p>
               </div>
-              <p className="font-accent text-2xl font-semibold text-neutral-950 sm:text-3xl">{item.price}</p>
+              <p className="font-accent text-ink text-2xl font-semibold sm:text-3xl">{item.price}</p>
             </PaperWrapper>
           ))}
         </div>
 
-        <p className="leading-7 text-neutral-500">
+        <p className="text-ink-muted leading-7">
           Ši suma įskaičiuojama į bendrą užsakymo sumą, kurią matysite sąskaitoje prieš apmokėjimą.
         </p>
       </div>
 
       <div className="flex w-full flex-col gap-5">
-        <h2 className="font-accent text-2xl font-semibold text-neutral-950 sm:text-3xl">Pristatymo terminai</h2>
+        <h2 className="font-accent text-ink text-2xl font-semibold sm:text-3xl">Pristatymo terminai</h2>
 
         <div className="grid gap-4 md:grid-cols-2">
           {deliveryTimeline.map((item) => (
             <PaperWrapper key={item.label} className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <p className="text-tumbleweed-700 text-sm font-bold tracking-[0.18em] uppercase">{item.label}</p>
+                <p className="text-link text-sm font-bold tracking-[0.18em] uppercase">{item.label}</p>
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <p className="font-accent text-2xl leading-none font-semibold text-neutral-950 sm:text-3xl">
-                    {item.value}
-                  </p>
-                  <p className="text-neutral-500g text-base">{item.unit}</p>
+                  <p className="font-accent text-ink text-2xl leading-none font-semibold sm:text-3xl">{item.value}</p>
+                  <p className="text-ink-muted text-base">{item.unit}</p>
                 </div>
               </div>
 
-              <p className="text-base leading-8 text-neutral-600">{item.description}</p>
+              <p className="text-ink-muted text-base leading-8">{item.description}</p>
             </PaperWrapper>
           ))}
         </div>

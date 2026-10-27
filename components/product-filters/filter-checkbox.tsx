@@ -16,10 +16,10 @@ export const FilterCheckbox = ({ label, checked, count, variant = 'compact', onC
   return (
     <label
       className={cn(
-        'group flex cursor-pointer items-center gap-2.5 text-neutral-700 transition',
+        'group text-ink-soft flex cursor-pointer items-center gap-2.5 transition',
         isTouch ? 'tap-soft min-h-12 rounded-2xl border px-3.5 py-2.5 text-base font-semibold' : 'py-0.5 text-sm',
-        isTouch && checked && 'border-neutral-950 bg-neutral-950 text-white shadow-sm',
-        isTouch && !checked && 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50',
+        isTouch && checked && 'border-ink bg-ink text-white shadow-sm',
+        isTouch && !checked && 'border-line hover:border-line-strong hover:bg-muted-soft bg-white',
       )}
     >
       <span className={cn('relative flex shrink-0 items-center', isTouch ? 'size-5' : 'size-4')}>
@@ -36,23 +36,19 @@ export const FilterCheckbox = ({ label, checked, count, variant = 'compact', onC
             checked
               ? isTouch
                 ? 'border-white bg-white'
-                : 'border-black bg-black'
-              : 'border-neutral-400 bg-transparent group-hover:border-black',
+                : 'border-ink bg-ink'
+              : 'border-ink-faint group-hover:border-ink bg-transparent',
           )}
         >
           {checked && (
-            <Check
-              size={isTouch ? 13 : 12}
-              className={isTouch ? 'text-neutral-950' : 'text-white'}
-              aria-hidden="true"
-            />
+            <Check size={isTouch ? 13 : 12} className={isTouch ? 'text-ink' : 'text-white'} aria-hidden="true" />
           )}
         </span>
       </span>
       <span
         className={cn(
           'min-w-0 flex-1 transition',
-          isTouch ? 'leading-tight' : 'group-hover:text-neutral-950',
+          isTouch ? 'leading-tight' : 'group-hover:text-ink',
           isTouch && checked && 'text-white',
         )}
       >
@@ -65,8 +61,8 @@ export const FilterCheckbox = ({ label, checked, count, variant = 'compact', onC
             isTouch
               ? checked
                 ? 'rounded-full bg-white/15 px-2 py-1 text-white'
-                : 'rounded-full bg-neutral-100 px-2 py-1 text-neutral-500'
-              : 'text-neutral-400',
+                : 'bg-muted text-ink-muted rounded-full px-2 py-1'
+              : 'text-ink-faint',
           )}
         >
           {count}

@@ -195,17 +195,14 @@ export const ProductCatalogToolbar = ({
       <div className="flex flex-col gap-3">
         <div className="grid gap-2.5 xl:grid-cols-[minmax(0,1fr)_14.5rem_auto]">
           <label className="relative block">
-            <Search
-              size={15}
-              className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-neutral-400"
-            />
+            <Search size={15} className="text-ink-faint pointer-events-none absolute top-1/2 left-4 -translate-y-1/2" />
             <input
               ref={searchInputRef}
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={searchPlaceholder}
-              className="focus:border-tumbleweed-300 bg-tumbleweed-50 h-10 w-full rounded-full border border-transparent pr-4 pl-10 text-sm outline-hidden transition placeholder:text-neutral-400 focus:bg-white"
+              className="focus:border-tumbleweed-300 bg-tumbleweed-50 placeholder:text-ink-faint h-10 w-full rounded-full border border-transparent pr-4 pl-10 text-sm outline-hidden transition focus:bg-white"
             />
           </label>
 
@@ -236,9 +233,9 @@ export const ProductCatalogToolbar = ({
         </div>
 
         {chips.length > 0 && (
-          <div className="border-t border-dashed border-neutral-200 pt-2.5">
+          <div className="border-line border-t border-dashed pt-2.5">
             <div className="flex min-w-0 flex-wrap items-center gap-2">
-              <span className="font-accent text-xs font-semibold tracking-widest text-neutral-400 uppercase">
+              <span className="font-accent text-ink-faint text-xs font-semibold tracking-widest uppercase">
                 Filtrai:
               </span>
               {chips.map((chip) => (
@@ -249,16 +246,16 @@ export const ProductCatalogToolbar = ({
         )}
 
         <div className="flex flex-row justify-between gap-4">
-          <p className="text-sm text-neutral-400">
-            Rodoma <span className="font-accent font-bold text-neutral-900">{visibleCount}</span> iš{' '}
-            <span className="font-accent font-bold text-neutral-900">{totalCount}</span>
+          <p className="text-ink-faint text-sm">
+            Rodoma <span className="font-accent text-ink font-bold">{visibleCount}</span> iš{' '}
+            <span className="font-accent text-ink font-bold">{totalCount}</span>
           </p>
 
           {chips.length > 0 && (
             <button
               type="button"
               onClick={onClearFilters}
-              className="text-tumbleweed-600 shrink-0 text-sm font-semibold underline underline-offset-4 transition"
+              className="text-link shrink-0 text-sm font-semibold underline underline-offset-4 transition"
             >
               Išvalyti filtrus
             </button>

@@ -11,12 +11,12 @@ export const CartProgress = ({ freeShippingProgress, remainingForFreeShipping }:
   return (
     <PaperWrapper>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold text-neutral-900">Nemokamas pristatymas</h2>
-        <p className="text-sm text-neutral-600">Nuo {toCurrency(FREE_SHIPPING_THRESHOLD)}</p>
+        <h2 className="text-ink text-lg font-semibold">Nemokamas pristatymas</h2>
+        <p className="text-ink-muted text-sm">Nuo {toCurrency(FREE_SHIPPING_THRESHOLD)}</p>
       </div>
 
       <div
-        className="mt-4 h-2.5 overflow-hidden rounded-full bg-neutral-100"
+        className="bg-muted mt-4 h-2.5 overflow-hidden rounded-full"
         role="progressbar"
         aria-valuenow={freeShippingProgress}
       >
@@ -26,7 +26,7 @@ export const CartProgress = ({ freeShippingProgress, remainingForFreeShipping }:
         />
       </div>
 
-      <p className="mt-3 text-sm font-medium text-neutral-700">
+      <p className="text-ink-soft mt-3 text-sm font-medium">
         {remainingForFreeShipping === 0
           ? 'Puiku! Nemokamas pristatymo-informacija jau pritaikytas.'
           : `Pridėk prekių dar už ${toCurrency(remainingForFreeShipping)} ir gausi nemokamą pristatymą.`}

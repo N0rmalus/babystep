@@ -23,16 +23,16 @@ const GrazinimoInformacijaPage = () => {
       />
 
       <PaperWrapper className="flex flex-col gap-5 sm:flex-row sm:gap-8">
-        <div className="bg-tumbleweed-50 text-tumbleweed-700 flex size-12 shrink-0 items-center justify-center rounded-xl">
+        <div className="bg-tumbleweed-50 text-link flex size-12 shrink-0 items-center justify-center rounded-xl">
           <RotateCcw size={20} />
         </div>
 
         <div>
-          <h2 className="font-accent text-xl font-semibold text-neutral-950 sm:text-2xl">Kaip grąžinti</h2>
-          <p className="mt-3 text-base leading-8 text-neutral-600">
+          <h2 className="font-accent text-ink text-xl font-semibold sm:text-2xl">Kaip grąžinti</h2>
+          <p className="text-ink-muted mt-3 text-base leading-8">
             Norėdami grąžinti įsigytas prekes, susisiekite su mumis nurodydami užsakymo datą, numerį, prekės pavadinimą
             ir konkrečią priežastį el. paštu{' '}
-            <a className="font-semibold text-neutral-900 hover:underline" href={`mailto:${CONTACT_EMAIL}`}>
+            <a className="text-ink font-semibold hover:underline" href={`mailto:${CONTACT_EMAIL}`}>
               {CONTACT_EMAIL}
             </a>
             .
@@ -41,14 +41,14 @@ const GrazinimoInformacijaPage = () => {
       </PaperWrapper>
 
       <section className="flex flex-col gap-5">
-        <h2 className="font-accent text-xl font-semibold text-neutral-950 sm:text-2xl">
+        <h2 className="font-accent text-ink text-xl font-semibold sm:text-2xl">
           Keičiamos ar grąžinamos prekės kriterijai
         </h2>
 
         <ul className="divide-tumbleweed-100 divide-y">
           {returnCriteria.map((criterion) => (
             <li key={criterion} className="flex items-start gap-4 py-5 sm:items-center sm:gap-6">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-800">
+              <span className="bg-success-soft text-success flex size-10 shrink-0 items-center justify-center rounded-full">
                 <Check size={20} aria-hidden="true" />
               </span>
               <span className="text-tumbleweed-950 text-lg leading-8">{criterion}</span>

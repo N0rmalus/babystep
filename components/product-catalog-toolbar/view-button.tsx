@@ -15,8 +15,8 @@ export const ViewButton = ({ label, icon, isActive, onClick }: Props) => (
     aria-label={label}
     onClick={onClick}
     className={cn(
-      'inline-flex size-8 items-center justify-center rounded-full text-neutral-700 transition',
-      isActive ? 'bg-white fill-neutral-950 text-neutral-950 shadow-sm' : 'hover:text-black',
+      'text-ink-soft inline-flex size-8 items-center justify-center rounded-full transition',
+      isActive ? 'fill-ink text-ink bg-white shadow-sm' : 'hover:text-ink',
     )}
   >
     {icon}

@@ -40,13 +40,11 @@ export const CartItem = ({ data }: Props) => {
       }}
       className={cn(
         'cursor-pointer rounded-3xl border bg-white p-5 shadow-xs transition-colors duration-300 sm:p-6',
-        isInStock
-          ? 'hover:border-tumbleweed-300 border-neutral-200'
-          : 'border-rose-200 opacity-75 hover:border-rose-300',
+        isInStock ? 'hover:border-tumbleweed-300 border-line' : 'border-danger-line hover:border-danger opacity-75',
       )}
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
-        <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-2xl bg-neutral-100 sm:h-36 sm:w-36">
+        <div className="bg-muted relative h-32 w-full shrink-0 overflow-hidden rounded-2xl sm:h-36 sm:w-36">
           <Image
             fill
             src={productImageUrl}
@@ -90,26 +88,23 @@ export const CartItem = ({ data }: Props) => {
               <Badge
                 label={isInStock ? `Yra sandėlyje (${data.amountInStock})` : 'Išparduota'}
                 variant="rounded"
-                color={isInStock ? 'green' : 'rose'}
+                color={isInStock ? 'success' : 'neutral'}
               />
               {pricing.isOnSale && (
-                <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="salmon" />
+                <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="sale" />
               )}
             </div>
 
             <div className="mt-auto pt-4">
-              <h3 className="text-xl leading-tight wrap-break-word text-neutral-900">{data.name}</h3>
+              <h3 className="text-ink text-xl leading-tight wrap-break-word">{data.name}</h3>
               <div>
                 {pricing.isOnSale && (
-                  <span className="block text-sm font-medium text-neutral-400 line-through">
+                  <span className="text-ink-faint block text-sm font-medium line-through">
                     {toCurrency(pricing.regularPrice)}
                   </span>
                 )}
                 <span
-                  className={cn(
-                    'font-accent text-2xl font-bold',
-                    pricing.isOnSale ? 'text-salmon-800' : 'text-neutral-900',
-                  )}
+                  className={cn('font-accent text-2xl font-bold', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}
                 >
                   {toCurrency(pricing.effectivePrice)}
                 </span>

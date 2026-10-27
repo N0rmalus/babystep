@@ -136,14 +136,14 @@ export const CartPopover = () => {
         variant="secondary"
         elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
         elementAfter={
-          <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5">
+          <span className="bg-ink inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5">
             {itemIds.length}
           </span>
         }
         label={<span className="hidden xl:inline">Krepšelis</span>}
         size="sm"
         aria-label="Krepšelis"
-        className="relative flex h-10 w-auto shrink-0 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-0 text-neutral-700 transition hover:border-neutral-300 hover:bg-white hover:text-black xl:h-auto xl:px-4 xl:py-2"
+        className="border-line text-ink-soft hover:border-line-strong hover:text-ink relative flex h-10 w-auto shrink-0 items-center justify-center gap-2 rounded-full border bg-white px-3 py-0 transition hover:bg-white xl:h-auto xl:px-4 xl:py-2"
         onClick={() => router.push('/cart')}
       />
 
@@ -158,12 +158,12 @@ export const CartPopover = () => {
             >
               <div
                 style={transitionStyles}
-                className="scrollbar-soft overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-xl"
+                className="scrollbar-soft border-line overflow-hidden rounded-3xl border bg-white shadow-xl"
               >
                 <div className="flex items-center justify-between gap-4 px-5 py-4">
                   <div>
-                    <h2 className="font-accent text-2xl font-black text-neutral-900">Tavo krepšelis</h2>
-                    <p className="mt-1 text-sm text-neutral-500">{getCartCountLabel(itemIds.length)}</p>
+                    <h2 className="font-accent text-ink text-2xl font-black">Tavo krepšelis</h2>
+                    <p className="text-ink-muted mt-1 text-sm">{getCartCountLabel(itemIds.length)}</p>
                   </div>
 
                   <button
@@ -180,12 +180,12 @@ export const CartPopover = () => {
                 </div>
 
                 {itemIds.length > 0 && (
-                  <div className="bg-tumbleweed-50/70 border-y border-neutral-200 px-5 py-3.5">
-                    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-neutral-800">
-                      <Truck className="text-emerald-700" size={16} aria-hidden="true" />
+                  <div className="bg-tumbleweed-50/70 border-line border-y px-5 py-3.5">
+                    <div className="text-ink-soft flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm">
+                      <Truck className="text-success" size={16} aria-hidden="true" />
                       <span>Nemokamas pristatymas</span>
                       {!hasFreeShipping && (
-                        <strong className="text-neutral-950">liko {toCurrency(remainingForFreeShipping)}</strong>
+                        <strong className="text-ink">liko {toCurrency(remainingForFreeShipping)}</strong>
                       )}
                     </div>
                     <div className="bg-tumbleweed-100 mt-3 h-1.5 overflow-hidden rounded-full">
@@ -200,7 +200,7 @@ export const CartPopover = () => {
                 <div className="max-h-[min(44vh,21rem)] overflow-y-auto">
                   {itemIds.length === 0 && (
                     <div className="px-5 py-9 text-center">
-                      <p className="mt-2 text-sm text-neutral-500">Krepšelis tuščias</p>
+                      <p className="text-ink-muted mt-2 text-sm">Krepšelis tuščias</p>
                     </div>
                   )}
 
@@ -208,10 +208,10 @@ export const CartPopover = () => {
                     <div className="space-y-3 px-5 py-4">
                       {[0, 1].map((item) => (
                         <div key={item} className="flex animate-pulse items-center gap-4">
-                          <div className="size-16 rounded-2xl bg-neutral-100" />
+                          <div className="bg-muted size-16 rounded-2xl" />
                           <div className="flex-1 space-y-2">
-                            <div className="h-4 w-3/4 rounded-full bg-neutral-100" />
-                            <div className="h-3 w-1/2 rounded-full bg-neutral-100" />
+                            <div className="bg-muted h-4 w-3/4 rounded-full" />
+                            <div className="bg-muted h-3 w-1/2 rounded-full" />
                           </div>
                         </div>
                       ))}
@@ -219,7 +219,7 @@ export const CartPopover = () => {
                   )}
 
                   {failedProductIds.length > 0 && !isLoading && (
-                    <div className="px-5 py-5 text-sm text-rose-600 sm:px-6">
+                    <div className="text-danger px-5 py-5 text-sm sm:px-6">
                       Nepavyko atnaujinti krepšelio prekių. Atidaryk pilną krepšelį arba bandyk dar kartą.
                     </div>
                   )}
@@ -234,8 +234,8 @@ export const CartPopover = () => {
                           key={product.id}
                           className={cn(
                             'hover:bg-tumbleweed-50/80 mx-3 my-1.5 flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors',
-                            index > 0 && 'border-t border-dashed border-neutral-200',
-                            isOutOfStock && 'bg-rose-50/70 opacity-75 hover:bg-rose-50',
+                            index > 0 && 'border-line border-t border-dashed',
+                            isOutOfStock && 'bg-danger-soft hover:bg-danger-soft opacity-75',
                           )}
                         >
                           <button
@@ -246,7 +246,7 @@ export const CartPopover = () => {
                             }}
                             className="grid min-w-0 flex-1 grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-3 text-left"
                           >
-                            <span className="relative size-14 overflow-hidden rounded-xl bg-neutral-100">
+                            <span className="bg-muted relative size-14 overflow-hidden rounded-xl">
                               <Image
                                 src={getImageUrl(product.images?.at(0)?.url)}
                                 alt={product.name}
@@ -257,17 +257,17 @@ export const CartPopover = () => {
                             </span>
 
                             <span className="min-w-0">
-                              <span className="line-clamp-2 text-sm leading-tight font-bold text-neutral-900">
+                              <span className="text-ink line-clamp-2 text-sm leading-tight font-bold">
                                 {product.name}
                               </span>
-                              <span className="mt-1 block truncate text-xs text-neutral-500">
+                              <span className="text-ink-muted mt-1 block truncate text-xs">
                                 {product.subcategory?.category?.name ?? 'Kategorija'} ·{' '}
                                 {product.subcategory?.name ?? 'Subkategorija'}
                               </span>
                               <span
                                 className={cn(
                                   'mt-2 block text-xs',
-                                  isOutOfStock ? 'font-semibold text-rose-600' : 'text-neutral-500',
+                                  isOutOfStock ? 'text-danger font-semibold' : 'text-ink-muted',
                                 )}
                               >
                                 {isOutOfStock ? 'Išparduota' : `1 × ${toCurrency(pricing.effectivePrice)}`}
@@ -277,17 +277,17 @@ export const CartPopover = () => {
 
                           <div className="flex shrink-0 flex-col items-end gap-4">
                             {pricing.isOnSale && (
-                              <span className="text-xs text-neutral-400 line-through">
+                              <span className="text-ink-faint text-xs line-through">
                                 {toCurrency(pricing.regularPrice)}
                               </span>
                             )}
-                            <span className="font-accent text-base font-black text-neutral-900">
+                            <span className="font-accent text-ink text-base font-black">
                               {toCurrency(pricing.effectivePrice)}
                             </span>
                             <button
                               type="button"
                               onClick={() => removeItem(product.id)}
-                              className="text-rose-500 transition hover:text-rose-600"
+                              className="text-ink-faint hover:text-danger transition"
                               aria-label={`Pašalinti ${product.name} iš krepšelio`}
                             >
                               <Trash2 size={18} aria-hidden="true" />
@@ -298,14 +298,14 @@ export const CartPopover = () => {
                     })}
                 </div>
 
-                <div className="border-t border-neutral-200 p-5">
+                <div className="border-line border-t p-5">
                   <div className="mb-4 flex items-center justify-between gap-4">
-                    <p className="text-sm text-neutral-500">Suma</p>
-                    <p className="font-accent text-2xl font-black text-neutral-900">{toCurrency(subtotal)}</p>
+                    <p className="text-ink-muted text-sm">Suma</p>
+                    <p className="font-accent text-ink text-2xl font-black">{toCurrency(subtotal)}</p>
                   </div>
 
                   {hasOutOfStockProducts && (
-                    <div className="flex pb-3 text-sm text-rose-700">
+                    <div className="text-danger flex pb-3 text-sm">
                       <p>Kai kurių prekių nebeliko, pašalink prieš tęsiant apmokėjimą.</p>
                     </div>
                   )}
