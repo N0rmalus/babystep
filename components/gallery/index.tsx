@@ -35,7 +35,7 @@ export const Gallery = ({ images }: Props) => {
       <Tab.Panels className="aspect-square w-full">
         {images.map((image) => (
           <Tab.Panel key={image.id} className="focus:outline-hidden">
-            <div className="relative aspect-square h-full w-full overflow-hidden rounded-2xl shadow-md">
+            <div className="shadow-card relative aspect-square h-full w-full overflow-hidden rounded-2xl">
               <div className="text-ink-soft absolute bottom-3 left-3 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold shadow-xs">
                 {selectedIndex + 1} / {images.length}
               </div>

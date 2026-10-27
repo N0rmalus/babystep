@@ -47,15 +47,15 @@ const badgeColorMap = {
 type Props = {
   label: string | ReactNode;
   color: BadgeColor;
-  variant?: 'rounded' | 'square';
   wordBreak?: 'break-all' | 'keep-all';
   onClick?: () => void;
 };
 
-export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
+export const Badge = ({ label, color, wordBreak, onClick }: Props) => {
   if (onClick) {
     return (
       <button
+        type="button"
         onClick={(event) => {
           event.stopPropagation();
           onClick();
@@ -64,7 +64,6 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
           'inline-flex items-center rounded-full px-3 py-1 transition',
           badgeColorMap[color].background,
           badgeColorMap[color].hoverBackground,
-          variant === 'rounded' ? 'rounded-full' : 'rounded-xs',
         )}
       >
         <span
@@ -82,13 +81,7 @@ export const Badge = ({ label, color, variant, wordBreak, onClick }: Props) => {
   }
 
   return (
-    <div
-      className={cn(
-        'inline-flex items-center rounded-full px-3 py-1 transition',
-        badgeColorMap[color].background,
-        variant === 'rounded' ? 'rounded-xl' : 'rounded-xs',
-      )}
-    >
+    <div className={cn('inline-flex items-center rounded-full px-3 py-1 transition', badgeColorMap[color].background)}>
       <span
         className={cn('eyebrow', badgeColorMap[color].text, wordBreak === 'break-all' ? 'break-all' : 'break-keep')}
       >

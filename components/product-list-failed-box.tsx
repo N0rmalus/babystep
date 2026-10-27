@@ -18,10 +18,10 @@ export const ProductListFailedBox = ({ onFocusRefresh }: Props) => {
 
         <Button
           size="sm"
-          variant="secondary"
+          variant="danger-outlined"
           label="Bandyti iš naujo"
           elementBefore={<RotateCcw size={14} />}
-          className="border-danger-line text-danger hover:bg-danger-soft ml-5 bg-white"
+          className="ml-5"
           onClick={onFocusRefresh}
         />
       </div>

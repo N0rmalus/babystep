@@ -8,6 +8,7 @@ import { Maximize2 } from 'lucide-react';
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import { getImageUrl } from '@/lib/image-url';
+import IconButton from '@/components/ui/icon-button';
 
 interface Props {
   images: { src: string }[];
@@ -30,13 +31,9 @@ export const ImageLightbox = ({ images, alt, className, startIndex = 0 }: Props)
         onClick={() => setOpen(true)}
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
       />
-      <button
-        onClick={() => setOpen(true)}
-        className="text-ink-soft absolute top-3 right-3 z-10 rounded-full bg-white/90 p-2 text-xs font-semibold shadow-xs"
-        title="Priartinti"
-      >
-        <Maximize2 size={18} className="text-ink-soft" />
-      </button>
+      <div className="absolute top-3 right-3 z-10">
+        <IconButton onClick={() => setOpen(true)} icon={<Maximize2 size={18} />} label="Priartinti" />
+      </div>
 
       {open && (
         <Lightbox

@@ -65,7 +65,7 @@ const CategoryMosaicTile = ({
     <Link
       href={`/category/${category.id}`}
       className={cn(
-        'group focus-visible:ring-tumbleweed-500 bg-line relative isolate overflow-hidden rounded-3xl shadow-sm transition-shadow duration-300 outline-none hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-4',
+        'group focus-visible:ring-tumbleweed-500 bg-line shadow-card relative isolate overflow-hidden rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-offset-4',
         layout?.frame,
       )}
     >

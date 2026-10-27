@@ -56,7 +56,7 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
           label="Pereiti į apmokėjimą"
           elementAfter={<ArrowRight size={18} />}
           onClick={onCheckout}
-          className="mt-3 rounded-xl"
+          className="mt-3"
           fullWidth
         />
 

@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import type { Category, Subcategory } from '@/actions/types';
 import { cn } from '@/lib/utils';
 import { SOCIAL_LINKS } from '@/lib/consts';
+import IconButton from '@/components/ui/icon-button';
 
 type Props = {
   biggestDiscount: number;
@@ -93,17 +94,14 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
 
   return (
     <>
-      <button
-        ref={setMobileReference}
-        type="button"
-        className={cn(
-          'tap-strong text-ink relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 lg:hidden',
-          isMobileMenuOpen && 'border-tumbleweed-300 bg-tumbleweed-50',
-        )}
-        {...getMobileReferenceProps()}
-      >
-        {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
+      <div className="lg:hidden">
+        <IconButton
+          ref={setMobileReference}
+          icon={isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          label={isMobileMenuOpen ? 'Uždaryti meniu' : 'Atidaryti meniu'}
+          {...getMobileReferenceProps()}
+        />
+      </div>
 
       {isMobileMounted && (
         <FloatingPortal>
@@ -133,15 +131,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
                     </span>
                   </Link>
 
-                  <button
-                    type="button"
-                    className={cn(
-                      'tap-strong text-ink relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2 lg:hidden',
-                    )}
-                    onClick={closeMobileMenu}
-                  >
-                    <X size={20} />
-                  </button>
+                  <IconButton icon={<X size={20} />} label="Uždaryti meniu" onClick={closeMobileMenu} />
                 </div>
 
                 <div className="scrollbar-soft flex-1 space-y-4 overflow-y-auto px-5 py-5">
@@ -209,15 +199,13 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
                   <div className="border-line border-t pt-4">
                     <div className="flex items-center gap-4">
                       {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
-                        <Link
+                        <IconButton
                           key={label}
                           href={href}
-                          aria-label={label}
-                          className="tap-strong border-line text-ink-soft hover:border-line-strong hover:text-ink flex size-10 items-center justify-center rounded-lg border bg-white transition"
+                          icon={<Icon size={20} />}
+                          label={label}
                           onClick={closeMobileMenu}
-                        >
-                          <Icon size={20} />
-                        </Link>
+                        />
                       ))}
                     </div>
                   </div>

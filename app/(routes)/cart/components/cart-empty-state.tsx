@@ -1,5 +1,5 @@
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
-import { LinkButton } from '@/components/ui/link-button';
+import Button from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
@@ -18,7 +18,7 @@ export const CartEmptyState = () => {
           </p>
 
           <div className="mt-7 flex justify-center lg:justify-start">
-            <LinkButton label="Tęsti apsipirkimą" elementAfter={<ArrowRight size={16} />} href="/" />
+            <Button label="Tęsti apsipirkimą" elementAfter={<ArrowRight size={16} />} href="/" />
           </div>
         </div>
 

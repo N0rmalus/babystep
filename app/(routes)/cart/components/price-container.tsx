@@ -93,7 +93,7 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
             value={couponCode}
             onChange={(event) => setCouponCode(event.target.value)}
             placeholder="BABYSTEP10"
-            className="border-line placeholder:text-ink-faint focus:border-ink-faint w-full rounded-lg border bg-white px-3 py-2 text-sm outline-hidden transition"
+            className="border-line placeholder:text-ink-faint focus:border-ink-faint w-full rounded-full border bg-white px-4 py-2 text-sm outline-hidden transition"
           />
           <Button
             size="sm"
@@ -101,7 +101,7 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
             label="Taikyti"
             onClick={onApplyCoupon}
             elementBefore={<BadgePercent size={15} />}
-            className="rounded-lg sm:w-auto"
+            className="sm:w-auto"
             fullWidth
           />
         </div>

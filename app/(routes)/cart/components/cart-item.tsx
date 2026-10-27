@@ -39,7 +39,7 @@ export const CartItem = ({ data }: Props) => {
         router.push(`/product/${data.id}`);
       }}
       className={cn(
-        'cursor-pointer rounded-3xl border bg-white p-5 shadow-xs transition-colors duration-300 sm:p-6',
+        'shadow-card cursor-pointer rounded-3xl border bg-white p-5 transition-colors duration-300 sm:p-6',
         isInStock ? 'hover:border-tumbleweed-300 border-line' : 'border-danger-line hover:border-danger opacity-75',
       )}
     >
@@ -64,7 +64,6 @@ export const CartItem = ({ data }: Props) => {
                   onClick={() => {
                     router.push(`/category/${data.subcategory.category.id}`);
                   }}
-                  variant="rounded"
                   color="tumbleweed-outlined"
                 />
 
@@ -80,19 +79,15 @@ export const CartItem = ({ data }: Props) => {
                   onClick={() => {
                     router.push(`/category/${data.subcategory.category.id}/${data.subcategory.id}`);
                   }}
-                  variant="rounded"
                   color="tumbleweed-outlined"
                 />
               </div>
 
               <Badge
                 label={isInStock ? `Yra sandėlyje (${data.amountInStock})` : 'Išparduota'}
-                variant="rounded"
                 color={isInStock ? 'success' : 'neutral'}
               />
-              {pricing.isOnSale && (
-                <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="sale" />
-              )}
+              {pricing.isOnSale && <Badge label={`Akcija -${pricing.discountPercent}%`} color="sale" />}
             </div>
 
             <div className="mt-auto pt-4">
@@ -112,14 +107,15 @@ export const CartItem = ({ data }: Props) => {
             </div>
           </div>
 
-          <div className="flex shrink-0 flex-row items-end justify-end gap-2 sm:flex-col sm:justify-between sm:gap-0">
+          <div className="flex shrink-0 flex-row items-end justify-end gap-2.5 sm:flex-col sm:justify-between sm:gap-0">
             <IconButton
               onClick={onAddToWishlist}
               disabled={isInWishlist}
               variant="primary"
-              icon={<Heart size={14} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
+              icon={<Heart size={16} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
+              label={isInWishlist ? 'Jau norų sąraše' : 'Į norų sąrašą'}
             />
-            <IconButton onClick={onRemove} icon={<Trash2 size={16} />} variant="danger" title="Pašalinti prekę" />
+            <IconButton onClick={onRemove} icon={<Trash2 size={16} />} variant="danger" label="Pašalinti prekę" />
           </div>
         </div>
       </div>

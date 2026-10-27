@@ -132,7 +132,8 @@ export const CartPopover = () => {
   return (
     <>
       <Button
-        buttonRef={setReference}
+        href="/cart"
+        linkRef={setReference}
         variant="secondary"
         elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
         elementAfter={
@@ -143,8 +144,7 @@ export const CartPopover = () => {
         label={<span className="hidden xl:inline">Krepšelis</span>}
         size="sm"
         aria-label="Krepšelis"
-        className="border-line text-ink-soft hover:border-line-strong hover:text-ink relative flex h-10 w-auto shrink-0 items-center justify-center gap-2 rounded-full border bg-white px-3 py-0 transition hover:bg-white xl:h-auto xl:px-4 xl:py-2"
-        onClick={() => router.push('/cart')}
+        className="border-line text-ink-soft hover:border-line-strong hover:text-ink h-11 shrink-0 hover:bg-white xl:px-4"
       />
 
       {isMounted && (
@@ -317,7 +317,7 @@ export const CartPopover = () => {
                     loading={isCheckingOut}
                     disabled={isCheckoutDisabled}
                     fullWidth
-                    className="rounded-full py-3.5 text-base"
+                    className="py-3.5 text-base"
                   />
                 </div>
               </div>

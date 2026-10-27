@@ -86,7 +86,7 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
     <div
       onClick={() => router.push(`/product/${data.id}`)}
       className={cn(
-        'group border-line flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl',
+        'group border-line shadow-card hover:border-line-strong flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-200 hover:-translate-y-0.5 sm:rounded-3xl',
         !isInStock && 'opacity-50',
       )}
     >
@@ -101,15 +101,15 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
-          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="sale" />}
-          {!isInStock && <Badge label="Išparduota" variant="rounded" color="neutral" />}
+          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} color="sale" />}
+          {!isInStock && <Badge label="Išparduota" color="neutral" />}
         </div>
 
-        <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2">
+        <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2.5">
           {!isMobile && (
-            <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
+            <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} label="Greita peržiūra" />
           )}
-          <IconButton onClick={onWishlistAction} variant="primary" icon={wishlistIcon} title={wishlistTitle} />
+          <IconButton onClick={onWishlistAction} variant="primary" icon={wishlistIcon} label={wishlistTitle} />
         </div>
       </div>
 

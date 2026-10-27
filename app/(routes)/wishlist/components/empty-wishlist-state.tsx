@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
-import { LinkButton } from '@/components/ui/link-button';
+import Button from '@/components/ui/button';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 
 export const EmptyWishlistState = () => {
@@ -33,7 +33,7 @@ export const EmptyWishlistState = () => {
           </p>
 
           <div className="mt-7 flex justify-center lg:justify-start">
-            <LinkButton label="Tęsti apsipirkimą" elementAfter={<ArrowRight size={16} />} href="/" />
+            <Button label="Tęsti apsipirkimą" elementAfter={<ArrowRight size={16} />} href="/" />
           </div>
         </div>
       </div>

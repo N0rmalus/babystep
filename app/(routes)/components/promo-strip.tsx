@@ -26,7 +26,7 @@ const promoItems = [
 
 export const PromoStrip = () => {
   return (
-    <div className="border-tumbleweed-100 bg-white shadow-md sm:shadow-xl">
+    <div className="border-tumbleweed-100 shadow-card bg-white">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-3 gap-y-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-6 lg:grid-cols-4 lg:px-8 lg:py-8">
         {promoItems.map(({ title, description, icon: Icon }) => (
           <div key={title} className="flex items-center gap-2.5 sm:gap-4">
