@@ -390,13 +390,13 @@ Most deviant first. Site-wide chrome (§4) applies to every page and is not coun
 
 ### Recommended order
 
-1. **[P1] `$impeccable layout` home:** keep the billboard, sales, blog and newsletter sections. Leave the billboard as the only banner and restyle sales and newsletter as plain sections on the page background, with no gradients. Hide the blog section until it has posts. Give the newsletter a pill input when the form is built. Make the marquee static and remove "Pagaminta Lietuvoje".
+1. **[P1] `$impeccable layout` home:** (will be done through Claude Design) keep the billboard, sales, blog and newsletter sections. Leave the billboard as the only banner and restyle sales and newsletter as plain sections on the page background, with no gradients. Hide the blog section until it has posts. Give the newsletter a pill input when the form is built. Make the marquee static and remove "Pagaminta Lietuvoje".
 2. **[P1] `$impeccable harden`:** make product cards real links, fix `neutral-400` and badge contrast, raise touch targets to 44px, and fix the h1 hierarchy.
-3. **[P1] `$impeccable colorize`:** add semantic tokens (cream bg, warm near-black text and primary, terracotta-700 link, one sale color), retire `gray`, `emerald` and `rose` for sale, and push salmon back to a rare accent.
-4. **[P2] `$impeccable polish` primitives:** pill-only `Button`/`IconButton`/inputs with no radius overrides, one card shadow, merge `LinkButton` into `Button`, and fix the badge radius conflict and its 9px size.
-5. **[P2] `$impeccable typeset`:** Bricolage for large headings only at 1–2 weights, the product `h1` in Bricolage, one eyebrow tracking value, and delete Proxima Nova.
+3. ✅ **Done 2026-10-27.** **[P1] `$impeccable colorize`:** add semantic tokens (cream bg, warm near-black text and primary, terracotta-700 link, one sale color), retire `gray`, `emerald` and `rose` for sale, and push salmon back to a rare accent.
+4. ✅ **Done 2026-10-27.** **[P2] `$impeccable polish` primitives:** pill-only `Button`/`IconButton`/inputs with no radius overrides, one card shadow, merge `LinkButton` into `Button`, and fix the badge radius conflict and its 9px size.
+5. ✅ **Done 2026-10-27.** **[P2] `$impeccable typeset`:** Bricolage for large headings only at 1–2 weights, the product `h1` in Bricolage, one eyebrow tracking value, and delete Proxima Nova.
 6. **[P2] `$impeccable clarify`:** the tu sweep (§5), the "pristatymo-informacija" bug, "Puiku!" and ":(".
-7. **[P2] `$impeccable layout`:** fewer cards per row (similar products, desktop catalog), drop the per-card stock count, add more space between home sections, a mobile billboard aspect and the mosaic layout for 3 categories.
+7. **[P2] `$impeccable layout`:** (will be done through Claude Design) fewer cards per row (similar products, desktop catalog), drop the per-card stock count, add more space between home sections, a mobile billboard aspect and the mosaic layout for 3 categories.
 8. **[P3] `$impeccable polish`:** final pass.
 
 You can ask me to run these one at a time, all at once, or in any order you prefer. Re-run `$impeccable audit` after fixes to see your score improve.
