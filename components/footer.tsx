@@ -61,7 +61,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h2 className="font-accent text-ink text-sm font-semibold tracking-wide uppercase">Parduotuvė</h2>
+            <h2 className="eyebrow text-ink">Parduotuvė</h2>
             <ul className="text-ink-muted mt-3 space-y-2.5 text-sm sm:mt-4 sm:space-y-3">
               {shopLinks.map((link) => (
                 <li key={link.label}>
@@ -74,7 +74,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h2 className="font-accent text-ink text-sm font-semibold tracking-wide uppercase">Pagalba</h2>
+            <h2 className="eyebrow text-ink">Pagalba</h2>
             <ul className="text-ink-muted mt-3 space-y-2.5 text-sm sm:mt-4 sm:space-y-3">
               {supportLinks.map((link) => (
                 <li key={link.href}>
@@ -87,7 +87,7 @@ export const Footer = () => {
           </div>
 
           <div className="col-span-2 md:col-span-1">
-            <h2 className="font-accent text-ink text-sm font-semibold tracking-wide uppercase">Kontaktai</h2>
+            <h2 className="eyebrow text-ink">Kontaktai</h2>
             <ul className="text-ink-muted mt-3 grid gap-3 text-sm sm:mt-4">
               <li className="flex items-start gap-3">
                 <Mail className="text-tumbleweed-500 mt-0.5 size-4 shrink-0" aria-hidden="true" />

@@ -12,10 +12,7 @@ const marqueeMessages = [
 const MessageRow = () => (
   <div className="flex shrink-0 items-center gap-8 pr-8">
     {marqueeMessages.map((message) => (
-      <span
-        key={message}
-        className="font-accent flex items-center gap-2 text-sm font-extralight whitespace-nowrap sm:text-base"
-      >
+      <span key={message} className="flex items-center gap-2 text-sm font-medium whitespace-nowrap sm:text-base">
         <Sparkle size={13} className="shrink-0 fill-current" />
         {message}
       </span>

@@ -39,7 +39,7 @@ export const MobileProductFiltersDrawer = ({
         <SlidersHorizontal size={16} aria-hidden="true" />
         <span>Filtrai</span>
         {activeFilterCount > 0 && (
-          <span className="bg-ink grid size-5 place-items-center rounded-full text-[11px] font-bold text-white">
+          <span className="bg-ink grid size-5 place-items-center rounded-full text-xs font-bold text-white tabular-nums">
             {activeFilterCount}
           </span>
         )}

@@ -90,7 +90,7 @@ export const WishlistItem = ({ data }: Props) => {
                   {toCurrency(pricing.regularPrice)}
                 </div>
               )}
-              <div className={cn('text-lg font-bold', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}>
+              <div className={cn('text-lg font-bold tabular-nums', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}>
                 {toCurrency(pricing.effectivePrice)}
               </div>
             </div>

@@ -33,7 +33,7 @@ export const EmptyFilteredProductsState = () => {
         </div>
 
         <div className="relative text-center sm:text-left">
-          <h2 className="font-accent text-link text-3xl font-semibold sm:text-4xl">
+          <h2 className="font-accent text-link text-3xl font-bold text-balance sm:text-4xl">
             Prekių pagal{' '}
             <span className="relative z-0 inline-block">
               filtrus

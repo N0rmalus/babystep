@@ -104,7 +104,7 @@ export const CartItem = ({ data }: Props) => {
                   </span>
                 )}
                 <span
-                  className={cn('font-accent text-2xl font-bold', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}
+                  className={cn('text-2xl font-bold tabular-nums', pricing.isOnSale ? 'text-sale-strong' : 'text-ink')}
                 >
                   {toCurrency(pricing.effectivePrice)}
                 </span>

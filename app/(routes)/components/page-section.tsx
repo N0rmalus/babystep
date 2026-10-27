@@ -29,8 +29,8 @@ export const PageSection = ({ children, smallText, bigText, position, link }: Pr
         {position === 'center' ? (
           <>
             <div className="flex flex-col items-center gap-2">
-              <p className="text-link text-xs font-semibold tracking-widest uppercase">{smallText}</p>
-              <h1 className="font-accent text-3xl font-black sm:text-4xl">{bigText}</h1>
+              <p className="eyebrow text-link">{smallText}</p>
+              <h1 className="font-accent text-3xl font-bold text-balance sm:text-4xl">{bigText}</h1>
               <div className="bg-tumbleweed-700 mt-2 h-1 w-60 rounded-full" />
             </div>
             {link && <SectionLink link={link} />}
@@ -38,8 +38,8 @@ export const PageSection = ({ children, smallText, bigText, position, link }: Pr
         ) : (
           <>
             <div className="flex flex-col gap-1">
-              <p className="text-link text-xs font-semibold tracking-widest uppercase">{smallText}</p>
-              <h1 className="font-accent text-ink text-3xl font-black sm:text-4xl">{bigText}</h1>
+              <p className="eyebrow text-link">{smallText}</p>
+              <h1 className="font-accent text-ink text-3xl font-bold text-balance sm:text-4xl">{bigText}</h1>
             </div>
             {link && <SectionLink link={link} />}
           </>
@@ -54,7 +54,7 @@ const SectionLink = ({ link }: { link: NonNullable<Props['link']> }) => {
   return (
     <Link
       href={link.href}
-      className="group hover:text-link font-accent text-ink inline-flex shrink-0 items-center gap-2 text-sm font-semibold transition sm:text-base"
+      className="group hover:text-link text-ink inline-flex shrink-0 items-center gap-2 text-sm font-semibold transition sm:text-base"
     >
       {link.label}
       <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />

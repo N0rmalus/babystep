@@ -23,7 +23,7 @@ export const PriceRangeSlider = ({ min, max, valueMin, valueMax, disabled, onCha
 
   return (
     <div>
-      <div className="font-accent text-ink flex items-center justify-between gap-3 text-sm font-semibold">
+      <div className="text-ink flex items-center justify-between gap-3 text-sm font-semibold tabular-nums">
         <span>{valueMin}€</span>
         <span>{valueMax}€</span>
       </div>

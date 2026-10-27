@@ -67,7 +67,7 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
       </PaperWrapper>
 
       <PaperWrapper>
-        <h3 className="text-ink-muted text-sm font-semibold tracking-[0.16em] uppercase">Reikia pagalbos?</h3>
+        <h3 className="eyebrow text-ink-muted">Reikia pagalbos?</h3>
         <p className="text-ink-soft mt-3 text-sm leading-relaxed">
           Jei turi klausimų dėl užsakymo, parašyk mums. Įprastai atsakome per 1 darbo valandą.
         </p>

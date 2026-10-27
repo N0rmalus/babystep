@@ -10,7 +10,7 @@ export const CartEmptyState = () => {
 
       <div className="relative grid min-h-96 items-center gap-8 px-6 py-10 sm:px-10 lg:min-h-104 lg:grid-cols-[minmax(0,0.85fr)_minmax(20rem,1fr)] lg:px-14 lg:py-10">
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <h2 className="font-accent text-ink mt-4 text-4xl font-black tracking-tight sm:text-5xl">
+          <h2 className="font-accent text-ink mt-4 text-4xl font-bold tracking-tight text-balance lg:text-5xl">
             Mažasis vežimėlis dar laukia atradimų
           </h2>
           <p className="text-ink-muted mt-4 text-base leading-7">

@@ -567,8 +567,8 @@ const TaisyklesIrSalygosPage = () => {
                 className="border-tumbleweed-100 flex scroll-mt-28 flex-col gap-4 border-b pb-8 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="font-accent text-link text-lg font-bold">{chapter.number}</span>
-                  <h2 className="font-accent text-ink text-2xl leading-tight font-semibold sm:text-3xl">
+                  <span className="text-link text-lg font-bold tabular-nums">{chapter.number}</span>
+                  <h2 className="font-accent text-ink text-2xl leading-tight font-semibold text-balance sm:text-3xl">
                     {chapter.title}
                   </h2>
                 </div>
@@ -578,7 +578,7 @@ const TaisyklesIrSalygosPage = () => {
                     <section key={subchapter.id} id={subchapter.id} className="scroll-mt-28">
                       <div className="flex items-baseline gap-3">
                         <span className="text-link text-sm font-semibold">{subchapter.number}</span>
-                        <h3 className="font-accent text-ink text-xl font-semibold sm:text-2xl">{subchapter.title}</h3>
+                        <h3 className="text-ink text-xl font-semibold">{subchapter.title}</h3>
                       </div>
                       <div className="text-ink-muted mt-3 space-y-4 text-base leading-8 sm:text-lg sm:leading-9">
                         {subchapter.paragraphs.map((paragraph, paragraphIndex) => (
@@ -593,7 +593,7 @@ const TaisyklesIrSalygosPage = () => {
           </div>
 
           <PaperWrapper className="max-w-xl">
-            <h3 className="text-ink-muted text-sm font-semibold tracking-[0.16em] uppercase">Reikia pagalbos?</h3>
+            <h3 className="eyebrow text-ink-muted">Reikia pagalbos?</h3>
             <p className="text-ink-soft mt-3 text-sm leading-relaxed">
               Jei turite klausimų dėl užsakymo, taisyklių arba prekių grąžinimo, susisiekite su mumis.
             </p>

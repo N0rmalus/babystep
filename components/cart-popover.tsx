@@ -162,7 +162,7 @@ export const CartPopover = () => {
               >
                 <div className="flex items-center justify-between gap-4 px-5 py-4">
                   <div>
-                    <h2 className="font-accent text-ink text-2xl font-black">Tavo krepšelis</h2>
+                    <h2 className="text-ink text-xl font-semibold">Tavo krepšelis</h2>
                     <p className="text-ink-muted mt-1 text-sm">{getCartCountLabel(itemIds.length)}</p>
                   </div>
 
@@ -277,11 +277,11 @@ export const CartPopover = () => {
 
                           <div className="flex shrink-0 flex-col items-end gap-4">
                             {pricing.isOnSale && (
-                              <span className="text-ink-faint text-xs line-through">
+                              <span className="text-ink-faint text-xs tabular-nums line-through">
                                 {toCurrency(pricing.regularPrice)}
                               </span>
                             )}
-                            <span className="font-accent text-ink text-base font-black">
+                            <span className="text-ink text-base font-bold tabular-nums">
                               {toCurrency(pricing.effectivePrice)}
                             </span>
                             <button
@@ -301,7 +301,7 @@ export const CartPopover = () => {
                 <div className="border-line border-t p-5">
                   <div className="mb-4 flex items-center justify-between gap-4">
                     <p className="text-ink-muted text-sm">Suma</p>
-                    <p className="font-accent text-ink text-2xl font-black">{toCurrency(subtotal)}</p>
+                    <p className="text-ink text-2xl font-bold tabular-nums">{toCurrency(subtotal)}</p>
                   </div>
 
                   {hasOutOfStockProducts && (

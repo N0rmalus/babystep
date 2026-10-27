@@ -2,7 +2,9 @@
 
 @theme {
   --font-*: initial;
-  --font-fak: Proxima Nova;
+
+  /* The one letter-spacing for uppercase labels: eyebrows, badges, chips, filter and footer titles. */
+  --tracking-eyebrow: 0.14em;
 
   --color-tumbleweed-50: #fbf6f1;
   --color-tumbleweed-100: #f6e9de;
@@ -66,7 +68,6 @@
 
 @theme inline {
   --font-accent: var(--font-bricolage-grotesque);
-  --tracking-widest: 0.22em;
 }
 
 /*
@@ -153,6 +154,11 @@
   & em {
     @apply italic;
   }
+}
+
+/* Uppercase label role. Color is set per use. */
+@utility eyebrow {
+  @apply tracking-eyebrow text-xs font-semibold uppercase;
 }
 
 @utility tap-soft {

@@ -55,10 +55,10 @@ export const Pagination = ({
     >
       <p className="text-ink-faint text-center text-sm sm:text-left">
         Rodoma{' '}
-        <span className="font-accent text-ink font-semibold">
+        <span className="text-ink font-semibold tabular-nums">
           {firstVisibleItem}-{lastVisibleItem}
         </span>{' '}
-        iš <span className="font-accent text-ink font-semibold">{totalItems}</span>
+        iš <span className="text-ink font-semibold tabular-nums">{totalItems}</span>
       </p>
 
       <div className="flex w-full items-center justify-center gap-1.5 sm:w-auto sm:justify-end sm:gap-2">

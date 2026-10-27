@@ -105,8 +105,8 @@ const PrivatumoPolitikaPage = () => {
                 className="border-tumbleweed-100 flex scroll-mt-28 flex-col gap-4 border-b pb-8 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="text-link font-accent text-lg font-bold">{formatSectionNumber(index)}</span>
-                  <h2 className="font-accent text-ink text-2xl leading-tight font-semibold sm:text-3xl">
+                  <span className="text-link text-lg font-bold tabular-nums">{formatSectionNumber(index)}</span>
+                  <h2 className="font-accent text-ink text-2xl leading-tight font-semibold text-balance sm:text-3xl">
                     {section.title}
                   </h2>
                 </div>
@@ -121,7 +121,7 @@ const PrivatumoPolitikaPage = () => {
           </div>
 
           <PaperWrapper className="max-w-xl">
-            <h3 className="text-ink-muted text-sm font-semibold tracking-[0.16em] uppercase">Turite klausimų?</h3>
+            <h3 className="eyebrow text-ink-muted">Turite klausimų?</h3>
             <p className="text-ink-soft mt-3 text-sm leading-relaxed">
               Jei norite pasinaudoti savo teisėmis arba turite klausimų apie savo duomenis, parašykite mums.
             </p>

@@ -164,12 +164,12 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
                     <div className="space-y-4">
                       <Link
                         href="/akcijos"
-                        className="group text-sale-strong font-accent flex items-center justify-between text-xl font-bold tracking-tight"
+                        className="group text-sale-strong flex items-center justify-between text-xl font-semibold"
                         onClick={closeMobileMenu}
                       >
                         <span>Akcijos</span>
                         {biggestDiscount > 0 && (
-                          <span className="bg-sale-soft text-sale-strong rounded-full px-4 py-1 text-sm font-bold tracking-wider uppercase">
+                          <span className="bg-sale-soft text-sale-strong eyebrow rounded-full px-4 py-1">
                             Iki -{biggestDiscount}%
                           </span>
                         )}
@@ -179,7 +179,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
 
                       <Link
                         href="/wishlist"
-                        className="group font-accent text-ink flex items-center justify-between text-xl font-bold tracking-tight"
+                        className="group text-ink flex items-center justify-between text-xl font-semibold"
                         onClick={closeMobileMenu}
                       >
                         <span>Norai</span>
@@ -188,7 +188,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
 
                       <Link
                         href="#"
-                        className="group font-accent text-ink flex items-center justify-between text-xl font-bold tracking-tight"
+                        className="group text-ink flex items-center justify-between text-xl font-semibold"
                         onClick={closeMobileMenu}
                       >
                         <span>Tinklaraštis</span>
@@ -197,7 +197,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
 
                       <Link
                         href="#"
-                        className="group font-accent text-ink flex items-center justify-between text-xl font-bold tracking-tight"
+                        className="group text-ink flex items-center justify-between text-xl font-semibold"
                         onClick={closeMobileMenu}
                       >
                         <span>Apie mus</span>
@@ -237,7 +237,7 @@ const MobileCategorySection = ({ category, isActive, subcategories, onNavigate }
       <Link
         href={`/category/${category.id}`}
         className={cn(
-          'group font-accent flex items-center justify-between text-xl font-bold transition-colors',
+          'group flex items-center justify-between text-xl font-semibold transition-colors',
           isActive ? 'text-tumbleweed-800' : 'hover:text-tumbleweed-800 text-ink',
         )}
         onClick={onNavigate}

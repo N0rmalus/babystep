@@ -45,7 +45,7 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4 text-sm">
             <p className="text-ink-muted">Prekės ({productIds.length})</p>
-            <div className="font-accent text-ink font-semibold">{toCurrency(subtotal)}</div>
+            <div className="text-ink font-bold tabular-nums">{toCurrency(subtotal)}</div>
           </div>
           <div className="border-tumbleweed-500 ml-4 border-l border-dotted">
             {products.map((product) => (
@@ -78,12 +78,12 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
       <div>
         <div className="flex items-center justify-between gap-4 text-sm">
           <p className="text-ink-muted">Suma</p>
-          <div className="font-accent text-ink text-lg font-semibold">{toCurrency(total)}</div>
+          <div className="text-ink text-lg font-bold tabular-nums">{toCurrency(total)}</div>
         </div>
       </div>
 
       <div className="border-line bg-muted-soft rounded-2xl border p-3">
-        <label htmlFor="coupon" className="text-ink-muted text-xs font-semibold tracking-[0.16em] uppercase">
+        <label htmlFor="coupon" className="eyebrow text-ink-muted">
           Nuolaidos kodas
         </label>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
