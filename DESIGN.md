@@ -93,6 +93,12 @@ Contrast (WCAG AA): `ink-muted`, `link`, `sale-strong`, `danger` and `success` a
 
 Everything is rounded: pill-shaped buttons and inputs, and a large radius (about 16–24px) on cards and images. No sharp corners.
 
+- **Exception, icon buttons:** `IconButton` is deliberately `rounded-lg` (8px), not a pill, everywhere it appears, including the mobile nav buttons. The squarer shape marks it as a tool (preview, remove, menu) rather than an action, and keeps a row of them from reading as a row of chips.
+- **Exception, checkboxes:** the compact filter checkbox is `rounded-md` (6px). A pill or circle would read as a radio button.
+- Shape belongs to the component. Call sites never pass a radius class; `Button` applies `rounded-full` after `className`, so an override has no effect.
+
+See [Components](#components) for each primitive.
+
 ### Density and promotions
 
 Generous whitespace and fewer products per row. The shop should never feel crowded.
@@ -137,3 +143,70 @@ These show the tone only. They are not real product or policy claims.
 - Red or yellow "sale" colors.
 - Sharp corners.
 - Formal "jūs".
+
+## Components
+
+Shared primitives live in `components/ui`. Shape, elevation and size are fixed inside each component; call sites only add layout (margins, width, height) or, rarely, colors.
+
+### Button
+
+`components/ui/button.tsx`. Always a pill (`rounded-full`), `font-semibold`.
+
+| Variant           | Look                                          | Use                                                                |
+| ----------------- | --------------------------------------------- | ------------------------------------------------------------------ |
+| `primary`         | `ink` fill, white text, `ink-soft` on hover   | The one main action: add to cart, checkout, empty-state CTAs       |
+| `secondary`       | White, `line-strong` border, `muted` on hover | Secondary actions: wishlist toggle, coupon, navbar Norai/Krepšelis |
+| `danger`          | `danger` fill, white text                     | Destructive confirmations                                          |
+| `danger-outlined` | White, `danger-line` border, `danger` text    | Retry after an error                                               |
+
+| Size | Padding / text                     |
+| ---- | ---------------------------------- |
+| `sm` | `px-3 py-1.5`, `text-sm`           |
+| `md` | `px-5 py-3`, `text-base` (default) |
+| `lg` | `px-7 py-4`, `text-lg`             |
+| `xl` | `px-9 py-5`, `text-xl`             |
+
+- **Links:** pass `href` and `Button` renders a Next.js `<Link>` (a real `<a>`), so it works with the keyboard, middle-click and "open in new tab". Use it for anything that navigates; never `onClick={() => router.push(...)}`. There is no separate `LinkButton`.
+- **States:** `disabled` and `loading` (spinner over the hidden label) on the `<button>` form only. Disabled is 50% opacity.
+- `elementBefore` / `elementAfter` hold icons or a count. `fullWidth` stretches it.
+- The navbar Norai and Krepšelis buttons are `secondary` `sm` links at `h-11` (44px), so they meet the touch-target minimum.
+
+### IconButton
+
+`components/ui/icon-button.tsx`. A single icon in a **34×34px** box (`size-8.5`), **`rounded-lg`** (see Shape). An invisible `::before` (`before:-inset-1.5`, 6px from inside the 1px border) extends the hit area to **44×44px**, the minimum touch target, without making the button look heavy on cards. Keep at least `gap-2.5` (10px) between icon buttons, so their hit areas barely overlap. `label` is required and becomes both `aria-label` and the tooltip.
+
+| Variant     | Look                                                                   | Use                                                                   |
+| ----------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `primary`   | White, `line` border, `muted` on hover (default)                       | Quick view, wishlist, close, zoom, mobile menu and cart, social links |
+| `secondary` | `ink` fill, white icon                                                 | No current use                                                        |
+| `danger`    | White, `ink-muted` icon; `danger` icon and `danger-soft` fill on hover | Remove from cart or wishlist                                          |
+
+- `href` renders a real link (mobile cart, social links); otherwise it is a `<button>` that stops the click from reaching a clickable card behind it.
+- `badge` puts a count in the top-right corner (the mobile cart count).
+- When it controls a menu, `aria-expanded="true"` gives it the open state (`tumbleweed-50` fill, `tumbleweed-300` border) without extra classes.
+- Icons are 16px inside cards and 18–20px in the navbar and on images.
+
+### Inputs
+
+- Text inputs are pills (`rounded-full`) with a `line` border on white, or a `tumbleweed-50` fill for the catalog search. The sort dropdown trigger is a pill too.
+- Filter checkboxes: compact is a 16px `rounded-md` box; the touch variant in the mobile drawer is a `rounded-2xl` row at least 48px tall with a round check.
+
+### Badge
+
+`components/ui/badge.tsx`. Always a pill (`rounded-full`, `px-3 py-1`) with the `eyebrow` text style (12px, uppercase). With `onClick` it renders a `<button>` (the category breadcrumbs on the product page and in the cart); otherwise a static label.
+
+| Color                 | Use                                    |
+| --------------------- | -------------------------------------- |
+| `sale`                | Discount: "-20%", "Akcija -20%"        |
+| `neutral`             | Out of stock ("Išparduota")            |
+| `success`             | In stock ("Yra sandėlyje")             |
+| `tumbleweed-outlined` | Category breadcrumbs, "Rekomenduojama" |
+| `tumbleweed`          | Brand-tinted label; no current use     |
+
+### Cards and elevation
+
+- **One card shadow:** `shadow-card` (token `--shadow-card` in `app/globals.css`, a soft 1–2px warm shadow), always with a 1px `line` border on white. Product, cart and wishlist cards, `PaperWrapper` panels, the product info panel, the promo strip, category tiles and gallery images all use it. No `shadow-md`/`xl` on cards, and no extra shadow on hover.
+- Clickable cards (product, wishlist) respond on hover with a 2px lift and a `line-strong` border, not a bigger shadow.
+- Card radius is 16–24px: `rounded-3xl` for cards and panels, `rounded-2xl` for product cards on mobile, the product info panel and gallery images.
+- `PaperWrapper` (`components/ui/paper-wrapper.tsx`) is the standard panel: `rounded-3xl`, border, `shadow-card`, `p-5 sm:p-6`.
+- Overlays (cart popover, dropdown menus, modal, filter drawer) float above the page and keep their own heavier shadows. They are not cards.

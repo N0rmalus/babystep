@@ -45,7 +45,7 @@ export const WishlistItem = ({ data }: Props) => {
   return (
     <div
       onClick={() => router.push(`/product/${data.id}`)}
-      className="group border-line cursor-pointer overflow-hidden rounded-3xl border bg-white shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      className="group border-line shadow-card hover:border-line-strong cursor-pointer overflow-hidden rounded-3xl border bg-white transition-all duration-200 hover:-translate-y-0.5"
     >
       <div className="bg-muted relative h-52 overflow-hidden">
         <Image
@@ -58,18 +58,18 @@ export const WishlistItem = ({ data }: Props) => {
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
-          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} variant="rounded" color="sale" />}
-          {!isInStock && <Badge label="Išparduota" variant="rounded" color="neutral" />}
-          {data.isFeatured && <Badge label="Rekomenduojama" variant="rounded" color="tumbleweed-outlined" />}
+          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} color="sale" />}
+          {!isInStock && <Badge label="Išparduota" color="neutral" />}
+          {data.isFeatured && <Badge label="Rekomenduojama" color="tumbleweed-outlined" />}
         </div>
 
-        <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2">
-          <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} title="Greita peržiūra" />
+        <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2.5">
+          <IconButton onClick={onPreview} variant="primary" icon={<Expand size={16} />} label="Greita peržiūra" />
           <IconButton
             onClick={onRemoveFromWishlist}
             variant="danger"
             icon={<Trash2 size={16} />}
-            title="Pašalinti iš norų sąrašo"
+            label="Pašalinti iš norų sąrašo"
           />
         </div>
       </div>

@@ -13,7 +13,7 @@ interface Props {
 
 export const GalleryTab = ({ image }: Props) => {
   return (
-    <Tab className="relative flex aspect-square cursor-pointer items-center justify-center rounded-lg bg-white shadow-xs transition hover:shadow-md">
+    <Tab className="shadow-card relative flex aspect-square cursor-pointer items-center justify-center rounded-lg bg-white transition">
       {({ selected }) => (
         <div>
           <span className="absolute inset-0 aspect-square h-full w-full overflow-hidden rounded-lg">

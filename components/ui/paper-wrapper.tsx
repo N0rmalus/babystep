@@ -8,6 +8,6 @@ type Props = {
 
 export const PaperWrapper = ({ className, children }: Props) => {
   return (
-    <div className={cn('border-line rounded-3xl border bg-white p-5 shadow-xs sm:p-6', className)}>{children}</div>
+    <div className={cn('border-line shadow-card rounded-3xl border bg-white p-5 sm:p-6', className)}>{children}</div>
   );
 };

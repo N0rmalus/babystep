@@ -4,6 +4,7 @@ import { Heart, ShoppingCart } from 'lucide-react';
 import { Product } from '@/actions/types';
 import Button from '@/components/ui/button';
 import useCart from '@/hooks/use-cart';
+import useMounted from '@/hooks/use-mounted';
 import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -23,7 +24,8 @@ export const Info = ({ data }: Props) => {
   const category = data?.subcategory?.category;
   const subcategory = data?.subcategory;
   const isInStock = data.amountInStock > 0;
-  const isInWishlist = wishlist.hasItem(data.id);
+  const isMounted = useMounted();
+  const isInWishlist = isMounted && wishlist.hasItem(data.id);
   const hasDescription = Boolean(data.description?.trim());
   const pricing = getProductPricing(data);
 
@@ -51,7 +53,6 @@ export const Info = ({ data }: Props) => {
               onClick={() => {
                 router.push(`/category/${category.id}`);
               }}
-              variant="rounded"
               color="tumbleweed-outlined"
             />
 
@@ -64,7 +65,6 @@ export const Info = ({ data }: Props) => {
               onClick={() => {
                 router.push(`/category/${category.id}/${subcategory.id}`);
               }}
-              variant="rounded"
               color="tumbleweed-outlined"
             />
           </div>
@@ -72,11 +72,10 @@ export const Info = ({ data }: Props) => {
 
         <Badge
           label={isInStock ? `Yra sandėlyje (${data.amountInStock} vnt.)` : 'Išparduota'}
-          variant="rounded"
           color={isInStock ? 'success' : 'neutral'}
         />
 
-        {pricing.isOnSale && <Badge label={`Akcija -${pricing.discountPercent}%`} variant="rounded" color="sale" />}
+        {pricing.isOnSale && <Badge label={`Akcija -${pricing.discountPercent}%`} color="sale" />}
       </div>
 
       <div className="flex justify-between gap-4">
@@ -108,7 +107,6 @@ export const Info = ({ data }: Props) => {
           onClick={onAddToCart}
           elementBefore={isInStock && <ShoppingCart size={18} />}
           label={isInStock ? 'Pridėti į krepšelį' : 'Prekė išparduota :('}
-          className="rounded-xl shadow-md"
           variant="primary"
           disabled={!isInStock}
         />
@@ -118,7 +116,7 @@ export const Info = ({ data }: Props) => {
           elementBefore={<Heart size={18} className={cn(isInWishlist && 'fill-tumbleweed-300')} />}
           label={isInWishlist ? 'Norų sąraše' : 'Į norų sąrašą'}
           onClick={onToggleWishlist}
-          className={cn('rounded-xl shadow-xs', isInWishlist && 'hover:text-tumbleweed-300')}
+          className={cn(isInWishlist && 'hover:text-tumbleweed-300')}
         />
       </div>
     </div>

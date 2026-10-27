@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, Home } from 'lucide-react';
 
 import Container from '@/components/ui/container';
-import { LinkButton } from '@/components/ui/link-button';
+import Button from '@/components/ui/button';
 
 const quickLinks = [
   { href: '/akcijos', label: 'Akcijos' },
@@ -45,7 +45,7 @@ const NotFound = () => {
             </p>
 
             <div className="mt-7">
-              <LinkButton label="Grįžti į pradžią" href="/" elementBefore={<Home size={17} />} />
+              <Button label="Grįžti į pradžią" href="/" elementBefore={<Home size={17} />} />
             </div>
 
             <div className="border-tumbleweed-200 mt-8 flex flex-wrap gap-2.5 border-t border-dashed pt-5">

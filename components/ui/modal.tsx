@@ -61,7 +61,7 @@ export const Modal = ({ open, onClose, children }: Props) => {
                     onClick={onClose}
                     variant="primary"
                     icon={<X size={16} className="text-ink-soft" />}
-                    title="Close preview"
+                    label="Uždaryti peržiūrą"
                   />
                 </div>
                 <div className="relative max-h-[85vh] overflow-y-auto px-8 pt-16 pb-8">{children}</div>

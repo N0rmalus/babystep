@@ -1,9 +1,10 @@
 'use client';
 
 import { Heart, ShoppingCart } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import Button from '@/components/ui/button';
+import IconButton from '@/components/ui/icon-button';
 import { CartPopover } from '@/components/cart-popover';
 import { useIsMobile } from '@/hooks/use-is-mobile';
 import useMounted from '@/hooks/use-mounted';
@@ -16,7 +17,6 @@ export const NavbarActions = () => {
   const isInWishlistPage = usePathname().includes('/wishlist');
   const isInCartPage = usePathname().includes('/cart');
   const isCompactNav = useIsMobile('lg');
-  const router = useRouter();
 
   const cart = useCart();
   const wishlist = useWishlist();
@@ -26,7 +26,7 @@ export const NavbarActions = () => {
   }
 
   const actionButtonClasses =
-    'relative flex h-10 w-auto shrink-0 items-center justify-center gap-2 rounded-full border border-line bg-white px-3 py-0 text-ink-soft transition hover:border-line-strong hover:bg-white hover:text-ink xl:h-auto xl:px-4 xl:py-2';
+    'h-11 shrink-0 border-line text-ink-soft hover:border-line-strong hover:bg-white hover:text-ink xl:px-4';
   const badgeClasses =
     'inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5';
 
@@ -34,7 +34,7 @@ export const NavbarActions = () => {
     <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-3">
       {!isCompactNav && (
         <Button
-          onClick={() => router.push('/wishlist')}
+          href="/wishlist"
           variant="secondary"
           elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
           elementAfter={<span className={badgeClasses}>{wishlist.items.length}</span>}
@@ -46,19 +46,15 @@ export const NavbarActions = () => {
       )}
 
       {isCompactNav ? (
-        <>
-          <button
-            type="button"
-            className="tap-strong text-ink relative flex shrink-0 items-center justify-center rounded-lg border bg-white p-2"
-            onClick={() => router.push('/cart')}
-          >
-            <ShoppingCart size={20} className={cn(isInCartPage && 'fill-tumbleweed-300')} />
-            <span className={cn('absolute -top-2 -right-2 shadow-sm', badgeClasses)}>{cart.items.length}</span>
-          </button>
-        </>
+        <IconButton
+          href="/cart"
+          icon={<ShoppingCart size={20} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
+          label="Krepšelis"
+          badge={<span className={cn('shadow-sm', badgeClasses)}>{cart.items.length}</span>}
+        />
       ) : isInCartPage ? (
         <Button
-          onClick={() => router.push('/cart')}
+          href="/cart"
           variant="secondary"
           elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
           elementAfter={<span className={badgeClasses}>{cart.items.length}</span>}

@@ -34,7 +34,7 @@ const ProductPage = async ({ params }: Props) => {
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-12">
           <Gallery images={product.images} />
           <div className="mt-10 sm:mt-16 lg:mt-0">
-            <div className="rounded-2xl bg-white p-4 shadow-xl md:p-8">
+            <div className="shadow-card rounded-2xl bg-white p-4 md:p-8">
               <Info data={product} />
             </div>
           </div>

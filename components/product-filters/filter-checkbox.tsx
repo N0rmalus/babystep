@@ -32,7 +32,7 @@ export const FilterCheckbox = ({ label, checked, count, variant = 'compact', onC
         <span
           className={cn(
             'pointer-events-none flex size-full items-center justify-center border transition-colors',
-            isTouch ? 'rounded-full' : 'rounded-sm',
+            isTouch ? 'rounded-full' : 'rounded-md',
             checked
               ? isTouch
                 ? 'border-white bg-white'
