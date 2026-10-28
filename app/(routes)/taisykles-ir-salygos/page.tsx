@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import { LegalContentNav, type LegalContentNavItem } from '@/components/legal/legal-content-nav';
 import { PageHeader } from '@/components/page-header';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 import { CONTACT_EMAIL } from '@/lib/consts';
 
@@ -546,7 +546,7 @@ const termsNavItems = termsChapters.map((chapter) => ({
 
 const TaisyklesIrSalygosPage = () => {
   return (
-    <Container>
+    <PageContainer>
       <PageHeader
         smallText="Pagalba"
         bigText="Taisyklės ir sąlygos"
@@ -606,7 +606,7 @@ const TaisyklesIrSalygosPage = () => {
           </PaperWrapper>
         </article>
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

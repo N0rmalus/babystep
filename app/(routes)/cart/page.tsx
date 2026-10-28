@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import useCart from '@/hooks/use-cart';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
@@ -63,14 +63,14 @@ const CartPage = () => {
 
   if (isCartEmpty) {
     return (
-      <Container className="flex flex-col gap-8">
+      <PageContainer className="flex flex-col gap-8">
         <CartEmptyState />
-      </Container>
+      </PageContainer>
     );
   }
 
   return (
-    <Container>
+    <PageContainer>
       <PageHeader bigText="Paruošta atsiskaitymui" smallText="Tavo krepšelis" />
 
       {!isCartEmpty && isResolvingProducts && !(failedProductIds.length > 0) && <CartLoadingState />}
@@ -95,7 +95,7 @@ const CartPage = () => {
           <Summary productIds={itemIds} products={products} cartSummary={cartSummary} />
         </div>
       )}
-    </Container>
+    </PageContainer>
   );
 };
 

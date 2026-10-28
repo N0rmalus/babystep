@@ -106,7 +106,7 @@ export const MobileNavbar = ({ biggestDiscount, categories, subcategoriesByCateg
               {...getFloatingProps()}
             >
               <div style={transitionStyles} className="flex h-dvh flex-col">
-                <div className="border-line grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b px-4">
+                <div className="border-line px-gutter grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b">
                   <div className="flex">
                     <IconButton icon={<X size={18} />} label="Uždaryti meniu" onClick={handleClose} />
                   </div>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Home } from 'lucide-react';
 
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import Button from '@/components/ui/button';
 
 const quickLinks = [
@@ -13,7 +13,7 @@ const quickLinks = [
 
 const NotFound = () => {
   return (
-    <Container>
+    <PageContainer>
       <div className="relative isolate overflow-hidden px-5 py-8 sm:px-8 sm:py-10 lg:min-h-136 lg:px-14 lg:py-12">
         <div className="font-accent text-tumbleweed-400/10 absolute top-8 right-8 -z-10 leading-none font-bold tracking-tight sm:text-[14rem] lg:top-2 lg:right-12 lg:text-[20rem]">
           404
@@ -81,7 +81,7 @@ const NotFound = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

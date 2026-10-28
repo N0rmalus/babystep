@@ -1,7 +1,7 @@
 import { Check, RotateCcw } from 'lucide-react';
 
 import { PageHeader } from '@/components/page-header';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 import { CONTACT_EMAIL } from '@/lib/consts';
 
@@ -15,7 +15,7 @@ const returnCriteria = [
 
 const GrazinimoInformacijaPage = () => {
   return (
-    <Container>
+    <PageContainer>
       <PageHeader
         smallText="Pagalba"
         bigText="Grąžinimo informacija"
@@ -56,7 +56,7 @@ const GrazinimoInformacijaPage = () => {
           ))}
         </ul>
       </section>
-    </Container>
+    </PageContainer>
   );
 };
 

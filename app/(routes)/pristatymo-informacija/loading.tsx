@@ -1,9 +1,9 @@
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import Skeleton from '@/components/ui/skeleton';
 
 const Loading = () => {
   return (
-    <Container>
+    <PageContainer>
       <div className="space-y-3">
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-10 w-80 max-w-full" />
@@ -35,7 +35,7 @@ const Loading = () => {
           ))}
         </div>
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

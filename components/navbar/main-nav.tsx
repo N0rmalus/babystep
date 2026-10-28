@@ -43,7 +43,7 @@ export const MainNav = ({ categories, subcategoriesByCategory }: Props) => {
   return (
     <nav
       aria-label="Kategorijos"
-      className="mx-auto hidden h-12 max-w-7xl items-center justify-center gap-9 px-10 whitespace-nowrap lg:flex"
+      className="px-gutter mx-auto hidden h-12 max-w-7xl items-center justify-center gap-9 whitespace-nowrap lg:flex"
     >
       {categories.map((category) => (
         <DesktopNavItem

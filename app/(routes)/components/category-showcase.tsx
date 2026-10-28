@@ -27,7 +27,7 @@ export const CategoryShowcase = ({ categories }: Props) => {
   return (
     <>
       <nav aria-label="Kategorijos" className="pt-3 lg:hidden">
-        <div className="scrollbar-none flex gap-3.5 overflow-x-auto px-4 pb-1">
+        <div className="scrollbar-none -mx-gutter px-gutter flex gap-3.5 overflow-x-auto pb-1">
           {visibleCategories.map((category) => (
             <Link
               key={category.id}

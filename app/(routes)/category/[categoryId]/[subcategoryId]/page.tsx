@@ -1,7 +1,7 @@
 import getProductCatalog from '@/actions/get-product-catalog';
 import getSubcategories from '@/actions/get-subcategories';
 import { notFound } from 'next/navigation';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { parseProductFilters, parseProductPage, type ProductFilterSearchParams } from '@/lib/product-filters';
 import { ProductFiltersContainer } from '@/components/product-filters/product-filters-container';
 import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
@@ -39,7 +39,7 @@ const SubcategoryPage = async ({ params, searchParams }: Props) => {
   const filterKey = JSON.stringify(filters);
 
   return (
-    <Container>
+    <PageContainer>
       <PageHeader bigText={subcategory.name} smallText={subcategory.category.name} />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
@@ -62,7 +62,7 @@ const SubcategoryPage = async ({ params, searchParams }: Props) => {
           mobileFilterControl={<MobileProductFiltersDrawer initialFilters={filters} priceRange={catalog.priceRange} />}
         />
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

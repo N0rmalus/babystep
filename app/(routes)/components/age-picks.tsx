@@ -89,7 +89,7 @@ export const AgePicks = ({ products }: Props) => {
         id={panelId}
         role="tabpanel"
         aria-labelledby={`${baseId}-tab-${activeIndex}`}
-        className="scrollbar-none -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pt-0.5 pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:p-0"
+        className="scrollbar-none -mx-gutter scroll-px-gutter px-gutter flex snap-x snap-mandatory gap-3 overflow-x-auto pt-0.5 pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:p-0"
       >
         {visibleProducts.map((product) => (
           <div key={product.id} className="w-41 shrink-0 snap-start lg:w-auto">

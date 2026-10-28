@@ -1,7 +1,7 @@
 import { Truck } from 'lucide-react';
 
 import { PageHeader } from '@/components/page-header';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/consts';
 
@@ -37,7 +37,7 @@ const deliveryTimeline = [
 
 const PristatymoInformacijaPage = () => {
   return (
-    <Container>
+    <PageContainer>
       <PageHeader
         smallText="Pagalba"
         bigText="Pristatymo informacija"
@@ -111,7 +111,7 @@ const PristatymoInformacijaPage = () => {
           ))}
         </div>
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

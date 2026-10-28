@@ -53,7 +53,7 @@ export const InstagramSection = ({ posts }: Props) => {
           </div>
         </div>
 
-        <div className="scrollbar-none -mx-4 flex gap-2.5 overflow-x-auto px-4 pb-1 lg:mx-0 lg:flex-1 lg:gap-6 lg:overflow-visible lg:p-0">
+        <div className="scrollbar-none -mx-gutter px-gutter flex gap-2.5 overflow-x-auto pb-1 lg:mx-0 lg:flex-1 lg:gap-6 lg:overflow-visible lg:p-0">
           {visiblePosts.map((post) => (
             <a
               key={post.id}

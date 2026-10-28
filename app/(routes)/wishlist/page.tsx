@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
 import useResolvedProducts from '@/hooks/use-resolved-products';
@@ -101,14 +101,14 @@ const WishlistPage = () => {
 
   if (isWishlistEmpty) {
     return (
-      <Container>
+      <PageContainer>
         <EmptyWishlistState />
-      </Container>
+      </PageContainer>
     );
   }
 
   return (
-    <Container>
+    <PageContainer>
       <PageHeader
         bigText="Norų sąrašas"
         smallText={
@@ -136,7 +136,7 @@ const WishlistPage = () => {
           <ProductList items={products} variant="grid" wishlistAction="remove" />
         </div>
       )}
-    </Container>
+    </PageContainer>
   );
 };
 

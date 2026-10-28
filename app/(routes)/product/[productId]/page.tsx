@@ -4,7 +4,7 @@ import { Gallery } from '@/components/gallery';
 import { Info } from '@/components/info';
 import { ProductList } from '@/components/product-list';
 import { RouteFocusRefresh } from '@/components/route-focus-refresh';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { notFound } from 'next/navigation';
 
 type Props = {
@@ -30,7 +30,7 @@ const ProductPage = async ({ params }: Props) => {
   return (
     <>
       <RouteFocusRefresh />
-      <Container>
+      <PageContainer>
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-12">
           <Gallery images={product.images} />
           <div className="mt-10 sm:mt-16 lg:mt-0">
@@ -39,12 +39,12 @@ const ProductPage = async ({ params }: Props) => {
             </div>
           </div>
         </div>
-      </Container>
+      </PageContainer>
 
       <div className="bg-tumbleweed-50 shadow-[inset_0_8px_20px_rgba(0,0,0,0.08)]">
-        <Container>
+        <PageContainer>
           <ProductList title="Panašios Prekės" items={suggestedProducts} />
-        </Container>
+        </PageContainer>
       </div>
     </>
   );

@@ -10,11 +10,7 @@ type Props = {
 
 export const HomeBillboard = ({ data }: Props) => {
   return (
-    <section
-      aria-roledescription="carousel"
-      aria-label="Pagrindinis pasiūlymas"
-      className="mx-auto w-full max-w-7xl px-4 pt-3 lg:px-10 lg:pt-7"
-    >
+    <section aria-roledescription="carousel" aria-label="Pagrindinis pasiūlymas" className="pt-3 lg:pt-7">
       <div
         aria-roledescription="slide"
         className="border-line bg-muted relative h-80 overflow-hidden rounded-3xl border lg:h-135"

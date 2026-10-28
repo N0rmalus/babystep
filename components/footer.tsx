@@ -46,8 +46,8 @@ const FOOTER_LINK_CLASSES = 'text-ink-soft hover:text-link transition-colors';
 
 export const Footer = () => {
   return (
-    <footer className="border-line bg-muted-soft lg:bg-canvas border-t">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-5 gap-y-10 px-4 pt-10 pb-8 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-10 lg:px-10 lg:pt-16 lg:pb-10">
+    <footer className="border-line bg-muted-soft border-t">
+      <div className="px-gutter mx-auto grid max-w-7xl grid-cols-2 gap-x-5 gap-y-10 pt-10 pb-8 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-10 lg:pt-16 lg:pb-10">
         <div className="col-span-2 flex flex-col items-start gap-4 lg:col-span-1">
           <Link href="/" className="font-accent text-ink text-2xl font-bold tracking-tight">
             Babystep
@@ -107,7 +107,7 @@ export const Footer = () => {
         </FooterColumn>
       </div>
 
-      <div className="border-line text-ink-muted mx-auto flex max-w-7xl justify-between gap-4 border-t px-4 pt-4 pb-7 text-xs lg:px-10 lg:pt-5 lg:pb-8">
+      <div className="border-line text-ink-muted px-gutter mx-auto flex max-w-7xl justify-between gap-4 border-t pt-4 pb-7 text-xs lg:pt-5 lg:pb-8">
         <span>&copy; 2026 Babystep</span>
         <span className="flex items-center gap-1.5">
           <Lock size={14} aria-hidden="true" />

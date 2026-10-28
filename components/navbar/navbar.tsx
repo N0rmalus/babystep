@@ -19,8 +19,8 @@ const Navbar = async () => {
   const subcategoriesByCategory = groupSubcategoriesByCategory(subcategories);
 
   return (
-    <header className="border-line bg-canvas sticky top-0 z-40 border-b">
-      <div className="mx-auto grid h-14 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-6 px-4 lg:h-19 lg:px-10">
+    <header className="border-line bg-muted-soft sticky top-0 z-40 border-b">
+      <div className="px-gutter mx-auto grid h-14 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-6 lg:h-19">
         <div className="flex">
           <MobileNavbar
             biggestDiscount={biggestDiscount}
@@ -35,7 +35,7 @@ const Navbar = async () => {
         <NavbarActions />
       </div>
 
-      <div className="px-4 pb-2.5 lg:hidden">
+      <div className="px-gutter pb-2.5 lg:hidden">
         <HeaderSearch />
       </div>
 
