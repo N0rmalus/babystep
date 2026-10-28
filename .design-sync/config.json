@@ -12,7 +12,7 @@
     "Badge": "components/ui/badge.tsx",
     "Billboard": "components/ui/billboard.tsx",
     "Button": "components/ui/button.tsx",
-    "Container": "components/ui/container.tsx",
+    "PageContainer": "components/ui/page-container.tsx",
     "IconButton": "components/ui/icon-button.tsx",
     "ImageLightbox": "components/ui/image-lightbox.tsx",
     "LoadingSpinner": "components/ui/loading-spinner.tsx",
@@ -36,7 +36,7 @@
     "Badge": ".design-sync/docs/Badge.md",
     "Billboard": ".design-sync/docs/Billboard.md",
     "Button": ".design-sync/docs/Button.md",
-    "Container": ".design-sync/docs/Container.md",
+    "PageContainer": ".design-sync/docs/PageContainer.md",
     "IconButton": ".design-sync/docs/IconButton.md",
     "ImageLightbox": ".design-sync/docs/ImageLightbox.md",
     "LoadingSpinner": ".design-sync/docs/LoadingSpinner.md",
@@ -57,7 +57,7 @@
     "Billboard": {
       "cardMode": "column"
     },
-    "Container": {
+    "PageContainer": {
       "cardMode": "column"
     },
     "PaperWrapper": {

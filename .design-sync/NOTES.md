@@ -28,7 +28,8 @@ This repo is a Next.js app, not a published package. The sync bundles `component
 ## Re-sync risks
 
 - `dtsPropsFor` bodies are copies of `actions/types.ts` and the Button props. They go stale silently when those change.
-- `icons.ts` is a snapshot of the app's lucide imports.
+- `icons.ts` is a snapshot of the app's lucide imports. When diffing it, scan `app`, `components`, `hooks`, `providers` and `lib` (`lib/consts.ts` imports `Facebook`/`Instagram`), and handle multi-line `import { … } from 'lucide-react'`.
+- Renamed or removed `components/ui` files break `prepare.mjs` at the `tsc` step (`Cannot find module` in `entry.ts`). Update `entry.ts`, `componentSrcMap`, `docsMap`, `overrides`, the preview and doc stub file names, and `conventions.md` together (as for `Container` → `PageContainer` on 2026-10-28).
 - Font files are a snapshot of Google Fonts as of 2026-10-27, with only the weights the app uses (Urbanist 400–800, Bricolage 600/700).
 - Playwright for the render check: Chromium build 1248 is cached locally and matches `playwright@1.64.1` (installed into `.ds-sync/`).
 - The Next.js shims make `Link`, `Image`, `useRouter` and `usePathname` inert in designs. Navigation and image optimization are not exercised.
