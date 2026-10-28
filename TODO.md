@@ -15,7 +15,7 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API
 ## Legal and trust
 
 - [ ] **Rewrite the privacy policy.** It is WordPress template text about comments and login cookies. It should cover the data the shop actually handles: name, phone, address, payment (Montonio), Sentry and Instagram.
-- [ ] **Fix the newsletter block.** It promises a discount email but has no signup form. Either add a form or remove the promise.
+- [ ] **Connect the newsletter form.** The home page form is a mock (see "Mocks to replace before launch"). Connect it to the signup endpoint once the admin's "Newsletter" tasks are done, with a real confirmation message and an error state.
 
 ## Unfinished pages
 
@@ -53,3 +53,12 @@ Storefront side of the billboard upgrade in the admin's TODO ("Customizable bill
 - [ ] **Home page carousel.** Fetch the active home banners from the new endpoint instead of `INDEX_BILLBOARD_ID`. With one banner show it alone; with several, a manual carousel: arrows, dots, swipe on mobile, keyboard accessible, no autoplay. Then remove `INDEX_BILLBOARD_ID` from `.env.example`.
 - [ ] **Category pages** use the same `Billboard` component with their category's billboard.
 - [ ] **Update `.design-sync/previews/Billboard.tsx`** and run `/design-sync` so Claude Design shows the new variants.
+
+## Mocks to replace before launch
+
+The site isn't public yet, so some home page parts are built as visible mocks to judge the design. Mark each in code with a `// MOCK:` comment so they are easy to find. Before launch, every item here must be real or removed.
+
+- [ ] **"Pagal amžių" section.** Tabs and product rail are a mock until the admin's "Product age range" tasks exist. Then fetch products with `?age=<group>`.
+- [ ] **Newsletter form.** Accepts an email but sends nothing. Connect it (see "Legal and trust").
+- [ ] **Account icon in the header.** A non-functional button until customer accounts exist.
+- [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
