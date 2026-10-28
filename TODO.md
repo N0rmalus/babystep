@@ -19,15 +19,17 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API
 
 ## Unfinished pages
 
-- [ ] **Fill or remove the empty blog section** ("Patarimai tėvams") on the home page.
-- [ ] **Fix links that go nowhere.** On the home page, "Žiūrėti įrašus" and "Žiūrėti rekomendacijas" go to `/`. In the footer, "Naujienos" goes to `#`. In the mobile menu, "Tinklaraštis" and "Apie mus" go to `#`.
+- [ ] **Fill the blog section** ("Patarimai tėvams"). It is hidden from the home page until there are posts.
+- [ ] **Fix links that go nowhere.** In the footer, "Naujienos" goes to `#`.
 - [x] **Fix the 404 page's broken desktop image.** `app/not-found.tsx` loads `/page-not-founds.png`, which doesn't exist. Only `page-not-found.png` does.
-- [ ] **Show category product counts** once the API provides them. See the TODO in `app/(routes)/components/category-mosaic.tsx`.
+- [ ] **Show category product counts** on the home page category tiles once the API provides them.
+- [ ] **Give the home page category tiles real images.** `/categories` returns no `billboard`, so the tiles in `app/(routes)/components/category-showcase.tsx` show the placeholder.
 
 ## SEO and quality
 
 - [ ] **Add `generateMetadata` to product and category pages.** Every page currently has the title "Babystep".
 - [x] **Set `<html lang="lt">`.** It is `lang="en"` in `app/layout.tsx` and `app/global-error.tsx`.
+
 ## Dead code
 
 - [x] **Delete the unused files** `actions/get-subcategory.tsx` and `components/ui/product-card/product-card-image.tsx`.
@@ -60,5 +62,6 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 
 - [ ] **"Pagal amžių" section.** Tabs and product rail are a mock until the admin's "Product age range" tasks exist. Then fetch products with `?age=<group>`.
 - [ ] **Newsletter form.** Accepts an email but sends nothing. Connect it (see "Legal and trust").
-- [ ] **Account icon in the header.** A non-functional button until customer accounts exist.
+- [ ] **Account icon in the header and the sign-in card in the mobile menu.** Non-functional until customer accounts exist.
+- [ ] **Header search.** The search field accepts text but submitting does nothing; there is no store-wide search page yet.
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.

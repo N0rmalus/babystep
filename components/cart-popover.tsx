@@ -23,6 +23,7 @@ import { useMemo, useState } from 'react';
 
 import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
+import { CartCountBadge } from '@/components/navbar/cart-count-badge';
 import Button from '@/components/ui/button';
 import useCart from '@/hooks/use-cart';
 import { useCartSummary } from '@/hooks/use-cart-summary';
@@ -135,16 +136,11 @@ export const CartPopover = () => {
         href="/cart"
         linkRef={setReference}
         variant="secondary"
-        elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
-        elementAfter={
-          <span className="bg-ink inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5">
-            {itemIds.length}
-          </span>
-        }
-        label={<span className="hidden xl:inline">Krepšelis</span>}
+        elementBefore={<ShoppingCart size={16} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
+        elementAfter={<CartCountBadge />}
+        label="Krepšelis"
         size="sm"
-        aria-label="Krepšelis"
-        className="border-line text-ink-soft hover:border-line-strong hover:text-ink h-11 shrink-0 hover:bg-white xl:px-4"
+        className="h-11"
       />
 
       {isMounted && (

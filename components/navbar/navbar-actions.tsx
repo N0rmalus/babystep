@@ -1,71 +1,65 @@
 'use client';
 
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart, UserRound } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
+import { CartPopover } from '@/components/cart-popover';
+import { CartCountBadge } from '@/components/navbar/cart-count-badge';
+import { CartIconButton } from '@/components/navbar/cart-icon-button';
 import Button from '@/components/ui/button';
 import IconButton from '@/components/ui/icon-button';
-import { CartPopover } from '@/components/cart-popover';
 import { useIsMobile } from '@/hooks/use-is-mobile';
 import useMounted from '@/hooks/use-mounted';
-import useWishlist from '@/hooks/use-wishlist';
 import { cn } from '@/lib/utils';
-import useCart from '@/hooks/use-cart';
 
 export const NavbarActions = () => {
   const isMounted = useMounted();
-  const isInWishlistPage = usePathname().includes('/wishlist');
-  const isInCartPage = usePathname().includes('/cart');
+  const pathname = usePathname();
   const isCompactNav = useIsMobile('lg');
-
-  const cart = useCart();
-  const wishlist = useWishlist();
+  const isInWishlistPage = pathname.includes('/wishlist');
+  const isInCartPage = pathname.includes('/cart');
 
   if (!isMounted) {
     return null;
   }
 
-  const actionButtonClasses =
-    'h-11 shrink-0 border-line text-ink-soft hover:border-line-strong hover:bg-white hover:text-ink xl:px-4';
-  const badgeClasses =
-    'inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-xs font-semibold text-white xl:h-6 xl:min-w-6 xl:px-1.5';
+  if (isCompactNav) {
+    return (
+      <div className="flex justify-end">
+        <CartIconButton />
+      </div>
+    );
+  }
 
   return (
-    <div className="ml-auto flex shrink-0 items-center gap-2 xl:gap-3">
-      {!isCompactNav && (
-        <Button
-          href="/wishlist"
-          variant="secondary"
-          elementBefore={<Heart size={18} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
-          elementAfter={<span className={badgeClasses}>{wishlist.items.length}</span>}
-          label={<span className="hidden xl:inline">Norai</span>}
-          size="sm"
-          aria-label="Norai"
-          className={actionButtonClasses}
-        />
-      )}
+    <div className="flex items-center justify-end gap-2.5">
+      <Button
+        href="/wishlist"
+        variant="secondary"
+        size="sm"
+        label="Norai"
+        elementBefore={<Heart size={16} className={cn(isInWishlistPage && 'fill-tumbleweed-300')} />}
+        className="h-11"
+      />
 
-      {isCompactNav ? (
-        <IconButton
-          href="/cart"
-          icon={<ShoppingCart size={20} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
-          label="Krepšelis"
-          badge={<span className={cn('shadow-sm', badgeClasses)}>{cart.items.length}</span>}
-        />
-      ) : isInCartPage ? (
+      {isInCartPage ? (
         <Button
           href="/cart"
           variant="secondary"
-          elementBefore={<ShoppingCart size={18} className={cn(isInCartPage && 'fill-tumbleweed-300')} />}
-          elementAfter={<span className={badgeClasses}>{cart.items.length}</span>}
-          label={<span className="hidden xl:inline">Krepšelis</span>}
           size="sm"
-          aria-label="Krepšelis"
-          className={actionButtonClasses}
+          label="Krepšelis"
+          elementBefore={<ShoppingCart size={16} className="fill-tumbleweed-300" />}
+          elementAfter={<CartCountBadge />}
+          className="h-11"
         />
       ) : (
         <CartPopover />
       )}
+
+      <span aria-hidden="true" className="bg-line mx-1 h-6 w-px" />
+
+      {/* MOCK: does nothing until customer accounts exist (TODO.md "Customer accounts"). */}
+      <IconButton icon={<UserRound size={16} />} label="Paskyra" />
     </div>
   );
 };

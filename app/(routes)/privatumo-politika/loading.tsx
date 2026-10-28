@@ -1,9 +1,9 @@
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import Skeleton from '@/components/ui/skeleton';
 
 const Loading = () => {
   return (
-    <Container className="gap-10 py-10 sm:py-16 lg:gap-14 lg:py-20">
+    <PageContainer className="gap-10 py-10 sm:py-16 lg:gap-14 lg:py-20">
       <div className="max-w-4xl space-y-5">
         <Skeleton className="h-4 w-44" />
         <Skeleton className="h-16 w-full max-w-2xl sm:h-20" />
@@ -29,7 +29,7 @@ const Loading = () => {
           ))}
         </div>
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

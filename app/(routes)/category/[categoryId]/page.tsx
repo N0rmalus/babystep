@@ -3,7 +3,7 @@ import getProductCatalog from '@/actions/get-product-catalog';
 import getSubcategories from '@/actions/get-subcategories';
 
 import { Billboard } from '@/components/ui/billboard';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { parseProductFilters, parseProductPage, type ProductFilterSearchParams } from '@/lib/product-filters';
 import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
 import { MobileProductFiltersDrawer } from '@/components/product-filters/mobile-product-filters-drawer';
@@ -46,7 +46,7 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
   }
 
   return (
-    <Container>
+    <PageContainer>
       <Billboard data={category.billboard} />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
@@ -77,7 +77,7 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
           }
         />
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

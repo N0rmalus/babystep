@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/page-header';
 import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
 import { MobileProductFiltersDrawer } from '@/components/product-filters/mobile-product-filters-drawer';
 import { ProductFiltersContainer } from '@/components/product-filters/product-filters-container';
-import Container from '@/components/ui/container';
+import { PageContainer } from '@/components/ui/page-container';
 import { parseProductFilters, parseProductPage, type ProductFilterSearchParams } from '@/lib/product-filters';
 
 export const revalidate = 0;
@@ -52,7 +52,7 @@ const AkcijosPage = async ({ searchParams }: Props) => {
   const filterKey = JSON.stringify(filters);
 
   return (
-    <Container>
+    <PageContainer>
       <PageHeader bigText="Akcijos" smallText="Švelnūs atradimai geresne kaina" />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
@@ -86,7 +86,7 @@ const AkcijosPage = async ({ searchParams }: Props) => {
           }
         />
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · mobilusis meniu (be paskyros)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f8f4ee}
+a{color:#9a4734;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid #c76e48;outline-offset:3px}
+.mrow{color:#2b2421}.mrow:hover{color:#9a4734}
+.chip{transition:border-color .2s ease,background .2s ease}.chip:hover{border-color:#d9a37f !important;background:#fbf6f1 !important}
+</style>
+</helmet>
+<div role="dialog" aria-label="Meniu" style="width: 390px; min-height: 844px; box-sizing: border-box; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans); display: flex; flex-direction: column;">
+<div style="height: 56px; flex: 0 0 auto; padding: 0 16px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--color-line);">
+<div style="display: flex;"><x-import component-from-global-scope="Babystep.IconButton" label="Uždaryti meniu" icon="{{icClose}}" on-click="{{noop}}"></x-import></div>
+<a href="#" style="font-family: var(--font-accent); font-weight: 700; font-size: 24px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<div style="display: flex; justify-content: flex-end;"><x-import component-from-global-scope="Babystep.IconButton" href="#krepselis" label="Krepšelis, 2 prekės" icon="{{icCart}}" badge="{{cartCount}}"></x-import></div>
+</div>
+<nav aria-label="Meniu" style="padding: 8px 20px 32px; display: flex; flex-direction: column;">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<div style="padding: 10px 0 8px;">
+<a href="#kategorija" class="mrow" style="display: flex; align-items: center; justify-content: space-between; height: 44px; font-weight: 600; font-size: 20px;"><span>{{g.name}}</span><span style="color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.ChevronRight" size="{{n18}}"></x-import></span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px;">
+<sc-for list="{{g.subs}}" as="s" hint-placeholder-count="3">
+<a href="#subkategorija" class="chip" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--color-tumbleweed-200); background: #ffffff; color: var(--color-ink-soft); font-size: 14px;">{{s}}</a>
+</sc-for>
+</div>
+</div>
+</sc-for>
+<a href="#akcijos" style="display: flex; align-items: center; justify-content: space-between; height: 56px; margin-top: 4px; color: var(--color-sale-strong); font-weight: 600; font-size: 20px;"><span>Akcijos</span><x-import component-from-global-scope="Babystep.Badge" color="sale" label="Iki −20 %"></x-import></a>
+<div style="height: 1px; background: var(--color-line); margin: 12px 0;"></div>
+<a href="#norai" class="mrow" style="display: flex; align-items: center; justify-content: space-between; height: 52px; font-weight: 600; font-size: 20px;"><span>Norai</span><span style="color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.Heart" size="{{n18}}"></x-import></span></a>
+<div style="margin-top: 12px; padding: 18px; border-radius: 20px; background: var(--color-tumbleweed-50); border: 1px solid var(--color-tumbleweed-100); display: flex; flex-direction: column; gap: 12px;">
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: var(--color-ink-soft);">Prisijunk, ir tavo norai bei užsakymai bus po ranka bet kuriame įrenginyje.</p>
+<x-import component-from-global-scope="Babystep.Button" size="sm" href="#prisijungti" label="Prisijungti" full-width="{{yes}}" class-name="h-11"></x-import>
+<p style="margin: 0; font-size: 14px; text-align: center; color: var(--color-ink-muted);">Neturi paskyros? <a href="#registracija" style="font-weight: 600; text-decoration: underline;">Susikurk</a></p>
+</div>
+<div style="height: 1px; background: var(--color-line); margin: 20px 0 16px;"></div>
+<div style="display: flex; gap: 10px;">
+<x-import component-from-global-scope="Babystep.IconButton" href="#instagram" label="Instagram" icon="{{icInsta}}"></x-import>
+<x-import component-from-global-scope="Babystep.IconButton" href="#facebook" label="Facebook" icon="{{icFb}}"></x-import>
+</div>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, I = (window.Babystep || {}).Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 18 }) : null;
+    return {
+      n18: 18, yes: true, noop: () => {}, icClose: ic('X'), icCart: ic('ShoppingCart'), icInsta: ic('Instagram', 16), icFb: ic('Facebook', 16),
+      cartCount: R ? R.createElement('span', { className: 'bg-ink flex size-5 items-center justify-center rounded-full text-xs font-semibold text-white tabular-nums' }, '2') : null,
+      groups: [
+        { name: 'Miegui', subs: ['Pledai', 'Lizdeliai', 'Apsaugėlės'] },
+        { name: 'Priežiūrai', subs: ['Rankšluostukai', 'Merliukai', 'Žinduko laikikliai', 'Pončai'] },
+        { name: 'Aksesuarai', subs: ['Tapukai / kojinytės'] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

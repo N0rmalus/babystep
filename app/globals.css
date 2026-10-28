@@ -6,6 +6,9 @@
   /* The one letter-spacing for uppercase labels: eyebrows, badges, chips, filter and footer titles. */
   --tracking-eyebrow: 0.14em;
 
+  /* Page side padding: px-gutter, -mx-gutter, scroll-px-gutter. Changed at lg and xl in the base layer. */
+  --spacing-gutter: 1rem;
+
   --color-tumbleweed-50: #fbf6f1;
   --color-tumbleweed-100: #f6e9de;
   --color-tumbleweed-200: #ebd1bd;
@@ -92,6 +95,16 @@
   button {
     cursor: pointer;
   }
+
+  :root {
+    @variant lg {
+      --spacing-gutter: 2.5rem;
+    }
+
+    @variant xl {
+      --spacing-gutter: 0.25rem;
+    }
+  }
 }
 
 @utility rich-text-content {
@@ -163,6 +176,14 @@
   @apply tracking-eyebrow text-xs font-semibold uppercase;
 }
 
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility tap-soft {
   @apply transition-transform;
 }
@@ -206,10 +227,6 @@
   .scrollbar-soft::-webkit-scrollbar-thumb:hover {
     background: var(--color-ink);
     background-clip: content-box;
-  }
-
-  .animate-promo-conveyor {
-    animation: promo-conveyor 60s linear infinite;
   }
 
   .animate-empty-state-image-float {
@@ -283,21 +300,7 @@
   }
 }
 
-@keyframes promo-conveyor {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-promo-conveyor {
-    animation: none;
-  }
-
   .animate-empty-state-image-float,
   .animate-empty-state-cart-roll,
   .animate-empty-state-wishlist-heart,

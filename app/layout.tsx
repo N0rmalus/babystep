@@ -4,7 +4,7 @@ import { ModalProvider } from '@/providers/modal-provider';
 import ToastProvider from '@/providers/toast-provider';
 import Navbar from '@/components/navbar/navbar';
 import { Footer } from '@/components/footer';
-import { PromoMarquee } from '@/components/promo-marquee';
+import { AnnouncementBar } from '@/components/announcement-bar';
 
 import './globals.css';
 import { ReactNode } from 'react';
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="bg-canvas text-ink flex min-h-screen flex-col">
           <ToastProvider />
           <ModalProvider />
-          <PromoMarquee />
+          <AnnouncementBar />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
