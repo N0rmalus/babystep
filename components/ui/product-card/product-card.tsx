@@ -128,17 +128,14 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
                 {toCurrency(pricing.regularPrice)}
               </div>
             )}
-            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
-              <span
-                className={cn(
-                  'text-base font-bold tabular-nums sm:text-lg',
-                  pricing.isOnSale ? 'text-sale-strong' : 'text-ink',
-                )}
-              >
-                {toCurrency(pricing.effectivePrice)}
-              </span>
-              {!isMobile && <p className="text-ink-muted text-xs">Likutis: {Math.max(data.amountInStock, 0)}</p>}
-            </div>
+            <span
+              className={cn(
+                'text-base font-bold tabular-nums sm:text-lg',
+                pricing.isOnSale ? 'text-sale-strong' : 'text-ink',
+              )}
+            >
+              {toCurrency(pricing.effectivePrice)}
+            </span>
           </div>
         </div>
 

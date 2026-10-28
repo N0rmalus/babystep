@@ -163,6 +163,14 @@
   @apply tracking-eyebrow text-xs font-semibold uppercase;
 }
 
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility tap-soft {
   @apply transition-transform;
 }
@@ -206,10 +214,6 @@
   .scrollbar-soft::-webkit-scrollbar-thumb:hover {
     background: var(--color-ink);
     background-clip: content-box;
-  }
-
-  .animate-promo-conveyor {
-    animation: promo-conveyor 60s linear infinite;
   }
 
   .animate-empty-state-image-float {
@@ -283,21 +287,7 @@
   }
 }
 
-@keyframes promo-conveyor {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-promo-conveyor {
-    animation: none;
-  }
-
   .animate-empty-state-image-float,
   .animate-empty-state-cart-roll,
   .animate-empty-state-wishlist-heart,

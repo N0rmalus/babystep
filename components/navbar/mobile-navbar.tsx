@@ -11,19 +11,22 @@ import {
   useTransitionStyles,
 } from '@floating-ui/react';
 import { ChevronRight, Heart, Menu, X } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import type { Category, Subcategory } from '@/actions/types';
-import { cn } from '@/lib/utils';
-import { SOCIAL_LINKS } from '@/lib/consts';
+import { BrandLink } from '@/components/navbar/brand-link';
+import { CartIconButton } from '@/components/navbar/cart-icon-button';
+import { Badge } from '@/components/ui/badge';
+import Button from '@/components/ui/button';
 import IconButton from '@/components/ui/icon-button';
+import { SOCIAL_LINKS } from '@/lib/consts';
+import { cn } from '@/lib/utils';
 
 type Props = {
   biggestDiscount: number;
   categories: Category[];
-  pathname: string;
   subcategoriesByCategory: Record<string, Subcategory[]>;
 };
 
@@ -34,8 +37,11 @@ type MobileCategorySectionProps = {
   onNavigate: () => void;
 };
 
-export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategoriesByCategory }: Props) => {
+const MENU_ROW_CLASSES = 'flex items-center justify-between text-xl font-semibold transition-colors';
+
+export const MobileNavbar = ({ biggestDiscount, categories, subcategoriesByCategory }: Props) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -50,23 +56,19 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
     };
   }, [isMobileMenuOpen]);
 
-  const handleMobileOpenChange = (isOpen: boolean) => {
-    setIsMobileMenuOpen(isOpen);
-  };
-
-  const { refs: mobileRefs, context: mobileContext } = useFloating({
+  const { refs, context } = useFloating({
     open: isMobileMenuOpen,
-    onOpenChange: handleMobileOpenChange,
+    onOpenChange: setIsMobileMenuOpen,
     strategy: 'fixed',
   });
 
-  const { isMounted: isMobileMounted, styles: mobileTransitionStyles } = useTransitionStyles(mobileContext, {
+  const { isMounted, styles: transitionStyles } = useTransitionStyles(context, {
     common: {
       transformOrigin: 'top center',
     },
     initial: {
       opacity: 0,
-      transform: 'translateY(-10px)',
+      transform: 'translateY(-8px)',
     },
     open: {
       opacity: 1,
@@ -78,138 +80,87 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
     },
   });
 
-  const mobileClick = useClick(mobileContext);
-  const mobileDismiss = useDismiss(mobileContext);
-  const mobileRole = useRole(mobileContext, { role: 'dialog' });
-  const { getReferenceProps: getMobileReferenceProps, getFloatingProps: getMobileFloatingProps } = useInteractions([
-    mobileClick,
-    mobileDismiss,
-    mobileRole,
-  ]);
-  const { setReference: setMobileReference, setFloating: setMobileFloating } = mobileRefs;
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'dialog' });
+  const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
+  const { setReference, setFloating } = refs;
 
-  const closeMobileMenu = () => {
-    handleMobileOpenChange(false);
+  const handleClose = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <>
       <div className="lg:hidden">
-        <IconButton
-          ref={setMobileReference}
-          icon={isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          label={isMobileMenuOpen ? 'Uždaryti meniu' : 'Atidaryti meniu'}
-          {...getMobileReferenceProps()}
-        />
+        <IconButton ref={setReference} icon={<Menu size={18} />} label="Meniu" {...getReferenceProps()} />
       </div>
 
-      {isMobileMounted && (
+      {isMounted && (
         <FloatingPortal>
-          <FloatingFocusManager context={mobileContext} modal initialFocus={-1}>
+          <FloatingFocusManager context={context} modal initialFocus={-1}>
             <div
-              ref={setMobileFloating}
-              className="text-ink fixed inset-0 z-50 bg-white outline-none lg:hidden"
-              {...getMobileFloatingProps()}
+              ref={setFloating}
+              aria-label="Meniu"
+              className="bg-canvas text-ink fixed inset-0 z-50 outline-none lg:hidden"
+              {...getFloatingProps()}
             >
-              <div style={mobileTransitionStyles} className="flex h-dvh flex-col overflow-hidden">
-                <div className="border-line flex h-16 items-center justify-between gap-2 border-b px-5 sm:gap-3 sm:px-8 lg:px-8">
-                  <Link
-                    href="/"
-                    aria-label="Babystep pradžia"
-                    className="group absolute left-1/2 inline-flex shrink-0 -translate-x-1/2 items-center gap-2 leading-none lg:static lg:translate-x-0"
-                  >
-                    <Image
-                      src="/logo2.png"
-                      alt="BabyStep.lt logo"
-                      width={50}
-                      height={50}
-                      className="size-9 object-contain transition-transform duration-200 ease-out group-hover:rotate-6 sm:size-10"
-                    />
+              <div style={transitionStyles} className="flex h-dvh flex-col">
+                <div className="border-line grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b px-4">
+                  <div className="flex">
+                    <IconButton icon={<X size={18} />} label="Uždaryti meniu" onClick={handleClose} />
+                  </div>
+                  <BrandLink onClick={handleClose} />
+                  <div className="flex justify-end">
+                    <CartIconButton onClick={handleClose} />
+                  </div>
+                </div>
 
-                    <span className="font-accent text-link text-xl font-bold tracking-tight transition sm:text-xl">
-                      Babystep
-                    </span>
+                <nav aria-label="Meniu" className="scrollbar-soft flex flex-1 flex-col overflow-y-auto px-5 pt-2 pb-8">
+                  {categories.map((category) => (
+                    <MobileCategorySection
+                      key={category.id}
+                      category={category}
+                      isActive={pathname.startsWith(`/category/${category.id}`)}
+                      subcategories={subcategoriesByCategory[category.id] ?? []}
+                      onNavigate={handleClose}
+                    />
+                  ))}
+
+                  <Link
+                    href="/akcijos"
+                    onClick={handleClose}
+                    className={cn('text-sale-strong mt-1 h-14', MENU_ROW_CLASSES)}
+                  >
+                    <span>Akcijos</span>
+                    {biggestDiscount > 0 && <Badge color="sale" label={`Iki -${biggestDiscount}%`} />}
                   </Link>
 
-                  <IconButton icon={<X size={20} />} label="Uždaryti meniu" onClick={closeMobileMenu} />
-                </div>
+                  <hr className="border-line my-3" />
 
-                <div className="scrollbar-soft flex-1 space-y-4 overflow-y-auto px-5 py-5">
-                  <div className="space-y-4">
-                    {categories.map((category) => {
-                      const isActive = pathname === `/category/${category.id}`;
-                      const subs = subcategoriesByCategory[category.id] || [];
+                  <Link
+                    href="/wishlist"
+                    onClick={handleClose}
+                    className={cn(
+                      'hover:text-link h-13',
+                      pathname === '/wishlist' ? 'text-link' : '',
+                      MENU_ROW_CLASSES,
+                    )}
+                  >
+                    <span>Norai</span>
+                    <Heart size={18} className="text-ink-muted" aria-hidden="true" />
+                  </Link>
 
-                      return (
-                        <MobileCategorySection
-                          key={category.id}
-                          category={category}
-                          isActive={isActive}
-                          subcategories={subs}
-                          onNavigate={closeMobileMenu}
-                        />
-                      );
-                    })}
+                  <GuestAccountCard />
 
-                    <div className="space-y-4">
-                      <Link
-                        href="/akcijos"
-                        className="group text-sale-strong flex items-center justify-between text-xl font-semibold"
-                        onClick={closeMobileMenu}
-                      >
-                        <span>Akcijos</span>
-                        {biggestDiscount > 0 && (
-                          <span className="bg-sale-soft text-sale-strong eyebrow rounded-full px-4 py-1">
-                            Iki -{biggestDiscount}%
-                          </span>
-                        )}
-                      </Link>
+                  <hr className="border-line mt-5 mb-4" />
 
-                      <div className="border-line border-t" />
-
-                      <Link
-                        href="/wishlist"
-                        className="group text-ink flex items-center justify-between text-xl font-semibold"
-                        onClick={closeMobileMenu}
-                      >
-                        <span>Norai</span>
-                        <Heart size={20} className="text-ink-faint group-hover:text-ink transition" />
-                      </Link>
-
-                      <Link
-                        href="#"
-                        className="group text-ink flex items-center justify-between text-xl font-semibold"
-                        onClick={closeMobileMenu}
-                      >
-                        <span>Tinklaraštis</span>
-                        <ChevronRight size={20} className="text-ink-faint group-hover:text-ink transition" />
-                      </Link>
-
-                      <Link
-                        href="#"
-                        className="group text-ink flex items-center justify-between text-xl font-semibold"
-                        onClick={closeMobileMenu}
-                      >
-                        <span>Apie mus</span>
-                        <ChevronRight size={20} className="text-ink-faint group-hover:text-ink transition" />
-                      </Link>
-                    </div>
+                  <div className="flex gap-2.5">
+                    {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
+                      <IconButton key={label} href={href} icon={<Icon size={16} />} label={label} />
+                    ))}
                   </div>
-
-                  <div className="border-line border-t pt-4">
-                    <div className="flex items-center gap-4">
-                      {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
-                        <IconButton
-                          key={label}
-                          href={href}
-                          icon={<Icon size={20} />}
-                          label={label}
-                          onClick={closeMobileMenu}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                </nav>
               </div>
             </div>
           </FloatingFocusManager>
@@ -221,33 +172,50 @@ export const MobileNavbar = ({ biggestDiscount, categories, pathname, subcategor
 
 const MobileCategorySection = ({ category, isActive, subcategories, onNavigate }: MobileCategorySectionProps) => {
   return (
-    <div className="space-y-2">
+    <div className="pt-2.5 pb-2">
       <Link
         href={`/category/${category.id}`}
-        className={cn(
-          'group flex items-center justify-between text-xl font-semibold transition-colors',
-          isActive ? 'text-tumbleweed-800' : 'hover:text-tumbleweed-800 text-ink',
-        )}
         onClick={onNavigate}
+        className={cn('h-11', isActive ? 'text-link' : 'hover:text-link', MENU_ROW_CLASSES)}
       >
         <span>{category.name}</span>
-        <ChevronRight size={20} className="text-ink-faint group-hover:text-ink transition" />
+        <ChevronRight size={18} className="text-ink-muted" aria-hidden="true" />
       </Link>
 
       {subcategories.length > 0 && (
-        <div className="flex flex-wrap gap-3">
+        <div className="mt-1.5 flex flex-wrap gap-2.5">
           {subcategories.map((subcategory) => (
             <Link
               key={subcategory.id}
               href={`/category/${category.id}/${subcategory.id}`}
-              className="tap-surface border-tumbleweed-100 text-ink-soft hover:border-line-strong hover:text-ink rounded-full border bg-white px-4 py-2 text-sm transition"
               onClick={onNavigate}
+              className="tap-surface border-tumbleweed-200 text-ink-soft hover:border-tumbleweed-300 hover:bg-tumbleweed-50 inline-flex h-10 items-center rounded-full border bg-white px-4 text-sm transition"
             >
               {subcategory.name}
             </Link>
           ))}
         </div>
       )}
+    </div>
+  );
+};
+
+// MOCK: sign-in card for guests; the buttons do nothing until customer accounts exist (TODO.md "Customer accounts").
+const GuestAccountCard = () => {
+  const handleMockClick = () => {};
+
+  return (
+    <div className="bg-tumbleweed-50 border-tumbleweed-100 mt-3 flex flex-col gap-3 rounded-3xl border p-4.5">
+      <p className="text-ink-soft text-sm leading-normal">
+        Prisijunk, ir tavo norai bei užsakymai bus po ranka bet kuriame įrenginyje.
+      </p>
+      <Button size="sm" label="Prisijungti" onClick={handleMockClick} fullWidth className="h-11" />
+      <p className="text-ink-muted text-center text-sm">
+        Neturi paskyros?{' '}
+        <button type="button" onClick={handleMockClick} className="text-link font-semibold underline">
+          Susikurk
+        </button>
+      </p>
     </div>
   );
 };

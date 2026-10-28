@@ -18,17 +18,15 @@ import {
 } from '@floating-ui/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 import type { Category, Subcategory } from '@/actions/types';
-import { MobileNavbar } from '@/components/navbar/mobile-navbar';
 import { cn } from '@/lib/utils';
 
 type Props = {
-  data: Category[];
-  subcategories: Subcategory[];
-  biggestDiscount: number;
+  categories: Category[];
+  subcategoriesByCategory: Record<string, Subcategory[]>;
 };
 
 type DesktopNavItemProps = {
@@ -37,41 +35,35 @@ type DesktopNavItemProps = {
   subcategories: Subcategory[];
 };
 
-export const MainNav = ({ data, subcategories, biggestDiscount }: Props) => {
+const NAV_LINK_CLASSES = 'text-base font-semibold transition-colors';
+
+export const MainNav = ({ categories, subcategoriesByCategory }: Props) => {
   const pathname = usePathname();
 
-  const subcategoriesByCategory = useMemo(() => {
-    const grouped: Record<string, Subcategory[]> = {};
-
-    subcategories.forEach((sub) => {
-      if (!grouped[sub.categoryId]) {
-        grouped[sub.categoryId] = [];
-      }
-      grouped[sub.categoryId].push(sub);
-    });
-
-    return grouped;
-  }, [subcategories]);
-
   return (
-    <div className="relative order-first shrink-0 lg:order-0">
-      <MobileNavbar
-        key={pathname}
-        biggestDiscount={biggestDiscount}
-        categories={data}
-        pathname={pathname}
-        subcategoriesByCategory={subcategoriesByCategory}
-      />
-
-      <nav className="hidden items-center gap-1 whitespace-nowrap lg:ml-4 lg:flex">
-        {data.map((category) => {
-          const isActive = pathname === `/category/${category.id}`;
-          const subs = subcategoriesByCategory[category.id] || [];
-
-          return <DesktopNavItem key={category.id} category={category} isActive={isActive} subcategories={subs} />;
-        })}
-      </nav>
-    </div>
+    <nav
+      aria-label="Kategorijos"
+      className="mx-auto hidden h-12 max-w-7xl items-center justify-center gap-9 px-10 whitespace-nowrap lg:flex"
+    >
+      {categories.map((category) => (
+        <DesktopNavItem
+          key={category.id}
+          category={category}
+          isActive={pathname.startsWith(`/category/${category.id}`)}
+          subcategories={subcategoriesByCategory[category.id] ?? []}
+        />
+      ))}
+      <Link
+        href="/akcijos"
+        className={cn(
+          'text-sale-strong decoration-2 underline-offset-8 hover:underline',
+          pathname === '/akcijos' ? 'underline' : '',
+          NAV_LINK_CLASSES,
+        )}
+      >
+        Akcijos
+      </Link>
+    </nav>
   );
 };
 
@@ -132,8 +124,9 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
         ref={setReference}
         href={`/category/${category.id}`}
         className={cn(
-          'hover:text-ink inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold transition-colors',
-          isActive || isOpen ? 'bg-muted text-ink' : 'text-ink-muted',
+          'hover:text-link inline-flex items-center gap-1',
+          isActive || isOpen ? 'text-link' : 'text-ink-soft',
+          NAV_LINK_CLASSES,
         )}
         {...getReferenceProps({
           onClick: () => setIsOpen(false),

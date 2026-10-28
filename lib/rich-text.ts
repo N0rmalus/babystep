@@ -8,6 +8,29 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
+const HTML_ENTITIES = {
+  '&nbsp;': ' ',
+  '&amp;': '&',
+  '&lt;': '<',
+  '&gt;': '>',
+  '&quot;': '"',
+  '&#39;': "'",
+} satisfies Record<string, string>;
+
+export const toPlainText = (value?: string | null) => {
+  if (!value) {
+    return '';
+  }
+
+  const withoutTags = value.replace(/<[^>]*>/g, ' ');
+  const decoded = Object.entries(HTML_ENTITIES).reduce(
+    (text, [entity, character]) => text.replaceAll(entity, character),
+    withoutTags,
+  );
+
+  return decoded.replace(/\s+/g, ' ').trim();
+};
+
 export const normalizeRichTextContent = (value?: string | null) => {
   if (!value?.trim()) {
     return '';
