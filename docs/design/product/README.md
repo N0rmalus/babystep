@@ -14,13 +14,9 @@ Source: the "Babystep Home Redesign" Design canvas in Claude Design (https://cla
 
 How to read `.dc.html` files: see `docs/design/home/README.md` ("How to read"). `/_blob/...` images are placeholder photos; use real product images. The sample data in each file's script block (sizes, colors, prices, stock, reviews) is fake.
 
-## Header changes
+## Header
 
-The header in these designs (and in the updated `docs/design/home/` files) changed since the home page was built. Apply them too:
-
-- **Logo:** the rocking horse next to the "Babystep" wordmark. Use `public/logo.png` (see `components/navbar/brand-link.tsx`).
-- **Desktop navigation:** real categories from the API. A category with subcategories gets a chevron and a hover/focus dropdown (`docs/design/home/nav-dropdown.dc.html`): its subcategories, a "Visos prekės: <category>" link, and the category's billboard image. Categories without subcategories are plain links. Keyboard accessible.
-- **Mobile menu:** logo plus wordmark, real categories with subcategory chips (`mobile-menu-guest.dc.html`).
+The header and menus in these designs (logo, category dropdown, mobile menu) are already built with the home page. Don't change them.
 
 ## What exists now vs. mocks
 
