@@ -5,6 +5,7 @@ export const CONTACT_EMAIL = 'info@babystep.lt';
 export const FREE_SHIPPING_THRESHOLD = 80;
 export const STANDARD_SHIPPING_PRICE = 4.99;
 export const RETURN_PERIOD_DAYS = 14;
+export const LOW_STOCK_THRESHOLD = 3;
 export const IMAGE_PLACEHOLDER_URL = '/placeholder.svg';
 
 export const INSTAGRAM_HANDLE = 'babystep.lt';

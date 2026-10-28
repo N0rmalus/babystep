@@ -1,6 +1,6 @@
 'use client';
 
-import { PreviewModal } from '@/components/preview-modal';
+import { QuickView } from '@/components/quick-view';
 import useMounted from '@/hooks/use-mounted';
 
 export const ModalProvider = () => {
@@ -10,5 +10,5 @@ export const ModalProvider = () => {
     return null;
   }
 
-  return <PreviewModal />;
+  return <QuickView />;
 };

@@ -6,15 +6,17 @@ import { BadgePercent } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import type { Product } from '@/actions/types';
+import type { CartLine } from '@/hooks/use-cart';
 
 type Props = {
-  productIds: string[];
+  lines: CartLine[];
+  itemCount: number;
   products: Product[];
   subtotal: number;
   shippingPrice: number;
 };
 
-export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }: Props) => {
+export const PriceContainer = ({ lines, itemCount, products, subtotal, shippingPrice }: Props) => {
   const [couponCode, setCouponCode] = useState('');
   const [isCouponApplied, setIsCouponApplied] = useState(false);
 
@@ -44,12 +46,16 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
       <div className="border-line space-y-3">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4 text-sm">
-            <p className="text-ink-muted">Prekės ({productIds.length})</p>
+            <p className="text-ink-muted">Prekės ({itemCount})</p>
             <div className="text-ink font-bold tabular-nums">{toCurrency(subtotal)}</div>
           </div>
           <div className="border-tumbleweed-500 ml-4 border-l border-dotted">
             {products.map((product) => (
-              <PriceRow key={product.id} product={product} />
+              <PriceRow
+                key={product.id}
+                product={product}
+                quantity={lines.find((line) => line.productId === product.id)?.quantity ?? 1}
+              />
             ))}
           </div>
         </div>
@@ -110,14 +116,17 @@ export const PriceContainer = ({ productIds, products, subtotal, shippingPrice }
   );
 };
 
-const PriceRow = ({ product }: { product: Product }) => {
+const PriceRow = ({ product, quantity }: { product: Product; quantity: number }) => {
   const pricing = getProductPricing(product);
 
   return (
     <div className="text-ink-muted flex min-w-0 flex-row items-center justify-between gap-3 pl-2 text-xs">
       <span className="min-w-0 wrap-break-word sm:truncate">{product.name}</span>
       <div className="text-ink-muted text-right text-sm sm:shrink-0">
-        <span>{toCurrency(pricing.effectivePrice)}</span>
+        <span className="tabular-nums">
+          {quantity > 1 && `${quantity} × `}
+          {toCurrency(pricing.effectivePrice)}
+        </span>
       </div>
     </div>
   );

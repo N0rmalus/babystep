@@ -6,6 +6,7 @@ import { ArrowRight, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { Product } from '@/actions/types';
+import type { CartLine } from '@/hooks/use-cart';
 import Button from '@/components/ui/button';
 import useCart from '@/hooks/use-cart';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
@@ -15,16 +16,25 @@ import { cn } from '@/lib/utils';
 import { CONTACT_EMAIL } from '@/lib/consts';
 
 type Props = {
-  productIds: string[];
+  lines: CartLine[];
   products: Product[];
   cartSummary: CartSummary;
   className?: string;
 };
 
-export const Summary = ({ productIds, products, cartSummary, className }: Props) => {
+export const Summary = ({ lines, products, cartSummary, className }: Props) => {
   const searchParams = useSearchParams();
   const removeAll = useCart((state) => state.removeAll);
-  const { hasOutOfStockProducts, isCheckoutDisabled, isCheckingOut, onCheckout, shippingPrice, subtotal } = cartSummary;
+  const {
+    hasOutOfStockProducts,
+    hasInsufficientStock,
+    isCheckoutDisabled,
+    isCheckingOut,
+    itemCount,
+    onCheckout,
+    shippingPrice,
+    subtotal,
+  } = cartSummary;
 
   useEffect(() => {
     if (searchParams.get('success')) {
@@ -42,11 +52,23 @@ export const Summary = ({ productIds, products, cartSummary, className }: Props)
       <PaperWrapper>
         <h2 className="text-ink text-lg font-semibold">Užsakymo santrauka</h2>
 
-        <PriceContainer productIds={productIds} products={products} subtotal={subtotal} shippingPrice={shippingPrice} />
+        <PriceContainer
+          lines={lines}
+          itemCount={itemCount}
+          products={products}
+          subtotal={subtotal}
+          shippingPrice={shippingPrice}
+        />
 
         {hasOutOfStockProducts && (
           <div className="text-danger flex pt-3 text-sm">
             <p>Kai kurių prekių nebeliko, pašalink prieš tęsiant apmokėjimą.</p>
+          </div>
+        )}
+
+        {hasInsufficientStock && (
+          <div className="text-danger flex pt-3 text-sm">
+            <p>Kai kurių prekių liko mažiau, nei pasirinkai. Sumažink kiekį prieš tęsiant apmokėjimą.</p>
           </div>
         )}
 
