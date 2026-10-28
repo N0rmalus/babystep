@@ -1,18 +1,27 @@
 'use client';
-import { Fragment, ReactNode, useEffect, useRef } from 'react';
 
-import { Dialog, Transition } from '@headlessui/react';
-import IconButton from '@/components/ui/icon-button';
+import { ReactNode, useEffect, useRef } from 'react';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { X } from 'lucide-react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-interface Props {
+import IconButton from '@/components/ui/icon-button';
+import { cn } from '@/lib/utils';
+
+type Props = {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
-}
+  size?: 'md' | 'lg';
+  closeLabel?: string;
+};
 
-export const Modal = ({ open, onClose, children }: Props) => {
+const sizeClasses = {
+  md: 'sm:max-w-2xl',
+  lg: 'sm:max-w-5xl',
+} as const;
+
+export const Modal = ({ open, onClose, children, size = 'lg', closeLabel = 'Uždaryti' }: Props) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const routeKey = `${pathname}?${searchParams.toString()}`;
@@ -29,47 +38,29 @@ export const Modal = ({ open, onClose, children }: Props) => {
   }, [open, onClose, routeKey]);
 
   return (
-    <Transition show={open} appear as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-200"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="bg-ink/55 fixed inset-0 backdrop-blur-xs" />
-        </Transition.Child>
+    <Dialog open={open} onClose={onClose} className="relative z-50">
+      <DialogBackdrop
+        transition
+        className="bg-ink/40 fixed inset-0 transition duration-200 ease-out data-closed:opacity-0"
+      />
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-3 text-center sm:items-center sm:p-6">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-white text-left align-middle shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)]">
-                <div className="from-muted-soft pointer-events-none absolute inset-x-0 top-0 h-20 bg-linear-to-b to-transparent" />
-                <div className="absolute top-4 right-4 z-20">
-                  <IconButton
-                    onClick={onClose}
-                    variant="primary"
-                    icon={<X size={16} className="text-ink-soft" />}
-                    label="Uždaryti peržiūrą"
-                  />
-                </div>
-                <div className="relative max-h-[85vh] overflow-y-auto px-8 pt-16 pb-8">{children}</div>
-              </Dialog.Panel>
-            </Transition.Child>
+      <div className="fixed inset-0 flex items-end justify-center sm:items-center sm:p-6">
+        <DialogPanel
+          transition
+          className={cn(
+            'border-line relative flex max-h-[90dvh] w-full flex-col overflow-hidden rounded-t-3xl border-t bg-white shadow-xl transition duration-200 ease-out data-closed:translate-y-6 data-closed:opacity-0 sm:max-h-full sm:rounded-3xl sm:border sm:data-closed:translate-y-0 sm:data-closed:scale-95',
+            sizeClasses[size],
+          )}
+        >
+          <div className="flex shrink-0 justify-center pt-2.5 sm:hidden" aria-hidden="true">
+            <span className="bg-line-strong h-1 w-10 rounded-full" />
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+          <div className="absolute top-4 right-4 z-10 sm:top-5 sm:right-5">
+            <IconButton onClick={onClose} icon={<X size={18} />} label={closeLabel} />
+          </div>
+          <div className="overflow-y-auto p-4 pt-3 sm:p-7">{children}</div>
+        </DialogPanel>
+      </div>
+    </Dialog>
   );
 };

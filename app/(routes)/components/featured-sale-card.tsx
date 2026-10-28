@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const FeaturedSaleCard = ({ product, summary }: Props) => {
-  const isInCart = useCart((state) => state.items.includes(product.id));
+  const isInCart = useCart((state) => state.items.some((item) => item.productId === product.id));
   const addToCart = useCart((state) => state.addItem);
   const isInWishlist = useWishlist((state) => state.items.includes(product.id));
   const addToWishlist = useWishlist((state) => state.addItem);
@@ -31,7 +31,7 @@ export const FeaturedSaleCard = ({ product, summary }: Props) => {
   const isInStock = product.amountInStock > 0;
 
   const handleAddToCart = () => {
-    addToCart(product.id);
+    addToCart({ productId: product.id, maxQuantity: product.amountInStock });
   };
 
   const handleWishlistToggle = () => {

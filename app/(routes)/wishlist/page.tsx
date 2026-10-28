@@ -23,7 +23,7 @@ const WishlistPage = () => {
   const setItems = useWishlist((state) => state.setItems);
   const removeAll = useWishlist((state) => state.removeAll);
   const cartItems = useCart((state) => state.items);
-  const setCartItems = useCart((state) => state.setItems);
+  const addCartItems = useCart((state) => state.addItems);
   const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);
 
   const onFocusRefresh = useCallback(() => {
@@ -81,14 +81,16 @@ const WishlistPage = () => {
   };
 
   const inStockProducts = products.filter((product) => product.amountInStock > 0);
-  const productsToAddToCart = inStockProducts.filter((product) => !cartItems.includes(product.id));
+  const productsToAddToCart = inStockProducts.filter(
+    (product) => !cartItems.some((item) => item.productId === product.id),
+  );
 
   const onAddAllToCart = () => {
     if (productsToAddToCart.length === 0) {
       return;
     }
 
-    setCartItems([...cartItems, ...productsToAddToCart.map((product) => product.id)]);
+    addCartItems(productsToAddToCart.map((product) => product.id));
     toast.success('Prekės pridėtos į krepšelį.');
   };
 

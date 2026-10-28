@@ -5,7 +5,7 @@ import { Expand, Heart, ShoppingCart, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Product } from '@/actions/types';
 import IconButton from '@/components/ui/icon-button';
-import usePreviewModal from '@/hooks/use-preview-modal';
+import useQuickView from '@/hooks/use-quick-view';
 import useCart from '@/hooks/use-cart';
 import useWishlist from '@/hooks/use-wishlist';
 import Button from '@/components/ui/button';
@@ -20,22 +20,22 @@ type Props = {
 };
 
 export const WishlistItem = ({ data }: Props) => {
-  const cart = useCart();
+  const isInCart = useCart((state) => state.items.some((item) => item.productId === data.id));
+  const addToCart = useCart((state) => state.addItem);
   const wishlist = useWishlist();
-  const previewModal = usePreviewModal();
+  const openQuickView = useQuickView((state) => state.onOpen);
   const router = useRouter();
 
   const isInStock = data.amountInStock > 0;
-  const isInCart = cart.items.some((item) => item === data.id);
   const imageUrl = getImageUrl(data.images.at(0)?.url);
   const pricing = getProductPricing(data);
 
   const onPreview = () => {
-    previewModal.onOpen(data);
+    openQuickView(data);
   };
 
   const onAddToCart = () => {
-    cart.addItem(data.id);
+    addToCart({ productId: data.id, maxQuantity: data.amountInStock });
   };
 
   const onRemoveFromWishlist = () => {

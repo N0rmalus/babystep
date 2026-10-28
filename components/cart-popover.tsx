@@ -25,6 +25,7 @@ import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
 import { CartCountBadge } from '@/components/navbar/cart-count-badge';
 import Button from '@/components/ui/button';
+import { QuantitySelector } from '@/components/ui/quantity-selector';
 import useCart from '@/hooks/use-cart';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useResolvedProducts from '@/hooks/use-resolved-products';
@@ -53,26 +54,30 @@ export const CartPopover = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const isInCartPage = usePathname().includes('/cart');
-  const itemIds = useCart((state) => state.items);
+  const lines = useCart((state) => state.items);
   const removeItem = useCart((state) => state.removeItem);
+  const setQuantity = useCart((state) => state.setQuantity);
+  const productIdsKey = lines.map((line) => line.productId).join(',');
 
   const { products, failedProductIds, isLoading } = useResolvedProducts(
     useMemo(() => {
-      return isOpen ? itemIds : [];
-    }, [isOpen, itemIds]),
+      return isOpen && productIdsKey ? productIdsKey.split(',') : [];
+    }, [isOpen, productIdsKey]),
   );
 
   const {
+    itemCount,
     subtotal,
     remainingForFreeShipping,
     freeShippingProgress,
     hasFreeShipping,
     hasOutOfStockProducts,
+    hasInsufficientStock,
     isCheckoutDisabled,
     isCheckingOut,
     onCheckout,
   } = useCartSummary({
-    productIds: itemIds,
+    lines,
     products,
     isLoading,
     failedProductIds,
@@ -159,7 +164,7 @@ export const CartPopover = () => {
                 <div className="flex items-center justify-between gap-4 px-5 py-4">
                   <div>
                     <h2 className="text-ink text-xl font-semibold">Tavo krepšelis</h2>
-                    <p className="text-ink-muted mt-1 text-sm">{getCartCountLabel(itemIds.length)}</p>
+                    <p className="text-ink-muted mt-1 text-sm">{getCartCountLabel(itemCount)}</p>
                   </div>
 
                   <button
@@ -175,7 +180,7 @@ export const CartPopover = () => {
                   </button>
                 </div>
 
-                {itemIds.length > 0 && (
+                {itemCount > 0 && (
                   <div className="bg-tumbleweed-50/70 border-line border-y px-5 py-3.5">
                     <div className="text-ink-soft flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm">
                       <Truck className="text-success" size={16} aria-hidden="true" />
@@ -194,13 +199,13 @@ export const CartPopover = () => {
                 )}
 
                 <div className="max-h-[min(44vh,21rem)] overflow-y-auto">
-                  {itemIds.length === 0 && (
+                  {itemCount === 0 && (
                     <div className="px-5 py-9 text-center">
                       <p className="text-ink-muted mt-2 text-sm">Krepšelis tuščias</p>
                     </div>
                   )}
 
-                  {itemIds.length > 0 && isLoading && (
+                  {itemCount > 0 && isLoading && (
                     <div className="space-y-3 px-5 py-4">
                       {[0, 1].map((item) => (
                         <div key={item} className="flex animate-pulse items-center gap-4">
@@ -224,6 +229,7 @@ export const CartPopover = () => {
                     products.map((product, index) => {
                       const isOutOfStock = product.amountInStock <= 0;
                       const pricing = getProductPricing(product);
+                      const quantity = lines.find((line) => line.productId === product.id)?.quantity ?? 1;
 
                       return (
                         <div
@@ -266,20 +272,38 @@ export const CartPopover = () => {
                                   isOutOfStock ? 'text-danger font-semibold' : 'text-ink-muted',
                                 )}
                               >
-                                {isOutOfStock ? 'Išparduota' : `1 × ${toCurrency(pricing.effectivePrice)}`}
+                                {isOutOfStock ? 'Išparduota' : `${quantity} × ${toCurrency(pricing.effectivePrice)}`}
                               </span>
                             </span>
                           </button>
 
-                          <div className="flex shrink-0 flex-col items-end gap-4">
-                            {pricing.isOnSale && (
-                              <span className="text-ink-faint text-xs tabular-nums line-through">
-                                {toCurrency(pricing.regularPrice)}
+                          <div className="flex shrink-0 flex-col items-end gap-2">
+                            <span className="flex items-baseline gap-1.5">
+                              {pricing.isOnSale && (
+                                <span className="text-ink-faint text-xs tabular-nums line-through">
+                                  <span className="sr-only">Buvusi kaina </span>
+                                  {toCurrency(pricing.regularPrice * quantity)}
+                                </span>
+                              )}
+                              <span className="text-ink text-base font-bold tabular-nums">
+                                {toCurrency(pricing.effectivePrice * quantity)}
                               </span>
-                            )}
-                            <span className="text-ink text-base font-bold tabular-nums">
-                              {toCurrency(pricing.effectivePrice)}
                             </span>
+                            {!isOutOfStock && (
+                              <QuantitySelector
+                                value={quantity}
+                                max={Math.max(product.amountInStock, quantity)}
+                                onChange={(value) =>
+                                  setQuantity({
+                                    productId: product.id,
+                                    quantity: value,
+                                    maxQuantity: product.amountInStock,
+                                  })
+                                }
+                                size="sm"
+                                label={`${product.name} kiekis`}
+                              />
+                            )}
                             <button
                               type="button"
                               onClick={() => removeItem(product.id)}
@@ -303,6 +327,12 @@ export const CartPopover = () => {
                   {hasOutOfStockProducts && (
                     <div className="text-danger flex pb-3 text-sm">
                       <p>Kai kurių prekių nebeliko, pašalink prieš tęsiant apmokėjimą.</p>
+                    </div>
+                  )}
+
+                  {hasInsufficientStock && (
+                    <div className="text-danger flex pb-3 text-sm">
+                      <p>Kai kurių prekių liko mažiau, nei pasirinkai. Sumažink kiekį krepšelyje.</p>
                     </div>
                   )}
 

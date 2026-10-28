@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 
 import { getProductEffectivePrice } from '@/business/product-pricing';
 import type { Product } from '@/actions/types';
+import { type CartLine, getCartItemCount, getCheckoutProductIds } from '@/hooks/use-cart';
 import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_PRICE } from '@/lib/consts';
 
 type CheckoutErrorPayload = {
@@ -18,18 +19,26 @@ type CheckoutErrorPayload = {
 };
 
 type Props = {
-  productIds: string[];
+  lines: CartLine[];
   products: Product[];
   isLoading?: boolean;
   failedProductIds?: string[];
 };
 
-export const useCartSummary = ({ productIds, products, isLoading = false, failedProductIds = [] }: Props) => {
+export const useCartSummary = ({ lines, products, isLoading = false, failedProductIds = [] }: Props) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
+  const quantityByProductId = useMemo(() => {
+    return new Map(lines.map((line) => [line.productId, line.quantity]));
+  }, [lines]);
+
   const subtotal = useMemo(() => {
-    return products.reduce((total, product) => total + getProductEffectivePrice(product), 0);
-  }, [products]);
+    return products.reduce((total, product) => {
+      return total + getProductEffectivePrice(product) * (quantityByProductId.get(product.id) ?? 0);
+    }, 0);
+  }, [products, quantityByProductId]);
+
+  const itemCount = getCartItemCount(lines);
 
   const productNameById = useMemo(() => {
     return new Map(products.map((product) => [product.id, product.name]));
@@ -38,15 +47,19 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
   const remainingForFreeShipping = Math.max(FREE_SHIPPING_THRESHOLD - subtotal, 0);
   const freeShippingProgress =
     FREE_SHIPPING_THRESHOLD > 0 ? Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100) : 100;
-  const hasFreeShipping = productIds.length > 0 && remainingForFreeShipping === 0;
-  const shippingPrice = productIds.length === 0 || hasFreeShipping ? 0 : STANDARD_SHIPPING_PRICE;
+  const hasFreeShipping = itemCount > 0 && remainingForFreeShipping === 0;
+  const shippingPrice = itemCount === 0 || hasFreeShipping ? 0 : STANDARD_SHIPPING_PRICE;
   const hasOutOfStockProducts = products.some((product) => product.amountInStock <= 0);
+  const hasInsufficientStock = products.some((product) => {
+    return product.amountInStock > 0 && (quantityByProductId.get(product.id) ?? 0) > product.amountInStock;
+  });
   const isCheckoutDisabled =
-    productIds.length === 0 ||
+    itemCount === 0 ||
     isLoading ||
     failedProductIds.length > 0 ||
     products.length === 0 ||
     hasOutOfStockProducts ||
+    hasInsufficientStock ||
     isCheckingOut;
 
   const onCheckout = async () => {
@@ -56,7 +69,7 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productIds }),
+        body: JSON.stringify({ productIds: getCheckoutProductIds(lines) }),
       });
       const data: unknown = await response.json().catch(() => null);
 
@@ -102,12 +115,14 @@ export const useCartSummary = ({ productIds, products, isLoading = false, failed
   };
 
   return {
+    itemCount,
     subtotal,
     remainingForFreeShipping,
     freeShippingProgress,
     hasFreeShipping,
     shippingPrice,
     hasOutOfStockProducts,
+    hasInsufficientStock,
     isCheckoutDisabled,
     isCheckingOut,
     onCheckout,

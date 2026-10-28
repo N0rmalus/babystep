@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { PageContainer } from '@/components/ui/page-container';
 import useCart from '@/hooks/use-cart';
 import { useCartSummary } from '@/hooks/use-cart-summary';
@@ -17,12 +17,15 @@ import { CartEmptyState } from '@/app/(routes)/cart/components/cart-empty-state'
 
 const CartPage = () => {
   const isMounted = useMounted();
-  const itemIds = useCart((state) => state.items);
-  const setItems = useCart((state) => state.setItems);
+  const lines = useCart((state) => state.items);
+  const removeItems = useCart((state) => state.removeItems);
+  const productIdsKey = lines.map((line) => line.productId).join(',');
+  const itemIds = useMemo(() => (productIdsKey ? productIdsKey.split(',') : []), [productIdsKey]);
 
   const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);
+  const quantityByProductId = new Map(lines.map((line) => [line.productId, line.quantity]));
   const cartSummary = useCartSummary({
-    productIds: itemIds,
+    lines,
     products,
     isLoading,
     failedProductIds,
@@ -42,17 +45,12 @@ const CartPage = () => {
       return;
     }
 
-    const missingProductIdSet = new Set(missingProductIds);
-    const nextItemIds = itemIds.filter((itemId) => !missingProductIdSet.has(itemId));
-    const didChange =
-      nextItemIds.length !== itemIds.length || nextItemIds.some((itemId, index) => itemId !== itemIds[index]);
-
-    if (!didChange) {
+    if (!missingProductIds.some((productId) => itemIds.includes(productId))) {
       return;
     }
 
-    setItems(nextItemIds);
-  }, [itemIds, missingProductIds, setItems]);
+    removeItems(missingProductIds);
+  }, [itemIds, missingProductIds, removeItems]);
 
   if (!isMounted) {
     return null;
@@ -87,12 +85,12 @@ const CartPage = () => {
 
             <ul className="space-y-4">
               {products.map((product) => (
-                <CartItem key={product.id} data={product} />
+                <CartItem key={product.id} data={product} quantity={quantityByProductId.get(product.id) ?? 1} />
               ))}
             </ul>
           </div>
 
-          <Summary productIds={itemIds} products={products} cartSummary={cartSummary} />
+          <Summary lines={lines} products={products} cartSummary={cartSummary} />
         </div>
       )}
     </PageContainer>
