@@ -36,6 +36,7 @@ type DesktopNavItemProps = {
 };
 
 const NAV_LINK_CLASSES = 'text-base font-semibold transition-colors';
+const DROPDOWN_GAP = 8;
 
 export const MainNav = ({ categories, subcategoriesByCategory }: Props) => {
   const pathname = usePathname();
@@ -77,7 +78,7 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
     placement: 'bottom',
     strategy: 'fixed',
     whileElementsMounted: autoUpdate,
-    middleware: [offset(12), flip({ padding: 12 }), shift({ padding: 12 })],
+    middleware: [offset(DROPDOWN_GAP), flip({ padding: 12 }), shift({ padding: 12 })],
   });
 
   const hover = useHover(context, {
@@ -124,7 +125,7 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
         ref={setReference}
         href={`/category/${category.id}`}
         className={cn(
-          'hover:text-link inline-flex items-center gap-1',
+          'hover:text-link inline-flex h-full items-center gap-1',
           isActive || isOpen ? 'text-link' : 'text-ink-soft',
           NAV_LINK_CLASSES,
         )}
@@ -142,7 +143,7 @@ const DesktopNavItem = ({ category, isActive, subcategories }: DesktopNavItemPro
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
             <div ref={setFloating} style={floatingStyles} className="z-50 w-56 outline-none" {...getFloatingProps()}>
-              <div style={transitionStyles} className="border-line rounded-xl border bg-white/95 p-1 shadow-xl">
+              <div style={transitionStyles} className="border-line rounded-xl border bg-white p-1 shadow-xl">
                 {subcategories.map((subcategory) => (
                   <Link
                     key={subcategory.id}

@@ -17,7 +17,7 @@ export const BillboardCarouselControls = () => {
   };
 
   return (
-    <div className="flex items-center pt-1 lg:pt-3.5">
+    <div className="flex items-center justify-center pt-1 lg:justify-start lg:pt-3.5">
       <div className="flex items-center gap-0.5">
         {Array.from({ length: MOCK_SLIDE_COUNT }, (_, index) => (
           <button
