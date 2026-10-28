@@ -7,7 +7,7 @@ Ranked by impact on a shop taking real orders. `npm run lint` and `npm run types
 Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API keeps the `{ productIds }` in, `{ url }` out contract, so the items below work with either provider.
 
 - [ ] **Add delivery method selection and make shipping prices agree.** The API currently charges no shipping at all. The cart shows a flat 4,99 € (`STANDARD_SHIPPING_PRICE` in `lib/consts.ts`), and the delivery page promises 3,49 € (parcel locker) and 6,49 € (courier). Once the API charges shipping, let the customer pick a delivery method, send it with the checkout request, and show the same prices in the cart and on the delivery page. Blocked on the admin side.
-- [ ] **Allow buying more than one of a product.** `hooks/use-cart.ts` stores each ID once and turns away a second add. The API already counts repeated IDs in `{ productIds }` as quantity and checks stock per quantity, so this is a storefront-only change: store a quantity per ID (with a store `migrate`) and repeat the ID that many times at checkout.
+- [ ] **Allow buying more than one of a product.** (If "Product variants" is close, do this together with its cart change, so the cart format changes once.) `hooks/use-cart.ts` stores each ID once and turns away a second add. The API already counts repeated IDs in `{ productIds }` as quantity and checks stock per quantity, so this is a storefront-only change: store a quantity per ID (with a store `migrate`) and repeat the ID that many times at checkout.
 - [ ] **Add per-route `error.tsx` boundaries.** Right now any API error falls through to `app/global-error.tsx`, which shows Next's plain error screen without the layout. On the home page, any one of its five parallel fetches failing takes the whole page down.
 - [ ] **Add a proper order confirmation.** `cart/components/summary.tsx` empties the cart and says payment succeeded whenever the URL has `?success`. There is no confirmation page or order number. `?canceled` shows "Kažkas nepavyko", which reads like an error when the customer simply cancelled. Build a confirmation page keyed on our own order ID (which the API will put in the return URL) that asks the API for the order's status, so it doesn't depend on the provider.
 - [x] **Check the checkout reply before redirecting.** `hooks/use-cart-summary.ts` does `window.location.href = response.data.url` without checking that `url` exists, so a malformed reply sends the customer to `/cart/undefined`.
@@ -65,3 +65,15 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 - [ ] **Account icon in the header and the sign-in card in the mobile menu.** Non-functional until customer accounts exist.
 - [ ] **Header search.** The search field accepts text but submitting does nothing; there is no store-wide search page yet.
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
+
+## Product variants
+
+Storefront side of "Product variants" in the admin's TODO. Do it after the admin side.
+
+- [ ] **Variant selection** on the product page and in the quick-view modal: size as pill chips, color as swatches, unavailable options crossed out. Price, stock and photos follow the chosen variant.
+- [ ] **Cart lines** become `{ productId, variantId?, quantity }`, with a store `migrate` from today's format. Show the chosen options in the cart and send line items to checkout.
+- [ ] **Product cards** show "from" pricing when variants differ in price, and the quick view or product page handles choosing the variant before adding to cart.
+
+## Product specifications
+
+- [ ] **"Papildoma informacija"** on the product page: a specs table (Matmenys, Medžiaga, Sudėtis, Priežiūra) next to the description, as tabs or accordions, following the product page design. Values change with the chosen variant where they differ.
