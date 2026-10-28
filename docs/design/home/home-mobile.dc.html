@@ -38,7 +38,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c76e
 <div style="display: flex;">
 <x-import component-from-global-scope="Babystep.IconButton" label="Meniu" icon="{{icMenu}}" on-click="{{openMenu}}"></x-import>
 </div>
-<a href="#" aria-label="Babystep pradžia" style="font-family: var(--font-accent); font-weight: 700; font-size: 24px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<a href="#" aria-label="Babystep pradžia" style="display: flex; align-items: center; gap: 6px; color: var(--color-ink);"><img src="/_blob/eba72f499df045e7ead825c1efde6e2d" alt="" style="height: 26px; width: auto; display: block;"><span style="font-family: var(--font-accent); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;">Babystep</span></a>
 <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
 <x-import component-from-global-scope="Babystep.IconButton" href="#krepselis" label="Krepšelis, 2 prekės" icon="{{icCart}}" badge="{{cartCount}}"></x-import>
 </div>
@@ -54,18 +54,20 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c76e
 <div role="dialog" aria-modal="true" aria-label="Meniu" style="position: fixed; inset: 0; z-index: 50; background: var(--color-canvas); display: flex; flex-direction: column; overflow-y: auto; animation: menuIn 220ms ease;">
 <div style="height: 56px; flex: 0 0 auto; padding: 0 16px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--color-line);">
 <div style="display: flex;"><x-import component-from-global-scope="Babystep.IconButton" label="Uždaryti meniu" icon="{{icClose}}" on-click="{{closeMenu}}"></x-import></div>
-<a href="#" style="font-family: var(--font-accent); font-weight: 700; font-size: 24px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<a href="#" aria-label="Babystep pradžia" style="display: flex; align-items: center; gap: 6px; color: var(--color-ink);"><img src="/_blob/eba72f499df045e7ead825c1efde6e2d" alt="" style="height: 26px; width: auto; display: block;"><span style="font-family: var(--font-accent); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;">Babystep</span></a>
 <div style="display: flex; justify-content: flex-end;"><x-import component-from-global-scope="Babystep.IconButton" href="#krepselis" label="Krepšelis, 2 prekės" icon="{{icCart}}" badge="{{cartCount}}"></x-import></div>
 </div>
 <nav aria-label="Meniu" style="padding: 8px 20px 32px; display: flex; flex-direction: column;">
 <sc-for list="{{menuGroups}}" as="g" hint-placeholder-count="3">
 <div style="padding: 10px 0 8px;">
 <a href="#kategorija" class="mrow" style="display: flex; align-items: center; justify-content: space-between; height: 44px; font-weight: 600; font-size: 20px;"><span>{{g.name}}</span><span style="color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.ChevronRight" size="{{n18}}"></x-import></span></a>
+<sc-if value="{{g.hasSubs}}" hint-placeholder-val="{{true}}">
 <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px;">
 <sc-for list="{{g.subs}}" as="s" hint-placeholder-count="3">
 <a href="#subkategorija" class="chip" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--color-tumbleweed-200); background: #ffffff; color: var(--color-ink-soft); font-size: 14px;">{{s}}</a>
 </sc-for>
 </div>
+</sc-if>
 </div>
 </sc-for>
 <a href="#akcijos" style="display: flex; align-items: center; justify-content: space-between; height: 56px; margin-top: 4px; color: var(--color-sale-strong); font-weight: 600; font-size: 20px;"><span>Akcijos</span><x-import component-from-global-scope="Babystep.Badge" color="sale" label="Iki −20 %"></x-import></a>
@@ -304,9 +306,11 @@ class Component extends DCLogic {
       icClose: ic('X', 18),
       signedIn: this.props.signedIn ?? true, guest: !(this.props.signedIn ?? true),
       menuGroups: [
-        { name: 'Miegui', subs: ['Pledai', 'Lizdeliai', 'Apsaugėlės'] },
-        { name: 'Priežiūrai', subs: ['Rankšluostukai', 'Merliukai', 'Žinduko laikikliai', 'Pončai'] },
-        { name: 'Aksesuarai', subs: ['Tapukai / kojinytės'] }
+        { name: 'Miegui', hasSubs: true, subs: ['Pledai', 'Lizdeliai', 'Apsaugėlės'] },
+        { name: 'Priežiūrai', hasSubs: true, subs: ['Rankšluostukai', 'Merliukai', 'Žinduko laikikliai', 'Pončai'] },
+        { name: 'Aksesuarai', hasSubs: true, subs: ['Tapukai / kojinytės'] },
+        { name: 'Žaislai', hasSubs: false, subs: [] },
+        { name: 'Dovanų rinkiniai', hasSubs: false, subs: [] }
       ],
       multi: count > 1, count, pos: i + 1,
       tx: (-i * 100) + '%',

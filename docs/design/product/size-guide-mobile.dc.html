@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · Dydžių gidas C · mobile</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f8f4ee}
+a{color:#9a4734;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid #c76e48;outline-offset:3px}
+.sgrow{cursor:pointer}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans);">
+
+<div aria-hidden="true" style="padding: 72px 16px 0; display: flex; flex-direction: column; gap: 16px;">
+<div style="aspect-ratio: 1 / 1; border-radius: 22px; overflow: hidden; background: var(--color-muted);"><img src="/_blob/b737f3d4d317b0dbc227b0267164c715" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;"></div>
+<span style="font-family: var(--font-accent); font-weight: 700; font-size: 30px;">Muslino miegmaišis</span>
+</div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(43, 36, 33, 0.38);"></div>
+
+<div role="dialog" aria-modal="true" aria-labelledby="sg-m" style="position: absolute; left: 0; right: 0; bottom: 0; max-height: 760px; background: #ffffff; border-radius: 28px 28px 0 0; border-top: 1px solid var(--color-line); display: flex; flex-direction: column;">
+<div style="flex: 0 0 auto; display: flex; justify-content: center; padding-top: 10px;"><span aria-hidden="true" style="width: 40px; height: 4px; border-radius: 999px; background: var(--color-line-strong);"></span></div>
+<div style="flex: 1 1 auto; overflow-y: auto; padding: 14px 16px 24px; display: flex; flex-direction: column; gap: 18px;">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+<h2 id="sg-m" style="margin: 6px 0 0; font-family: var(--font-accent); font-weight: 700; font-size: 24px; line-height: 1.2;">Kaip išsirinkti dydį</h2>
+</div>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--color-ink-soft);">Rinkis pagal mažylio ūgį, ne tik amžių. Jei abejoji tarp dviejų dydžių, imk didesnį, užaugs.</p>
+
+<div role="table" aria-label="Dydžių lentelė" style="border: 1px solid var(--color-line); border-radius: 18px; overflow: hidden; font-size: 14px; font-variant-numeric: tabular-nums;">
+<div role="row" style="display: grid; grid-template-columns: 1.35fr 1fr 1fr 0.8fr; background: var(--color-muted-soft); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);"><span role="columnheader" style="padding: 10px 12px;">Dydis</span><span role="columnheader" style="padding: 10px 12px;">Ūgis</span><span role="columnheader" style="padding: 10px 12px;">Svoris</span><span role="columnheader" style="padding: 10px 12px;">Ilgis</span></div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<div role="row" style="display: grid; grid-template-columns: 1.35fr 1fr 1fr 0.8fr; align-items: center; min-height: 48px; border-top: 1px solid var(--color-line); background: #ffffff;"><span role="rowheader" style="padding: 0 12px; font-weight: 700; color: var(--color-ink); white-space: nowrap;">{{r.label}}</span><span role="cell" style="padding: 0 12px; color: var(--color-ink-soft); white-space: nowrap;">{{r.height}}</span><span role="cell" style="padding: 0 12px; color: var(--color-ink-soft); white-space: nowrap;">{{r.weight}}</span><span role="cell" style="padding: 0 12px; color: var(--color-ink-soft); white-space: nowrap;">{{r.len}}</span></div>
+</sc-for>
+</div>
+
+<p style="margin: 0; padding-top: 14px; border-top: 1px solid var(--color-line); font-size: 15px; color: var(--color-ink-soft);">Vis dar abejoji? <a href="#kontaktai" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">Parašyk mums</a>, mielai padėsim.</p>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, B = window.Babystep || {}, I = B.Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 16 }) : null;
+    const st = this.state || {};
+    const sel = st.s || 's0';
+    const GUIDE = [
+      { id: 's0', label: '0–6 mėn.', height: '[56–68] cm', weight: '[4–8] kg', len: '70 cm' },
+      { id: 's1', label: '6–12 mėn.', height: '[68–80] cm', weight: '[8–10] kg', len: '80 cm' },
+      { id: 's2', label: '12–18 mėn.', height: '[80–86] cm', weight: '[10–12] kg', len: '90 cm' },
+      { id: 's3', label: '18–36 mėn.', height: '[86–98] cm', weight: '[12–15] kg', len: '100 cm' }
+    ];
+    return {
+      n14: 14, noop: () => {}, icClose: ic('X', 18),
+      rows: GUIDE.map((g) => ({ ...g, sel: g.id === sel, pressed: g.id === sel ? 'true' : 'false',
+        aria: 'Pasirinkti ' + g.label + ': ūgis ' + g.height + ', svoris ' + g.weight + ', ilgis ' + g.len,
+        bg: g.id === sel ? 'var(--color-tumbleweed-50)' : '#ffffff',
+        bd: g.id === sel ? '1px solid var(--color-tumbleweed-300)' : '1px solid var(--color-line)',
+        pick: () => this.setState({ s: g.id }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -64,6 +64,10 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 - [ ] **Newsletter form.** Accepts an email but sends nothing. Connect it (see "Legal and trust").
 - [ ] **Account icon in the header and the sign-in card in the mobile menu.** Non-functional until customer accounts exist.
 - [ ] **Header search.** The search field accepts text but submitting does nothing; there is no store-wide search page yet.
+- [ ] **Product page: size chips and color swatches.** Mock until "Product variants".
+- [ ] **Product page: "Papildoma informacija".** Mock until "Product specifications".
+- [ ] **Product page: rating summary and reviews.** Mock until reviews exist ("Customer accounts").
+- [ ] **Size guide.** Mock values until variants and specifications exist.
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
 
 ## Product variants

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · Pirkimo blokas C · būsenos</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f8f4ee}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; box-sizing: border-box; padding: 56px 64px; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; align-items: start;">
+<sc-for list="{{boxes}}" as="bx" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 22px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted); padding-bottom: 12px; border-bottom: 1px solid var(--color-line);">{{bx.title}}</span>
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<h2 style="margin: 0; font-family: var(--font-accent); font-weight: 700; font-size: 30px; line-height: 1.1;">Muslino miegmaišis</h2>
+<div style="display: flex; align-items: center; gap: 10px;">
+<span style="font-size: 30px; line-height: 36px; font-weight: 700; color: {{bx.priceColor}}; font-variant-numeric: tabular-nums;">{{bx.price}}</span>
+<sc-if value="{{bx.onSale}}" hint-placeholder-val="{{false}}"><span style="font-size: 17px; color: var(--color-ink-faint); text-decoration: line-through; font-variant-numeric: tabular-nums;">{{bx.oldPrice}}</span><x-import component-from-global-scope="Babystep.Badge" color="sale" label="{{bx.pct}}"></x-import></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<span style="font-size: 16px; font-weight: 600;">Dydis <span style="font-weight: 400; color: var(--color-ink-muted);">· {{bx.sizeLabel}}</span></span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+<sc-for list="{{bx.sizeChips}}" as="ch" hint-placeholder-count="4">
+<span style="height: 44px; border-radius: 999px; font-size: 15px; font-weight: 600; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: {{ch.bg}}; color: {{ch.fg}}; border: {{ch.bd}}; text-decoration: {{ch.td}};">{{ch.label}}</span>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<span style="font-size: 16px; font-weight: 600;">Spalva <span style="font-weight: 400; color: var(--color-ink-muted);">· {{bx.colorLabel}}</span></span>
+<div style="display: flex; gap: 10px;">
+<sc-for list="{{bx.swatches}}" as="w" hint-placeholder-count="3">
+<span style="position: relative; width: 44px; height: 44px; border-radius: 999px; background: #ffffff; box-shadow: {{w.ring}}; display: flex; align-items: center; justify-content: center;"><span style="width: 34px; height: 34px; border-radius: 999px; background: {{w.hex}}; box-shadow: inset 0 0 0 1px rgba(43, 36, 33, 0.12); opacity: {{w.op}};"></span><sc-if value="{{w.out}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="position: absolute; left: 6px; right: 6px; top: 50%; height: 2px; background: var(--color-ink-muted); transform: rotate(-45deg);"></span></sc-if></span>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{bx.inStock}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<span style="height: 48px; box-sizing: border-box; display: flex; align-items: center; gap: 18px; border: 1px solid var(--color-line-strong); border-radius: 999px; padding: 0 18px; background: #ffffff; font-weight: 700;"><span style="color: var(--color-ink-muted);">−</span>1<span style="color: var(--color-ink-muted);">+</span></span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: var(--color-success);"><x-import component-from-global-scope="Babystep.Icons.Check" size="{{n16}}"></x-import>{{bx.stockText}}</span>
+</div>
+<div style="display: flex; gap: 10px;">
+<div style="flex: 1 1 auto; min-width: 0;"><x-import component-from-global-scope="Babystep.Button" size="lg" label="Į krepšelį" element-before="{{icCart}}" on-click="{{noop}}" full-width="{{yes}}"></x-import></div>
+<div style="flex: 0 0 auto;"><x-import component-from-global-scope="Babystep.Button" size="lg" variant="secondary" label="Į norus" element-before="{{icHeart}}" on-click="{{noop}}"></x-import></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{bx.out}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 15px; color: var(--color-ink-soft);"><span>Šio derinio kol kas neturime.</span></p>
+<div style="display: flex; gap: 10px;">
+<div style="flex: 1 1 auto; min-width: 0;"><x-import component-from-global-scope="Babystep.Button" size="lg" label="Išparduota" disabled="{{yes}}" on-click="{{noop}}" full-width="{{yes}}"></x-import></div>
+<div style="flex: 0 0 auto;"><x-import component-from-global-scope="Babystep.Button" size="lg" variant="secondary" label="Į norus" element-before="{{icHeart}}" on-click="{{noop}}"></x-import></div>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, B = window.Babystep || {}, I = B.Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 16 }) : null;
+    const SIZES = [{ id: 's0', label: '0–6 mėn.' }, { id: 's1', label: '6–12 mėn.' }, { id: 's2', label: '12–18 mėn.' }, { id: 's3', label: '18–36 mėn.' }];
+    const COLORS = [{ id: 'sage', label: 'Šalavijų', hex: '#b9c4ad' }, { id: 'oat', label: 'Avižų', hex: '#e8dcc8' }, { id: 'clay', label: 'Molio', hex: '#c9937a' }];
+    const PRICE = { s0: 39.99, s1: 42.99, s2: 44.99, s3: 46.99 }, SALE = { s2: 35.99 };
+    const STOCK = { sage: { s0: 12, s1: 6, s2: 3, s3: 0 }, oat: { s0: 2, s1: 8, s2: 5, s3: 4 }, clay: { s0: 0, s1: 0, s2: 0, s3: 0 } };
+    const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
+    const box = (title, c, s) => {
+      const price = PRICE[s], sale = SALE[s] || null, stock = STOCK[c][s];
+      const col = COLORS.find((x) => x.id === c), sz = SIZES.find((x) => x.id === s);
+      return {
+        title, price: eur(sale || price), oldPrice: eur(price), onSale: !!sale,
+        pct: sale ? '−' + Math.round((1 - sale / price) * 100) + '%' : '',
+        priceColor: sale ? 'var(--color-sale-strong)' : 'var(--color-ink)',
+        inStock: stock > 0, out: stock === 0,
+        stockText: stock > 3 ? 'Yra sandėlyje' : 'Liko ' + stock + ' vnt.',
+        sizeLabel: sz.label, colorLabel: col.label,
+        sizeChips: SIZES.map((x) => {
+          const sel = x.id === s, out = STOCK[c][x.id] === 0;
+          return { label: x.label,
+            bg: sel ? (out ? '#ffffff' : 'var(--color-ink)') : (out ? 'var(--color-muted-soft)' : '#ffffff'),
+            fg: sel ? (out ? 'var(--color-ink-muted)' : '#ffffff') : (out ? 'var(--color-ink-muted)' : 'var(--color-ink)'),
+            bd: sel ? '2px solid var(--color-ink)' : (out ? '1px dashed var(--color-line-strong)' : '1px solid var(--color-line-strong)'),
+            td: out ? 'line-through' : 'none' };
+        }),
+        swatches: COLORS.map((x) => {
+          const sel = x.id === c, out = STOCK[x.id][s] === 0;
+          return { hex: x.hex, out, ring: sel ? '0 0 0 2px var(--color-ink)' : '0 0 0 1px var(--color-line)', op: out ? '0.55' : '1' };
+        })
+      };
+    };
+    return {
+      n16: 16, yes: true, noop: () => {},
+      icCart: ic('ShoppingCart'), icHeart: ic('Heart'),
+      boxes: [box('Įprasta · 0–6 mėn.', 'sage', 's0'), box('Akcija · 12–18 mėn., liko nedaug', 'sage', 's2'), box('Išparduota · 18–36 mėn.', 'sage', 's3')]
+    };
+  }
+}
+</script>
+</body>
+</html>
