@@ -17,8 +17,8 @@ type Props = {
 };
 
 const sizeClasses = {
-  md: 'sm:max-w-2xl',
-  lg: 'sm:max-w-5xl',
+  md: 'max-w-2xl',
+  lg: 'max-w-5xl',
 } as const;
 
 export const Modal = ({ open, onClose, children, size = 'lg', closeLabel = 'Uždaryti' }: Props) => {
@@ -44,21 +44,18 @@ export const Modal = ({ open, onClose, children, size = 'lg', closeLabel = 'Užd
         className="bg-ink/40 fixed inset-0 transition duration-200 ease-out data-closed:opacity-0"
       />
 
-      <div className="fixed inset-0 flex items-end justify-center sm:items-center sm:p-6">
+      <div className="fixed inset-0 flex items-center justify-center p-6">
         <DialogPanel
           transition
           className={cn(
-            'border-line relative flex max-h-[90dvh] w-full flex-col overflow-hidden rounded-t-3xl border-t bg-white shadow-xl transition duration-200 ease-out data-closed:translate-y-6 data-closed:opacity-0 sm:max-h-full sm:rounded-3xl sm:border sm:data-closed:translate-y-0 sm:data-closed:scale-95',
+            'border-line relative flex max-h-full w-full flex-col overflow-hidden rounded-3xl border bg-white shadow-xl transition duration-200 ease-out data-closed:scale-95 data-closed:opacity-0',
             sizeClasses[size],
           )}
         >
-          <div className="flex shrink-0 justify-center pt-2.5 sm:hidden" aria-hidden="true">
-            <span className="bg-line-strong h-1 w-10 rounded-full" />
-          </div>
-          <div className="absolute top-4 right-4 z-10 sm:top-5 sm:right-5">
+          <div className="absolute top-5 right-5 z-10">
             <IconButton onClick={onClose} icon={<X size={18} />} label={closeLabel} />
           </div>
-          <div className="overflow-y-auto p-4 pt-3 sm:p-7">{children}</div>
+          <div className="overflow-y-auto p-7">{children}</div>
         </DialogPanel>
       </div>
     </Dialog>
