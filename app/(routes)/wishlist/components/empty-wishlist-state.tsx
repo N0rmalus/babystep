@@ -1,7 +1,4 @@
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
-
-import Button from '@/components/ui/button';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 
 export const EmptyWishlistState = () => {
@@ -9,7 +6,7 @@ export const EmptyWishlistState = () => {
     <PaperWrapper className="relative overflow-hidden border-0 bg-white/10 p-0 shadow-none">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(199,110,72,0.18)_1px,transparent_1.5px)] bg-size-[14px_14px] opacity-45" />
 
-      <div className="relative grid min-h-96 items-center gap-8 px-6 py-10 sm:px-10 lg:min-h-104 lg:grid-cols-[minmax(20rem,1fr)_minmax(0,0.85fr)] lg:px-14 lg:py-10">
+      <div className="relative grid min-h-96 items-center gap-8 px-6 sm:px-10 lg:min-h-104 lg:grid-cols-[minmax(20rem,1fr)_minmax(0,0.85fr)] lg:px-14">
         <div className="relative order-2 mx-auto h-56 w-full max-w-xl overflow-hidden lg:order-1 lg:flex lg:h-auto lg:items-end lg:justify-start lg:pt-4">
           <div className="bg-tumbleweed-300/20 absolute right-8 bottom-5 left-8 h-10 rounded-full blur-2xl" />
           <div className="absolute -top-12 left-1/2 w-64 -translate-x-1/2 sm:-top-20 sm:w-100 lg:static lg:w-120 lg:translate-x-0">
@@ -31,10 +28,6 @@ export const EmptyWishlistState = () => {
           <p className="text-ink-muted mt-4 text-base leading-7">
             Išsisaugok patikusias prekes vienu paspaudimu ir sugrįžk prie jų tada, kai norėsi nuspręsti.
           </p>
-
-          <div className="mt-7 flex justify-center lg:justify-start">
-            <Button label="Tęsti apsipirkimą" elementAfter={<ArrowRight size={16} />} href="/" />
-          </div>
         </div>
       </div>
     </PaperWrapper>

@@ -1,6 +1,4 @@
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
-import Button from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 export const CartEmptyState = () => {
@@ -16,10 +14,6 @@ export const CartEmptyState = () => {
           <p className="text-ink-muted mt-4 text-base leading-7">
             Išsirink kelis švelnius radinius ir sugrįžk čia, kai būsi pasiruošęs atsiskaitymui.
           </p>
-
-          <div className="mt-7 flex justify-center lg:justify-start">
-            <Button label="Tęsti apsipirkimą" elementAfter={<ArrowRight size={16} />} href="/" />
-          </div>
         </div>
 
         <div className="relative mx-auto h-56 w-full max-w-xl overflow-hidden lg:flex lg:h-auto lg:items-end lg:justify-end lg:pt-4">

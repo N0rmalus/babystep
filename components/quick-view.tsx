@@ -55,10 +55,11 @@ const QuickViewContent = ({ product }: { product: Product }) => {
           </div>
           <Link
             href={productHref}
-            className="text-link hover:text-tumbleweed-800 flex min-h-8 w-fit items-center gap-1.5 font-semibold underline underline-offset-3"
+            aria-label={`Visa informacija apie ${product.name}`}
+            className="group text-link flex min-h-8 w-fit items-center gap-1.5 font-semibold underline underline-offset-3"
           >
             Visa informacija apie prekę
-            <ArrowRight size={16} aria-hidden="true" />
+            <ArrowRight size={16} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
