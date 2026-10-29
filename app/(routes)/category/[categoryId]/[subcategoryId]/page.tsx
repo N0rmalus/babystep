@@ -7,6 +7,7 @@ import { ProductFiltersContainer } from '@/components/product-filters/product-fi
 import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
 import { MobileProductFiltersDrawer } from '@/components/product-filters/mobile-product-filters-drawer';
 import { PageHeader } from '@/components/page-header';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 
 type Props = {
   params: Promise<{
@@ -39,8 +40,15 @@ const SubcategoryPage = async ({ params, searchParams }: Props) => {
   const filterKey = JSON.stringify(filters);
 
   return (
-    <PageContainer>
-      <PageHeader bigText={subcategory.name} smallText={subcategory.category.name} />
+    <PageContainer
+      breadcrumbs={
+        <Breadcrumbs
+          links={[{ label: subcategory.category.name, href: `/category/${categoryId}` }]}
+          current={subcategory.name}
+        />
+      }
+    >
+      <PageHeader bigText={subcategory.name} />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
         <div className="hidden lg:block">

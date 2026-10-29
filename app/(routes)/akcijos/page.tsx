@@ -2,6 +2,7 @@ import getCategories from '@/actions/get-categories';
 import getProductCatalog from '@/actions/get-product-catalog';
 import getSubcategories from '@/actions/get-subcategories';
 import { PageHeader } from '@/components/page-header';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
 import { MobileProductFiltersDrawer } from '@/components/product-filters/mobile-product-filters-drawer';
 import { ProductFiltersContainer } from '@/components/product-filters/product-filters-container';
@@ -52,7 +53,7 @@ const AkcijosPage = async ({ searchParams }: Props) => {
   const filterKey = JSON.stringify(filters);
 
   return (
-    <PageContainer>
+    <PageContainer breadcrumbs={<Breadcrumbs current="Akcijos" />}>
       <PageHeader bigText="Akcijos" smallText="Švelnūs atradimai geresne kaina" />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">

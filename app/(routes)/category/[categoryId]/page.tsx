@@ -3,6 +3,7 @@ import getProductCatalog from '@/actions/get-product-catalog';
 import getSubcategories from '@/actions/get-subcategories';
 
 import { Billboard } from '@/components/ui/billboard';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { PageContainer } from '@/components/ui/page-container';
 import { parseProductFilters, parseProductPage, type ProductFilterSearchParams } from '@/lib/product-filters';
 import { ProductCatalogResults } from '@/components/product-catalog/product-catalog-results';
@@ -46,8 +47,8 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
   }
 
   return (
-    <PageContainer>
-      <Billboard data={category.billboard} />
+    <PageContainer breadcrumbs={<Breadcrumbs current={category.name} />}>
+      <Billboard data={category.billboard} size="compact" />
 
       <div className="grid grid-cols-1 gap-7 lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-x-7">
         <div className="hidden lg:block">

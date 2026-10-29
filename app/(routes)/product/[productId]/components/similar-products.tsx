@@ -23,10 +23,11 @@ export const SimilarProducts = ({ products, href }: Props) => {
           </h2>
           <Link
             href={href}
-            className="text-link hover:text-tumbleweed-800 hidden min-h-11 items-center gap-1.5 font-semibold lg:flex"
+            aria-label="Žiūrėti panašias prekes"
+            className="group text-link hidden min-h-11 items-center gap-1.5 font-semibold lg:flex"
           >
             Žiūrėti visas
-            <ArrowRight size={16} aria-hidden="true" />
+            <ArrowRight size={16} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
         <ul className="scrollbar-soft px-gutter scroll-px-gutter flex snap-x snap-mandatory gap-3.5 overflow-x-auto pb-2 lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0">
