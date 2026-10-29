@@ -69,6 +69,8 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 - [ ] **Product page: rating summary and reviews.** Mock until reviews exist ("Customer accounts").
 - [ ] **Size guide.** Mock values until variants and specifications exist.
 - [ ] **Header search.** Submitting does nothing until there is a store-wide search page (`components/navbar/header-search.tsx`).
+- [ ] **Wishlist sharing.** The "Pasidalinti" button and popover are a mock (see "Wishlist sharing").
+- [ ] **Wishlist sign-in note.** The "Prisijunk" link does nothing until customer accounts exist.
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
 
 ## Product variants
@@ -82,3 +84,10 @@ Storefront side of "Product variants" in the admin's TODO. Do it after the admin
 ## Product specifications
 
 - [ ] **"Papildoma informacija"** on the product page: a specs table (Matmenys, Medžiaga, Sudėtis, Priežiūra) next to the description, as tabs or accordions, following the product page design. Values change with the chosen variant where they differ.
+
+## Wishlist sharing
+
+The wishlist's "Pasidalinti" is a mock. Parents share it so relatives know what to buy.
+
+- [ ] **Shareable link without accounts.** Encode the wishlist's product IDs in the URL (e.g. `/norai/bendrinti?p=<ids>`), so no backend is needed. The link opens a read-only page with those products, an "Į krepšelį" per item, and no remove actions.
+- [ ] **Later, with customer accounts:** a saved, named wishlist with a short link that stays up to date. Revisit when accounts are planned.
