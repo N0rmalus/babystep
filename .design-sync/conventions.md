@@ -4,7 +4,7 @@ Babystep is a calm, warm shop for baby sleep products. UI copy is **Lithuanian**
 
 ## Setup
 
-- Components are on `window.Babystep` (`Button`, `IconButton`, `Badge`, `ProductCard`, `Modal`, `PaperWrapper`, `PageContainer`, `Skeleton`, `LoadingSpinner`, `NoResults`, `RichTextContent`, `Billboard`, `ImageLightbox`), plus `Babystep.cn` (clsx + tailwind-merge) and `Babystep.Icons` (lucide icons the shop uses: `ShoppingCart`, `Heart`, `Trash2`, `Search`, `Menu`, `X`, `Expand`, `ArrowRight`, `ChevronLeft`, `ChevronRight`, `ChevronDown`, `Truck`, `Lock`, `Check`, `Mail`, `Phone`, `MapPin`, `SlidersHorizontal`, …). Use `Icons.*` at `size={16}`; there is no other icon set.
+- Components are on `window.Babystep` (`Button`, `IconButton`, `Badge`, `ProductCard`, `Modal`, `PaperWrapper`, `PageContainer`, `Skeleton`, `LoadingSpinner`, `NoResults`, `RichTextContent`, `Billboard`, `BottomSheet`, `QuantitySelector`, `StarRating`), plus `Babystep.cn` (clsx + tailwind-merge) and `Babystep.Icons` (lucide icons the shop uses: `ShoppingCart`, `Heart`, `Trash2`, `Search`, `Menu`, `X`, `Expand`, `ArrowRight`, `ChevronLeft`, `ChevronRight`, `ChevronDown`, `Truck`, `Lock`, `Check`, `Mail`, `Phone`, `MapPin`, `SlidersHorizontal`, …). Use `Icons.*` at `size={16}`; there is no other icon set.
 - No provider is needed. `styles.css` carries the tokens, fonts and the compiled utility classes. Put pages on `bg-canvas text-ink`, like the shop root.
 - `Button` and `IconButton` without `href` need `onClick`. With `href` they render links.
 

@@ -68,6 +68,7 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 - [ ] **Product page: "Papildoma informacija".** Mock until "Product specifications".
 - [ ] **Product page: rating summary and reviews.** Mock until reviews exist ("Customer accounts").
 - [ ] **Size guide.** Mock values until variants and specifications exist.
+- [ ] **Header search.** Submitting does nothing until there is a store-wide search page (`components/navbar/header-search.tsx`).
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
 
 ## Product variants
@@ -75,7 +76,7 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 Storefront side of "Product variants" in the admin's TODO. Do it after the admin side.
 
 - [ ] **Variant selection** on the product page and in the quick-view modal: size as pill chips, color as swatches, unavailable options crossed out. Price, stock and photos follow the chosen variant.
-- [ ] **Cart lines** become `{ productId, variantId?, quantity }`, with a store `migrate` from today's format. Show the chosen options in the cart and send line items to checkout.
+- [ ] **Cart lines per variant.** The cart already stores `{ productId, variantId?, quantity }`, but `hooks/use-cart.ts` matches lines by `productId` only (add, set quantity, remove). Match by `productId` + `variantId`, so two sizes of one product are separate lines. Show the chosen options in the cart and send line items to checkout.
 - [ ] **Product cards** show "from" pricing when variants differ in price, and the quick view or product page handles choosing the variant before adding to cart.
 
 ## Product specifications

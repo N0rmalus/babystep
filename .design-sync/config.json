@@ -11,16 +11,18 @@
   "componentSrcMap": {
     "Badge": "components/ui/badge.tsx",
     "Billboard": "components/ui/billboard.tsx",
+    "BottomSheet": "components/ui/bottom-sheet.tsx",
     "Button": "components/ui/button.tsx",
     "PageContainer": "components/ui/page-container.tsx",
     "IconButton": "components/ui/icon-button.tsx",
-    "ImageLightbox": "components/ui/image-lightbox.tsx",
     "LoadingSpinner": "components/ui/loading-spinner.tsx",
     "Modal": "components/ui/modal.tsx",
     "NoResults": "components/ui/no-results.tsx",
     "PaperWrapper": "components/ui/paper-wrapper.tsx",
+    "QuantitySelector": "components/ui/quantity-selector.tsx",
     "RichTextContent": "components/ui/rich-text-content.tsx",
     "Skeleton": "components/ui/skeleton.tsx",
+    "StarRating": "components/ui/star-rating.tsx",
     "ProductCard": "components/ui/product-card/product-card.tsx",
     "Icons": null
   },
@@ -35,16 +37,18 @@
   "docsMap": {
     "Badge": ".design-sync/docs/Badge.md",
     "Billboard": ".design-sync/docs/Billboard.md",
+    "BottomSheet": ".design-sync/docs/BottomSheet.md",
     "Button": ".design-sync/docs/Button.md",
     "PageContainer": ".design-sync/docs/PageContainer.md",
     "IconButton": ".design-sync/docs/IconButton.md",
-    "ImageLightbox": ".design-sync/docs/ImageLightbox.md",
     "LoadingSpinner": ".design-sync/docs/LoadingSpinner.md",
     "Modal": ".design-sync/docs/Modal.md",
     "NoResults": ".design-sync/docs/NoResults.md",
     "PaperWrapper": ".design-sync/docs/PaperWrapper.md",
+    "QuantitySelector": ".design-sync/docs/QuantitySelector.md",
     "RichTextContent": ".design-sync/docs/RichTextContent.md",
-    "Skeleton": ".design-sync/docs/Skeleton.md"
+    "Skeleton": ".design-sync/docs/Skeleton.md",
+    "StarRating": ".design-sync/docs/StarRating.md"
   },
   "overrides": {
     "ProductCard": {
@@ -62,6 +66,10 @@
     },
     "PaperWrapper": {
       "cardMode": "column"
+    },
+    "BottomSheet": {
+      "cardMode": "single",
+      "viewport": "420x560"
     }
   },
   "extraFonts": [

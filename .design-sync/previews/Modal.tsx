@@ -1,8 +1,8 @@
 import { Button, Modal } from 'babysteps-store';
 
 export const Open = () => (
-  <Modal open onClose={() => {}}>
-    <div className="flex flex-col gap-4">
+  <Modal open onClose={() => {}} size="md">
+    <div className="flex flex-col gap-4 pr-12">
       <h2 className="font-accent text-ink text-3xl font-bold">Muslino miegmaišis 0–6 mėn.</h2>
       <p className="text-ink-soft max-w-prose text-sm leading-relaxed">
         Lengvas, kvėpuojantis miegmaišis, kuris padeda kūdikiui išlaikyti pastovią temperatūrą visą naktį.
