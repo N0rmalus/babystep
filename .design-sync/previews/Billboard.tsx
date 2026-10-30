@@ -6,13 +6,19 @@ const art = (a: string, b: string) =>
   )}`;
 
 export const WithLabel = () => (
-  <div className="w-[720px]">
+  <div className="w-[960px]">
     <Billboard data={{ id: 'b1', label: 'Ramesnės naktys visai šeimai', imageUrl: art('#f6e9de', '#ebd1bd') }} />
   </div>
 );
 
+export const Compact = () => (
+  <div className="w-[960px]">
+    <Billboard data={{ id: 'b3', label: 'Miegmaišiai', imageUrl: art('#eef3ec', '#cfdfc9') }} size="compact" />
+  </div>
+);
+
 export const Sale = () => (
-  <div className="w-[720px]">
+  <div className="w-[960px]">
     <Billboard data={{ id: 'b2', label: 'Rudens akcijos iki -30%', imageUrl: art('#fef1f0', '#fcc5bf') }} />
   </div>
 );

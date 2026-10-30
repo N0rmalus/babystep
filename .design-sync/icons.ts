@@ -1,5 +1,6 @@
 export {
   AlertTriangle,
+  ArrowLeft,
   ArrowRight,
   BadgePercent,
   Bird,

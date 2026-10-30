@@ -32,7 +32,7 @@
   "dtsPropsFor": {
     "Button": "variant?: \"primary\" | \"secondary\" | \"danger\" | \"danger-outlined\";\n  size?: \"sm\" | \"md\" | \"lg\" | \"xl\";\n  label: React.ReactNode;\n  elementBefore?: React.ReactNode;\n  elementAfter?: React.ReactNode;\n  fullWidth?: boolean;\n  className?: string;\n  /** Renders a link instead of a button. */\n  href?: string;\n  /** Required for type=\"button\" (the default). Not used with href. */\n  onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;\n  type?: \"button\" | \"submit\";\n  disabled?: boolean;\n  /** Shows a spinner over the label and disables the button. */\n  loading?: boolean;",
     "ProductCard": "data: {\n    id: string;\n    subcategoryId: string;\n    name: string;\n    /** Prices are decimal strings, e.g. \"39.99\". */\n    price: string;\n    salePrice?: string | null;\n    saleStartsAt?: string | null;\n    saleEndsAt?: string | null;\n    amountInStock: number;\n    isFeatured: boolean;\n    createdAt?: string;\n    description: string | null;\n    images: { id: string; url: string }[];\n    subcategory: { id: string; name: string; categoryId: string; category: { id: string; name: string; billboard: { id: string; label: string; imageUrl: string } } };\n  };\n  wishlistAction?: \"add\" | \"remove\";",
-    "Billboard": "data: { id: string; label: string; imageUrl: string };"
+    "Billboard": "data: { id: string; label: string; imageUrl: string };\n  /** \"compact\" is a short fixed-height banner for category pages; \"default\" is the tall home hero. */\n  size?: \"default\" | \"compact\";"
   },
   "docsMap": {
     "Badge": ".design-sync/docs/Badge.md",
