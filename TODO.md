@@ -81,8 +81,7 @@ Storefront side of "Product variants" in the admin's TODO. Do it after the admin
 
 - [ ] **Variant selection** on the product page and in the quick-view modal: size as pill chips, color as swatches, unavailable options crossed out. Price, stock and photos follow the chosen variant.
 - [ ] **Cart lines per variant.** The cart already stores `{ productId, variantId?, quantity }`, but `hooks/use-cart.ts` matches lines by `productId` only (add, set quantity, remove). Match by `productId` + `variantId`, so two sizes of one product are separate lines. Show the chosen options in the cart and send line items to checkout.
-- [ ] **Product cards** show "from" pricing when variants differ in price, and the quick view or product page handles choosing the variant before adding to cart.
-
+- [ ] **Product cards for products with variants.** The button says "Pasirinkti savybes" instead of "Į krepšelį" and opens the quick view on desktop (the product page on mobile), since an option must be chosen first. If variant prices differ, the card shows a price range, e.g. "22,50 € – 25,00 €", using effective (sale) prices; one price if they're all the same. If some variants are on sale, show the sale badge as "iki -X%".
 ## Product specifications
 
 - [ ] **"Papildoma informacija"** on the product page: a specs table (Matmenys, Medžiaga, Sudėtis, Priežiūra) next to the description, as tabs or accordions, following the product page design. Values change with the chosen variant where they differ.
