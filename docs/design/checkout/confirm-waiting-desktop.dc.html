@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · Laukiame mokėjimo · desktop</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f8f4ee}
+a{color:#9a4734;text-decoration:none}a:hover{color:#7c3b30}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c76e48;outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.nlink{color:#433934;font-weight:600;font-size:15px}.nlink:hover{color:#9a4734}
+.flink{color:#433934}.flink:hover{color:#9a4734}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1.4s linear infinite}
+@media (max-width: 1100px){.fcols{grid-template-columns:1fr 1fr !important}}
+@media (prefers-reduced-motion: reduce){.spin{animation-duration:4s}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans);">
+
+<div style="background: var(--color-ink); color: #f8f4ee; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+<span>Nemokamas pristatymas užsakymams nuo 80 € · Grąžinti gali per 14 dienų</span>
+</div>
+
+<header style="position: sticky; top: 0; z-index: 30; background: var(--color-canvas); border-bottom: 1px solid var(--color-line);">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 76px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;">
+<form role="search" onSubmit="{{noSubmit}}" style="position: relative; width: 320px;">
+<label for="qw2" class="sr">Paieška</label>
+<span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.Search" size="{{n18}}"></x-import></span>
+<input id="qw2" type="search" placeholder="Ko ieškai?" style="width: 100%; box-sizing: border-box; height: 44px; padding: 0 18px 0 44px; border-radius: 999px; border: 1px solid var(--color-line-strong); background: #ffffff; font: inherit; font-size: 15px; color: var(--color-ink);">
+</form>
+<a href="D-desktop.dc.html" aria-label="Babystep pradžia" style="display: flex; align-items: center; gap: 8px; color: var(--color-ink);"><img src="/_blob/eba72f499df045e7ead825c1efde6e2d" alt="" style="height: 34px; width: auto; display: block;"><span style="font-family: var(--font-accent); font-weight: 700; font-size: 30px; letter-spacing: -0.02em;">Babystep</span></a>
+<nav aria-label="Paskyra" style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+<x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="Wish-desktop.dc.html" label="Norai" element-before="{{icHeart}}" class-name="h-11"></x-import>
+<x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="Cart-desktop.dc.html" label="Krepšelis" element-before="{{icCart}}" class-name="h-11"></x-import>
+<span style="width: 1px; height: 24px; background: var(--color-line); margin: 0 4px;" aria-hidden="true"></span>
+<x-import component-from-global-scope="Babystep.IconButton" href="#paskyra" label="Paskyra" icon="{{icUser}}"></x-import>
+</nav>
+</div>
+<nav aria-label="Kategorijos" style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 48px; display: flex; align-items: center; justify-content: center; gap: 36px;">
+<a class="nlink" href="Cat-A-desktop.dc.html">Miegui</a><a class="nlink" href="#">Priežiūrai</a><a class="nlink" href="#">Aksesuarai</a><a class="nlink" href="#">Žaislai</a><a class="nlink" href="#">Dovanų rinkiniai</a><a href="Sale-desktop.dc.html" style="font-weight: 600; font-size: 15px; color: var(--color-sale-strong);">Akcijos</a>
+</nav>
+</header>
+
+<main style="max-width: 720px; margin: 0 auto; padding: 80px 40px 112px;">
+<section aria-labelledby="h-wait" aria-live="polite" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;">
+<span aria-hidden="true" style="position: relative; width: 72px; height: 72px; border-radius: 999px; background: var(--color-tumbleweed-50); display: flex; align-items: center; justify-content: center;"><span class="spin" style="position: absolute; inset: 6px; border-radius: 999px; border: 3px solid var(--color-tumbleweed-100); border-top-color: var(--color-tumbleweed-500);"></span><span style="display: flex; color: var(--color-link);"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n20}}"></x-import></span></span>
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-link); font-variant-numeric: tabular-nums;">Užsakymo nr. BS-10482</span>
+<h1 id="h-wait" style="margin: 0; font-family: var(--font-accent); font-weight: 700; font-size: 48px; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance;">Laukiame mokėjimo patvirtinimo</h1>
+<p style="margin: 0; max-width: 540px; font-size: 18px; line-height: 1.55; color: var(--color-ink-muted);">Kartais bankui prireikia kelių minučių. Šis puslapis atsinaujins pats, o kai tik bankas patvirtins, patvirtinimą atsiųsime į <strong style="color: var(--color-ink-soft);">ieva@pastas.lt</strong>.</p>
+<p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--color-ink-soft);">Nieko daryti nereikia, ir mokėti dar kartą nereikia.</p><div style="margin-top: 12px;"><x-import component-from-global-scope="Babystep.Button" variant="secondary" label="Atnaujinti dabar" element-before="{{icRefresh}}" on-click="{{noop}}"></x-import></div>
+</section>
+
+<section aria-labelledby="h-wq" style="margin-top: 56px; padding: 22px 24px; border-radius: 20px; background: #ffffff; border: 1px solid var(--color-line); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
+<h2 id="h-wq" style="margin: 0; font-size: 16px; font-weight: 600;">Jei laukti tenka ilgiau nei įprastai</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.5; color: var(--color-ink-soft);">
+<li style="display: flex; gap: 10px;"><span style="display: flex; color: var(--color-ink-muted); padding-top: 3px;"><x-import component-from-global-scope="Babystep.Icons.Check" size="{{n16}}"></x-import></span>Užsakymas išsaugotas, niekas nedings.</li>
+<li style="display: flex; gap: 10px;"><span style="display: flex; color: var(--color-ink-muted); padding-top: 3px;"><x-import component-from-global-scope="Babystep.Icons.Mail" size="{{n16}}"></x-import></span>Gali uždaryti šį langą. Kai tik bankas patvirtins, laišką gausi el. paštu.</li>
+<li style="display: flex; gap: 10px;"><span style="display: flex; color: var(--color-ink-muted); padding-top: 3px;"><x-import component-from-global-scope="Babystep.Icons.Phone" size="{{n16}}"></x-import></span>Neramu? Parašyk mums: [el. paštas]. Pažiūrėsime kartu.</li>
+</ul>
+</section>
+</main>
+
+<footer style="border-top: 1px solid var(--color-line);">
+<div class="fcols" style="max-width: 1280px; margin: 0 auto; padding: 64px 40px 40px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+<a href="D-desktop.dc.html" style="font-family: var(--font-accent); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<p style="margin: 0; max-width: 300px; font-size: 15px; line-height: 1.55; color: var(--color-ink-muted);">Švelnios miego prekės ramesnėms naktims. Kaip draugas, kuris tai jau išgyveno.</p>
+<div style="display: flex; gap: 10px;">
+<x-import component-from-global-scope="Babystep.IconButton" href="#instagram" label="Instagram" icon="{{icInsta}}"></x-import>
+<x-import component-from-global-scope="Babystep.IconButton" href="#facebook" label="Facebook" icon="{{icFb}}"></x-import>
+</div>
+</div>
+<nav aria-label="Parduotuvė" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Parduotuvė</span>
+<a class="flink" href="#">Miegmaišiai</a><a class="flink" href="#">Vystyklai</a><a class="flink" href="#">Naktinės lempos</a><a href="Sale-desktop.dc.html" style="color: var(--color-sale-strong);">Akcijos</a>
+</nav>
+<nav aria-label="Pagalba" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Pagalba</span>
+<a class="flink" href="#">Pristatymas</a><a class="flink" href="#">Grąžinimas</a><a class="flink" href="#">Dažni klausimai</a><a class="flink" href="#">Kontaktai</a>
+</nav>
+<nav aria-label="Babystep" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Babystep</span>
+<a class="flink" href="#">Apie mus</a><a class="flink" href="#">Taisyklės</a><a class="flink" href="#">Privatumo politika</a><span style="color: var(--color-ink-soft);">[el. paštas]</span>
+</nav>
+</div>
+<div style="max-width: 1280px; margin: 0 auto; padding: 20px 40px 32px; display: flex; justify-content: space-between; gap: 16px; font-size: 13px; color: var(--color-ink-muted); border-top: 1px solid var(--color-line);">
+<span>© 2026 Babystep</span>
+<span style="display: flex; align-items: center; gap: 6px;"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n14}}"></x-import> Saugus apmokėjimas</span>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, B = window.Babystep || {}, I = B.Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 16 }) : null;
+    return {
+      n14: 14, n16: 16, n18: 18, n20: 20,
+      noop: () => {}, noSubmit: (e) => e.preventDefault(),
+      icHeart: ic('Heart'), icCart: ic('ShoppingCart'), icRefresh: ic('RotateCcw'), icInsta: ic('Instagram'), icFb: ic('Facebook'),
+      icUser: R ? R.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }, R.createElement('circle', { cx: 12, cy: 8, r: 4 }), R.createElement('path', { d: 'M4 21a8 8 0 0 1 16 0' })) : null
+    };
+  }
+}
+</script>
+</body>
+</html>

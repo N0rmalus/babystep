@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · Užsakymas apmokėtas · desktop</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f8f4ee}
+a{color:#9a4734;text-decoration:none}a:hover{color:#7c3b30}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c76e48;outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.nlink{color:#433934;font-weight:600;font-size:15px}.nlink:hover{color:#9a4734}
+.flink{color:#433934}.flink:hover{color:#9a4734}
+@media (max-width: 1100px){.fcols{grid-template-columns:1fr 1fr !important}.cfg{grid-template-columns:1fr !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans);">
+
+<div style="background: var(--color-ink); color: #f8f4ee; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+<span>Nemokamas pristatymas užsakymams nuo 80 € · Grąžinti gali per 14 dienų</span>
+</div>
+
+<header style="position: sticky; top: 0; z-index: 30; background: var(--color-canvas); border-bottom: 1px solid var(--color-line);">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 76px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;">
+<form role="search" onSubmit="{{noSubmit}}" style="position: relative; width: 320px;">
+<label for="qp" class="sr">Paieška</label>
+<span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.Search" size="{{n18}}"></x-import></span>
+<input id="qp" type="search" placeholder="Ko ieškai?" style="width: 100%; box-sizing: border-box; height: 44px; padding: 0 18px 0 44px; border-radius: 999px; border: 1px solid var(--color-line-strong); background: #ffffff; font: inherit; font-size: 15px; color: var(--color-ink);">
+</form>
+<a href="D-desktop.dc.html" aria-label="Babystep pradžia" style="display: flex; align-items: center; gap: 8px; color: var(--color-ink);"><img src="/_blob/eba72f499df045e7ead825c1efde6e2d" alt="" style="height: 34px; width: auto; display: block;"><span style="font-family: var(--font-accent); font-weight: 700; font-size: 30px; letter-spacing: -0.02em;">Babystep</span></a>
+<nav aria-label="Paskyra" style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+<x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="Wish-desktop.dc.html" label="Norai" element-before="{{icHeart}}" class-name="h-11"></x-import>
+<x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="Cart-empty-desktop.dc.html" label="Krepšelis" element-before="{{icCart}}" class-name="h-11"></x-import>
+<span style="width: 1px; height: 24px; background: var(--color-line); margin: 0 4px;" aria-hidden="true"></span>
+<x-import component-from-global-scope="Babystep.IconButton" href="#paskyra" label="Paskyra" icon="{{icUser}}"></x-import>
+</nav>
+</div>
+<nav aria-label="Kategorijos" style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 48px; display: flex; align-items: center; justify-content: center; gap: 36px;">
+<a class="nlink" href="Cat-A-desktop.dc.html">Miegui</a><a class="nlink" href="#">Priežiūrai</a><a class="nlink" href="#">Aksesuarai</a><a class="nlink" href="#">Žaislai</a><a class="nlink" href="#">Dovanų rinkiniai</a><a href="Sale-desktop.dc.html" style="font-weight: 600; font-size: 15px; color: var(--color-sale-strong);">Akcijos</a>
+</nav>
+</header>
+
+<main style="max-width: 960px; margin: 0 auto; padding: 64px 40px 112px;">
+<section aria-labelledby="h-paid" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;">
+<span aria-hidden="true" style="width: 72px; height: 72px; border-radius: 999px; background: var(--color-success-soft); color: var(--color-success); display: flex; align-items: center; justify-content: center;"><x-import component-from-global-scope="Babystep.Icons.Check" size="{{n32}}"></x-import></span>
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-success); font-variant-numeric: tabular-nums;">Užsakymo nr. BS-10482</span>
+<h1 id="h-paid" style="margin: 0; font-family: var(--font-accent); font-weight: 700; font-size: 48px; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance;">Ačiū, užsakymas priimtas</h1>
+<p style="margin: 0; max-width: 560px; font-size: 18px; line-height: 1.55; color: var(--color-ink-muted);">Patvirtinimą išsiuntėme į <strong style="color: var(--color-ink-soft);">ieva@pastas.lt</strong>. Kai siunta iškeliaus, atsiųsime ir sekimo nuorodą.</p></section>
+
+<ol aria-label="Užsakymo eiga" style="margin: 48px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;">
+<li style="display: flex; flex-direction: column; gap: 10px;"><span style="height: 6px; border-radius: 999px; background: var(--color-success);"></span><span style="font-size: 14px; font-weight: 600; color: var(--color-ink);">Užsakymas apmokėtas</span><span style="font-size: 13px; color: var(--color-ink-muted);">Šiandien</span></li>
+<li style="display: flex; flex-direction: column; gap: 10px;"><span style="height: 6px; border-radius: 999px; background: var(--color-muted);"></span><span style="font-size: 14px; font-weight: 600; color: var(--color-ink-soft);">Ruošiame siuntą</span><span style="font-size: 13px; color: var(--color-ink-muted);">Supakuosime su rūpesčiu</span></li>
+<li style="display: flex; flex-direction: column; gap: 10px;"><span style="height: 6px; border-radius: 999px; background: var(--color-muted);"></span><span style="font-size: 14px; font-weight: 600; color: var(--color-ink-soft);">Siunta pakeliui</span><span style="font-size: 13px; color: var(--color-ink-muted);">Sekimą gausi el. paštu</span></li>
+<li style="display: flex; flex-direction: column; gap: 10px;"><span style="height: 6px; border-radius: 999px; background: var(--color-muted);"></span><span style="font-size: 14px; font-weight: 600; color: var(--color-ink-soft);">Atsiimsi paštomate</span><span style="font-size: 13px; color: var(--color-ink-muted);">Kodą atsiųs Omniva</span></li>
+</ol>
+
+<div class="cfg" style="margin-top: 40px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: start;">
+<section aria-labelledby="h-items" style="padding: 24px; border-radius: 24px; background: #ffffff; border: 1px solid var(--color-line); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 14px;">
+<h2 id="h-items" style="margin: 0; font-size: 18px; font-weight: 600;">Ką užsakei</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px;">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="3">
+<li style="display: flex; align-items: center; gap: 12px;"><span style="flex: 0 0 auto; width: 56px; height: 56px; border-radius: 12px; overflow: hidden; background: var(--color-muted);"><img src="{{it.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;"></span><span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 15px; font-weight: 600;">{{it.name}}</span><span style="font-size: 13px; color: var(--color-ink-muted);">{{it.meta}} · {{it.qty}} vnt.</span></span><span style="font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums;">{{it.total}}</span></li>
+</sc-for>
+</ul>
+<div style="height: 1px; background: var(--color-line);"></div>
+<div style="display: flex; justify-content: space-between; font-size: 15px; color: var(--color-ink-soft);"><span>Prekės</span><span style="font-variant-numeric: tabular-nums;">76,79 €</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 15px; color: var(--color-ink-soft);"><span>Pristatymas · paštomatas</span><span style="font-variant-numeric: tabular-nums;">3,49 €</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-weight: 600;">Sumokėta</span><span style="font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums;">80,28 €</span></div>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 20px;">
+<section aria-labelledby="h-del" style="padding: 24px; border-radius: 24px; background: #ffffff; border: 1px solid var(--color-line); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 14px;">
+<h2 id="h-del" style="margin: 0; font-size: 18px; font-weight: 600;">Pristatymas</h2>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 15px;">
+<div style="display: flex; flex-direction: column; gap: 2px;"><dt style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Paštomatas</dt><dd style="margin: 0; color: var(--color-ink-soft); line-height: 1.5;">Omniva · Vilnius, PC Akropolis<br>Ozo g. 25</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px;"><dt style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Gavėjas</dt><dd style="margin: 0; color: var(--color-ink-soft); line-height: 1.5;">Ieva Kazlauskienė<br>+370 612 34567</dd></div>
+<div style="display: flex; flex-direction: column; gap: 2px;"><dt style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Mokėjimas</dt><dd style="margin: 0; color: var(--color-ink-soft);">Swedbank, per Montonio</dd></div>
+</dl>
+<p style="margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--color-muted-soft); font-size: 14px; line-height: 1.5; color: var(--color-ink-soft); display: flex; gap: 10px;"><span style="display: flex; color: var(--color-link); padding-top: 2px;"><x-import component-from-global-scope="Babystep.Icons.Mail" size="{{n16}}"></x-import></span><span>Siuntos sekimo nuorodą atsiųsime el. paštu, kai tik siunta iškeliaus.</span></p>
+</section>
+
+<section aria-labelledby="h-acc" style="padding: 20px 24px; border-radius: 20px; background: var(--color-tumbleweed-50); border: 1px solid var(--color-tumbleweed-100); display: flex; flex-direction: column; gap: 10px;">
+<h2 id="h-acc" style="margin: 0; font-size: 16px; font-weight: 600;">Nori matyti užsakymą bet kada?</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--color-ink-soft);">Susikurk paskyrą su tuo pačiu el. paštu. Šis užsakymas atsiras joje, o kitą kartą duomenis užpildysime už tave.</p>
+<x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="#registracija" label="Susikurti paskyrą" class-name="h-11" style="align-self: flex-start;"></x-import>
+</section>
+</div>
+</div>
+
+<div style="display: flex; justify-content: center; gap: 12px; margin-top: 40px; flex-wrap: wrap;">
+<x-import component-from-global-scope="Babystep.Button" href="D-desktop.dc.html" label="Grįžti į parduotuvę" element-after="{{icArrow}}"></x-import>
+</div>
+<p style="margin: 20px 0 0; text-align: center; font-size: 14px; color: var(--color-ink-muted);">Kyla klausimų? Parašyk mums: [el. paštas]</p>
+</main>
+
+<footer style="border-top: 1px solid var(--color-line);">
+<div class="fcols" style="max-width: 1280px; margin: 0 auto; padding: 64px 40px 40px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+<a href="D-desktop.dc.html" style="font-family: var(--font-accent); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<p style="margin: 0; max-width: 300px; font-size: 15px; line-height: 1.55; color: var(--color-ink-muted);">Švelnios miego prekės ramesnėms naktims. Kaip draugas, kuris tai jau išgyveno.</p>
+<div style="display: flex; gap: 10px;">
+<x-import component-from-global-scope="Babystep.IconButton" href="#instagram" label="Instagram" icon="{{icInsta}}"></x-import>
+<x-import component-from-global-scope="Babystep.IconButton" href="#facebook" label="Facebook" icon="{{icFb}}"></x-import>
+</div>
+</div>
+<nav aria-label="Parduotuvė" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Parduotuvė</span>
+<a class="flink" href="#">Miegmaišiai</a><a class="flink" href="#">Vystyklai</a><a class="flink" href="#">Naktinės lempos</a><a href="Sale-desktop.dc.html" style="color: var(--color-sale-strong);">Akcijos</a>
+</nav>
+<nav aria-label="Pagalba" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Pagalba</span>
+<a class="flink" href="#">Pristatymas</a><a class="flink" href="#">Grąžinimas</a><a class="flink" href="#">Dažni klausimai</a><a class="flink" href="#">Kontaktai</a>
+</nav>
+<nav aria-label="Babystep" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Babystep</span>
+<a class="flink" href="#">Apie mus</a><a class="flink" href="#">Taisyklės</a><a class="flink" href="#">Privatumo politika</a><span style="color: var(--color-ink-soft);">[el. paštas]</span>
+</nav>
+</div>
+<div style="max-width: 1280px; margin: 0 auto; padding: 20px 40px 32px; display: flex; justify-content: space-between; gap: 16px; font-size: 13px; color: var(--color-ink-muted); border-top: 1px solid var(--color-line);">
+<span>© 2026 Babystep</span>
+<span style="display: flex; align-items: center; gap: 6px;"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n14}}"></x-import> Saugus apmokėjimas</span>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, B = window.Babystep || {}, I = B.Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 16 }) : null;
+    return {
+      n14: 14, n16: 16, n18: 18, n32: 32,
+      noSubmit: (e) => e.preventDefault(),
+      icHeart: ic('Heart'), icCart: ic('ShoppingCart'), icArrow: ic('ArrowRight'), icInsta: ic('Instagram'), icFb: ic('Facebook'),
+      icUser: R ? R.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }, R.createElement('circle', { cx: 12, cy: 8, r: 4 }), R.createElement('path', { d: 'M4 21a8 8 0 0 1 16 0' })) : null,
+      items: [
+        { name: 'Muslino miegmaišis 0–6 mėn.', meta: 'šalavijų žalia', qty: 1, total: '31,99 €', img: '/_blob/b737f3d4d317b0dbc227b0267164c715' },
+        { name: 'Vystyklai iš muslino, 3 vnt.', meta: 'smėlio rinkinys', qty: 1, total: '24,90 €', img: '/_blob/3b51b221bfb5008f3969e06103616212' },
+        { name: 'Medinė piramidė', meta: 'natūrali mediena', qty: 1, total: '19,90 €', img: '/_blob/c3ea53d068455e00c50206693dc68aac' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

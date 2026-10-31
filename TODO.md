@@ -71,6 +71,8 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 - [ ] **Header search.** Submitting does nothing until there is a store-wide search page (`components/navbar/header-search.tsx`).
 - [ ] **Wishlist sharing.** The "Pasidalinti" button and popover are a mock (see "Wishlist sharing").
 - [ ] **Wishlist sign-in note.** The "Prisijunk" link does nothing until customer accounts exist.
+- [ ] **Checkout data layer.** Delivery options, pickup points, bank list, order creation and status are mock data until the admin endpoints exist.
+- [ ] **Confirmation page account card and checkout sign-in note.** Mocks until customer accounts exist.
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
 
 ## Product variants
@@ -91,3 +93,26 @@ The wishlist's "Pasidalinti" is a mock. Parents share it so relatives know what 
 
 - [ ] **Shareable link without accounts.** Encode the wishlist's product IDs in the URL (e.g. `/norai/bendrinti?p=<ids>`), so no backend is needed. The link opens a read-only page with those products, an "Į krepšelį" per item, and no remove actions.
 - [ ] **Later, with customer accounts:** a saved, named wishlist with a short link that stays up to date. Revisit when accounts are planned.
+
+## Checkout (design in docs/design/checkout/)
+
+Cart, checkout (`/apmokejimas`) and order confirmation (`/uzsakymas/[orderId]`). Decisions: `../babystep-admin/docs/montonio-research.md`, "Decisions".
+
+- [ ] **Build the UI against a mock data layer** (`lib/checkout-api.ts` + `lib/mocks/checkout.ts`): delivery options, pickup points, payment methods, create order, order status. Can be done before the admin side.
+- [ ] **Switch the data layer to the real admin endpoints** once the admin's Montonio work is done. Test the full flow in Montonio's sandbox.
+- [ ] **Payment and carrier logos.** Visa, Mastercard, Apple Pay, Google Pay, Omniva, Unisend and SmartPosti as official SVGs in `public/logos/`, following each brand's usage rules (no recoloring, minimum size). Bank logos come from Montonio's `logoUrl`.
+- [ ] **Delivery page** (`pristatymo-informacija`): Omniva and Unisend lockers 3,49 €, SmartPosti courier 6,49 €, free from 80 €. Remove LP Express and the flat 4,99 € (`STANDARD_SHIPPING_PRICE`).
+
+## Migration from WordPress (babystep.lt)
+
+The new site replaces the live WordPress/WooCommerce shop at babystep.lt. Most of this happens near launch, but plan it early.
+
+- [ ] **Owner: list the WordPress setup.** Which plugins the shop uses (WooCommerce, Montonio plugin, newsletter, reviews, SEO, others), and what data lives where. Then make the items below specific.
+- [ ] **URL redirects.** Map old WooCommerce URLs (`/product/...`, `/product-category/...`, pages) to the new ones and serve 301 redirects, so search rankings and bookmarks keep working. Export the old URL list (sitemap) first.
+- [ ] **Products and images.** Check that every live product, category and image exists in the new admin; import what's missing.
+- [ ] **Product reviews.** Export existing WooCommerce reviews and import them, so the reviews section starts with real reviews (mark them as imported; the "verified purchase" label only where it was verified).
+- [ ] **Newsletter subscribers.** Move the list to the new email service with their consent records.
+- [ ] **Customers and order history.** Decide whether to import WordPress customer accounts and past orders, or start fresh (affects "Customer accounts" and GDPR).
+- [ ] **Shipping prices.** Compare what WordPress charges today with the new decisions, so any change is on purpose.
+- [ ] **SEO and analytics.** Page titles and descriptions, sitemap, Google Search Console (submit the new sitemap after the switch), analytics.
+- [ ] **Switch-over day plan.** DNS/domain to Vercel, Montonio production keys into Vercel, turn off the WordPress Montonio plugin, handle orders that are paid but not yet shipped in WordPress, keep a backup of the WordPress site and database.

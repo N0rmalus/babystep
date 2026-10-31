@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · Krepšelis · desktop</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.pfield{transition:border-color .15s ease,box-shadow .15s ease}.pfield:hover{border-color:#968a81 !important}.pfield:focus-within{border-color:#c76e48 !important;box-shadow:0 0 0 3px rgba(199,110,72,.14)}.pfield input{outline:none !important}.pfield input::placeholder{color:#968a81;text-transform:none;letter-spacing:0}.pbtn{transition:background-color .15s ease,color .15s ease}.pbtn:hover{background:#2b2421 !important;color:#ffffff !important}.pbtn:focus-visible{outline:2px solid #c76e48;outline-offset:2px}
+body{margin:0;background:#f8f4ee}
+a{color:#9a4734;text-decoration:none}a:hover{color:#7c3b30}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c76e48;outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.nlink{color:#433934;font-weight:600;font-size:15px}.nlink:hover{color:#9a4734}
+.flink{color:#433934}.flink:hover{color:#9a4734}
+.srch:hover{border-color:#968a81 !important}.srch:focus{border-color:#c76e48 !important}
+.dd{opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.navcat:hover .dd,.navcat:focus-within .dd{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.chev{transition:transform .18s ease}.navcat:hover .chev,.navcat:focus-within .chev{transform:rotate(180deg)}
+.ddlink{color:#433934}.ddlink:hover,.ddlink:focus-visible{background:#faf7f3;color:#9a4734}
+.bc{color:#6e625a}.bc:hover{color:#9a4734}
+.qbtn{color:#2b2421}.qbtn:hover:not(:disabled){background:#f1ebe3}.qbtn:disabled{color:#968a81;cursor:default}
+.iname{color:#2b2421}.iname:hover{color:#9a4734}
+.bar{transition:width .4s ease}
+@media (max-width: 1100px){.fcols{grid-template-columns:1fr 1fr !important}.cartg{grid-template-columns:1fr !important}}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans);">
+
+<div style="background: var(--color-ink); color: #f8f4ee; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+<span>Nemokamas pristatymas užsakymams nuo 80 € · Grąžinti gali per 14 dienų</span>
+</div>
+
+<header style="position: sticky; top: 0; z-index: 30; background: var(--color-canvas); border-bottom: 1px solid var(--color-line);">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 76px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;">
+<form role="search" onSubmit="{{noSubmit}}" style="position: relative; width: 320px;">
+<label for="qc" class="sr">Paieška</label>
+<span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.Search" size="{{n18}}"></x-import></span>
+<input id="qc" class="srch" type="search" placeholder="Ko ieškai?" style="width: 100%; box-sizing: border-box; height: 44px; padding: 0 18px 0 44px; border-radius: 999px; border: 1px solid var(--color-line-strong); background: #ffffff; font: inherit; font-size: 15px; color: var(--color-ink);">
+</form>
+<a href="D-desktop.dc.html" aria-label="Babystep pradžia" style="display: flex; align-items: center; gap: 8px; color: var(--color-ink);"><img src="/_blob/eba72f499df045e7ead825c1efde6e2d" alt="" style="height: 34px; width: auto; display: block;"><span style="font-family: var(--font-accent); font-weight: 700; font-size: 30px; letter-spacing: -0.02em;">Babystep</span></a>
+<nav aria-label="Paskyra" style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+<x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="Wish-desktop.dc.html" label="Norai" element-before="{{icHeart}}" class-name="h-11"></x-import>
+<span style="display: inline-flex; border-radius: 999px; box-shadow: 0 0 0 2px var(--color-tumbleweed-300);"><x-import component-from-global-scope="Babystep.Button" variant="secondary" size="sm" href="Cart-desktop.dc.html" label="Krepšelis" element-before="{{icCart}}" element-after="{{cartCount}}" class-name="h-11"></x-import></span>
+<span style="width: 1px; height: 24px; background: var(--color-line); margin: 0 4px;" aria-hidden="true"></span>
+<x-import component-from-global-scope="Babystep.IconButton" href="#paskyra" label="Paskyra" icon="{{icUser}}"></x-import>
+</nav>
+</div>
+<nav aria-label="Kategorijos" style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 48px; display: flex; align-items: center; justify-content: center; gap: 36px;">
+<sc-for list="{{navCats}}" as="c" hint-placeholder-count="5">
+<div class="navcat" style="position: relative; height: 48px; display: flex; align-items: center;">
+<a class="nlink" href="{{c.href}}" style="display: flex; align-items: center; gap: 4px; height: 48px;">{{c.name}}<sc-if value="{{c.hasSubs}}" hint-placeholder-val="{{false}}"><span class="chev" style="display: flex; color: var(--color-ink-muted);"><x-import component-from-global-scope="Babystep.Icons.ChevronDown" size="{{n14}}"></x-import></span></sc-if></a>
+<sc-if value="{{c.hasSubs}}" hint-placeholder-val="{{false}}">
+<div class="dd" style="position: absolute; top: 100%; left: 50%; padding-top: 4px; z-index: 40;">
+<ul style="width: 260px; box-sizing: border-box; margin: 0; list-style: none; background: #ffffff; border: 1px solid var(--color-line); border-radius: 20px; box-shadow: 0 12px 32px rgba(43, 36, 33, 0.08); padding: 10px; display: flex; flex-direction: column;">
+<sc-for list="{{c.subs}}" as="s" hint-placeholder-count="3">
+<li><a href="#" class="ddlink" style="display: flex; align-items: center; height: 44px; padding: 0 12px; border-radius: 12px; font-size: 15px;">{{s}}</a></li>
+</sc-for>
+</ul>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<a href="Sale-desktop.dc.html" style="font-weight: 600; font-size: 15px; color: var(--color-sale-strong);">Akcijos</a>
+</nav>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 0 40px 112px;">
+<nav aria-label="Naršymo kelias" style="padding: 20px 0;">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; align-items: center; gap: 4px; font-size: 14px; color: var(--color-ink-muted);">
+<li><a href="D-desktop.dc.html" class="bc" aria-label="Pradžia" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 999px;"><x-import component-from-global-scope="Babystep.Icons.Home" size="{{n16}}"></x-import></a></li>
+<li aria-hidden="true" style="display: flex; color: var(--color-ink-faint);"><x-import component-from-global-scope="Babystep.Icons.ChevronRight" size="{{n14}}"></x-import></li>
+<li><span aria-current="page" style="display: flex; align-items: center; height: 32px; padding: 0 4px; font-weight: 700; color: var(--color-ink);">Krepšelis</span></li>
+</ol>
+</nav>
+
+<div style="display: flex; align-items: baseline; gap: 14px; padding: 20px 0 28px;">
+<h1 style="margin: 0; font-family: var(--font-accent); font-weight: 700; font-size: 36px; line-height: 1.1;">Krepšelis</h1>
+<span style="font-size: 16px; color: var(--color-ink-muted);"><span style="font-variant-numeric: tabular-nums;">{{count}}</span> {{countWord}}</span>
+</div>
+
+<div class="cartg" style="display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 40px; align-items: start;">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+
+<section aria-label="Nemokamas pristatymas" style="padding: 18px 22px; border-radius: 20px; background: #ffffff; border: 1px solid var(--color-line); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 12px;">
+<sc-if value="{{notFree}}" hint-placeholder-val="{{true}}">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--color-ink-soft);"><span style="display: flex; color: var(--color-link);"><x-import component-from-global-scope="Babystep.Icons.Truck" size="{{n18}}"></x-import></span><span>Iki nemokamo pristatymo liko <strong style="color: var(--color-ink); font-variant-numeric: tabular-nums;">{{left}}</strong></span></p>
+</sc-if>
+<sc-if value="{{free}}" hint-placeholder-val="{{false}}">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--color-success);"><x-import component-from-global-scope="Babystep.Icons.Check" size="{{n18}}"></x-import><span>Pristatymas tau nemokamas</span></p>
+</sc-if>
+<div role="progressbar" aria-label="Iki nemokamo pristatymo" aria-valuemin="0" aria-valuemax="80" aria-valuenow="{{subNum}}" style="height: 8px; border-radius: 999px; background: var(--color-muted); overflow: hidden;"><div class="bar" style="height: 100%; width: {{pct}}; border-radius: 999px; background: {{barColor}};"></div></div>
+</section>
+
+<section aria-label="Prekės krepšelyje" style="border-radius: 24px; background: #ffffff; border: 1px solid var(--color-line); box-shadow: var(--shadow-card); padding: 4px 24px;">
+<ul style="margin: 0; padding: 0; list-style: none;">
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="3">
+<li style="padding: 20px 0; border-bottom: {{l.border}};">
+<div style="display: grid; grid-template-columns: 112px minmax(0, 1fr) 140px 104px 96px; gap: 20px; align-items: center;">
+<a href="PP-C-desktop.dc.html" aria-hidden="true" tabindex="-1" style="display: block; width: 112px; height: 112px; border-radius: 16px; overflow: hidden; background: var(--color-muted);"><img src="{{l.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;"></a>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;">
+<a href="PP-C-desktop.dc.html" class="iname" style="font-size: 17px; font-weight: 600; line-height: 1.3;">{{l.name}}</a>
+<span style="font-size: 14px; color: var(--color-ink-muted);">{{l.meta}}</span>
+<span style="display: flex; align-items: baseline; gap: 8px; font-size: 14px; font-variant-numeric: tabular-nums;"><span style="color: {{l.unitColor}}; font-weight: 600;">{{l.unit}}</span><sc-if value="{{l.onSale}}" hint-placeholder-val="{{false}}"><span style="color: var(--color-ink-faint); text-decoration: line-through; font-size: 13px;">{{l.old}}</span></sc-if><span style="color: var(--color-ink-muted);">/ vnt.</span></span>
+</div>
+<div style="display: inline-flex; align-items: center; justify-self: start; border: 1px solid {{l.qtyBorder}}; border-radius: 999px; background: #ffffff; height: 44px;">
+<button type="button" class="qbtn" aria-label="Mažinti kiekį" onClick="{{l.dec}}" disabled="{{l.decOff}}" style="width: 44px; height: 42px; border: 0; background: transparent; border-radius: 999px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<span aria-live="polite" aria-label="Kiekis" style="min-width: 28px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums;">{{l.qty}}</span>
+<button type="button" class="qbtn" aria-label="Didinti kiekį" onClick="{{l.inc}}" disabled="{{l.incOff}}" style="width: 44px; height: 42px; border: 0; background: transparent; border-radius: 999px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+<span style="justify-self: end; font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums;">{{l.total}}</span>
+<div style="display: flex; gap: 4px; justify-content: flex-end;"><x-import component-from-global-scope="Babystep.IconButton" label="{{l.wishLabel}}" icon="{{l.wishIcon}}" on-click="{{l.wish}}"></x-import><x-import component-from-global-scope="Babystep.IconButton" variant="danger" label="{{l.removeLabel}}" icon="{{icTrash}}" on-click="{{l.remove}}"></x-import></div>
+</div>
+</li>
+</sc-for>
+</ul>
+</section>
+
+<a href="Cat-A-desktop.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600;"><x-import component-from-global-scope="Babystep.Icons.ChevronLeft" size="{{n16}}"></x-import> Tęsti apsipirkimą</a>
+</div>
+
+<aside aria-labelledby="h-sum" style="position: sticky; top: 148px; padding: 24px; border-radius: 24px; background: #ffffff; border: 1px solid var(--color-line); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 14px;">
+<h2 id="h-sum" style="margin: 0; font-size: 18px; font-weight: 600;">Užsakymo suma</h2>
+<div style="display: flex; justify-content: space-between; font-size: 15px; color: var(--color-ink-soft);"><span>Prekės</span><span style="font-variant-numeric: tabular-nums;">{{sub}}</span></div>
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--color-ink-soft);">
+<span style="display: flex; flex-direction: column; gap: 2px;">Pristatymas<span style="font-size: 13px; color: var(--color-ink-muted);">Pasirinksi apmokėdamas</span></span>
+<span style="font-variant-numeric: tabular-nums; font-weight: {{delWeight}}; color: {{delColor}};">{{delivery}}</span>
+</div>
+<sc-if value="{{noPromo}}" hint-placeholder-val="{{true}}">
+<form onSubmit="{{applyPromo}}" style="display: flex; flex-direction: column; gap: 6px;">
+<label for="promo-d" class="sr">Nuolaidos kodas</label>
+<div class="pfield" style="display: flex; align-items: center; height: 40px; padding: 0 4px 0 14px; gap: 8px; border-radius: 999px; border: 1px solid {{codeBorder}}; background: var(--color-canvas);">
+<span aria-hidden="true" style="display: flex; color: var(--color-ink-muted);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/></svg></span>
+<input id="promo-d" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Nuolaidos kodas" value="{{codeVal}}" onChange="{{onCode}}" aria-invalid="{{codeBad}}" aria-describedby="promo-d-err" style="flex: 1 1 auto; min-width: 0; height: 100%; padding: 0; border: 0; background: transparent; font: inherit; font-size: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink);">
+<button type="submit" class="pbtn" style="flex: 0 0 auto; height: 32px; padding: 0 14px; border: 0; border-radius: 999px; background: var(--color-muted); color: var(--color-ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Pritaikyti</button>
+</div>
+<sc-if value="{{codeBad}}" hint-placeholder-val="{{false}}"><span id="promo-d-err" role="alert" style="padding-left: 14px; font-size: 13px; color: var(--color-danger);">Tokio kodo neradome. Patikrink, ar gerai įvedei.</span></sc-if>
+</form>
+</sc-if>
+<sc-if value="{{hasPromo}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px;">
+<span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--color-ink-soft);">Nuolaida <span style="display: inline-flex; align-items: center; gap: 2px; padding: 2px 4px 2px 10px; border-radius: 999px; background: var(--color-success-soft, #e7efe4); color: var(--color-success); font-size: 13px; font-weight: 600; letter-spacing: 0.04em;">{{promoCode}}<button type="button" onClick="{{removePromo}}" aria-label="Pašalinti nuolaidos kodą" style="width: 28px; height: 28px; border: 0; background: transparent; color: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 999px; font-size: 16px; line-height: 1;">×</button></span></span>
+<span style="font-variant-numeric: tabular-nums; font-weight: 600; color: var(--color-success);">−{{discount}}</span>
+</div>
+</sc-if>
+<div style="height: 1px; background: var(--color-line);"></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: 16px; font-weight: 600;">Iš viso</span><span style="font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums;">{{total}}</span></div>
+<span style="font-size: 13px; color: var(--color-ink-muted); margin-top: -8px;">{{totalNote}}</span>
+<sc-if value="{{ok}}" hint-placeholder-val="{{true}}">
+<x-import component-from-global-scope="Babystep.Button" size="lg" href="CheckoutC-desktop.dc.html" label="Pereiti prie apmokėjimo" element-after="{{icArrow}}" full-width="{{yes}}" style="margin-top: 4px;"></x-import>
+</sc-if>
+<ul style="margin: 6px 0 0; padding: 14px 0 0; list-style: none; border-top: 1px solid var(--color-line); display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--color-ink-soft);">
+<li style="display: flex; align-items: center; gap: 10px;"><span style="display: flex; color: var(--color-ink-muted);"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n16}}"></x-import></span>Saugus apmokėjimas per Montonio</li>
+<li style="display: flex; align-items: center; gap: 10px;"><span style="display: flex; color: var(--color-ink-muted);"><x-import component-from-global-scope="Babystep.Icons.RotateCcw" size="{{n16}}"></x-import></span>Grąžinti gali per 14 dienų</li>
+<li style="display: flex; align-items: center; gap: 10px;"><span style="display: flex; color: var(--color-ink-muted);"><x-import component-from-global-scope="Babystep.Icons.Truck" size="{{n16}}"></x-import></span>Paštomatas arba kurjeris į namus</li>
+</ul>
+</aside>
+</div>
+</main>
+
+<footer style="border-top: 1px solid var(--color-line);">
+<div class="fcols" style="max-width: 1280px; margin: 0 auto; padding: 64px 40px 40px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+<a href="D-desktop.dc.html" style="font-family: var(--font-accent); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<p style="margin: 0; max-width: 300px; font-size: 15px; line-height: 1.55; color: var(--color-ink-muted);">Švelnios miego prekės ramesnėms naktims. Kaip draugas, kuris tai jau išgyveno.</p>
+<div style="display: flex; gap: 10px;">
+<x-import component-from-global-scope="Babystep.IconButton" href="#instagram" label="Instagram" icon="{{icInsta}}"></x-import>
+<x-import component-from-global-scope="Babystep.IconButton" href="#facebook" label="Facebook" icon="{{icFb}}"></x-import>
+</div>
+</div>
+<nav aria-label="Parduotuvė" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Parduotuvė</span>
+<a class="flink" href="#">Miegmaišiai</a><a class="flink" href="#">Vystyklai</a><a class="flink" href="#">Naktinės lempos</a><a href="Sale-desktop.dc.html" style="color: var(--color-sale-strong);">Akcijos</a>
+</nav>
+<nav aria-label="Pagalba" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Pagalba</span>
+<a class="flink" href="#">Pristatymas</a><a class="flink" href="#">Grąžinimas</a><a class="flink" href="#">Dažni klausimai</a><a class="flink" href="#">Kontaktai</a>
+</nav>
+<nav aria-label="Babystep" style="display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink-muted);">Babystep</span>
+<a class="flink" href="#">Apie mus</a><a class="flink" href="#">Taisyklės</a><a class="flink" href="#">Privatumo politika</a><span style="color: var(--color-ink-soft);">[el. paštas]</span>
+</nav>
+</div>
+<div style="max-width: 1280px; margin: 0 auto; padding: 20px 40px 32px; display: flex; justify-content: space-between; gap: 16px; font-size: 13px; color: var(--color-ink-muted); border-top: 1px solid var(--color-line);">
+<span>© 2026 Babystep</span>
+<span style="display: flex; align-items: center; gap: 6px;"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n14}}"></x-import> Saugus apmokėjimas</span>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, B = window.Babystep || {}, I = B.Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 16 }) : null;
+    const st = this.state || {};
+    const fmt = (n) => n.toFixed(2).replace('.', ',') + ' €';
+    const FREE = 80;
+    const base = [
+      { id: 'a', name: 'Muslino miegmaišis 0–6 mėn.', meta: 'Dydis: 0–6 mėn. · Spalva: šalavijų žalia', price: 31.99, old: 39.99, stock: 8, img: '/_blob/b737f3d4d317b0dbc227b0267164c715' },
+      { id: 'b', name: 'Vystyklai iš muslino, 3 vnt.', meta: 'Dydis: 120 × 120 cm · Spalva: smėlio rinkinys', price: 24.90, old: null, stock: 8, img: '/_blob/3b51b221bfb5008f3969e06103616212' },
+      { id: 'c', name: 'Medinė piramidė', meta: 'Dydis: vienas · Spalva: natūrali mediena', price: 19.90, old: null, stock: 1, img: '/_blob/c3ea53d068455e00c50206693dc68aac' }
+    ];
+    const q = Object.assign({ a: 1, b: 1, c: 1 }, st.q || {});
+    const gone = st.gone || {};
+    const wished = st.wished || {};
+    const setQ = (id, v) => this.setState({ q: Object.assign({}, q, { [id]: v }) });
+    const live = base.filter((it) => !gone[it.id]);
+    const lines = live.map((it, k) => {
+      const n = q[it.id];
+      const warn = n > it.stock;
+      return {
+        img: it.img, name: it.name, meta: it.meta, unit: fmt(it.price), old: it.old ? fmt(it.old) : '', onSale: !!it.old,
+        unitColor: it.old ? 'var(--color-sale-strong)' : 'var(--color-ink)',
+        qty: n, total: fmt(it.price * n), warn, stock: it.stock,
+        fixLabel: 'Palikti ' + it.stock + ' vnt.',
+        qtyBorder: warn ? 'var(--color-danger-line)' : 'var(--color-line-strong)',
+        decOff: n <= 1, incOff: n >= Math.min(it.stock, 10),
+        dec: () => setQ(it.id, Math.max(1, n - 1)), inc: () => setQ(it.id, n + 1), fix: () => setQ(it.id, it.stock),
+        removeLabel: 'Pašalinti „' + it.name + '“ iš krepšelio',
+        wishLabel: wished[it.id] ? 'Pašalinti „' + it.name + '“ iš norų sąrašo' : 'Įtraukti „' + it.name + '“ į norų sąrašą',
+        wishIcon: (R && I.Heart) ? R.createElement(I.Heart, { size: 16, fill: wished[it.id] ? 'currentColor' : 'none', style: { color: wished[it.id] ? 'var(--color-sale-strong)' : undefined } }) : null,
+        wish: () => this.setState({ wished: Object.assign({}, wished, { [it.id]: !wished[it.id] }) }),
+        remove: () => this.setState({ gone: Object.assign({}, gone, { [it.id]: true }) }),
+        border: k === live.length - 1 ? '0' : '1px solid var(--color-line)'
+      };
+    });
+    const sub = live.reduce((s, it) => s + it.price * q[it.id], 0);
+    const count = live.reduce((s, it) => s + q[it.id], 0);
+    const free = sub >= FREE;
+    const blocked = false;
+    const promo = st.promo || '';
+    const codeVal = st.code || '';
+    const disc = promo ? Math.round(sub * 0.10 * 100) / 100 : 0;
+    return {
+      n14: 14, n16: 16, n18: 18, yes: true,
+      noop: () => {}, noSubmit: (e) => e.preventDefault(),
+      icHeart: ic('Heart'), icCart: ic('ShoppingCart'), icArrow: ic('ArrowRight'), icTrash: ic('Trash2'),
+      icInsta: ic('Instagram'), icFb: ic('Facebook'),
+      icUser: R ? R.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }, R.createElement('circle', { cx: 12, cy: 8, r: 4 }), R.createElement('path', { d: 'M4 21a8 8 0 0 1 16 0' })) : null,
+      cartCount: R ? R.createElement('span', { className: 'bg-ink flex size-5 items-center justify-center rounded-full text-xs font-semibold text-white tabular-nums' }, String(count)) : null,
+      navCats: [
+        { name: 'Miegui', href: 'Cat-A-desktop.dc.html', hasSubs: true, subs: ['Miegmaišiai', 'Pledai', 'Lizdeliai', 'Apsaugėlės'] },
+        { name: 'Priežiūrai', href: '#', hasSubs: true, subs: ['Rankšluostukai', 'Merliukai', 'Žinduko laikikliai', 'Pončai'] },
+        { name: 'Aksesuarai', href: '#', hasSubs: true, subs: ['Tapukai / kojinytės'] },
+        { name: 'Žaislai', href: '#', hasSubs: false, subs: [] },
+        { name: 'Dovanų rinkiniai', href: '#', hasSubs: false, subs: [] }
+      ],
+      lines, count, countWord: count === 1 ? 'prekė' : (count % 10 === 0 || (count >= 11 && count <= 19) ? 'prekių' : 'prekės'),
+      sub: fmt(sub), subNum: String(Math.round(sub)), left: fmt(Math.max(0, FREE - sub)),
+      free, notFree: !free, pct: Math.min(100, sub / FREE * 100).toFixed(1) + '%',
+      barColor: free ? 'var(--color-success)' : 'var(--color-tumbleweed-500)',
+      delivery: free ? 'Nemokamai' : 'nuo 3,49 €', delColor: free ? 'var(--color-success)' : 'var(--color-ink-soft)', delWeight: free ? '600' : '400',
+      total: fmt(sub - disc), totalNote: free ? 'Pristatymas jau įskaičiuotas.' : 'Be pristatymo. Jį pridėsime, kai pasirinksi būdą.',
+      ok: !blocked, blocked,
+      codeVal, onCode: (e) => this.setState({ code: e.target.value, codeBad: false }),
+      applyPromo: (e) => { if (e && e.preventDefault) e.preventDefault(); const c = (codeVal || '').trim().toUpperCase(); if (!c) return; if (c === 'LABAS10') this.setState({ promo: c, code: '', codeBad: false }); else this.setState({ codeBad: true }); },
+      removePromo: () => this.setState({ promo: '' }),
+      noPromo: !promo, hasPromo: !!promo, promoCode: promo, discount: fmt(disc), codeBad: !!st.codeBad,
+      codeBorder: st.codeBad ? 'var(--color-danger-line)' : 'var(--color-line-strong)'
+    };
+  }
+}
+</script>
+</body>
+</html>

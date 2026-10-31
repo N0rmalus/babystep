@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Babystep · Laukiame mokėjimo · mobile</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/babystep/tokens.css">
+<link rel="stylesheet" href="ds/babystep/fonts/fonts.css">
+<link rel="stylesheet" href="ds/babystep/components/bundle.css">
+<script src="ds/babystep/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f8f4ee}
+a{color:#9a4734;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c76e48;outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.flink{color:#433934}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1.4s linear infinite}
+@media (prefers-reduced-motion: reduce){.spin{animation-duration:4s}}
+</style>
+</helmet>
+<div style="width: 390px; background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans);">
+
+<div style="background: var(--color-ink); color: #f8f4ee; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 13px;"><span>Nemokamas pristatymas nuo 80 €</span></div>
+
+<header style="position: sticky; top: 0; z-index: 30; background: var(--color-canvas); border-bottom: 1px solid var(--color-line);">
+<div style="height: 56px; padding: 0 16px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;">
+<div style="display: flex;"><x-import component-from-global-scope="Babystep.IconButton" label="Meniu" icon="{{icMenu}}" on-click="{{noop}}"></x-import></div>
+<a href="D-mobile.dc.html" aria-label="Babystep pradžia" style="display: flex; align-items: center; gap: 6px; color: var(--color-ink);"><img src="/_blob/eba72f499df045e7ead825c1efde6e2d" alt="" style="height: 26px; width: auto; display: block;"><span style="font-family: var(--font-accent); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;">Babystep</span></a>
+<div style="display: flex; justify-content: flex-end;"><x-import component-from-global-scope="Babystep.IconButton" href="Cart-mobile.dc.html" label="Krepšelis" icon="{{icCart18}}"></x-import></div>
+</div>
+<form role="search" onSubmit="{{noSubmit}}" style="position: relative; padding: 0 16px 10px;">
+<label for="qwm" class="sr">Paieška</label>
+<span style="position: absolute; left: 32px; top: 22px; transform: translateY(-50%); color: var(--color-ink-muted); display: flex;"><x-import component-from-global-scope="Babystep.Icons.Search" size="{{n16}}"></x-import></span>
+<input id="qwm" type="search" placeholder="Ko ieškai?" style="width: 100%; box-sizing: border-box; height: 44px; padding: 0 16px 0 42px; border-radius: 999px; border: 1px solid var(--color-line-strong); background: #ffffff; font: inherit; font-size: 16px; color: var(--color-ink);">
+</form>
+</header>
+
+<main style="padding: 48px 16px 56px;">
+<section aria-labelledby="h-wm" aria-live="polite" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;">
+<span aria-hidden="true" style="position: relative; width: 64px; height: 64px; border-radius: 999px; background: var(--color-tumbleweed-50); display: flex; align-items: center; justify-content: center;"><span class="spin" style="position: absolute; inset: 5px; border-radius: 999px; border: 3px solid var(--color-tumbleweed-100); border-top-color: var(--color-tumbleweed-500);"></span><span style="display: flex; color: var(--color-link);"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n18}}"></x-import></span></span>
+<span style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-link); font-variant-numeric: tabular-nums;">Užsakymo nr. BS-10482</span>
+<h1 id="h-wm" style="margin: 0; font-family: var(--font-accent); font-weight: 700; font-size: 36px; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance;">Laukiame mokėjimo patvirtinimo</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: var(--color-ink-muted);">Kartais bankui prireikia kelių minučių. Puslapis atsinaujins pats, o patvirtinimą atsiųsime į <strong style="color: var(--color-ink-soft);">ieva@pastas.lt</strong>.</p>
+<p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--color-ink-soft);">Mokėti dar kartą nereikia.</p><div style="width: 100%; margin-top: 8px;"><x-import component-from-global-scope="Babystep.Button" variant="secondary" label="Atnaujinti dabar" element-before="{{icRefresh}}" on-click="{{noop}}" full-width="{{yes}}"></x-import></div>
+</section>
+
+<section aria-labelledby="h-wmq" style="margin-top: 36px; padding: 18px; border-radius: 20px; background: #ffffff; border: 1px solid var(--color-line); display: flex; flex-direction: column; gap: 10px;">
+<h2 id="h-wmq" style="margin: 0; font-size: 15px; font-weight: 600;">Jei laukti tenka ilgiau</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--color-ink-soft);">Užsakymas išsaugotas. Gali uždaryti šį langą, o kai tik bankas patvirtins, laišką gausi el. paštu.</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--color-ink-soft);">Neramu? Parašyk mums: [el. paštas].</p>
+</section>
+</main>
+
+<footer style="background: var(--color-muted-soft); border-top: 1px solid var(--color-line); padding: 40px 16px 28px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;">
+<a href="D-mobile.dc.html" style="font-family: var(--font-accent); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; color: var(--color-ink);">Babystep</a>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--color-ink-muted);">Klausk mūsų bet ko: [el. paštas]</p>
+<nav aria-label="Informacija" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0 20px;">
+<a class="flink" href="#" style="padding: 10px 0;">Pristatymas</a><a class="flink" href="#" style="padding: 10px 0;">Grąžinimas</a><a class="flink" href="#" style="padding: 10px 0;">DUK</a><a class="flink" href="#" style="padding: 10px 0;">Apie mus</a><a class="flink" href="#" style="padding: 10px 0;">Kontaktai</a><a class="flink" href="#" style="padding: 10px 0;">Privatumas</a>
+</nav>
+<div style="display: flex; gap: 10px;">
+<x-import component-from-global-scope="Babystep.IconButton" href="#instagram" label="Instagram" icon="{{icInsta}}"></x-import>
+<x-import component-from-global-scope="Babystep.IconButton" href="#facebook" label="Facebook" icon="{{icFb}}"></x-import>
+</div>
+<div style="width: 100%; padding-top: 16px; border-top: 1px solid var(--color-line); display: flex; justify-content: space-between; font-size: 13px; color: var(--color-ink-muted);">
+<span>© 2026 Babystep</span>
+<span style="display: flex; align-items: center; gap: 6px;"><x-import component-from-global-scope="Babystep.Icons.Lock" size="{{n14}}"></x-import> Saugus apmokėjimas</span>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const R = window.React, B = window.Babystep || {}, I = B.Icons || {};
+    const ic = (n, s) => (R && I[n]) ? R.createElement(I[n], { size: s || 16 }) : null;
+    return {
+      n14: 14, n16: 16, n18: 18, yes: true,
+      noop: () => {}, noSubmit: (e) => e.preventDefault(),
+      icMenu: ic('Menu', 18), icCart18: ic('ShoppingCart', 18), icRefresh: ic('RotateCcw'), icInsta: ic('Instagram'), icFb: ic('Facebook')
+    };
+  }
+}
+</script>
+</body>
+</html>
