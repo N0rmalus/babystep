@@ -165,7 +165,4 @@ export const selectCartItemCount = (state: CartStore) => getCartItemCount(state.
 
 export const getCartItemCount = (items: CartLine[]) => items.reduce((total, item) => total + item.quantity, 0);
 
-export const getCheckoutProductIds = (items: CartLine[]) =>
-  items.flatMap((item) => Array.from({ length: item.quantity }, () => item.productId));
-
 export default useCart;

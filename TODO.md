@@ -4,12 +4,12 @@ Ranked by impact on a shop taking real orders. `npm run lint` and `npm run types
 
 ## Orders and money
 
-Payments are moving from Stripe to Montonio (see the admin repo's TODO). The API keeps the `{ productIds }` in, `{ url }` out contract, so the items below work with either provider.
+Payments are moving from Stripe to Montonio (see the admin repo's TODO). The cart, checkout (`/apmokejimas`) and confirmation (`/uzsakymas/[orderId]`) now run on a mock data layer (`lib/checkout-api.ts`); see "Checkout" below for what's left.
 
-- [ ] **Add delivery method selection and make shipping prices agree.** The API currently charges no shipping at all. The cart shows a flat 4,99 € (`STANDARD_SHIPPING_PRICE` in `lib/consts.ts`), and the delivery page promises 3,49 € (parcel locker) and 6,49 € (courier). Once the API charges shipping, let the customer pick a delivery method, send it with the checkout request, and show the same prices in the cart and on the delivery page. Blocked on the admin side.
+- [x] **Add delivery method selection and make shipping prices agree.** The checkout lets the customer pick a parcel locker or courier, and the cart shows "nuo 3,49 €" from the same delivery config. The flat `STANDARD_SHIPPING_PRICE` is gone. Still open: the delivery page (see "Checkout") and the real endpoint.
 - [ ] **Allow buying more than one of a product.** (If "Product variants" is close, do this together with its cart change, so the cart format changes once.) `hooks/use-cart.ts` stores each ID once and turns away a second add. The API already counts repeated IDs in `{ productIds }` as quantity and checks stock per quantity, so this is a storefront-only change: store a quantity per ID (with a store `migrate`) and repeat the ID that many times at checkout.
 - [ ] **Add per-route `error.tsx` boundaries.** Right now any API error falls through to `app/global-error.tsx`, which shows Next's plain error screen without the layout. On the home page, any one of its five parallel fetches failing takes the whole page down.
-- [ ] **Add a proper order confirmation.** `cart/components/summary.tsx` empties the cart and says payment succeeded whenever the URL has `?success`. There is no confirmation page or order number. `?canceled` shows "Kažkas nepavyko", which reads like an error when the customer simply cancelled. Build a confirmation page keyed on our own order ID (which the API will put in the return URL) that asks the API for the order's status, so it doesn't depend on the provider.
+- [x] **Add a proper order confirmation.** `/uzsakymas/[orderId]` reads the order status from the data layer and shows paid, waiting (polls) or not paid. The `?success` / `?canceled` handling is gone. Runs on mock data until the admin's order status endpoint exists.
 - [x] **Check the checkout reply before redirecting.** `hooks/use-cart-summary.ts` does `window.location.href = response.data.url` without checking that `url` exists, so a malformed reply sends the customer to `/cart/undefined`.
 
 ## Legal and trust
@@ -73,6 +73,9 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 - [ ] **Wishlist sign-in note.** The "Prisijunk" link does nothing until customer accounts exist.
 - [ ] **Checkout data layer.** Delivery options, pickup points, bank list, order creation and status are mock data until the admin endpoints exist.
 - [ ] **Confirmation page account card and checkout sign-in note.** Mocks until customer accounts exist.
+- [ ] **Cart promo code field.** One demo code (`BABYSTEP10`, 10 %) in `cart/components/promo-code-field.tsx`; the discount isn't carried into checkout. Replace once the admin supports promo codes.
+- [ ] **Confirmation status switcher.** `uzsakymas/[orderId]/components/mock-status-switcher.tsx` (development builds only) switches paid / waiting / failed. Delete it with the mock data layer.
+- [ ] **Size and color in cart, checkout and confirmation lines.** `MOCK_CART_VARIANT_META` until "Product variants".
 - [ ] **Billboard carousel controls**, if shown with fewer than two real banners. Replace with the "Customizable billboards" work.
 
 ## Product variants
@@ -97,9 +100,9 @@ The wishlist's "Pasidalinti" is a mock. Parents share it so relatives know what 
 
 Cart, checkout (`/apmokejimas`) and order confirmation (`/uzsakymas/[orderId]`). Decisions: `../babystep-admin/docs/montonio-research.md`, "Decisions".
 
-- [ ] **Build the UI against a mock data layer** (`lib/checkout-api.ts` + `lib/mocks/checkout.ts`): delivery options, pickup points, payment methods, create order, order status. Can be done before the admin side.
+- [x] **Build the UI against a mock data layer** (`lib/checkout-api.ts` + `lib/mocks/checkout.ts`): delivery options, pickup points, payment methods, create order, order status. Can be done before the admin side.
 - [ ] **Switch the data layer to the real admin endpoints** once the admin's Montonio work is done. Test the full flow in Montonio's sandbox.
-- [ ] **Payment and carrier logos.** Visa, Mastercard, Apple Pay, Google Pay, Omniva, Unisend and SmartPosti as official SVGs in `public/logos/`, following each brand's usage rules (no recoloring, minimum size). Bank logos come from Montonio's `logoUrl`.
+- [ ] **Payment and carrier logos.** Visa, Mastercard, Apple Pay, Google Pay, Omniva, Unisend and SmartPosti as official SVGs in `public/logos/`, following each brand's usage rules (no recoloring, minimum size). Bank logos come from Montonio's `logoUrl`. Unisend is still missing, so it shows as a text chip.
 - [ ] **Delivery page** (`pristatymo-informacija`): Omniva and Unisend lockers 3,49 €, SmartPosti courier 6,49 €, free from 80 €. Remove LP Express and the flat 4,99 € (`STANDARD_SHIPPING_PRICE`).
 
 ## Migration from WordPress (babystep.lt)
