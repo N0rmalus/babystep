@@ -11,6 +11,7 @@ import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 import type { DeliveryConfig } from '@/lib/checkout-api';
+import { PRODUCT_REFRESH_INTERVAL_MS } from '@/lib/consts';
 import { pluralize } from '@/lib/plural';
 import { CartEmptyState } from './cart-empty-state';
 import { CartLine } from './cart-line';
@@ -49,6 +50,7 @@ export const CartView = ({ deliveryConfig }: Props) => {
 
   useFocusRefresh({
     onRefresh: handleFocusRefresh,
+    minIntervalMs: PRODUCT_REFRESH_INTERVAL_MS,
     enabled: isMounted,
   });
 
@@ -77,7 +79,7 @@ export const CartView = ({ deliveryConfig }: Props) => {
   }
 
   const hasFailedProducts = failedProductIds.length > 0;
-  const isResolvingProducts = isLoading || missingProductIds.length > 0 || hasFailedProducts;
+  const isResolvingProducts = isLoading || hasFailedProducts;
   const total = cartSummary.subtotal - promo.discount;
 
   return (

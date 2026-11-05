@@ -8,6 +8,7 @@ import { MOCK_CART_VARIANT_META } from '@/lib/mocks/product';
 import { cn } from '@/lib/utils';
 import type { CheckoutLine } from './checkout-lines';
 import { CheckoutStep } from './checkout-step';
+import { StockProblemNote } from './stock-problem-notice';
 import { PaperWrapper } from '@/components/ui/paper-wrapper';
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   isTermsAccepted: boolean;
   termsError?: string;
   isSubmitting: boolean;
+  hasStockProblem: boolean;
   onTermsChange: (isAccepted: boolean) => void;
 };
 
@@ -36,6 +38,7 @@ export const ReviewStep = ({
   isTermsAccepted,
   termsError,
   isSubmitting,
+  hasStockProblem,
   onTermsChange,
 }: Props) => (
   <CheckoutStep
@@ -100,20 +103,30 @@ export const ReviewStep = ({
         </p>
       )}
 
-      <div className="hidden sm:block">
-        <PayButton total={total} isSubmitting={isSubmitting} />
+      <div className="hidden flex-col gap-2.5 sm:flex">
+        {hasStockProblem && <StockProblemNote />}
+        <PayButton total={total} isSubmitting={isSubmitting} isDisabled={hasStockProblem} />
       </div>
     </PaperWrapper>
   </CheckoutStep>
 );
 
-export const PayButton = ({ total, isSubmitting }: { total: number; isSubmitting: boolean }) => (
+export const PayButton = ({
+  total,
+  isSubmitting,
+  isDisabled,
+}: {
+  total: number;
+  isSubmitting: boolean;
+  isDisabled: boolean;
+}) => (
   <Button
     type="submit"
     size="lg"
     label={`Apmokėti ${toCurrency(total)}`}
     elementBefore={<Lock size={18} aria-hidden="true" />}
     loading={isSubmitting}
+    disabled={isDisabled}
     fullWidth
   />
 );

@@ -10,12 +10,20 @@ interface UseFocusRefreshOptions {
 
 const DEFAULT_MIN_INTERVAL_MS = 1200;
 
-const useFocusRefresh = ({ onRefresh, minIntervalMs = DEFAULT_MIN_INTERVAL_MS, enabled = true }: UseFocusRefreshOptions) => {
+const useFocusRefresh = ({
+  onRefresh,
+  minIntervalMs = DEFAULT_MIN_INTERVAL_MS,
+  enabled = true,
+}: UseFocusRefreshOptions) => {
   const lastRefreshAt = useRef(0);
 
   useEffect(() => {
     if (!enabled) {
       return;
+    }
+
+    if (lastRefreshAt.current === 0) {
+      lastRefreshAt.current = Date.now();
     }
 
     const refreshIfAllowed = () => {

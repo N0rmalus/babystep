@@ -33,6 +33,7 @@ import { DeliveryStep } from './delivery-step';
 import { OrderSummaryToggle } from './order-summary-toggle';
 import { PaymentStep } from './payment-step';
 import { PayButton, ReviewStep } from './review-step';
+import { StockProblemNote } from './stock-problem-notice';
 
 type Props = {
   cartLines: CartLine[];
@@ -41,13 +42,22 @@ type Props = {
   subtotal: number;
   deliveryConfig: DeliveryConfig;
   paymentMethods: PaymentMethods;
+  hasStockProblem: boolean;
 };
 
 const EMPTY_CONTACT: ContactValues = { firstName: '', lastName: '', email: '', phone: '' };
 const EMPTY_COURIER: CourierValues = { street: '', apartment: '', city: '', postalCode: '' };
 const CHECKOUT_ERROR_MESSAGE = 'Nepavyko sukurti užsakymo. Bandyk dar kartą.';
 
-export const CheckoutForm = ({ cartLines, lines, itemCount, subtotal, deliveryConfig, paymentMethods }: Props) => {
+export const CheckoutForm = ({
+  cartLines,
+  lines,
+  itemCount,
+  subtotal,
+  deliveryConfig,
+  paymentMethods,
+  hasStockProblem,
+}: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [contact, setContact] = useState(EMPTY_CONTACT);
   const [isContactEditing, setIsContactEditing] = useState(true);
@@ -128,6 +138,10 @@ export const CheckoutForm = ({ cartLines, lines, itemCount, subtotal, deliveryCo
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (hasStockProblem) {
+      return;
+    }
 
     const nextErrors = validateCheckout(values);
     const delivery = toDelivery(values);
@@ -217,6 +231,7 @@ export const CheckoutForm = ({ cartLines, lines, itemCount, subtotal, deliveryCo
           isTermsAccepted={isTermsAccepted}
           termsError={errors.terms}
           isSubmitting={isSubmitting}
+          hasStockProblem={hasStockProblem}
           onTermsChange={(isAccepted) => {
             setIsTermsAccepted(isAccepted);
             clearError('terms');
@@ -225,7 +240,8 @@ export const CheckoutForm = ({ cartLines, lines, itemCount, subtotal, deliveryCo
       </ol>
 
       <div className="border-line bg-canvas shadow-bar sticky bottom-0 z-20 -mx-4 -mt-2 flex flex-col gap-2 border-t px-4 pt-3 pb-3.5 sm:hidden">
-        <PayButton total={total} isSubmitting={isSubmitting} />
+        {hasStockProblem && <StockProblemNote />}
+        <PayButton total={total} isSubmitting={isSubmitting} isDisabled={hasStockProblem} />
       </div>
     </form>
   );

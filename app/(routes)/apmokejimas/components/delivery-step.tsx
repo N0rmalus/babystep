@@ -1,4 +1,4 @@
-import { Check, Cuboid, House, MapPin, Truck } from 'lucide-react';
+import { Cuboid, House, MapPin, Truck } from 'lucide-react';
 
 import { getDeliveryPrice, getRemainingForFreeShipping, hasFreeShipping } from '@/business/delivery-pricing';
 import { toCurrency } from '@/business/to-currency';
@@ -58,12 +58,7 @@ export const DeliveryStep = ({
         ))}
       </div>
 
-      {isFree ? (
-        <p className="text-success flex items-center gap-2 text-sm font-semibold">
-          <Check size={16} aria-hidden="true" />
-          Pristatymas tau nemokamas.
-        </p>
-      ) : (
+      {!isFree && (
         <p className="text-ink-muted flex items-start gap-2 text-sm">
           <Truck size={16} className="text-link mt-0.5 shrink-0" aria-hidden="true" />
           <span>

@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
-import Button from '@/components/ui/button';
 import Skeleton from '@/components/ui/skeleton';
 import useCart from '@/hooks/use-cart';
 import { useCartSummary } from '@/hooks/use-cart-summary';
@@ -14,9 +13,11 @@ import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 import type { DeliveryConfig, PaymentMethods } from '@/lib/checkout-api';
+import { PRODUCT_REFRESH_INTERVAL_MS } from '@/lib/consts';
 import { toCheckoutLines } from './checkout-lines';
 import { CheckoutForm } from './checkout-form';
 import { CheckoutSignInNote } from './checkout-sign-in-note';
+import { StockProblemNotice } from './stock-problem-notice';
 
 type Props = {
   deliveryConfig: DeliveryConfig;
@@ -42,7 +43,7 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
     refetch();
   }, [refetch]);
 
-  useFocusRefresh({ onRefresh: handleFocusRefresh, enabled: isMounted });
+  useFocusRefresh({ onRefresh: handleFocusRefresh, minIntervalMs: PRODUCT_REFRESH_INTERVAL_MS, enabled: isMounted });
 
   const isCartEmpty = itemIds.length === 0;
 
@@ -57,9 +58,13 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
   }
 
   const hasFailedProducts = failedProductIds.length > 0;
-  const isResolving = isLoading || hasFailedProducts || products.length === 0;
+  const hasResolvedAnything = products.length > 0 || missingProductIds.length > 0;
+  const isInitialLoading = isLoading && !hasResolvedAnything;
   const hasStockProblem =
-    missingProductIds.length > 0 || cartSummary.hasOutOfStockProducts || cartSummary.hasInsufficientStock;
+    missingProductIds.length > 0 ||
+    hasFailedProducts ||
+    cartSummary.hasOutOfStockProducts ||
+    cartSummary.hasInsufficientStock;
   const lines = toCheckoutLines({ products, quantityByProductId: cartSummary.quantityByProductId });
 
   return (
@@ -79,18 +84,21 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
       <CheckoutSignInNote />
 
       <div className="mt-4 sm:mt-5">
-        {hasFailedProducts && <ProductListFailedBox onFocusRefresh={handleFocusRefresh} />}
-        {isResolving && !hasFailedProducts && <CheckoutLoadingState />}
-        {!isResolving && hasStockProblem && <StockProblemNotice />}
-        {!isResolving && !hasStockProblem && (
-          <CheckoutForm
-            cartLines={cartLines}
-            lines={lines}
-            itemCount={cartSummary.itemCount}
-            subtotal={cartSummary.subtotal}
-            deliveryConfig={deliveryConfig}
-            paymentMethods={paymentMethods}
-          />
+        {hasFailedProducts && !hasResolvedAnything && <ProductListFailedBox onFocusRefresh={handleFocusRefresh} />}
+        {isInitialLoading && !hasFailedProducts && <CheckoutLoadingState />}
+        {hasResolvedAnything && (
+          <div className="flex flex-col gap-7 sm:gap-9">
+            {hasStockProblem && <StockProblemNotice />}
+            <CheckoutForm
+              cartLines={cartLines}
+              lines={lines}
+              itemCount={cartSummary.itemCount}
+              subtotal={cartSummary.subtotal}
+              deliveryConfig={deliveryConfig}
+              paymentMethods={paymentMethods}
+              hasStockProblem={hasStockProblem}
+            />
+          </div>
         )}
       </div>
     </div>
@@ -103,17 +111,4 @@ const CheckoutLoadingState = () => (
     <Skeleton className="h-48 w-full rounded-3xl" />
     <Skeleton className="h-64 w-full rounded-3xl" />
   </div>
-);
-
-const StockProblemNotice = () => (
-  <section
-    role="alert"
-    className="border-danger-line shadow-card flex flex-col items-start gap-3 rounded-3xl border bg-white p-5 sm:p-6"
-  >
-    <h2 className="text-ink text-lg font-semibold">Krepšelyje kai kas pasikeitė</h2>
-    <p className="text-ink-soft text-base leading-relaxed">
-      Kai kurių prekių nebeliko arba liko mažiau, nei pasirinkai. Pakoreguok krepšelį ir grįžk čia.
-    </p>
-    <Button href="/cart" label="Grįžti į krepšelį" variant="secondary" />
-  </section>
 );
