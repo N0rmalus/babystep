@@ -74,8 +74,6 @@ export const CartPopover = () => {
     hasOutOfStockProducts,
     hasInsufficientStock,
     isCheckoutDisabled,
-    isCheckingOut,
-    onCheckout,
   } = useCartSummary({
     lines,
     products,
@@ -281,7 +279,7 @@ export const CartPopover = () => {
                             <span className="flex items-baseline gap-1.5">
                               {pricing.isOnSale && (
                                 <span className="text-ink-faint text-xs tabular-nums line-through">
-                                  <span className="sr-only">Buvusi kaina </span>
+                                  <span className="sr-only">Buvusi kaina</span>
                                   {toCurrency(pricing.regularPrice * quantity)}
                                 </span>
                               )}
@@ -336,15 +334,25 @@ export const CartPopover = () => {
                     </div>
                   )}
 
-                  <Button
-                    label="Pereiti į apmokėjimą"
-                    elementAfter={<ArrowRight size={18} />}
-                    onClick={onCheckout}
-                    loading={isCheckingOut}
-                    disabled={isCheckoutDisabled}
-                    fullWidth
-                    className="py-3.5 text-base"
-                  />
+                  {isCheckoutDisabled ? (
+                    <Button
+                      label="Pereiti prie apmokėjimo"
+                      elementAfter={<ArrowRight size={18} />}
+                      onClick={() => {}}
+                      disabled
+                      fullWidth
+                      className="py-3.5 text-base"
+                    />
+                  ) : (
+                    <Button
+                      href="/apmokejimas"
+                      label="Pereiti prie apmokėjimo"
+                      elementAfter={<ArrowRight size={18} />}
+                      onClick={() => setIsOpen(false)}
+                      fullWidth
+                      className="py-3.5 text-base"
+                    />
+                  )}
                 </div>
               </div>
             </div>
