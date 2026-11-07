@@ -16,6 +16,7 @@ Payments are moving from Stripe to Montonio (see the admin repo's TODO). The car
 
 - [ ] **Rewrite the privacy policy.** It is WordPress template text about comments and login cookies. It should cover the data the shop actually handles: name, phone, address, payment (Montonio), Sentry and Instagram.
 - [ ] **Connect the newsletter form.** The home page form is a mock (see "Mocks to replace before launch"). Connect it to the signup endpoint once the admin's "Newsletter" tasks are done, with a real confirmation message and an error state.
+- [ ] **Price reductions (EU Omnibus rules).** When a discount is shown (sale price, "-X%", "iki -X%"), the "before" price should be the lowest price in the 30 days before the discount. Check the exact requirement for Lithuania (with the privacy policy review), then show the sale price and badge accordingly. Needs price history from the admin (see its TODO), which must start recording before launch; until 30 days of history exist, the current regular price is the reference.
 
 ## Unfinished pages
 
@@ -80,14 +81,17 @@ The site isn't public yet, so some home page parts are built as visible mocks to
 
 ## Product variants
 
-Storefront side of "Product variants" in the admin's TODO. Do it after the admin side.
+Step 2 of the plan in `../babystep-admin/docs/product-variants.md` ("Storefront" and "Public API" there have the details). Do it after the admin's step 1. Checkout with variants comes with the Montonio checkout (step 3).
 
-- [ ] **Variant selection** on the product page and in the quick-view modal: size as pill chips, color as swatches, unavailable options crossed out. Price, stock and photos follow the chosen variant.
-- [ ] **Cart lines per variant.** The cart already stores `{ productId, variantId?, quantity }`, but `hooks/use-cart.ts` matches lines by `productId` only (add, set quantity, remove). Match by `productId` + `variantId`, so two sizes of one product are separate lines. Show the chosen options in the cart and send line items to checkout.
-- [ ] **Product cards for products with variants.** The button says "Pasirinkti savybes" instead of "Į krepšelį" and opens the quick view on desktop (the product page on mobile), since an option must be chosen first. If variant prices differ, the card shows a price range, e.g. "22,50 € – 25,00 €", using effective (sale) prices; one price if they're all the same. If some variants are on sale, show the sale badge as "iki -X%".
+- [ ] **One generic option picker** on the product page, quick view and mobile buy bar, replacing `size-picker`, `color-picker` and the mock state in `product-purchase-provider`. Chips or swatches per group, no preselection when there's a real choice, unavailable values crossed out, `?variantId=` in the URL. Price range until a full selection, then the variant's price; photos follow the image tags.
+- [ ] **Cart lines per variant.** Match lines by `productId` + `variantId` (bump the storage version, `migrate` keeps lines), show `name – label` from the API, cap quantity at the variant's `stockCount`. A line missing its option or with a variant no longer available blocks checkout until fixed ("Pasirink savybes" / "Šis pasirinkimas nebegalimas").
+- [ ] **Product cards for products with variants.** "Pasirinkti savybes" instead of "Į krepšelį" (quick view on desktop, product page on mobile), a range of effective prices when they differ, the badge "-X%" only when every variant has the same discount and "iki -X%" otherwise, and the product's first image.
+- [ ] **Wishlist.** Products with variants get "Pasirinkti savybes"; "Viską į krepšelį" adds only products without variants and lists the ones that need a choice.
+- [ ] **Size guide** from the API (Dydis height and weight ranges plus specification rows that vary by Dydis), shown only when there's data. Comes with "Product specifications".
+
 ## Product specifications
 
-- [ ] **"Papildoma informacija"** on the product page: a specs table (Matmenys, Medžiaga, Sudėtis, Priežiūra) next to the description, as tabs or accordions, following the product page design. Values change with the chosen variant where they differ.
+- [ ] **"Papildoma informacija"** on the product page: a specs table (Matmenys, Medžiaga, Sudėtis, Priežiūra) next to the description, as tabs or accordions, following the product page design. Rows that vary by an option group (e.g. Matmenys per Dydis) show the value for the chosen option, and the product-level value before a choice.
 
 ## Wishlist sharing
 
@@ -109,12 +113,29 @@ Cart, checkout (`/apmokejimas`) and order confirmation (`/uzsakymas/[orderId]`).
 
 The new site replaces the live WordPress/WooCommerce shop at babystep.lt. Most of this happens near launch, but plan it early.
 
-- [ ] **Owner: list the WordPress setup.** Which plugins the shop uses (WooCommerce, Montonio plugin, newsletter, reviews, SEO, others), and what data lives where. Then make the items below specific.
+- [x] **Owner: list the WordPress setup.** Theme Flatsome on Hostinger. Plugins: WooCommerce, Variation Swatches for WooCommerce, Checkout Field Editor, Montonio for WooCommerce (payments), MultiParcels (shipping), Facebook for WooCommerce, Site Kit by Google, Header Footer Code Manager, WPConsent + WP Consent API, Yoast SEO, Newsletter, Contact Form 7, Smash Balloon Instagram Feed, YITH WooCommerce Wishlist, Max Mega Menu, Jetpack, LiteSpeed Cache, Wordfence, Hostinger tools, WPvivid Backup.
+- [ ] **Variable products.** The shop already sells products with variants (Variation Swatches). Enter them by hand in the new admin's variant editor (no importer), and update stock numbers from WooCommerce on switch-over day.
+- [ ] **Checkout custom fields.** Check what Checkout Field Editor adds (e.g. company and VAT details for invoices, order comments) and add what's needed to the new checkout.
+- [ ] **Facebook and Instagram shop.** Replace Facebook for WooCommerce: a product feed (catalog) for Meta Commerce Manager, and the Meta pixel (and possibly the Conversions API).
+- [ ] **Analytics and tracking.** Re-add Google Analytics (Site Kit) and verify Google Search Console for the new site. Check Header Footer Code Manager for other tracking snippets and re-add those still needed.
+- [ ] **Cookie consent.** Replace WPConsent with a cookie banner that blocks analytics and the pixel until consent (GDPR).
+- [ ] **SEO data.** Export Yoast titles and meta descriptions for products, categories and pages, and the Yoast sitemap (for the redirect list).
+- [ ] **Contact form.** Replace Contact Form 7 on the contact page (a form that emails the shop, or a clear email link).
+- [ ] **Not migrated:** Max Mega Menu and Flatsome (replaced by the redesign), Smash Balloon (the new site has its own Instagram feed), YITH wishlists (guest wishlists are local; revisit with customer accounts), Jetpack, LiteSpeed Cache, Wordfence and Hostinger tools (not needed on Vercel). Retire MultiParcels after the switch.
+- [ ] **Until the switch:** keep WordPress plugins updated (about 25 pending, incl. Wordfence and Montonio), with a WPvivid backup first. Take a full WPvivid backup right before switch-over day.
 - [ ] **URL redirects.** Map old WooCommerce URLs (`/product/...`, `/product-category/...`, pages) to the new ones and serve 301 redirects, so search rankings and bookmarks keep working. Export the old URL list (sitemap) first.
-- [ ] **Products and images.** Check that every live product, category and image exists in the new admin; import what's missing.
+- [ ] **Products and images.** Enter every live product, category and image by hand in the new admin, then check nothing is missing. Update stock numbers from WooCommerce on switch-over day.
 - [ ] **Product reviews.** Export existing WooCommerce reviews and import them, so the reviews section starts with real reviews (mark them as imported; the "verified purchase" label only where it was verified).
 - [ ] **Newsletter subscribers.** Move the list to the new email service with their consent records.
 - [ ] **Customers and order history.** Decide whether to import WordPress customer accounts and past orders, or start fresh (affects "Customer accounts" and GDPR).
 - [ ] **Shipping prices.** Compare what WordPress charges today with the new decisions, so any change is on purpose.
 - [ ] **SEO and analytics.** Page titles and descriptions, sitemap, Google Search Console (submit the new sitemap after the switch), analytics.
-- [ ] **Switch-over day plan.** DNS/domain to Vercel, Montonio production keys into Vercel, turn off the WordPress Montonio plugin, handle orders that are paid but not yet shipped in WordPress, keep a backup of the WordPress site and database.
+- [ ] **Hosting: try Hostinger first.** The current Business Web Hosting plan (€12,99/month) includes 5 Node.js apps, and Hostinger confirmed it runs Next.js with SSR and API routes, plus cron jobs every 5 minutes.
+    1. Test-deploy the store and admin as Node.js apps (Node 22) on subdomains (e.g. `new.babystep.lt`, `admin.babystep.lt`), with env variables and the Neon connection. Check speed and memory.
+    2. If it works: add a staging setup (store and admin from a `staging` branch, replacing Vercel previews), and a Hostinger cron job every 5 minutes (UTC) calling the reservation cleanup endpoint with a secret token.
+    3. If it doesn't: fall back to Vercel Pro ($20/month; Hobby is non-commercial only) or Cloudflare Workers.
+- [ ] **Hostinger: domain and DNS stay.** babystep.lt is registered at Hostinger (auto-renews, valid until 2027-08-24) and its DNS is Hostinger's (`ns1/ns2.dns-parking.com`). Keep both. On switch-over day change only the website records (A/CNAME, as Vercel shows when adding the domain). Never change the nameservers or the mail (MX) records.
+- [ ] **Hostinger: email.** info@babystep.lt is on "Free Business Email", shown as expired on 2025-11-15 but still active. Ask Hostinger support whether it's tied to the web hosting and what happens if the hosting is cancelled. If needed, move the mailbox to a standalone paid plan (Hostinger Business Email, Google Workspace or Zoho Mail) before cancelling hosting. Back up the mailbox (~295 MB) first.
+- [ ] **Hostinger: web hosting.** Check its renewal date so it doesn't auto-renew for a long period right before the switch. Keep WordPress running for a few weeks after switch-over as a fallback (with a full WPvivid backup), then cancel the hosting.
+- [ ] **Email sending for the new site.** When the order confirmation email is built, add the email service's SPF and DKIM records to Hostinger's DNS for babystep.lt, so confirmations from info@babystep.lt don't land in spam.
+- [ ] **Switch-over day plan.** Website DNS records to the chosen host, Montonio production keys into the host's environment variables, turn off the WordPress Montonio plugin, handle orders that are paid but not yet shipped in WordPress, keep a backup of the WordPress site and database.
