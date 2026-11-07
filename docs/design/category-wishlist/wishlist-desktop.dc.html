@@ -170,7 +170,7 @@ class Component extends DCLogic {
     const st = this.state || {};
     const pill = (t) => R ? R.createElement('span', { className: 'bg-ink flex size-5 items-center justify-center rounded-full text-xs font-semibold text-white tabular-nums' }, t) : null;
     const C = (name) => ({ id: 'c-' + name, name, billboard: { id: 'b', label: '', imageUrl: '' } });
-    const P = (id, name, price, sale, img, catName, sub, stock) => ({ id, subcategoryId: 's-' + sub, name, price, salePrice: sale, saleStartsAt: null, saleEndsAt: null, amountInStock: stock ?? 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: img }], subcategory: { id: 's-' + sub, name: sub, categoryId: 'c-' + catName, category: C(catName) } });
+    const P = (id, name, price, sale, img, catName, sub, stock) => ({ id, subcategoryId: 's-' + sub, name, price, salePrice: sale, saleStartsAt: null, saleEndsAt: null, stockCount: stock ?? 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: img }], subcategory: { id: 's-' + sub, name: sub, categoryId: 'c-' + catName, category: C(catName) } });
     return {
       n14: 14, n16: 16, n18: 18,
       noSubmit: (e) => e.preventDefault(),

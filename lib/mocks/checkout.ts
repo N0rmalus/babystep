@@ -141,11 +141,11 @@ export const mockCreateOrder = async ({ lines, contact, delivery, payment }: Cre
   const insufficientStockItems = lines.reduce<InsufficientStockItem[]>((items, line, index) => {
     const product = products.at(index);
 
-    if (!product || line.quantity <= product.amountInStock) {
+    if (!product || line.quantity <= product.stockCount) {
       return items;
     }
 
-    return [...items, { productId: line.productId, requested: line.quantity, available: product.amountInStock }];
+    return [...items, { productId: line.productId, requested: line.quantity, available: product.stockCount }];
   }, []);
 
   if (invalidProductIds.length > 0 || insufficientStockItems.length > 0) {

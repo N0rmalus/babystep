@@ -225,7 +225,7 @@ export const CartPopover = () => {
 
                   {!isLoading &&
                     products.map((product, index) => {
-                      const isOutOfStock = product.amountInStock <= 0;
+                      const isOutOfStock = product.stockCount <= 0;
                       const pricing = getProductPricing(product);
                       const quantity = lines.find((line) => line.productId === product.id)?.quantity ?? 1;
 
@@ -290,12 +290,12 @@ export const CartPopover = () => {
                             {!isOutOfStock && (
                               <QuantitySelector
                                 value={quantity}
-                                max={Math.max(product.amountInStock, quantity)}
+                                max={Math.max(product.stockCount, quantity)}
                                 onChange={(value) =>
                                   setQuantity({
                                     productId: product.id,
                                     quantity: value,
-                                    maxQuantity: product.amountInStock,
+                                    maxQuantity: product.stockCount,
                                   })
                                 }
                                 size="sm"

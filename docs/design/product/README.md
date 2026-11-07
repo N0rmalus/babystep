@@ -26,7 +26,7 @@ Build everything in the design. Parts whose data doesn't exist in the API yet ar
 | --- | --- |
 | Gallery, name, breadcrumbs, price, sale price and badge, description, similar products | Real data |
 | Quantity selector | Real. Cart lines become `{ productId, variantId?, quantity }` now (with a store `migrate`), so the format won't change again for variants. Checkout keeps sending repeated product IDs, which the API already counts as quantity |
-| Stock text ("Yra sandėlyje" / "Liko X vnt.") | Real, from `amountInStock` |
+| Stock text ("Yra sandėlyje" / "Liko X vnt.") | Real, from `stockCount` |
 | Sold-out state | Real |
 | Size chips, color swatches | Mock until "Product variants" (TODO.md) |
 | "Papildoma informacija" (specs) | Mock until "Product specifications" |

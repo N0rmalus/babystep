@@ -163,7 +163,7 @@ class Component extends DCLogic {
     const qty = Math.max(1, Math.min(st.qty || 1, Math.max(1, stock)));
     const wish = !!st.wish;
     const cat = { id: 'c1', name: 'Miegui', billboard: { id: 'b1', label: '', imageUrl: '' } };
-    const P = (id, name, pr, sl, im, sub) => ({ id, subcategoryId: 's' + id, name, price: pr, salePrice: sl, saleStartsAt: null, saleEndsAt: null, amountInStock: 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: im }], subcategory: { id: 's' + id, name: sub, categoryId: 'c1', category: cat } });
+    const P = (id, name, pr, sl, im, sub) => ({ id, subcategoryId: 's' + id, name, price: pr, salePrice: sl, saleStartsAt: null, saleEndsAt: null, stockCount: 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: im }], subcategory: { id: 's' + id, name: sub, categoryId: 'c1', category: cat } });
     return {
       n16: 16, n18: 18, yes: true, b, noop: () => {},
       icClose: ic('X', 18), icCart: ic('ShoppingCart'),

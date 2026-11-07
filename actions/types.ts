@@ -6,7 +6,7 @@ export interface Product {
   salePrice?: string | null;
   saleStartsAt?: string | null;
   saleEndsAt?: string | null;
-  amountInStock: number;
+  stockCount: number;
   isFeatured: boolean;
   createdAt?: string;
   description: string | null;

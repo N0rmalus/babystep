@@ -212,7 +212,7 @@ class Component extends DCLogic {
       pillow: '/_blob/2a05548b471ab07209229199a16ac39b', bed: '/_blob/56451f1521a86dd6f222ead8a3b1f1f9'
     };
     const cat = { id: 'c1', name: 'Miegui', billboard: { id: 'b1', label: '', imageUrl: '' } };
-    const P = (id, name, price, sale, img, sub, rank, stock) => ({ id, subcategoryId: 's-' + sub, name, price, salePrice: sale, saleStartsAt: null, saleEndsAt: null, amountInStock: stock ?? 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: img }], subcategory: { id: 's-' + sub, name: sub, categoryId: 'c1', category: cat }, rank });
+    const P = (id, name, price, sale, img, sub, rank, stock) => ({ id, subcategoryId: 's-' + sub, name, price, salePrice: sale, saleStartsAt: null, saleEndsAt: null, stockCount: stock ?? 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: img }], subcategory: { id: 's-' + sub, name: sub, categoryId: 'c1', category: cat }, rank });
     const ALL = [
       P('m1', 'Muslino miegmaišis 0–6 mėn.', '39.99', null, IMG.sage, 'Miegmaišiai', 3),
       P('m2', 'Šiltas miegmaišis 6–18 mėn.', '54.90', '46.90', IMG.oat, 'Miegmaišiai', 1),
@@ -231,7 +231,7 @@ class Component extends DCLogic {
     const lo = st.lo ?? aLo, hi = st.hi ?? aHi;
     const q = (st.q || '').trim().toLowerCase();
     const eff = (p) => Number(p.salePrice || p.price);
-    let list = ALL.filter((p) => (!subs.length || subs.includes(p.subcategory.name)) && (!inStock || p.amountInStock > 0) && (!sale || p.salePrice) && eff(p) >= aLo && eff(p) <= aHi && (!q || p.name.toLowerCase().includes(q)));
+    let list = ALL.filter((p) => (!subs.length || subs.includes(p.subcategory.name)) && (!inStock || p.stockCount > 0) && (!sale || p.salePrice) && eff(p) >= aLo && eff(p) <= aHi && (!q || p.name.toLowerCase().includes(q)));
     const sort = st.sort || 'rec';
     if (sort === 'asc') list = list.slice().sort((a, b) => eff(a) - eff(b));
     if (sort === 'desc') list = list.slice().sort((a, b) => eff(b) - eff(a));

@@ -60,8 +60,8 @@ const WishlistPage = () => {
     setItems(nextItemIds);
   }, [itemIds, missingProductIds, setItems]);
 
-  const inStockProducts = products.filter((product) => product.amountInStock > 0);
-  const soldOutProducts = products.filter((product) => product.amountInStock <= 0);
+  const inStockProducts = products.filter((product) => product.stockCount > 0);
+  const soldOutProducts = products.filter((product) => product.stockCount <= 0);
   const productsToAddToCart = inStockProducts.filter(
     (product) => !cartItems.some((item) => item.productId === product.id),
   );

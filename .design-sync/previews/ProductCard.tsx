@@ -15,7 +15,7 @@ const product = (over: Record<string, unknown>) => ({
   salePrice: null,
   saleStartsAt: null,
   saleEndsAt: null,
-  amountInStock: 12,
+  stockCount: 12,
   isFeatured: true,
   description: null,
   images: [{ id: 'i1', url: photo('#f1ebe3', '#d9a37f') }],
@@ -51,7 +51,7 @@ export const SoldOut = () => (
         id: 'p3',
         name: 'Vystyklai iš muslino, 3 vnt.',
         price: '24.90',
-        amountInStock: 0,
+        stockCount: 0,
         images: [{ id: 'i3', url: photo('#e6eee1', '#4d6b47') }],
         subcategory: { id: 's3', name: 'Vystyklai', categoryId: 'c1', category },
       })}
@@ -67,7 +67,7 @@ export const InWishlist = () => (
         id: 'p4',
         name: 'Naktinė lempa „Mėnulis“',
         price: '29.00',
-        amountInStock: 3,
+        stockCount: 3,
         images: [{ id: 'i4', url: photo('#f6e9de', '#c76e48') }],
         subcategory: { id: 's4', name: 'Naktinės lempos', categoryId: 'c1', category },
       })}

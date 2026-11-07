@@ -26,7 +26,7 @@ export const WishlistItem = ({ data }: Props) => {
   const openQuickView = useQuickView((state) => state.onOpen);
   const router = useRouter();
 
-  const isInStock = data.amountInStock > 0;
+  const isInStock = data.stockCount > 0;
   const imageUrl = getImageUrl(data.images.at(0)?.url);
   const pricing = getProductPricing(data);
 
@@ -35,7 +35,7 @@ export const WishlistItem = ({ data }: Props) => {
   };
 
   const onAddToCart = () => {
-    addToCart({ productId: data.id, maxQuantity: data.amountInStock });
+    addToCart({ productId: data.id, maxQuantity: data.stockCount });
   };
 
   const onRemoveFromWishlist = () => {
@@ -94,7 +94,7 @@ export const WishlistItem = ({ data }: Props) => {
                 {toCurrency(pricing.effectivePrice)}
               </div>
             </div>
-            <p className="text-ink-muted text-xs">Likutis: {Math.max(data.amountInStock, 0)}</p>
+            <p className="text-ink-muted text-xs">Likutis: {Math.max(data.stockCount, 0)}</p>
           </div>
         </div>
 

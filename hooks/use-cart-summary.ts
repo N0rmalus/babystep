@@ -41,9 +41,9 @@ export const useCartSummary = ({
   const remainingForFreeShipping = getRemainingForFreeShipping({ subtotal, freeShippingThreshold });
   const freeShippingProgress = getFreeShippingProgress({ subtotal, freeShippingThreshold });
   const hasFreeShipping = itemCount > 0 && getHasFreeShipping({ subtotal, freeShippingThreshold });
-  const hasOutOfStockProducts = products.some((product) => product.amountInStock <= 0);
+  const hasOutOfStockProducts = products.some((product) => product.stockCount <= 0);
   const hasInsufficientStock = products.some((product) => {
-    return product.amountInStock > 0 && (quantityByProductId.get(product.id) ?? 0) > product.amountInStock;
+    return product.stockCount > 0 && (quantityByProductId.get(product.id) ?? 0) > product.stockCount;
   });
   const isCheckoutDisabled =
     itemCount === 0 ||

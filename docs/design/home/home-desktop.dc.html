@@ -300,7 +300,7 @@ class Component extends DCLogic {
       bed: '/_blob/56451f1521a86dd6f222ead8a3b1f1f9', shelf: '/_blob/681915d26932eb8a1b7e5014e44a90ef'
     };
     const cat = { id: 'c1', name: 'Miegui', billboard: { id: 'b1', label: '', imageUrl: '' } };
-    const P = (id, name, price, sale, img, sub, stock) => ({ id, subcategoryId: 's' + id, name, price, salePrice: sale, saleStartsAt: null, saleEndsAt: null, amountInStock: stock ?? 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: img }], subcategory: { id: 's' + id, name: sub, categoryId: 'c1', category: cat } });
+    const P = (id, name, price, sale, img, sub, stock) => ({ id, subcategoryId: 's' + id, name, price, salePrice: sale, saleStartsAt: null, saleEndsAt: null, stockCount: stock ?? 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: img }], subcategory: { id: 's' + id, name: sub, categoryId: 'c1', category: cat } });
     const allCats = [
       { name: 'Miegmaišiai', img: IMG.sage }, { name: 'Vystyklai', img: IMG.swaddle }, { name: 'Naktinės lempos', img: IMG.lamp },
       { name: 'Baltasis triukšmas', img: IMG.noise }, { name: 'Pledai', img: IMG.blanket }, { name: 'Žaislai', img: IMG.rings }

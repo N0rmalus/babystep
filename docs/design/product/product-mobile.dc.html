@@ -282,7 +282,7 @@ class Component extends DCLogic {
     const open = st.open || { d: true, s: false };
     const starRow = (n) => [1, 2, 3, 4, 5].map((k) => ({ fill: k <= n ? '#c76e48' : '#e9e1d8' }));
     const cat = { id: 'c1', name: 'Miegui', billboard: { id: 'b1', label: '', imageUrl: '' } };
-    const P = (id, name, pr, sl, im, sub) => ({ id, subcategoryId: 's' + id, name, price: pr, salePrice: sl, saleStartsAt: null, saleEndsAt: null, amountInStock: 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: im }], subcategory: { id: 's' + id, name: sub, categoryId: 'c1', category: cat } });
+    const P = (id, name, pr, sl, im, sub) => ({ id, subcategoryId: 's' + id, name, price: pr, salePrice: sl, saleStartsAt: null, saleEndsAt: null, stockCount: 8, isFeatured: false, description: null, images: [{ id: 'i' + id, url: im }], subcategory: { id: 's' + id, name: sub, categoryId: 'c1', category: cat } });
     return {
       n14: 14, n16: 16, n18: 18, yes: true, b, noop: () => {},
       icClose: ic('X', 18), sgOpen: !!st.sg, openSg: () => this.setState({ sg: true }), closeSg: () => this.setState({ sg: false }),

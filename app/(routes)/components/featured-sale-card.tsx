@@ -28,10 +28,10 @@ export const FeaturedSaleCard = ({ product, summary }: Props) => {
   const removeFromWishlist = useWishlist((state) => state.removeItem);
 
   const pricing = getProductPricing(product);
-  const isInStock = product.amountInStock > 0;
+  const isInStock = product.stockCount > 0;
 
   const handleAddToCart = () => {
-    addToCart({ productId: product.id, maxQuantity: product.amountInStock });
+    addToCart({ productId: product.id, maxQuantity: product.stockCount });
   };
 
   const handleWishlistToggle = () => {

@@ -31,12 +31,12 @@ export const CartLine = ({ product, quantity }: Props) => {
   const removeFromWishlist = useWishlist((state) => state.removeItem);
 
   const pricing = getProductPricing(product);
-  const isInStock = product.amountInStock > 0;
-  const hasInsufficientStock = isInStock && quantity > product.amountInStock;
+  const isInStock = product.stockCount > 0;
+  const hasInsufficientStock = isInStock && quantity > product.stockCount;
   const productHref = `/product/${product.id}`;
 
   const handleQuantityChange = (value: number) => {
-    setQuantity({ productId: product.id, quantity: value, maxQuantity: product.amountInStock });
+    setQuantity({ productId: product.id, quantity: value, maxQuantity: product.stockCount });
   };
 
   const handleWishlistToggle = () => {
@@ -117,7 +117,7 @@ export const CartLine = ({ product, quantity }: Props) => {
           {isInStock ? (
             <QuantitySelector
               value={quantity}
-              max={Math.max(product.amountInStock, quantity)}
+              max={Math.max(product.stockCount, quantity)}
               onChange={handleQuantityChange}
               label={`${product.name} kiekis`}
             />
@@ -125,7 +125,7 @@ export const CartLine = ({ product, quantity }: Props) => {
             <span className="text-danger text-sm font-semibold">Išparduota</span>
           )}
           {hasInsufficientStock && (
-            <span className="text-danger text-xs font-semibold">Liko tik {product.amountInStock} vnt.</span>
+            <span className="text-danger text-xs font-semibold">Liko tik {product.stockCount} vnt.</span>
           )}
         </div>
 

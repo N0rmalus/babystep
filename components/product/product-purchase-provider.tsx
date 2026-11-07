@@ -44,7 +44,7 @@ const useProductPurchaseState = (product: Product) => {
   const size = MOCK_PRODUCT_SIZES.find((option) => option.id === sizeId);
   const color = MOCK_PRODUCT_COLORS.find((option) => option.id === colorId);
   const isVariantAvailable = Boolean(size?.isAvailable && color?.isAvailable);
-  const stockCount = product.amountInStock;
+  const { stockCount } = product;
   const isInStock = stockCount > 0 && isVariantAvailable;
   const maxQuantity = Math.max(stockCount, 1);
 

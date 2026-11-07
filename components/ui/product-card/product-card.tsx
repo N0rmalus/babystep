@@ -29,7 +29,7 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
   const router = useRouter();
   const isMobile = useIsMobile('md');
 
-  const isInStock = data.amountInStock > 0;
+  const isInStock = data.stockCount > 0;
   const isInWishlist = wishlist.items.some((item) => item === data.id);
   const imageUrl = getImageUrl(data.images?.at(0)?.url);
 
@@ -40,7 +40,7 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
   };
 
   const onAddToCart = () => {
-    addToCart({ productId: data.id, maxQuantity: data.amountInStock });
+    addToCart({ productId: data.id, maxQuantity: data.stockCount });
   };
 
   const onWishlistAction = () => {
