@@ -6,12 +6,11 @@ import Link from 'next/link';
 import type { Product } from '@/actions/types';
 import { toCurrency } from '@/business/to-currency';
 import { BuyActions } from '@/components/product/buy-actions';
-import { ColorPicker } from '@/components/product/color-picker';
+import { OptionPicker } from '@/components/product/option-picker';
 import { ProductGallery } from '@/components/product/product-gallery';
 import { ProductPrice } from '@/components/product/product-price';
-import { ProductPurchaseProvider } from '@/components/product/product-purchase-provider';
+import { ProductPurchaseProvider, useProductPurchase } from '@/components/product/product-purchase-provider';
 import { ProductRatingCompact } from '@/components/product/product-rating-summary';
-import { SizePicker } from '@/components/product/size-picker';
 import { Modal } from '@/components/ui/modal';
 import useQuickView from '@/hooks/use-quick-view';
 import { FREE_SHIPPING_THRESHOLD, RETURN_PERIOD_DAYS } from '@/lib/consts';
@@ -35,6 +34,7 @@ export const QuickView = () => {
 };
 
 const QuickViewContent = ({ product }: { product: Product }) => {
+  const { price } = useProductPurchase();
   const productHref = `/product/${product.id}`;
 
   return (
@@ -49,7 +49,7 @@ const QuickViewContent = ({ product }: { product: Product }) => {
             </Link>
           </h2>
           <div className="flex items-center justify-between gap-3">
-            <ProductPrice product={product} />
+            <ProductPrice price={price} />
             {/* MOCK: rating until "Customer accounts" (reviews). */}
             <ProductRatingCompact />
           </div>
@@ -65,9 +65,7 @@ const QuickViewContent = ({ product }: { product: Product }) => {
 
         <hr className="border-line" />
 
-        {/* MOCK: size and color pickers until "Product variants". */}
-        <SizePicker columns="four" />
-        <ColorPicker />
+        <OptionPicker columns="four" />
 
         <BuyActions />
 

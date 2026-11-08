@@ -1,11 +1,10 @@
-import type { Product } from '@/actions/types';
-import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
+import type { SelectionPrice } from '@/business/variant-selection';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 type Props = {
-  product: Product;
+  price: SelectionPrice;
   size?: 'sm' | 'lg';
 };
 
@@ -14,9 +13,22 @@ const sizeClasses = {
   lg: { price: 'text-3xl', oldPrice: 'text-base sm:text-lg', gap: 'gap-2 sm:gap-3' },
 } as const;
 
-export const ProductPrice = ({ product, size = 'lg' }: Props) => {
-  const pricing = getProductPricing(product);
+export const ProductPrice = ({ price, size = 'lg' }: Props) => {
   const classes = sizeClasses[size];
+
+  if (price.kind === 'none') {
+    return null;
+  }
+
+  if (price.kind === 'range') {
+    return (
+      <div className={cn('flex items-center', classes.gap)}>
+        <span className={cn('text-ink font-bold tabular-nums', classes.price)}>{formatRange(price)}</span>
+      </div>
+    );
+  }
+
+  const { pricing } = price;
 
   return (
     <div className={cn('flex items-center', classes.gap)}>
@@ -34,4 +46,12 @@ export const ProductPrice = ({ product, size = 'lg' }: Props) => {
       )}
     </div>
   );
+};
+
+const formatRange = ({ min, max }: Extract<SelectionPrice, { kind: 'range' }>) => {
+  if (min === max) {
+    return toCurrency(min);
+  }
+
+  return `${toCurrency(min)} – ${toCurrency(max)}`;
 };

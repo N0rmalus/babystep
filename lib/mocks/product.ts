@@ -1,16 +1,3 @@
-export type ProductSizeOption = {
-  id: string;
-  label: string;
-  isAvailable: boolean;
-};
-
-export type ProductColorOption = {
-  id: string;
-  label: string;
-  hex: string;
-  isAvailable: boolean;
-};
-
 export type ProductSpec = {
   label: string;
   value: string;
@@ -32,19 +19,6 @@ export type SizeGuideRow = {
   weight: string;
   length: string;
 };
-
-export const MOCK_PRODUCT_SIZES: ProductSizeOption[] = [
-  { id: 's0', label: '0–6 mėn.', isAvailable: true },
-  { id: 's1', label: '6–12 mėn.', isAvailable: true },
-  { id: 's2', label: '12–18 mėn.', isAvailable: true },
-  { id: 's3', label: '18–36 mėn.', isAvailable: false },
-];
-
-export const MOCK_PRODUCT_COLORS: ProductColorOption[] = [
-  { id: 'sage', label: 'Šalavijų', hex: '#b9c4ad', isAvailable: true },
-  { id: 'oat', label: 'Avižų', hex: '#e8dcc8', isAvailable: true },
-  { id: 'clay', label: 'Molio', hex: '#c9937a', isAvailable: false },
-];
 
 export const MOCK_PRODUCT_SPECS: ProductSpec[] = [
   { label: 'Matmenys', value: 'Ilgis 70 cm (0–6 mėn.)' },
@@ -99,4 +73,4 @@ export const MOCK_SIZE_GUIDE_ROWS: SizeGuideRow[] = [
   { id: 's3', label: '18–36 mėn.', height: '[86–98] cm', weight: '[12–15] kg', length: '100 cm' },
 ];
 
-export const MOCK_CART_VARIANT_META = `Dydis: ${MOCK_PRODUCT_SIZES.at(0)?.label} · Spalva: ${MOCK_PRODUCT_COLORS.at(0)?.label}`;
+export const MOCK_CART_VARIANT_META = 'Dydis: 0–6 mėn. · Spalva: Šalavijų';

@@ -3,8 +3,14 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import type { Product } from '@/actions/types';
+import {
+  getBuyableValueIds,
+  getInitialSelection,
+  getPurchaseState,
+  getSelectionPrice,
+  toggleValue,
+} from '@/business/variant-selection';
 import useCart from '@/hooks/use-cart';
-import { MOCK_PRODUCT_COLORS, MOCK_PRODUCT_SIZES } from '@/lib/mocks/product';
 
 type ProductPurchase = ReturnType<typeof useProductPurchaseState>;
 
@@ -12,6 +18,8 @@ type Props = {
   product: Product;
   children: ReactNode;
 };
+
+const MIN_QUANTITY = 1;
 
 const ProductPurchaseContext = createContext<ProductPurchase | null>(null);
 
@@ -33,63 +41,53 @@ export const useProductPurchase = () => {
 
 const useProductPurchaseState = (product: Product) => {
   const addToCart = useCart((state) => state.addItem);
-  // MOCK: size and color options until "Product variants".
-  const [sizeId, setSizeId] = useState(getFirstAvailableId(MOCK_PRODUCT_SIZES));
-  const [colorId, setColorId] = useState(getFirstAvailableId(MOCK_PRODUCT_COLORS));
-  const [quantity, setQuantity] = useState(1);
+  const [selection, setSelection] = useState(() => getInitialSelection(product));
+  const [quantity, setQuantity] = useState(MIN_QUANTITY);
   const [isAdded, setIsAdded] = useState(false);
   const [isCtaVisible, setIsCtaVisible] = useState(true);
 
-  // MOCK: variant availability until "Product variants".
-  const size = MOCK_PRODUCT_SIZES.find((option) => option.id === sizeId);
-  const color = MOCK_PRODUCT_COLORS.find((option) => option.id === colorId);
-  const isVariantAvailable = Boolean(size?.isAvailable && color?.isAvailable);
-  const { stockCount } = product;
-  const isInStock = stockCount > 0 && isVariantAvailable;
-  const maxQuantity = Math.max(stockCount, 1);
+  const purchaseState = getPurchaseState(product, selection);
+  const buyableValueIds = getBuyableValueIds(product, selection);
+  const price = getSelectionPrice({ product, selection });
+  const maxQuantity = purchaseState.kind === 'buyable' ? purchaseState.maxQuantity : MIN_QUANTITY;
 
-  const selectSize = (id: string) => {
-    setSizeId(id);
-    setIsAdded(false);
-  };
-
-  const selectColor = (id: string) => {
-    setColorId(id);
+  const selectValue = (groupId: string, valueId: string) => {
+    setSelection((current) => toggleValue({ product, selection: current, groupId, valueId }));
     setIsAdded(false);
   };
 
   const changeQuantity = (value: number) => {
-    setQuantity(Math.min(Math.max(value, 1), maxQuantity));
+    setQuantity(Math.min(Math.max(value, MIN_QUANTITY), maxQuantity));
     setIsAdded(false);
   };
 
   const addSelectionToCart = () => {
-    if (!isInStock) {
+    if (purchaseState.kind !== 'buyable') {
       return;
     }
 
-    addToCart({ productId: product.id, quantity: Math.min(quantity, stockCount), maxQuantity: stockCount });
+    addToCart({
+      productId: product.id,
+      variantId: purchaseState.variant?.id,
+      quantity: Math.min(quantity, maxQuantity),
+      maxQuantity,
+    });
     setIsAdded(true);
   };
 
   return {
     product,
-    size,
-    color,
+    selection,
+    purchaseState,
+    buyableValueIds,
+    price,
     quantity: Math.min(quantity, maxQuantity),
     maxQuantity,
-    stockCount,
-    isInStock,
     isAdded,
     isCtaVisible,
     setIsCtaVisible,
-    selectSize,
-    selectColor,
+    selectValue,
     changeQuantity,
     addSelectionToCart,
   };
-};
-
-const getFirstAvailableId = (options: { id: string; isAvailable: boolean }[]) => {
-  return options.find((option) => option.isAvailable)?.id ?? options.at(0)?.id ?? '';
 };
