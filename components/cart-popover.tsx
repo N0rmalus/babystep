@@ -27,6 +27,7 @@ import { CartCountBadge } from '@/components/navbar/cart-count-badge';
 import Button from '@/components/ui/button';
 import { QuantitySelector } from '@/components/ui/quantity-selector';
 import useCart from '@/hooks/use-cart';
+import { getCartProductIds } from '@/lib/cart-lines';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useResolvedProducts from '@/hooks/use-resolved-products';
 import { getImageUrl } from '@/lib/image-url';
@@ -57,7 +58,7 @@ export const CartPopover = () => {
   const lines = useCart((state) => state.items);
   const removeItem = useCart((state) => state.removeItem);
   const setQuantity = useCart((state) => state.setQuantity);
-  const productIdsKey = lines.map((line) => line.productId).join(',');
+  const productIdsKey = getCartProductIds(lines).join(',');
 
   const { products, failedProductIds, isLoading } = useResolvedProducts(
     useMemo(() => {
@@ -304,7 +305,7 @@ export const CartPopover = () => {
                             )}
                             <button
                               type="button"
-                              onClick={() => removeItem(product.id)}
+                              onClick={() => removeItem({ productId: product.id })}
                               className="text-ink-faint hover:text-danger transition"
                               aria-label={`Pašalinti ${product.name} iš krepšelio`}
                             >

@@ -106,7 +106,7 @@ export const CartLine = ({ product, quantity }: Props) => {
             }
           />
           <IconButton
-            onClick={() => removeFromCart(product.id)}
+            onClick={() => removeFromCart({ productId: product.id })}
             icon={<Trash2 size={16} aria-hidden="true" />}
             variant="danger"
             label={`Pašalinti „${product.name}“ iš krepšelio`}

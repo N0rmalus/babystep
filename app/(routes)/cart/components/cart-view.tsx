@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import { PageContainer } from '@/components/ui/page-container';
 import useCart from '@/hooks/use-cart';
+import { getCartProductIds } from '@/lib/cart-lines';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
@@ -31,7 +32,7 @@ export const CartView = ({ deliveryConfig }: Props) => {
   const isMounted = useMounted();
   const lines = useCart((state) => state.items);
   const removeItems = useCart((state) => state.removeItems);
-  const productIdsKey = lines.map((line) => line.productId).join(',');
+  const productIdsKey = getCartProductIds(lines).join(',');
   const itemIds = useMemo(() => (productIdsKey ? productIdsKey.split(',') : []), [productIdsKey]);
 
   const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);

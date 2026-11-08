@@ -28,7 +28,10 @@ export const useCartSummary = ({
   freeShippingThreshold = FREE_SHIPPING_THRESHOLD,
 }: Props) => {
   const quantityByProductId = useMemo(() => {
-    return new Map(lines.map((line) => [line.productId, line.quantity]));
+    return lines.reduce(
+      (quantities, line) => quantities.set(line.productId, (quantities.get(line.productId) ?? 0) + line.quantity),
+      new Map<string, number>(),
+    );
   }, [lines]);
 
   const subtotal = useMemo(() => {
