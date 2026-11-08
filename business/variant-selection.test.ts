@@ -5,6 +5,7 @@ import {
   getBuyableValueIds,
   getInitialSelection,
   getPurchaseState,
+  getSelectionFromVariantId,
   getSelectionPrice,
   toggleValue,
 } from '@/business/variant-selection';
@@ -99,6 +100,40 @@ describe('getInitialSelection', () => {
 
   it('is empty for a product without options', () => {
     expect(getInitialSelection(PRODUCT_WITHOUT_OPTIONS)).toEqual({});
+  });
+});
+
+describe('getSelectionFromVariantId', () => {
+  const product = createProduct(
+    [SIZE, COLOR],
+    [
+      createVariant({ id: 's0-sage', optionValueIds: ['s0', 'sage'] }),
+      createVariant({ id: 's1-oat', optionValueIds: ['s1', 'oat'] }),
+    ],
+  );
+
+  it('seeds the full selection from a valid variantId', () => {
+    expect(getSelectionFromVariantId(product, 's1-oat')).toEqual({ size: 's1', color: 'oat' });
+  });
+
+  it('ignores an unknown variantId', () => {
+    expect(getSelectionFromVariantId(product, 'missing')).toEqual({});
+  });
+
+  it('ignores an archived variantId, which the API leaves out of the variants', () => {
+    const productWithArchived = createProduct(
+      [SIZE, SINGLE_COLOR],
+      [
+        createVariant({ id: 's0-sage', optionValueIds: ['s0', 'sage'] }),
+        createVariant({ id: 's1-sage', optionValueIds: ['s1', 'sage'] }),
+      ],
+    );
+
+    expect(getSelectionFromVariantId(productWithArchived, 's2-sage')).toEqual({ color: 'sage' });
+  });
+
+  it('keeps the initial selection without a variantId', () => {
+    expect(getSelectionFromVariantId(product, undefined)).toEqual({});
   });
 });
 

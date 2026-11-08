@@ -34,12 +34,12 @@ export const QuickView = () => {
 };
 
 const QuickViewContent = ({ product }: { product: Product }) => {
-  const { price } = useProductPurchase();
+  const { price, images } = useProductPurchase();
   const productHref = `/product/${product.id}`;
 
   return (
     <div className="grid gap-9 md:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:grid-cols-[27.5rem_minmax(0,1fr)]">
-      <ProductGallery images={product.images} name={product.name} sizes="440px" />
+      <ProductGallery images={images} name={product.name} sizes="440px" />
 
       <div className="flex flex-col gap-5.5 pt-2 pr-10 pb-1">
         <div className="flex flex-col gap-2.5">

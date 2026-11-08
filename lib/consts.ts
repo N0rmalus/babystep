@@ -7,6 +7,7 @@ export const RETURN_PERIOD_DAYS = 14;
 export const LOW_STOCK_THRESHOLD = 3;
 export const IMAGE_PLACEHOLDER_URL = '/placeholder.svg';
 export const PRODUCT_REFRESH_INTERVAL_MS = 60_000;
+export const VARIANT_ID_PARAM = 'variantId';
 
 export const INSTAGRAM_HANDLE = 'babystep.lt';
 export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}`;

@@ -3,10 +3,11 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import type { Product } from '@/actions/types';
+import { orderImagesBySelection } from '@/business/gallery-order';
 import {
   getBuyableValueIds,
-  getInitialSelection,
   getPurchaseState,
+  getSelectionFromVariantId,
   getSelectionPrice,
   toggleValue,
 } from '@/business/variant-selection';
@@ -16,6 +17,7 @@ type ProductPurchase = ReturnType<typeof useProductPurchaseState>;
 
 type Props = {
   product: Product;
+  initialVariantId?: string;
   children: ReactNode;
 };
 
@@ -23,8 +25,8 @@ const MIN_QUANTITY = 1;
 
 const ProductPurchaseContext = createContext<ProductPurchase | null>(null);
 
-export const ProductPurchaseProvider = ({ product, children }: Props) => {
-  const purchase = useProductPurchaseState(product);
+export const ProductPurchaseProvider = ({ product, initialVariantId, children }: Props) => {
+  const purchase = useProductPurchaseState(product, initialVariantId);
 
   return <ProductPurchaseContext.Provider value={purchase}>{children}</ProductPurchaseContext.Provider>;
 };
@@ -39,9 +41,9 @@ export const useProductPurchase = () => {
   return purchase;
 };
 
-const useProductPurchaseState = (product: Product) => {
+const useProductPurchaseState = (product: Product, initialVariantId: string | undefined) => {
   const addToCart = useCart((state) => state.addItem);
-  const [selection, setSelection] = useState(() => getInitialSelection(product));
+  const [selection, setSelection] = useState(() => getSelectionFromVariantId(product, initialVariantId));
   const [quantity, setQuantity] = useState(MIN_QUANTITY);
   const [isAdded, setIsAdded] = useState(false);
   const [isCtaVisible, setIsCtaVisible] = useState(true);
@@ -49,6 +51,8 @@ const useProductPurchaseState = (product: Product) => {
   const purchaseState = getPurchaseState(product, selection);
   const buyableValueIds = getBuyableValueIds(product, selection);
   const price = getSelectionPrice({ product, selection });
+  const images = orderImagesBySelection(product.images, selection);
+  const selectedVariantId = purchaseState.kind === 'incomplete' ? undefined : purchaseState.variant?.id;
   const maxQuantity = purchaseState.kind === 'buyable' ? purchaseState.maxQuantity : MIN_QUANTITY;
 
   const selectValue = (groupId: string, valueId: string) => {
@@ -68,7 +72,7 @@ const useProductPurchaseState = (product: Product) => {
 
     addToCart({
       productId: product.id,
-      variantId: purchaseState.variant?.id,
+      variantId: selectedVariantId,
       quantity: Math.min(quantity, maxQuantity),
       maxQuantity,
     });
@@ -78,6 +82,8 @@ const useProductPurchaseState = (product: Product) => {
   return {
     product,
     selection,
+    images,
+    selectedVariantId,
     purchaseState,
     buyableValueIds,
     price,

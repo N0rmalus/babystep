@@ -24,6 +24,22 @@ export const getInitialSelection = (product: Product): Selection => {
   );
 };
 
+export const getSelectionFromVariantId = (product: Product, variantId: string | undefined): Selection => {
+  const variant = product.variants.find(({ id }) => id === variantId);
+
+  if (!variant) {
+    return getInitialSelection(product);
+  }
+
+  return Object.fromEntries(
+    product.options.flatMap(({ id, values }) => {
+      const value = values.find((item) => variant.optionValueIds.includes(item.id));
+
+      return value ? [[id, value.id]] : [];
+    }),
+  );
+};
+
 export const getBuyableValueIds = (product: Product, selection: Selection): Set<string> => {
   const inStockVariants = product.variants.filter(({ stockCount }) => stockCount > 0);
 
