@@ -15,7 +15,7 @@ npm is the package manager (`package-lock.json`).
 - `npm run lint`: ESLint (next core-web-vitals + typescript + prettier)
 - `npm run typescript`: `next typegen && tsc --noEmit`; use this as the type check
 - `npx prettier --write <files>`: format. `.prettierrc` wins over `prettier.config.js`: 120 cols, single quotes, Tailwind class sorting.
-- There are no tests.
+- `npm test`: Vitest (`vitest run`); `npx vitest run <file>` for one file. Tests are `*.test.ts` next to the module.
 
 ## Architecture
 
