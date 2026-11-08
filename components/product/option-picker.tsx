@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 
 import type { ProductOption, ProductOptionValue } from '@/actions/types';
 import { useProductPurchase } from '@/components/product/product-purchase-provider';
+import { OPTION_PICKER_ID } from '@/lib/consts';
 import { cn } from '@/lib/utils';
 
 type Columns = 'responsive' | 'four';
@@ -31,6 +32,7 @@ type ChipProps = ValueProps & {
 };
 
 const UNAVAILABLE_SUFFIX = 'šiuo metu nėra';
+const FIRST_UNCHOSEN_VALUE_SELECTOR = 'fieldset:not(:has([aria-pressed="true"])) button[aria-pressed]';
 
 export const OptionPicker = ({ action, columns = 'responsive' }: Props) => {
   const { product } = useProductPurchase();
@@ -134,4 +136,11 @@ const SwatchValue = ({ value, isSelected, isBuyable, onSelect }: ValueProps) => 
 
 const getValueLabel = (value: ProductOptionValue, isBuyable: boolean) => {
   return isBuyable ? value.label : `${value.label}, ${UNAVAILABLE_SUFFIX}`;
+};
+
+export const scrollToOptionPicker = () => {
+  const picker = document.getElementById(OPTION_PICKER_ID);
+
+  picker?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  picker?.querySelector<HTMLButtonElement>(FIRST_UNCHOSEN_VALUE_SELECTOR)?.focus({ preventScroll: true });
 };

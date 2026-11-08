@@ -2,12 +2,19 @@ import type { Product, ProductVariant } from '@/actions/types';
 import { getProductPricing, type ProductPricing } from '@/business/product-pricing';
 import { getVariantPriceSummary } from '@/business/variant-price-summary';
 
+const VALUE_LABEL_SEPARATOR = ' · ';
+
 export type Selection = Partial<Record<string, string>>;
 
 export type PurchaseState =
   | { kind: 'incomplete' }
   | { kind: 'soldOut'; variant: ProductVariant | null }
   | { kind: 'buyable'; variant: ProductVariant | null; maxQuantity: number };
+
+export type SelectionSummary =
+  | { kind: 'none' }
+  | { kind: 'missing'; groupNames: string[] }
+  | { kind: 'selected'; label: string };
 
 export type SelectionPrice =
   | { kind: 'exact'; pricing: ProductPricing }
@@ -165,4 +172,30 @@ export const getSelectionPrice = ({ product, selection, now = new Date() }: Sele
   }
 
   return { kind: 'range', min: summary.min, max: summary.max };
+};
+
+export const getSelectionSummary = (product: Product, selection: Selection): SelectionSummary => {
+  if (!product.hasOptions || product.variants.length === 0) {
+    return { kind: 'none' };
+  }
+
+  const missingGroupNames = product.options.filter(({ id }) => !selection[id]).map(({ name }) => name);
+
+  if (missingGroupNames.length > 0) {
+    return { kind: 'missing', groupNames: missingGroupNames };
+  }
+
+  const variant = getSelectedVariant(product, selection);
+
+  if (variant) {
+    return { kind: 'selected', label: variant.label };
+  }
+
+  const chosenLabels = product.options.flatMap(({ id, values }) => {
+    const value = values.find((item) => item.id === selection[id]);
+
+    return value ? [value.label] : [];
+  });
+
+  return { kind: 'selected', label: chosenLabels.join(VALUE_LABEL_SEPARATOR) };
 };

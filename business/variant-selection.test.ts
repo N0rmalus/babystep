@@ -7,6 +7,7 @@ import {
   getPurchaseState,
   getSelectionFromVariantId,
   getSelectionPrice,
+  getSelectionSummary,
   toggleValue,
 } from '@/business/variant-selection';
 
@@ -300,5 +301,29 @@ describe('getSelectionPrice', () => {
 
   it('gives no price when every variant is archived', () => {
     expect(getSelectionPrice({ product: createProduct([], []), selection: {}, now: NOW })).toEqual({ kind: 'none' });
+  });
+});
+
+describe('getSelectionSummary', () => {
+  const product = createProduct([SIZE, COLOR], [createVariant({ id: 's0-sage', optionValueIds: ['s0', 'sage'] })]);
+
+  it('names the groups still to choose, in picker order', () => {
+    expect(getSelectionSummary(product, { color: 'sage' })).toEqual({ kind: 'missing', groupNames: ['size'] });
+  });
+
+  it("gives the selected variant's label after a full choice", () => {
+    expect(getSelectionSummary(product, { size: 's0', color: 'sage' })).toEqual({ kind: 'selected', label: 's0-sage' });
+  });
+
+  it('joins the chosen value labels when the full choice matches no variant', () => {
+    expect(getSelectionSummary(product, { size: 's1', color: 'oat' })).toEqual({ kind: 'selected', label: 's1 · oat' });
+  });
+
+  it('has nothing to show for a product without options', () => {
+    expect(getSelectionSummary(PRODUCT_WITHOUT_OPTIONS, {})).toEqual({ kind: 'none' });
+  });
+
+  it('has nothing to show when every variant is archived', () => {
+    expect(getSelectionSummary(createProduct([SIZE], []), {})).toEqual({ kind: 'none' });
   });
 });

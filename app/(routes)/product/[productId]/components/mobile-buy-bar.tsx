@@ -3,19 +3,26 @@
 import Image from 'next/image';
 import { ShoppingCart } from 'lucide-react';
 
+import type { PurchaseState, SelectionSummary } from '@/business/variant-selection';
+import { scrollToOptionPicker } from '@/components/product/option-picker';
 import { ProductPrice } from '@/components/product/product-price';
 import { useProductPurchase } from '@/components/product/product-purchase-provider';
-import type { PurchaseState } from '@/business/variant-selection';
 import Button from '@/components/ui/button';
 import { getImageUrl } from '@/lib/image-url';
 
 type Props = {
   kind: PurchaseState['kind'];
-  onClick: () => void;
+  onAddToCart: () => void;
 };
 
+type SummaryProps = {
+  summary: SelectionSummary;
+};
+
+const MISSING_PREFIX = 'Pasirink';
+
 export const MobileBuyBar = () => {
-  const { product, purchaseState, price, isCtaVisible, addSelectionToCart } = useProductPurchase();
+  const { product, purchaseState, price, selectionSummary, isCtaVisible, addSelectionToCart } = useProductPurchase();
 
   if (isCtaVisible) {
     return null;
@@ -27,21 +34,32 @@ export const MobileBuyBar = () => {
         <Image fill src={getImageUrl(product.images.at(0)?.url)} alt="" className="object-cover" sizes="44px" />
       </span>
       <div className="flex min-w-0 flex-1 flex-col">
+        <SelectionSummaryText summary={selectionSummary} />
         <ProductPrice price={price} size="sm" />
       </div>
-      <BuyBarButton kind={purchaseState.kind} onClick={addSelectionToCart} />
+      <BuyBarButton kind={purchaseState.kind} onAddToCart={addSelectionToCart} />
     </div>
   );
 };
 
-const BuyBarButton = ({ kind, onClick }: Props) => {
+const SelectionSummaryText = ({ summary }: SummaryProps) => {
+  if (summary.kind === 'none') {
+    return null;
+  }
+
+  const text = summary.kind === 'missing' ? `${MISSING_PREFIX}: ${summary.groupNames.join(', ')}` : summary.label;
+
+  return <span className="text-ink-muted truncate text-xs">{text}</span>;
+};
+
+const BuyBarButton = ({ kind, onAddToCart }: Props) => {
   if (kind === 'incomplete') {
-    return <Button label="Pasirinkti savybes" disabled onClick={onClick} />;
+    return <Button label="Pasirinkti savybes" onClick={scrollToOptionPicker} />;
   }
 
   if (kind === 'soldOut') {
-    return <Button label="Išparduota" disabled onClick={onClick} />;
+    return <Button label="Išparduota" disabled onClick={onAddToCart} />;
   }
 
-  return <Button label="Į krepšelį" elementBefore={<ShoppingCart size={16} />} onClick={onClick} />;
+  return <Button label="Į krepšelį" elementBefore={<ShoppingCart size={16} />} onClick={onAddToCart} />;
 };

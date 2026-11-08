@@ -9,6 +9,7 @@ import {
   getPurchaseState,
   getSelectionFromVariantId,
   getSelectionPrice,
+  getSelectionSummary,
   toggleValue,
 } from '@/business/variant-selection';
 import useCart from '@/hooks/use-cart';
@@ -51,6 +52,7 @@ const useProductPurchaseState = (product: Product, initialVariantId: string | un
   const purchaseState = getPurchaseState(product, selection);
   const buyableValueIds = getBuyableValueIds(product, selection);
   const price = getSelectionPrice({ product, selection });
+  const selectionSummary = getSelectionSummary(product, selection);
   const images = orderImagesBySelection(product.images, selection);
   const selectedVariantId = purchaseState.kind === 'incomplete' ? undefined : purchaseState.variant?.id;
   const maxQuantity = purchaseState.kind === 'buyable' ? purchaseState.maxQuantity : MIN_QUANTITY;
@@ -87,6 +89,7 @@ const useProductPurchaseState = (product: Product, initialVariantId: string | un
     purchaseState,
     buyableValueIds,
     price,
+    selectionSummary,
     quantity: Math.min(quantity, maxQuantity),
     maxQuantity,
     isAdded,

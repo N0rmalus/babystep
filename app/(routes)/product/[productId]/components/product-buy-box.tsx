@@ -7,6 +7,7 @@ import { OptionPicker } from '@/components/product/option-picker';
 import { ProductPrice } from '@/components/product/product-price';
 import { useProductPurchase } from '@/components/product/product-purchase-provider';
 import { ProductRatingLink } from '@/components/product/product-rating-summary';
+import { OPTION_PICKER_ID } from '@/lib/consts';
 import { SizeGuideDialog } from './size-guide-dialog';
 
 export const ProductBuyBox = () => {
@@ -39,7 +40,13 @@ export const ProductBuyBox = () => {
         </div>
       </div>
 
-      {hasPicker ? <OptionPicker action={sizeGuideLink} /> : <div className="flex justify-end">{sizeGuideLink}</div>}
+      {hasPicker ? (
+        <div id={OPTION_PICKER_ID} className="flex flex-col gap-6 lg:gap-7">
+          <OptionPicker action={sizeGuideLink} />
+        </div>
+      ) : (
+        <div className="flex justify-end">{sizeGuideLink}</div>
+      )}
 
       <BuyActions />
 
