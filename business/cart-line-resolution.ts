@@ -29,6 +29,8 @@ export type ResolvedCartLine =
 
 export type OkCartLine = Extract<ResolvedCartLine, { kind: 'ok' }>;
 
+export const isOkLine = (line: ResolvedCartLine): line is OkCartLine => line.kind === 'ok';
+
 type ResolveCartLinesOptions = {
   lines: CartLine[];
   products: Product[];

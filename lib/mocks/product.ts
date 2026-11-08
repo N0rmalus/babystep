@@ -72,5 +72,3 @@ export const MOCK_SIZE_GUIDE_ROWS: SizeGuideRow[] = [
   { id: 's2', label: '12–18 mėn.', height: '[80–86] cm', weight: '[10–12] kg', length: '90 cm' },
   { id: 's3', label: '18–36 mėn.', height: '[86–98] cm', weight: '[12–15] kg', length: '100 cm' },
 ];
-
-export const MOCK_CART_VARIANT_META = 'Dydis: 0–6 mėn. · Spalva: Šalavijų';

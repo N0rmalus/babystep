@@ -1,4 +1,4 @@
-import type { CartLine } from '@/hooks/use-cart';
+import type { CartLine, CartLineKey } from '@/lib/cart-lines';
 import {
   mockCreateOrder,
   mockGetDeliveryConfig,
@@ -66,8 +66,7 @@ export type CreateOrderInput = {
   payment: Payment;
 };
 
-export type InsufficientStockItem = {
-  productId: string;
+export type InsufficientStockItem = CartLineKey & {
   requested: number;
   available: number;
 };
@@ -77,14 +76,13 @@ export type CreateOrderResult =
   | {
       status: 'rejected';
       message: string;
-      invalidProductIds: string[];
+      invalidLines: CartLineKey[];
       insufficientStockItems: InsufficientStockItem[];
     };
 
 export type OrderStatus = 'paid' | 'pending' | 'failed';
 
-export type OrderLine = {
-  productId: string;
+export type OrderLine = CartLineKey & {
   name: string;
   quantity: number;
   total: number;

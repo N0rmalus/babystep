@@ -23,6 +23,10 @@ export const toCartLineKey = ({ productId, variantId }: CartLineKey): CartLineKe
     : { productId: normalizedProductId };
 };
 
+export const pickCartLineKey = ({ productId, variantId }: CartLineKey): CartLineKey => {
+  return variantId ? { productId, variantId } : { productId };
+};
+
 export const getCartLineKey = ({ productId, variantId }: CartLineKey): string => {
   return variantId ? `${productId}:${variantId}` : productId;
 };

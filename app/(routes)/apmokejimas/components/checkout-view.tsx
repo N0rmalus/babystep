@@ -68,7 +68,7 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
     cartSummary.hasUnavailableLines ||
     cartSummary.hasSoldOutLines ||
     cartSummary.hasInsufficientStock;
-  const lines = toCheckoutLines({ products, quantityByProductId: cartSummary.quantityByProductId });
+  const lines = toCheckoutLines(cartSummary.resolvedLines);
 
   return (
     <div className="mx-auto w-full max-w-180 px-4 pt-2 sm:px-10 sm:pt-6 sm:pb-28">

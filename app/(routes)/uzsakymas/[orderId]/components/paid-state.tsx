@@ -5,9 +5,9 @@ import { ArrowRight, Check, Mail } from 'lucide-react';
 import { toCurrency } from '@/business/to-currency';
 import Button from '@/components/ui/button';
 import type { Order } from '@/lib/checkout-api';
+import { getCartLineKey } from '@/lib/cart-lines';
 import { CARRIER_NAMES } from '@/lib/carriers';
 import { getImageUrl } from '@/lib/image-url';
-import { MOCK_CART_VARIANT_META } from '@/lib/mocks/product';
 import { formatPhone } from '@/lib/phone';
 import { cn } from '@/lib/utils';
 import { ContactLine } from './contact-line';
@@ -70,16 +70,13 @@ export const PaidState = ({ order }: Props) => {
           </h2>
           <ul className="flex flex-col gap-3">
             {order.lines.map((line) => (
-              <li key={line.productId} className="flex items-center gap-3">
+              <li key={getCartLineKey(line)} className="flex items-center gap-3">
                 <span className="bg-muted relative size-14 shrink-0 overflow-hidden rounded-xl">
                   <Image fill src={getImageUrl(line.imageUrl)} alt="" sizes="56px" className="object-cover" />
                 </span>
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="text-ink text-base font-semibold">{line.name}</span>
-                  {/* MOCK: size and color until "Product variants". */}
-                  <span className="text-ink-muted text-sm">
-                    {MOCK_CART_VARIANT_META} · {line.quantity} vnt.
-                  </span>
+                  <span className="text-ink-muted text-sm">{line.quantity} vnt.</span>
                 </span>
                 <span className="text-ink text-base font-semibold tabular-nums">{toCurrency(line.total)}</span>
               </li>

@@ -4,7 +4,6 @@ import { AlertTriangle, Lock } from 'lucide-react';
 import { toCurrency } from '@/business/to-currency';
 import Button from '@/components/ui/button';
 import type { DeliveryMethod } from '@/lib/checkout-api';
-import { MOCK_CART_VARIANT_META } from '@/lib/mocks/product';
 import { cn } from '@/lib/utils';
 import type { CheckoutLine } from './checkout-lines';
 import { CheckoutStep } from './checkout-step';
@@ -50,10 +49,9 @@ export const ReviewStep = ({
   >
     <PaperWrapper className="flex flex-col gap-3">
       {lines.map((line) => (
-        <div key={line.productId} className="text-ink-soft flex justify-between gap-4 text-sm">
-          {/* MOCK: size and color until "Product variants". */}
+        <div key={line.key} className="text-ink-soft flex justify-between gap-4 text-sm">
           <span>
-            {line.name} · {MOCK_CART_VARIANT_META} × {line.quantity}
+            {line.name} × {line.quantity}
           </span>
           <span className="shrink-0 tabular-nums">{toCurrency(line.total)}</span>
         </div>
