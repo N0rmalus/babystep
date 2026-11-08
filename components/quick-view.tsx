@@ -12,13 +12,16 @@ import { ProductPrice } from '@/components/product/product-price';
 import { ProductPurchaseProvider, useProductPurchase } from '@/components/product/product-purchase-provider';
 import { ProductRatingCompact } from '@/components/product/product-rating-summary';
 import { Modal } from '@/components/ui/modal';
+import { useFreshProduct } from '@/hooks/use-fresh-product';
 import useQuickView from '@/hooks/use-quick-view';
 import { FREE_SHIPPING_THRESHOLD, RETURN_PERIOD_DAYS } from '@/lib/consts';
+import { getProductHref } from '@/lib/product-href';
 
 export const QuickView = () => {
   const isOpen = useQuickView((state) => state.isOpen);
   const onClose = useQuickView((state) => state.onClose);
-  const product = useQuickView((state) => state.product);
+  const listProduct = useQuickView((state) => state.product);
+  const product = useFreshProduct(listProduct, isOpen);
 
   if (!product) {
     return null;
@@ -34,8 +37,8 @@ export const QuickView = () => {
 };
 
 const QuickViewContent = ({ product }: { product: Product }) => {
-  const { price, images } = useProductPurchase();
-  const productHref = `/product/${product.id}`;
+  const { price, images, selectedVariantId } = useProductPurchase();
+  const productHref = getProductHref({ productId: product.id, variantId: selectedVariantId });
 
   return (
     <div className="grid gap-9 md:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:grid-cols-[27.5rem_minmax(0,1fr)]">

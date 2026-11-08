@@ -21,7 +21,7 @@ const getUniqueProductIds = (productIds: string[]) => {
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const PRODUCT_RESOLVE_TIMEOUT_MS = 8000;
 
-const fetchProductById = async (productId: string): Promise<ResolvedProductFetchResult> => {
+export const fetchProductById = async (productId: string): Promise<ResolvedProductFetchResult> => {
   if (!apiUrl) {
     return { status: 'error' };
   }

@@ -20,11 +20,20 @@ import { getImageUrl } from '@/lib/image-url';
 import { toCurrency } from '@/business/to-currency';
 import { getPriceSummaryLabel, PriceSummaryBadge } from '@/components/product/price-summary';
 import { useIsMobile } from '@/hooks/use-is-mobile';
+import { CardAction, CardActionTarget, getCardAction } from '@/components/ui/product-card/card-action';
+import { getProductHref } from '@/lib/product-href';
 
 type Props = {
   data: Product;
   wishlistAction?: 'add' | 'remove';
 };
+
+const MAP_CARD_ACTION_TO_LABEL = {
+  soldOut: 'Išparduota',
+  chooseOptions: 'Pasirinkti savybes',
+  add: 'Į krepšelį',
+  inCart: 'Jau krepšelyje',
+} satisfies Record<CardAction['kind'], string>;
 
 export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
   const isInCart = useCart((state) => state.items.some((item) => item.productId === data.id));
@@ -34,7 +43,8 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
   const router = useRouter();
   const isMobile = useIsMobile('md');
 
-  const isInStock = data.stockCount > 0;
+  const productHref = getProductHref({ productId: data.id });
+  const cardAction = getCardAction({ product: data, isInCart, isMobile });
   const isInWishlist = wishlist.items.some((item) => item === data.id);
   const imageUrl = getImageUrl(data.images?.at(0)?.url);
 
@@ -47,8 +57,22 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
     openQuickView(data);
   };
 
-  const onAddToCart = () => {
+  const handleCardAction = () => {
+    if (cardAction.kind === 'chooseOptions') {
+      handleChooseOptions(cardAction.target);
+      return;
+    }
+
     addToCart({ productId: data.id, maxQuantity: data.stockCount });
+  };
+
+  const handleChooseOptions = (target: CardActionTarget) => {
+    if (target === 'quickView') {
+      openQuickView(data);
+      return;
+    }
+
+    router.push(productHref);
   };
 
   const onWishlistAction = () => {
@@ -79,23 +103,12 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
         ? 'Pašalinti iš norų sąrašo'
         : 'Įtraukti į norų sąrašą';
 
-  const buttonLabel = () => {
-    if (!isInStock) {
-      return 'Išparduota';
-    }
-    if (isInCart) {
-      return 'Jau krepšelyje';
-    }
-
-    return 'Į krepšelį';
-  };
-
   return (
     <div
-      onClick={() => router.push(`/product/${data.id}`)}
+      onClick={() => router.push(productHref)}
       className={cn(
         'group border-line shadow-card hover:border-line-strong flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white transition-all duration-200 hover:-translate-y-0.5 sm:rounded-3xl',
-        !isInStock && 'opacity-50',
+        cardAction.kind === 'soldOut' && 'opacity-50',
       )}
     >
       <div className="bg-muted relative aspect-square overflow-hidden sm:aspect-4/3">
@@ -110,7 +123,7 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
           <PriceSummaryBadge summary={priceSummary} />
-          {!isInStock && <Badge label="Išparduota" color="neutral" />}
+          {cardAction.kind === 'soldOut' && <Badge label="Išparduota" color="neutral" />}
         </div>
 
         <div className="absolute top-3 right-3 bottom-0 flex flex-col gap-2.5">
@@ -151,10 +164,10 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
 
         <Button
           size="sm"
-          label={buttonLabel()}
-          onClick={onAddToCart}
-          elementBefore={!isInCart && <ShoppingCart size={15} />}
-          disabled={!isInStock}
+          label={MAP_CARD_ACTION_TO_LABEL[cardAction.kind]}
+          onClick={handleCardAction}
+          elementBefore={cardAction.kind === 'add' && <ShoppingCart size={15} />}
+          disabled={cardAction.kind === 'soldOut'}
           fullWidth
         />
       </div>
