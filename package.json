@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typescript": "next typegen && tsc --noEmit"
+    "typescript": "next typegen && tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.19",
@@ -37,6 +38,7 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.0.0-insiders.f7d2598",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
   }
 }
