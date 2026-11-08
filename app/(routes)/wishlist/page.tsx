@@ -12,16 +12,19 @@ import useWishlist from '@/hooks/use-wishlist';
 import { WishlistLoadingState } from './components/wishlist-loading-state';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import { EmptyWishlistState } from '@/app/(routes)/wishlist/components/empty-wishlist-state';
+import type { Product } from '@/actions/types';
 import useCart from '@/hooks/use-cart';
 import { ProductCard } from '@/components/ui/product-card/product-card';
 import { WishlistAddedStatus } from './components/wishlist-added-status';
 import { WishlistGrid } from './components/wishlist-grid';
 import { WishlistHeader } from './components/wishlist-header';
 import { WishlistSignInNote } from './components/wishlist-sign-in-note';
+import { getWishlistBulkAdd } from '@/business/wishlist-bulk-add';
 
 type AddedStatus = {
   addedCount: number;
   soldOutNames: string[];
+  needsChoiceProducts: Product[];
 };
 
 const WishlistPage = () => {
@@ -60,21 +63,18 @@ const WishlistPage = () => {
     setItems(nextItemIds);
   }, [itemIds, missingProductIds, setItems]);
 
-  const inStockProducts = products.filter((product) => product.stockCount > 0);
-  const soldOutProducts = products.filter((product) => product.stockCount <= 0);
-  const productsToAddToCart = inStockProducts.filter(
-    (product) => !cartItems.some((item) => item.productId === product.id),
-  );
+  const bulkAdd = getWishlistBulkAdd({ products, cartProductIds: cartItems.map((item) => item.productId) });
 
   const handleAddAllToCart = () => {
-    if (productsToAddToCart.length === 0) {
+    if (bulkAdd.productsToAdd.length === 0) {
       return;
     }
 
-    addCartItems(productsToAddToCart.map((product) => product.id));
+    addCartItems(bulkAdd.productsToAdd.map((product) => product.id));
     setAddedStatus({
-      addedCount: inStockProducts.length,
-      soldOutNames: soldOutProducts.map((product) => product.name.trim()),
+      addedCount: bulkAdd.addedCount,
+      soldOutNames: bulkAdd.soldOutProducts.map((product) => product.name.trim()),
+      needsChoiceProducts: bulkAdd.needsChoiceProducts,
     });
   };
 
@@ -99,13 +99,17 @@ const WishlistPage = () => {
     <PageContainer>
       <section>
         <WishlistHeader
-          canAddAllToCart={!isResolvingProducts && productsToAddToCart.length > 0}
+          canAddAllToCart={!isResolvingProducts && bulkAdd.productsToAdd.length > 0}
           onAddAllToCart={handleAddAllToCart}
         />
 
         {addedStatus && (
           <div className="mt-3 sm:mt-5">
-            <WishlistAddedStatus addedCount={addedStatus.addedCount} soldOutNames={addedStatus.soldOutNames} />
+            <WishlistAddedStatus
+              addedCount={addedStatus.addedCount}
+              soldOutNames={addedStatus.soldOutNames}
+              needsChoiceProducts={addedStatus.needsChoiceProducts}
+            />
           </div>
         )}
 
