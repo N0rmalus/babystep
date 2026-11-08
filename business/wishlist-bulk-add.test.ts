@@ -69,18 +69,22 @@ describe('getWishlistBulkAdd', () => {
     expect(bulkAdd.soldOutProducts).toEqual([soldOutPlain, soldOutWithVariants]);
   });
 
-  it('skips products already in the cart but counts them as in the cart, leaving out ones that need a choice', () => {
+  it('skips products already in the cart but counts them as in the cart', () => {
     const inCart = createProduct({ id: 'in-cart', name: 'Pledas' });
     const notInCart = createProduct({ id: 'not-in-cart', name: 'Antklodė' });
-    const withVariantsInCart = createProductWithVariants({ id: 'sized', name: 'Miegmaišis' });
 
-    const bulkAdd = getWishlistBulkAdd({
-      products: [inCart, notInCart, withVariantsInCart],
-      cartProductIds: ['in-cart', 'sized'],
-    });
+    const bulkAdd = getWishlistBulkAdd({ products: [inCart, notInCart], cartProductIds: ['in-cart'] });
 
     expect(bulkAdd.productsToAdd).toEqual([notInCart]);
     expect(bulkAdd.addedCount).toBe(2);
-    expect(bulkAdd.needsChoiceProducts).toEqual([withVariantsInCart]);
+  });
+
+  it('does not ask for a choice on a product with variants that already has a line in the cart', () => {
+    const chosen = createProductWithVariants({ id: 'chosen', name: 'Miegmaišis' });
+    const notChosen = createProductWithVariants({ id: 'not-chosen', name: 'Pledukas' });
+
+    const bulkAdd = getWishlistBulkAdd({ products: [chosen, notChosen], cartProductIds: ['chosen'] });
+
+    expect(bulkAdd.needsChoiceProducts).toEqual([notChosen]);
   });
 });

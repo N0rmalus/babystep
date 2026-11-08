@@ -21,7 +21,7 @@ export const getWishlistBulkAdd = ({ products, cartProductIds }: WishlistBulkAdd
     productsToAdd: addableProducts.filter((product) => !cartProductIdSet.has(product.id)),
     addedCount: addableProducts.length,
     soldOutProducts: products.filter((product) => !isInStock(product)),
-    needsChoiceProducts: inStockProducts.filter((product) => product.hasOptions),
+    needsChoiceProducts: inStockProducts.filter((product) => product.hasOptions && !cartProductIdSet.has(product.id)),
   };
 };
 
