@@ -18,7 +18,15 @@ type Props = {
 };
 
 export const CartSummaryPanel = ({ cartSummary, deliveryConfig, promo, total }: Props) => {
-  const { subtotal, hasFreeShipping, hasOutOfStockProducts, hasInsufficientStock, isCheckoutDisabled } = cartSummary;
+  const {
+    subtotal,
+    hasFreeShipping,
+    hasLinesNeedingChoice,
+    hasUnavailableLines,
+    hasSoldOutLines,
+    hasInsufficientStock,
+    isCheckoutDisabled,
+  } = cartSummary;
   const cheapestDeliveryPrice = getCheapestDeliveryPrice({ config: deliveryConfig, subtotal });
 
   return (
@@ -58,7 +66,19 @@ export const CartSummaryPanel = ({ cartSummary, deliveryConfig, promo, total }: 
         {hasFreeShipping ? 'Pristatymas jau įskaičiuotas.' : 'Be pristatymo. Jį pridėsime, kai pasirinksi būdą.'}
       </span>
 
-      {hasOutOfStockProducts && (
+      {hasLinesNeedingChoice && (
+        <p role="alert" className="text-danger text-sm">
+          Kai kurioms prekėms dar nepasirinkai savybių. Pasirink jas prieš tęsiant apmokėjimą.
+        </p>
+      )}
+
+      {hasUnavailableLines && (
+        <p role="alert" className="text-danger text-sm">
+          Kai kurie pasirinkimai nebegalimi, pašalink juos prieš tęsiant apmokėjimą.
+        </p>
+      )}
+
+      {hasSoldOutLines && (
         <p role="alert" className="text-danger text-sm">
           Kai kurių prekių nebeliko, pašalink jas prieš tęsiant apmokėjimą.
         </p>

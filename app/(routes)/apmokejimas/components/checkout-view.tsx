@@ -64,7 +64,9 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
   const hasStockProblem =
     missingProductIds.length > 0 ||
     hasFailedProducts ||
-    cartSummary.hasOutOfStockProducts ||
+    cartSummary.hasLinesNeedingChoice ||
+    cartSummary.hasUnavailableLines ||
+    cartSummary.hasSoldOutLines ||
     cartSummary.hasInsufficientStock;
   const lines = toCheckoutLines({ products, quantityByProductId: cartSummary.quantityByProductId });
 

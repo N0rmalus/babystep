@@ -6,7 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import { PageContainer } from '@/components/ui/page-container';
 import useCart from '@/hooks/use-cart';
-import { getCartProductIds } from '@/lib/cart-lines';
+import { getCartLineKey, getCartProductIds } from '@/lib/cart-lines';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
@@ -108,12 +108,8 @@ export const CartView = ({ deliveryConfig }: Props) => {
                 aria-label="Prekės krepšelyje"
                 className="xl:border-line xl:shadow-card flex flex-col gap-3 xl:gap-0 xl:rounded-3xl xl:border xl:bg-white xl:px-6 xl:py-1"
               >
-                {products.map((product) => (
-                  <CartLine
-                    key={product.id}
-                    product={product}
-                    quantity={cartSummary.quantityByProductId.get(product.id) ?? 1}
-                  />
+                {cartSummary.resolvedLines.map((resolvedLine) => (
+                  <CartLine key={getCartLineKey(resolvedLine.line)} resolvedLine={resolvedLine} />
                 ))}
               </ul>
 
