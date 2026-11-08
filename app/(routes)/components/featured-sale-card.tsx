@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { Product } from '@/actions/types';
-import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
-import { Badge } from '@/components/ui/badge';
+import { getStrikethroughPrice, getVariantPriceSummary } from '@/business/variant-price-summary';
+import { getPriceSummaryLabel, PriceSummaryBadge } from '@/components/product/price-summary';
 import Button from '@/components/ui/button';
 import IconButton from '@/components/ui/icon-button';
 import useCart from '@/hooks/use-cart';
@@ -27,7 +27,8 @@ export const FeaturedSaleCard = ({ product, summary }: Props) => {
   const addToWishlist = useWishlist((state) => state.addItem);
   const removeFromWishlist = useWishlist((state) => state.removeItem);
 
-  const pricing = getProductPricing(product);
+  const priceSummary = getVariantPriceSummary(product);
+  const strikethroughPrice = getStrikethroughPrice(priceSummary);
   const isInStock = product.stockCount > 0;
 
   const handleAddToCart = () => {
@@ -62,7 +63,7 @@ export const FeaturedSaleCard = ({ product, summary }: Props) => {
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute top-3 left-3 lg:top-3.5 lg:left-3.5">
-          <Badge color="sale" label={`-${pricing.discountPercent}%`} />
+          <PriceSummaryBadge summary={priceSummary} />
         </div>
         <div className="absolute top-3 right-3 z-10 lg:hidden">{wishlistButton}</div>
       </div>
@@ -78,11 +79,13 @@ export const FeaturedSaleCard = ({ product, summary }: Props) => {
         <div className="mt-1 flex items-center justify-between gap-3 lg:mt-auto lg:flex-col lg:items-stretch">
           <div className="flex items-baseline gap-2 lg:gap-2.5">
             <span className="text-sale-strong text-2xl font-bold tabular-nums lg:text-3xl">
-              {toCurrency(pricing.effectivePrice)}
+              {getPriceSummaryLabel(priceSummary)}
             </span>
-            <span className="text-ink-faint text-sm tabular-nums line-through lg:text-base">
-              {toCurrency(pricing.regularPrice)}
-            </span>
+            {strikethroughPrice !== null && (
+              <span className="text-ink-faint text-sm tabular-nums line-through lg:text-base">
+                {toCurrency(strikethroughPrice)}
+              </span>
+            )}
           </div>
           <div className="relative z-10 flex items-center gap-2.5">
             <Button

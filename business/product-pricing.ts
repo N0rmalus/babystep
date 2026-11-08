@@ -65,10 +65,3 @@ export const getProductEffectivePrice = (input: PricingInput, now = new Date()):
 export const isProductOnSale = (input: PricingInput, now = new Date()): boolean => {
   return getProductPricing(input, now).isOnSale;
 };
-
-export const getBiggestDiscount = (inputs: PricingInput[]): number => {
-  return inputs.reduce((maxDiscount, input) => {
-    const { discountPercent } = getProductPricing(input);
-    return Math.max(maxDiscount, discountPercent);
-  }, 0);
-};

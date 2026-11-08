@@ -2,7 +2,7 @@ import getCategories from '@/actions/get-categories';
 import getProducts from '@/actions/get-products';
 import getSubcategories from '@/actions/get-subcategories';
 import type { Subcategory } from '@/actions/types';
-import { getBiggestDiscount } from '@/business/product-pricing';
+import { getBiggestDiscount } from '@/business/variant-price-summary';
 import { BrandLink } from '@/components/navbar/brand-link';
 import { HeaderSearch } from '@/components/navbar/header-search';
 import { MainNav } from '@/components/navbar/main-nav';

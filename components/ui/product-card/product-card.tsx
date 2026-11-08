@@ -11,9 +11,14 @@ import IconButton from '@/components/ui/icon-button';
 import { Expand, Heart, ShoppingCart, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from '@/components/ui/button';
-import { getProductPricing } from '@/business/product-pricing';
+import {
+  getStrikethroughPrice,
+  getSummaryDiscountPercent,
+  getVariantPriceSummary,
+} from '@/business/variant-price-summary';
 import { getImageUrl } from '@/lib/image-url';
 import { toCurrency } from '@/business/to-currency';
+import { getPriceSummaryLabel, PriceSummaryBadge } from '@/components/product/price-summary';
 import { useIsMobile } from '@/hooks/use-is-mobile';
 
 type Props = {
@@ -33,7 +38,10 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
   const isInWishlist = wishlist.items.some((item) => item === data.id);
   const imageUrl = getImageUrl(data.images?.at(0)?.url);
 
-  const pricing = getProductPricing(data);
+  const priceSummary = getVariantPriceSummary(data);
+  const isOnSale = getSummaryDiscountPercent(priceSummary) > 0;
+  const strikethroughPrice = getStrikethroughPrice(priceSummary);
+  const priceLabel = getPriceSummaryLabel(priceSummary);
 
   const onPreview = () => {
     openQuickView(data);
@@ -101,7 +109,7 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
         />
 
         <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2">
-          {pricing.isOnSale && <Badge label={`-${pricing.discountPercent}%`} color="sale" />}
+          <PriceSummaryBadge summary={priceSummary} />
           {!isInStock && <Badge label="Išparduota" color="neutral" />}
         </div>
 
@@ -123,19 +131,21 @@ export const ProductCard = ({ data, wishlistAction = 'add' }: Props) => {
           </div>
 
           <div>
-            {pricing.isOnSale && (
+            {strikethroughPrice !== null && (
               <div className="text-ink-faint text-xs font-medium tabular-nums line-through">
-                {toCurrency(pricing.regularPrice)}
+                {toCurrency(strikethroughPrice)}
               </div>
             )}
-            <span
-              className={cn(
-                'text-base font-bold tabular-nums sm:text-lg',
-                pricing.isOnSale ? 'text-sale-strong' : 'text-ink',
-              )}
-            >
-              {toCurrency(pricing.effectivePrice)}
-            </span>
+            {priceLabel && (
+              <span
+                className={cn(
+                  'text-base font-bold tabular-nums sm:text-lg',
+                  isOnSale ? 'text-sale-strong' : 'text-ink',
+                )}
+              >
+                {priceLabel}
+              </span>
+            )}
           </div>
         </div>
 

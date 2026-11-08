@@ -5,7 +5,7 @@ import type { Product } from '@/actions/types';
 import { FeaturedSaleCard } from '@/app/(routes)/components/featured-sale-card';
 import { HomeSection } from '@/app/(routes)/components/home-section';
 import { SectionHeading } from '@/app/(routes)/components/section-heading';
-import { getProductPricing } from '@/business/product-pricing';
+import { getSummaryDiscountPercent, getVariantPriceSummary } from '@/business/variant-price-summary';
 import { ProductCard } from '@/components/ui/product-card/product-card';
 import { toPlainText } from '@/lib/rich-text';
 
@@ -55,7 +55,7 @@ export const SaleSection = ({ products }: Props) => {
 
 const sortByDiscount = (products: Product[]) => {
   return products
-    .map((product) => ({ product, discountPercent: getProductPricing(product).discountPercent }))
+    .map((product) => ({ product, discountPercent: getSummaryDiscountPercent(getVariantPriceSummary(product)) }))
     .filter(({ discountPercent }) => discountPercent > 0)
     .sort((first, second) => second.discountPercent - first.discountPercent);
 };
