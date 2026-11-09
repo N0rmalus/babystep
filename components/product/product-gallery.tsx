@@ -19,9 +19,17 @@ const SWIPE_THRESHOLD_PX = 40;
 
 export const ProductGallery = ({ images, name, sizes, expandButton }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [imageOrderKey, setImageOrderKey] = useState(() => getImageOrderKey(images));
   const touchStartXRef = useRef<number | null>(null);
   const imageCount = images.length;
   const selectedImage = images.at(selectedIndex);
+
+  const currentImageOrderKey = getImageOrderKey(images);
+
+  if (imageOrderKey !== currentImageOrderKey) {
+    setImageOrderKey(currentImageOrderKey);
+    setSelectedIndex(0);
+  }
 
   const showImage = (index: number) => {
     setSelectedIndex((index + imageCount) % imageCount);
@@ -96,3 +104,5 @@ export const ProductGallery = ({ images, name, sizes, expandButton }: Props) => 
     </div>
   );
 };
+
+const getImageOrderKey = (images: ImageType[]) => images.map(({ id }) => id).join();

@@ -1,7 +1,12 @@
-import type { Product } from '@/actions/types';
-
 type PriceLike = number | string | null | undefined;
 type DateLike = string | null | undefined;
+
+export interface PricingInput {
+  price: PriceLike;
+  salePrice?: PriceLike;
+  saleStartsAt?: DateLike;
+  saleEndsAt?: DateLike;
+}
 
 const normalizePrice = (value: PriceLike) => {
   if (value === null || value === undefined || value === '') {
@@ -23,11 +28,19 @@ const normalizeDate = (value: DateLike) => {
   return Number.isNaN(date.getTime()) ? null : date;
 };
 
-export const getProductPricing = (product: Product, now = new Date()) => {
-  const regularPrice = normalizePrice(product.price) ?? 0;
-  const salePrice = normalizePrice(product.salePrice);
-  const saleStartsAt = normalizeDate(product.saleStartsAt);
-  const saleEndsAt = normalizeDate(product.saleEndsAt);
+export interface ProductPricing {
+  regularPrice: number;
+  salePrice: number | null;
+  effectivePrice: number;
+  discountPercent: number;
+  isOnSale: boolean;
+}
+
+export const getProductPricing = (input: PricingInput, now = new Date()): ProductPricing => {
+  const regularPrice = normalizePrice(input.price) ?? 0;
+  const salePrice = normalizePrice(input.salePrice);
+  const saleStartsAt = normalizeDate(input.saleStartsAt);
+  const saleEndsAt = normalizeDate(input.saleEndsAt);
   const hasValidSalePrice = salePrice !== null && salePrice > 0 && regularPrice > 0 && salePrice < regularPrice;
   const hasStarted = !saleStartsAt || saleStartsAt.getTime() <= now.getTime();
   const hasNotEnded = !saleEndsAt || saleEndsAt.getTime() >= now.getTime();
@@ -45,17 +58,10 @@ export const getProductPricing = (product: Product, now = new Date()) => {
   };
 };
 
-export const getProductEffectivePrice = (product: Product, now = new Date()) => {
-  return getProductPricing(product, now).effectivePrice;
+export const getProductEffectivePrice = (input: PricingInput, now = new Date()): number => {
+  return getProductPricing(input, now).effectivePrice;
 };
 
-export const isProductOnSale = (product: Product, now = new Date()) => {
-  return getProductPricing(product, now).isOnSale;
-};
-
-export const getBiggestDiscount = (products: Product[]) => {
-  return products.reduce((maxDiscount, product) => {
-    const { discountPercent } = getProductPricing(product);
-    return Math.max(maxDiscount, discountPercent);
-  }, 0);
+export const isProductOnSale = (input: PricingInput, now = new Date()): boolean => {
+  return getProductPricing(input, now).isOnSale;
 };

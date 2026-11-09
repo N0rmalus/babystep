@@ -6,20 +6,22 @@ import Link from 'next/link';
 import type { Product } from '@/actions/types';
 import { toCurrency } from '@/business/to-currency';
 import { BuyActions } from '@/components/product/buy-actions';
-import { ColorPicker } from '@/components/product/color-picker';
+import { OptionPicker } from '@/components/product/option-picker';
 import { ProductGallery } from '@/components/product/product-gallery';
 import { ProductPrice } from '@/components/product/product-price';
-import { ProductPurchaseProvider } from '@/components/product/product-purchase-provider';
+import { ProductPurchaseProvider, useProductPurchase } from '@/components/product/product-purchase-provider';
 import { ProductRatingCompact } from '@/components/product/product-rating-summary';
-import { SizePicker } from '@/components/product/size-picker';
 import { Modal } from '@/components/ui/modal';
+import { useFreshProduct } from '@/hooks/use-fresh-product';
 import useQuickView from '@/hooks/use-quick-view';
 import { FREE_SHIPPING_THRESHOLD, RETURN_PERIOD_DAYS } from '@/lib/consts';
+import { getProductHref } from '@/lib/product-href';
 
 export const QuickView = () => {
   const isOpen = useQuickView((state) => state.isOpen);
   const onClose = useQuickView((state) => state.onClose);
-  const product = useQuickView((state) => state.product);
+  const listProduct = useQuickView((state) => state.product);
+  const product = useFreshProduct(listProduct, isOpen);
 
   if (!product) {
     return null;
@@ -35,11 +37,12 @@ export const QuickView = () => {
 };
 
 const QuickViewContent = ({ product }: { product: Product }) => {
-  const productHref = `/product/${product.id}`;
+  const { price, images, selectedVariantId } = useProductPurchase();
+  const productHref = getProductHref({ productId: product.id, variantId: selectedVariantId });
 
   return (
     <div className="grid gap-9 md:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:grid-cols-[27.5rem_minmax(0,1fr)]">
-      <ProductGallery images={product.images} name={product.name} sizes="440px" />
+      <ProductGallery images={images} name={product.name} sizes="440px" />
 
       <div className="flex flex-col gap-5.5 pt-2 pr-10 pb-1">
         <div className="flex flex-col gap-2.5">
@@ -49,7 +52,7 @@ const QuickViewContent = ({ product }: { product: Product }) => {
             </Link>
           </h2>
           <div className="flex items-center justify-between gap-3">
-            <ProductPrice product={product} />
+            <ProductPrice price={price} />
             {/* MOCK: rating until "Customer accounts" (reviews). */}
             <ProductRatingCompact />
           </div>
@@ -65,9 +68,7 @@ const QuickViewContent = ({ product }: { product: Product }) => {
 
         <hr className="border-line" />
 
-        {/* MOCK: size and color pickers until "Product variants". */}
-        <SizePicker columns="four" />
-        <ColorPicker />
+        <OptionPicker columns="four" />
 
         <BuyActions />
 

@@ -7,17 +7,14 @@ import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import 'yet-another-react-lightbox/styles.css';
 
-import type { Image } from '@/actions/types';
 import { ProductGallery } from '@/components/product/product-gallery';
+import { useProductPurchase } from '@/components/product/product-purchase-provider';
 import IconButton from '@/components/ui/icon-button';
 import { getImageUrl } from '@/lib/image-url';
 
-type Props = {
-  images: Image[];
-  name: string;
-};
-
-export const ProductMedia = ({ images, name }: Props) => {
+export const ProductMedia = () => {
+  const { product, images } = useProductPurchase();
+  const { name } = product;
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   return (

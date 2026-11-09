@@ -8,6 +8,7 @@ import { ChevronLeft } from 'lucide-react';
 import { ProductListFailedBox } from '@/components/product-list-failed-box';
 import Skeleton from '@/components/ui/skeleton';
 import useCart from '@/hooks/use-cart';
+import { getCartProductIds } from '@/lib/cart-lines';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useFocusRefresh from '@/hooks/use-focus-refresh';
 import useMounted from '@/hooks/use-mounted';
@@ -28,7 +29,7 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
   const router = useRouter();
   const isMounted = useMounted();
   const cartLines = useCart((state) => state.items);
-  const productIdsKey = cartLines.map((line) => line.productId).join(',');
+  const productIdsKey = getCartProductIds(cartLines).join(',');
   const itemIds = useMemo(() => (productIdsKey ? productIdsKey.split(',') : []), [productIdsKey]);
   const { products, missingProductIds, failedProductIds, isLoading, refetch } = useResolvedProducts(itemIds);
   const cartSummary = useCartSummary({
@@ -63,9 +64,11 @@ export const CheckoutView = ({ deliveryConfig, paymentMethods }: Props) => {
   const hasStockProblem =
     missingProductIds.length > 0 ||
     hasFailedProducts ||
-    cartSummary.hasOutOfStockProducts ||
+    cartSummary.hasLinesNeedingChoice ||
+    cartSummary.hasUnavailableLines ||
+    cartSummary.hasSoldOutLines ||
     cartSummary.hasInsufficientStock;
-  const lines = toCheckoutLines({ products, quantityByProductId: cartSummary.quantityByProductId });
+  const lines = toCheckoutLines(cartSummary.resolvedLines);
 
   return (
     <div className="mx-auto w-full max-w-180 px-4 pt-2 sm:px-10 sm:pt-6 sm:pb-28">

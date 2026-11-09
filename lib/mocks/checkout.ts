@@ -1,12 +1,11 @@
 import type { Product } from '@/actions/types';
 import { getDeliveryPrice } from '@/business/delivery-pricing';
-import { getProductEffectivePrice } from '@/business/product-pricing';
+import { isOkLine, resolveCartLines } from '@/business/cart-line-resolution';
 import type {
   Bank,
   CreateOrderInput,
   CreateOrderResult,
   DeliveryConfig,
-  InsufficientStockItem,
   Order,
   OrderDelivery,
   OrderPayment,
@@ -15,6 +14,7 @@ import type {
   PickupPoint,
 } from '@/lib/checkout-api';
 import { ApiGetError, apiGet } from '@/lib/api-client';
+import { getCartProductIds, isSameLine, pickCartLineKey } from '@/lib/cart-lines';
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/consts';
 
 type MockOrderRecord = Order & { pendingPollCount: number };
@@ -136,44 +136,34 @@ export const mockGetPaymentMethods = async (): Promise<PaymentMethods> => {
 export const mockCreateOrder = async ({ lines, contact, delivery, payment }: CreateOrderInput) => {
   await wait();
 
-  const products = await Promise.all(lines.map((line) => fetchProduct(line.productId)));
-  const invalidProductIds = lines.filter((_, index) => products.at(index) === null).map((line) => line.productId);
-  const insufficientStockItems = lines.reduce<InsufficientStockItem[]>((items, line, index) => {
-    const product = products.at(index);
+  const fetchedProducts = await Promise.all(getCartProductIds(lines).map(fetchProduct));
+  const products = fetchedProducts.filter((product) => product !== null);
+  const okLines = resolveCartLines({ lines, products }).filter(isOkLine);
+  const invalidLines = lines.filter((line) => !okLines.some((okLine) => isSameLine(okLine.line, line)));
+  const insufficientStockItems = okLines
+    .filter(({ quantity, maxQuantity }) => quantity > maxQuantity)
+    .map(({ line, quantity, maxQuantity }) => ({
+      ...pickCartLineKey(line),
+      requested: quantity,
+      available: Math.max(maxQuantity, 0),
+    }));
 
-    if (!product || line.quantity <= product.stockCount) {
-      return items;
-    }
-
-    return [...items, { productId: line.productId, requested: line.quantity, available: product.stockCount }];
-  }, []);
-
-  if (invalidProductIds.length > 0 || insufficientStockItems.length > 0) {
+  if (invalidLines.length > 0 || insufficientStockItems.length > 0) {
     return {
       status: 'rejected',
       message: 'Kai kurios prekės nebegalimos.',
-      invalidProductIds,
+      invalidLines: invalidLines.map(pickCartLineKey),
       insufficientStockItems,
     } satisfies CreateOrderResult;
   }
 
-  const orderLines = lines.flatMap((line, index) => {
-    const product = products.at(index);
-
-    if (!product) {
-      return [];
-    }
-
-    return [
-      {
-        productId: product.id,
-        name: product.name,
-        quantity: line.quantity,
-        total: getProductEffectivePrice(product) * line.quantity,
-        imageUrl: product.images.at(0)?.url ?? null,
-      },
-    ];
-  });
+  const orderLines = okLines.map(({ line, product, name, pricing, quantity }) => ({
+    ...pickCartLineKey(line),
+    name,
+    quantity,
+    total: pricing.effectivePrice * quantity,
+    imageUrl: product.images.at(0)?.url ?? null,
+  }));
   const subtotal = orderLines.reduce((sum, line) => sum + line.total, 0);
   const orderDelivery = toOrderDelivery(delivery);
   const option = MOCK_DELIVERY_CONFIG.options.find((current) => current.method === delivery.method);
@@ -187,7 +177,7 @@ export const mockCreateOrder = async ({ lines, contact, delivery, payment }: Cre
     return {
       status: 'rejected',
       message: 'Pasirinktas paštomatas nebegalimas.',
-      invalidProductIds: [],
+      invalidLines: [],
       insufficientStockItems: [],
     } satisfies CreateOrderResult;
   }

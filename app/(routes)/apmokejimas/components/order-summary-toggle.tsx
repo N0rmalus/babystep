@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 
 import { toCurrency } from '@/business/to-currency';
-import { MOCK_CART_VARIANT_META } from '@/lib/mocks/product';
 import { pluralize } from '@/lib/plural';
 import { cn } from '@/lib/utils';
 import type { CheckoutLine } from './checkout-lines';
@@ -35,7 +34,7 @@ export const OrderSummaryToggle = ({ lines, itemCount, total }: Props) => {
         <span aria-hidden="true" className="flex">
           {lines.slice(0, THUMBNAIL_COUNT).map((line, index) => (
             <span
-              key={line.productId}
+              key={line.key}
               className={cn(
                 'bg-muted relative size-10 overflow-hidden rounded-lg border-2 border-white',
                 index > 0 ? '-ml-2.5' : undefined,
@@ -65,16 +64,13 @@ export const OrderSummaryToggle = ({ lines, itemCount, total }: Props) => {
       {isOpen && (
         <ul id={listId} className="border-line flex flex-col gap-3 border-t px-4 pt-3.5 pb-4 sm:px-4.5">
           {lines.map((line) => (
-            <li key={line.productId} className="flex items-center gap-3">
+            <li key={line.key} className="flex items-center gap-3">
               <span className="bg-muted relative size-12 shrink-0 overflow-hidden rounded-xl">
                 <Image fill src={line.imageUrl} alt="" sizes="48px" className="object-cover" />
               </span>
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span className="text-ink text-sm font-semibold">{line.name}</span>
-                {/* MOCK: size and color until "Product variants". */}
-                <span className="text-ink-muted text-sm">
-                  {MOCK_CART_VARIANT_META} · {line.quantity} vnt.
-                </span>
+                <span className="text-ink-muted text-sm">{line.quantity} vnt.</span>
               </span>
               <span className="text-ink text-sm font-semibold tabular-nums">{toCurrency(line.total)}</span>
             </li>

@@ -14,10 +14,9 @@ import { cn } from '@/lib/utils';
 export const BuyActions = () => {
   const {
     product,
+    purchaseState,
     quantity,
     maxQuantity,
-    stockCount,
-    isInStock,
     isAdded,
     changeQuantity,
     addSelectionToCart,
@@ -42,9 +41,23 @@ export const BuyActions = () => {
       observer.disconnect();
       setIsCtaVisible(true);
     };
-  }, [setIsCtaVisible, isInStock]);
+  }, [setIsCtaVisible, purchaseState.kind]);
 
-  if (!isInStock) {
+  if (purchaseState.kind === 'incomplete') {
+    return (
+      <div className="flex flex-col gap-3">
+        <QuantitySelector value={quantity} max={maxQuantity} onChange={changeQuantity} isDisabled />
+        <div ref={ctaRef} className="flex gap-2.5">
+          <div className="min-w-0 flex-1">
+            <Button size="lg" label="Pasirinkti savybes" disabled onClick={addSelectionToCart} fullWidth />
+          </div>
+          <WishlistButton productId={product.id} />
+        </div>
+      </div>
+    );
+  }
+
+  if (purchaseState.kind === 'soldOut') {
     return (
       <div className="flex flex-col gap-3">
         <p className="text-ink-soft text-sm sm:text-base">Šio derinio kol kas neturime.</p>
@@ -64,7 +77,7 @@ export const BuyActions = () => {
         <QuantitySelector value={quantity} max={maxQuantity} onChange={changeQuantity} />
         <span className="text-success flex items-center gap-2 text-sm font-semibold sm:text-base">
           <Check size={16} aria-hidden="true" />
-          {stockCount > LOW_STOCK_THRESHOLD ? 'Yra sandėlyje' : `Liko ${stockCount} vnt.`}
+          {maxQuantity > LOW_STOCK_THRESHOLD ? 'Yra sandėlyje' : `Liko ${maxQuantity} vnt.`}
         </span>
       </div>
       <div ref={ctaRef} className="flex gap-2.5">

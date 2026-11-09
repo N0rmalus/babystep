@@ -5,6 +5,7 @@ import getProducts from '@/actions/get-products';
 import type { Product } from '@/actions/types';
 import { ProductPurchaseProvider } from '@/components/product/product-purchase-provider';
 import { RouteFocusRefresh } from '@/components/route-focus-refresh';
+import { VARIANT_ID_PARAM } from '@/lib/consts';
 import { MobileBuyBar } from './components/mobile-buy-bar';
 import { ProductBreadcrumbs } from './components/product-breadcrumbs';
 import { ProductBuyBox } from './components/product-buy-box';
@@ -12,19 +13,22 @@ import { ProductDetails } from './components/product-details';
 import { ProductMedia } from './components/product-media';
 import { ProductReviews } from './components/product-reviews';
 import { SimilarProducts } from './components/similar-products';
+import { VariantUrlSync } from './components/variant-url-sync';
 
 type Props = {
   params: Promise<{
     productId: string;
   }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 const SIMILAR_PRODUCTS_COUNT = 4;
 
 export const revalidate = 0;
 
-const ProductPage = async ({ params }: Props) => {
+const ProductPage = async ({ params, searchParams }: Props) => {
   const { productId } = await params;
+  const variantId = (await searchParams)[VARIANT_ID_PARAM];
   const product = await getProduct(productId);
 
   if (!product) {
@@ -35,15 +39,20 @@ const ProductPage = async ({ params }: Props) => {
   const similarProducts = await getSimilarProducts(product);
 
   return (
-    <ProductPurchaseProvider key={product.id} product={product}>
+    <ProductPurchaseProvider
+      key={product.id}
+      product={product}
+      initialVariantId={typeof variantId === 'string' ? variantId : undefined}
+    >
       <RouteFocusRefresh />
+      <VariantUrlSync />
       <div className="lg:px-gutter mx-auto w-full max-w-7xl lg:pb-20">
         <div className="px-2 lg:px-0">
           <ProductBreadcrumbs subcategory={subcategory} productName={product.name} />
         </div>
 
         <div className="px-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-16 lg:px-0">
-          <ProductMedia images={product.images} name={product.name} />
+          <ProductMedia />
           <ProductBuyBox />
         </div>
 

@@ -1,4 +1,4 @@
-export interface Product {
+interface ProductBase {
   id: string;
   subcategoryId: string;
   name: string;
@@ -12,6 +12,51 @@ export interface Product {
   description: string | null;
   images: Image[];
   subcategory: Subcategory;
+}
+
+interface ProductWithoutOptions {
+  hasOptions: false;
+  options: [];
+  variants: [];
+}
+
+interface ProductWithOptions {
+  hasOptions: true;
+  options: ProductOption[];
+  variants: ProductVariant[];
+}
+
+export type Product = ProductBase & (ProductWithoutOptions | ProductWithOptions);
+
+export type OptionDisplay = 'CHIPS' | 'SWATCH';
+
+export interface ProductOption {
+  id: string;
+  name: string;
+  displayType: OptionDisplay;
+  values: ProductOptionValue[];
+}
+
+export interface ProductOptionValue {
+  id: string;
+  label: string;
+  hex: string | null;
+  ageFromMonths: number | null;
+  ageToMonths: number | null;
+  heightFromCm: number | null;
+  heightToCm: number | null;
+  weightFromKg: string | null;
+  weightToKg: string | null;
+}
+
+export interface ProductVariant {
+  id: string;
+  sku: string | null;
+  label: string;
+  optionValueIds: string[];
+  price: string;
+  salePrice: string | null;
+  stockCount: number;
 }
 
 export interface ProductPriceRange {
@@ -33,6 +78,7 @@ export interface ProductCatalogResponse {
 export interface Image {
   id: string;
   url: string;
+  optionValueId?: string | null;
 }
 
 export interface Billboard {

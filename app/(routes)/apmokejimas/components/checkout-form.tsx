@@ -13,6 +13,7 @@ import {
   type Payment,
   type PaymentMethods,
 } from '@/lib/checkout-api';
+import { type CartLineKey, isSameLine } from '@/lib/cart-lines';
 import { normalizePhone, PHONE_PREFIX } from '@/lib/phone';
 import type { CheckoutLine } from './checkout-lines';
 import {
@@ -268,16 +269,16 @@ const getRejectionMessage = ({
   result: Extract<CreateOrderResult, { status: 'rejected' }>;
   lines: CheckoutLine[];
 }) => {
-  const getName = (productId: string) =>
-    lines.find((line) => line.productId === productId)?.name ?? `prekė (${productId.slice(0, 8)})`;
+  const getName = (key: CartLineKey) =>
+    lines.find((line) => isSameLine(line, key))?.name ?? `prekė (${key.productId.slice(0, 8)})`;
 
-  if (result.invalidProductIds.length > 0) {
-    return `Šios prekės nebegalimos: ${result.invalidProductIds.map(getName).join(', ')}.`;
+  if (result.invalidLines.length > 0) {
+    return `Šios prekės nebegalimos: ${result.invalidLines.map(getName).join(', ')}.`;
   }
 
   if (result.insufficientStockItems.length > 0) {
     const details = result.insufficientStockItems.map(
-      (item) => `${getName(item.productId)} (likutis: ${item.available}, pasirinkta: ${item.requested})`,
+      (item) => `${getName(item)} (likutis: ${item.available}, pasirinkta: ${item.requested})`,
     );
 
     return `Pasikeitė likučiai: ${details.join('; ')}. Pakoreguok krepšelį.`;

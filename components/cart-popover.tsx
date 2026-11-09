@@ -16,20 +16,18 @@ import {
   useRole,
   useTransitionStyles,
 } from '@floating-ui/react';
-import { ArrowRight, ShoppingCart, Trash2, Truck } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRight, ShoppingCart, Truck } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
-import { getProductPricing } from '@/business/product-pricing';
 import { toCurrency } from '@/business/to-currency';
 import { CartCountBadge } from '@/components/navbar/cart-count-badge';
+import { CartPopoverLine } from '@/components/cart-popover-line';
 import Button from '@/components/ui/button';
-import { QuantitySelector } from '@/components/ui/quantity-selector';
 import useCart from '@/hooks/use-cart';
+import { getCartLineKey, getCartProductIds } from '@/lib/cart-lines';
 import { useCartSummary } from '@/hooks/use-cart-summary';
 import useResolvedProducts from '@/hooks/use-resolved-products';
-import { getImageUrl } from '@/lib/image-url';
 import { cn } from '@/lib/utils';
 
 const getCartCountLabel = (count: number) => {
@@ -55,9 +53,12 @@ export const CartPopover = () => {
   const router = useRouter();
   const isInCartPage = usePathname().includes('/cart');
   const lines = useCart((state) => state.items);
-  const removeItem = useCart((state) => state.removeItem);
-  const setQuantity = useCart((state) => state.setQuantity);
-  const productIdsKey = lines.map((line) => line.productId).join(',');
+  const productIdsKey = getCartProductIds(lines).join(',');
+
+  const handleNavigate = (href: string) => {
+    setIsOpen(false);
+    router.push(href);
+  };
 
   const { products, failedProductIds, isLoading } = useResolvedProducts(
     useMemo(() => {
@@ -66,12 +67,15 @@ export const CartPopover = () => {
   );
 
   const {
+    resolvedLines,
     itemCount,
     subtotal,
     remainingForFreeShipping,
     freeShippingProgress,
     hasFreeShipping,
-    hasOutOfStockProducts,
+    hasLinesNeedingChoice,
+    hasUnavailableLines,
+    hasSoldOutLines,
     hasInsufficientStock,
     isCheckoutDisabled,
   } = useCartSummary({
@@ -224,96 +228,14 @@ export const CartPopover = () => {
                   )}
 
                   {!isLoading &&
-                    products.map((product, index) => {
-                      const isOutOfStock = product.stockCount <= 0;
-                      const pricing = getProductPricing(product);
-                      const quantity = lines.find((line) => line.productId === product.id)?.quantity ?? 1;
-
-                      return (
-                        <div
-                          key={product.id}
-                          className={cn(
-                            'hover:bg-tumbleweed-50/80 mx-3 my-1.5 flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors',
-                            index > 0 && 'border-line border-t border-dashed',
-                            isOutOfStock && 'bg-danger-soft hover:bg-danger-soft opacity-75',
-                          )}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setIsOpen(false);
-                              router.push(`/product/${product.id}`);
-                            }}
-                            className="grid min-w-0 flex-1 grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-3 text-left"
-                          >
-                            <span className="bg-muted relative size-14 overflow-hidden rounded-xl">
-                              <Image
-                                src={getImageUrl(product.images?.at(0)?.url)}
-                                alt={product.name}
-                                fill
-                                className={cn('object-cover', isOutOfStock && 'grayscale')}
-                                sizes="72px"
-                              />
-                            </span>
-
-                            <span className="min-w-0">
-                              <span className="text-ink line-clamp-2 text-sm leading-tight font-bold">
-                                {product.name}
-                              </span>
-                              <span className="text-ink-muted mt-1 block truncate text-xs">
-                                {product.subcategory?.category?.name ?? 'Kategorija'} ·{' '}
-                                {product.subcategory?.name ?? 'Subkategorija'}
-                              </span>
-                              <span
-                                className={cn(
-                                  'mt-2 block text-xs',
-                                  isOutOfStock ? 'text-danger font-semibold' : 'text-ink-muted',
-                                )}
-                              >
-                                {isOutOfStock ? 'Išparduota' : `${quantity} × ${toCurrency(pricing.effectivePrice)}`}
-                              </span>
-                            </span>
-                          </button>
-
-                          <div className="flex shrink-0 flex-col items-end gap-2">
-                            <span className="flex items-baseline gap-1.5">
-                              {pricing.isOnSale && (
-                                <span className="text-ink-faint text-xs tabular-nums line-through">
-                                  <span className="sr-only">Buvusi kaina</span>
-                                  {toCurrency(pricing.regularPrice * quantity)}
-                                </span>
-                              )}
-                              <span className="text-ink text-base font-bold tabular-nums">
-                                {toCurrency(pricing.effectivePrice * quantity)}
-                              </span>
-                            </span>
-                            {!isOutOfStock && (
-                              <QuantitySelector
-                                value={quantity}
-                                max={Math.max(product.stockCount, quantity)}
-                                onChange={(value) =>
-                                  setQuantity({
-                                    productId: product.id,
-                                    quantity: value,
-                                    maxQuantity: product.stockCount,
-                                  })
-                                }
-                                size="sm"
-                                label={`${product.name} kiekis`}
-                              />
-                            )}
-                            <button
-                              type="button"
-                              onClick={() => removeItem(product.id)}
-                              className="text-ink-faint hover:text-danger transition"
-                              aria-label={`Pašalinti ${product.name} iš krepšelio`}
-                            >
-                              <Trash2 size={18} aria-hidden="true" />
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    resolvedLines.map((resolvedLine, index) => (
+                      <CartPopoverLine
+                        key={getCartLineKey(resolvedLine.line)}
+                        resolvedLine={resolvedLine}
+                        hasDivider={index > 0}
+                        onNavigate={handleNavigate}
+                      />
+                    ))}
                 </div>
 
                 <div className="border-line border-t p-5">
@@ -322,7 +244,19 @@ export const CartPopover = () => {
                     <p className="text-ink text-2xl font-bold tabular-nums">{toCurrency(subtotal)}</p>
                   </div>
 
-                  {hasOutOfStockProducts && (
+                  {hasLinesNeedingChoice && (
+                    <div className="text-danger flex pb-3 text-sm">
+                      <p>Kai kurioms prekėms dar nepasirinkai savybių. Pasirink jas prieš tęsiant apmokėjimą.</p>
+                    </div>
+                  )}
+
+                  {hasUnavailableLines && (
+                    <div className="text-danger flex pb-3 text-sm">
+                      <p>Kai kurie pasirinkimai nebegalimi, pašalink juos prieš tęsiant apmokėjimą.</p>
+                    </div>
+                  )}
+
+                  {hasSoldOutLines && (
                     <div className="text-danger flex pb-3 text-sm">
                       <p>Kai kurių prekių nebeliko, pašalink prieš tęsiant apmokėjimą.</p>
                     </div>
